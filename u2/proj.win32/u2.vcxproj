@@ -1,0 +1,327 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{76A39BB2-9B84-4C65-98A5-654D86B86F2A}</ProjectGuid>
+    <RootNamespace>test_win32</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0'">v120</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v120_xp</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '14.0'">v140</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '14.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v140_xp</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0'">v120</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v120_xp</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '14.0'">v140</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '14.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v140_xp</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\cocos2d\cocos\2d\cocos2dx.props" />
+    <Import Project="..\cocos2d\cocos\2d\cocos2d_headers.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\cocos2d\cocos\2d\cocos2dx.props" />
+    <Import Project="..\cocos2d\cocos\2d\cocos2d_headers.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>12.0.21005.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Configuration).win32\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration).win32\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration).win32\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration).win32\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LibraryPath>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LibraryPath>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(EngineRoot)cocos\audio\include;$(EngineRoot)external;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;..\engine;..\engine\include;..\engine\include\core;..\engine\include\core\streams;..\engine\include\core\threading;..\engine\include\core\threading\threadpool;..\engine\include\mvc;..\gamebase;..\Classes;..;%(AdditionalIncludeDirectories);$(_COCOS_HEADER_WIN32_BEGIN);$(_COCOS_HEADER_WIN32_END)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_CHIPMUNK_INTEGRATION=1;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;U2_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>%(AdditionalDependencies);$(_COCOS_LIB_WIN32_BEGIN);$(_COCOS_LIB_WIN32_END)</AdditionalDependencies>
+      <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
+      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories);$(_COCOS_LIB_PATH_WIN32_BEGIN);$(_COCOS_LIB_PATH_WIN32_END)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+    <PreLinkEvent>
+      <Command>
+      </Command>
+    </PreLinkEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup>
+    <CustomBuildStep>
+      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
+xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
+      </Command>
+      <Outputs>$(TargetName).cab</Outputs>
+      <Inputs>$(TargetFileName)</Inputs>
+    </CustomBuildStep>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>$(EngineRoot)cocos\audio\include;$(EngineRoot)external;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;..\Classes;..;%(AdditionalIncludeDirectories);$(_COCOS_HEADER_WIN32_BEGIN);$(_COCOS_HEADER_WIN32_END)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>libcurl_imp.lib;websockets.lib;%(AdditionalDependencies);$(_COCOS_LIB_WIN32_BEGIN);$(_COCOS_LIB_WIN32_END)</AdditionalDependencies>
+      <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
+      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories);$(_COCOS_LIB_PATH_WIN32_BEGIN);$(_COCOS_LIB_PATH_WIN32_END)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+    <PreLinkEvent>
+      <Command>
+      </Command>
+    </PreLinkEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Classes\AppDelegate.cpp" />
+    <ClCompile Include="..\Classes\application\ApplicationCommands.cpp" />
+    <ClCompile Include="..\Classes\application\ApplicationFacade.cpp" />
+    <ClCompile Include="..\Classes\application\ApplicationMediators.cpp" />
+    <ClCompile Include="..\Classes\application\ApplicationPrerequisites.cpp" />
+    <ClCompile Include="..\Classes\application\ApplicationViewComponents.cpp" />
+    <ClCompile Include="..\Classes\cg\CgCommands.cpp" />
+    <ClCompile Include="..\Classes\cg\CgFacade.cpp" />
+    <ClCompile Include="..\Classes\cg\CgMediators.cpp" />
+    <ClCompile Include="..\Classes\cg\CgPrerequisites.cpp" />
+    <ClCompile Include="..\Classes\cg\CgViewComponents.cpp" />
+    <ClCompile Include="..\Classes\GameContexts.cpp" />
+    <ClCompile Include="..\Classes\tabinfo\InfoMediator.cpp" />
+    <ClCompile Include="..\Classes\tabinfo\TabInfoCommands.cpp" />
+    <ClCompile Include="..\Classes\tabinfo\TabInfoFacade.cpp" />
+    <ClCompile Include="..\Classes\tabinfo\TabInfoMediator.cpp" />
+    <ClCompile Include="..\Classes\tabinfo\TabInfoPrerequisites.cpp" />
+    <ClCompile Include="..\Classes\tabinfo\TabInfoViewComponent.cpp" />
+    <ClCompile Include="..\Classes\tabinfo\TabMediator.cpp" />
+    <ClCompile Include="..\engine\src\core\streams\U2CodeCvt.cpp" />
+    <ClCompile Include="..\engine\src\core\streams\U2DataFilterStream.cpp" />
+    <ClCompile Include="..\engine\src\core\streams\U2FileStream.cpp" />
+    <ClCompile Include="..\engine\src\core\streams\U2FilterStream.cpp" />
+    <ClCompile Include="..\engine\src\core\streams\U2Stream.cpp" />
+    <ClCompile Include="..\engine\src\core\threading\threadpool\threadpool.cpp" />
+    <ClCompile Include="..\engine\src\core\threading\threadpool\threadpool_generic.cpp" />
+    <ClCompile Include="..\engine\src\core\threading\U2TaskQueue.cpp" />
+    <ClCompile Include="..\engine\src\core\U2AlignedAllocator.cpp" />
+    <ClCompile Include="..\engine\src\core\U2FactoryManager.cpp" />
+    <ClCompile Include="..\engine\src\core\U2MemoryAllocatedObject.cpp" />
+    <ClCompile Include="..\engine\src\core\U2MemoryTracker.cpp" />
+    <ClCompile Include="..\engine\src\core\U2NameGenerator.cpp" />
+    <ClCompile Include="..\engine\src\core\U2Object.cpp" />
+    <ClCompile Include="..\engine\src\core\U2PoolingObjectManager.cpp" />
+    <ClCompile Include="..\engine\src\core\U2Prerequisites.cpp" />
+    <ClCompile Include="..\engine\src\core\U2SimpleObjectManager.cpp" />
+    <ClCompile Include="..\engine\src\core\U2TypedObjectManager.cpp" />
+    <ClCompile Include="..\engine\src\mvc\U2Command.cpp" />
+    <ClCompile Include="..\engine\src\mvc\U2Context.cpp" />
+    <ClCompile Include="..\engine\src\mvc\U2ContextQueue.cpp" />
+    <ClCompile Include="..\engine\src\mvc\U2Controller.cpp" />
+    <ClCompile Include="..\engine\src\mvc\U2Facade.cpp" />
+    <ClCompile Include="..\engine\src\mvc\U2FrameListenerCollection.cpp" />
+    <ClCompile Include="..\engine\src\mvc\U2Mediator.cpp" />
+    <ClCompile Include="..\engine\src\mvc\U2Model.cpp" />
+    <ClCompile Include="..\engine\src\mvc\U2Notification.cpp" />
+    <ClCompile Include="..\engine\src\mvc\U2Notifier.cpp" />
+    <ClCompile Include="..\engine\src\mvc\U2Observer.cpp" />
+    <ClCompile Include="..\engine\src\mvc\U2PredefinedCommands.cpp" />
+    <ClCompile Include="..\engine\src\mvc\U2PredefinedFacade.cpp" />
+    <ClCompile Include="..\engine\src\mvc\U2PredefinedMediators.cpp" />
+    <ClCompile Include="..\engine\src\mvc\U2PredefinedPrerequisites.cpp" />
+    <ClCompile Include="..\engine\src\mvc\U2PredefinedProxies.cpp" />
+    <ClCompile Include="..\engine\src\mvc\U2Proxy.cpp" />
+    <ClCompile Include="..\engine\src\mvc\U2SimpleCommand.cpp" />
+    <ClCompile Include="..\engine\src\mvc\U2TransStep.cpp" />
+    <ClCompile Include="..\engine\src\mvc\U2View.cpp" />
+    <ClCompile Include="..\engine\src\mvc\U2ViewComponent.cpp" />
+    <ClCompile Include="..\gamebase\U2CocosFrameListenerCollection.cpp" />
+    <ClCompile Include="..\gamebase\U2CocosMediator.cpp" />
+    <ClCompile Include="..\gamebase\U2CocosViewComponent.cpp" />
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Classes\AppDelegate.h" />
+    <ClInclude Include="..\Classes\application\ApplicationCommands.h" />
+    <ClInclude Include="..\Classes\application\ApplicationFacade.h" />
+    <ClInclude Include="..\Classes\application\ApplicationMediators.h" />
+    <ClInclude Include="..\Classes\application\ApplicationPrerequisites.h" />
+    <ClInclude Include="..\Classes\application\ApplicationViewComponents.h" />
+    <ClInclude Include="..\Classes\cg\CgCommands.h" />
+    <ClInclude Include="..\Classes\cg\CgFacade.h" />
+    <ClInclude Include="..\Classes\cg\CgMediators.h" />
+    <ClInclude Include="..\Classes\cg\CgPrerequisites.h" />
+    <ClInclude Include="..\Classes\cg\CgViewComponents.h" />
+    <ClInclude Include="..\Classes\GameContexts.h" />
+    <ClInclude Include="..\Classes\tabinfo\InfoMediator.h" />
+    <ClInclude Include="..\Classes\tabinfo\TabInfoCommands.h" />
+    <ClInclude Include="..\Classes\tabinfo\TabInfoFacade.h" />
+    <ClInclude Include="..\Classes\tabinfo\TabInfoMediator.h" />
+    <ClInclude Include="..\Classes\tabinfo\TabInfoPrerequisites.h" />
+    <ClInclude Include="..\Classes\tabinfo\TabInfoViewComponent.h" />
+    <ClInclude Include="..\Classes\tabinfo\TabMediator.h" />
+    <ClInclude Include="..\engine\include\core\streams\U2CodeCvt.h" />
+    <ClInclude Include="..\engine\include\core\streams\U2DataFilterStream.h" />
+    <ClInclude Include="..\engine\include\core\streams\U2FileStream.h" />
+    <ClInclude Include="..\engine\include\core\streams\U2FilterStream.h" />
+    <ClInclude Include="..\engine\include\core\streams\U2Stream.h" />
+    <ClInclude Include="..\engine\include\core\threading\threadpool\impl\threadpool_generic.h" />
+    <ClInclude Include="..\engine\include\core\threading\threadpool\impl\threadpool_generic_impl.h" />
+    <ClInclude Include="..\engine\include\core\threading\threadpool\impl\threadpool_generic_inst.h" />
+    <ClInclude Include="..\engine\include\core\threading\threadpool\impl\threadpool_impl.h" />
+    <ClInclude Include="..\engine\include\core\threading\threadpool\impl\threadpool_impl_homogenous.h" />
+    <ClInclude Include="..\engine\include\core\threading\threadpool\impl\threadpool_impl_util.h" />
+    <ClInclude Include="..\engine\include\core\threading\threadpool\impl\threadpool_inst.h" />
+    <ClInclude Include="..\engine\include\core\threading\threadpool\impl\threadpool_interface_generic.h" />
+    <ClInclude Include="..\engine\include\core\threading\threadpool\impl\threadpool_interface_virtual.h" />
+    <ClInclude Include="..\engine\include\core\threading\threadpool\make_iterator.h" />
+    <ClInclude Include="..\engine\include\core\threading\threadpool\parallel_for_each.h" />
+    <ClInclude Include="..\engine\include\core\threading\threadpool\parallel_transform.h" />
+    <ClInclude Include="..\engine\include\core\threading\threadpool\singlethreaded\parallel_for_each.h" />
+    <ClInclude Include="..\engine\include\core\threading\threadpool\singlethreaded\parallel_transform.h" />
+    <ClInclude Include="..\engine\include\core\threading\threadpool\singlethreaded\threadpool.h" />
+    <ClInclude Include="..\engine\include\core\threading\threadpool\threadpool.h" />
+    <ClInclude Include="..\engine\include\core\threading\threadpool\threadpool_config.h" />
+    <ClInclude Include="..\engine\include\core\threading\U2TaskQueue.h" />
+    <ClInclude Include="..\engine\include\core\threading\U2ThreadDefines.h" />
+    <ClInclude Include="..\engine\include\core\threading\U2ThreadDefinesCpp11.h" />
+    <ClInclude Include="..\engine\include\core\threading\U2ThreadDefinesNone.h" />
+    <ClInclude Include="..\engine\include\core\threading\U2ThreadHeaders.h" />
+    <ClInclude Include="..\engine\include\core\threading\U2ThreadHeadersCpp11.h" />
+    <ClInclude Include="..\engine\include\core\U2AlignedAllocator.h" />
+    <ClInclude Include="..\engine\include\core\U2Config.h" />
+    <ClInclude Include="..\engine\include\core\U2Core.h" />
+    <ClInclude Include="..\engine\include\core\U2FactoryManager.h" />
+    <ClInclude Include="..\engine\include\core\U2FactoryObj.h" />
+    <ClInclude Include="..\engine\include\core\U2HeaderPrefix.h" />
+    <ClInclude Include="..\engine\include\core\U2HeaderSuffix.h" />
+    <ClInclude Include="..\engine\include\core\U2IteratorWrapper.h" />
+    <ClInclude Include="..\engine\include\core\U2MemoryAllocatedObject.h" />
+    <ClInclude Include="..\engine\include\core\U2MemoryAllocatorConfig.h" />
+    <ClInclude Include="..\engine\include\core\U2MemoryStdAlloc.h" />
+    <ClInclude Include="..\engine\include\core\U2MemorySTLAllocator.h" />
+    <ClInclude Include="..\engine\include\core\U2MemoryTracker.h" />
+    <ClInclude Include="..\engine\include\core\U2NameGenerator.h" />
+    <ClInclude Include="..\engine\include\core\U2Object.h" />
+    <ClInclude Include="..\engine\include\core\U2Platform.h" />
+    <ClInclude Include="..\engine\include\core\U2PoolingObjectManager.h" />
+    <ClInclude Include="..\engine\include\core\U2Prerequisites.h" />
+    <ClInclude Include="..\engine\include\core\U2SimpleObjectManager.h" />
+    <ClInclude Include="..\engine\include\core\U2Singleton.h" />
+    <ClInclude Include="..\engine\include\core\U2StdHeader.h" />
+    <ClInclude Include="..\engine\include\core\U2STLRedefined.h" />
+    <ClInclude Include="..\engine\include\core\U2TypedObjectManager.h" />
+    <ClInclude Include="..\engine\include\mvc\U2Command.h" />
+    <ClInclude Include="..\engine\include\mvc\U2Context.h" />
+    <ClInclude Include="..\engine\include\mvc\U2ContextQueue.h" />
+    <ClInclude Include="..\engine\include\mvc\U2Controller.h" />
+    <ClInclude Include="..\engine\include\mvc\U2Facade.h" />
+    <ClInclude Include="..\engine\include\mvc\U2FrameListenerCollection.h" />
+    <ClInclude Include="..\engine\include\mvc\U2Mediator.h" />
+    <ClInclude Include="..\engine\include\mvc\U2Model.h" />
+    <ClInclude Include="..\engine\include\mvc\U2Mvc.h" />
+    <ClInclude Include="..\engine\include\mvc\U2Notification.h" />
+    <ClInclude Include="..\engine\include\mvc\U2Notifier.h" />
+    <ClInclude Include="..\engine\include\mvc\U2Observer.h" />
+    <ClInclude Include="..\engine\include\mvc\U2PredefinedCommands.h" />
+    <ClInclude Include="..\engine\include\mvc\U2PredefinedFacade.h" />
+    <ClInclude Include="..\engine\include\mvc\U2PredefinedMediators.h" />
+    <ClInclude Include="..\engine\include\mvc\U2PredefinedPrerequisites.h" />
+    <ClInclude Include="..\engine\include\mvc\U2PredefinedProxies.h" />
+    <ClInclude Include="..\engine\include\mvc\U2Proxy.h" />
+    <ClInclude Include="..\engine\include\mvc\U2SimpleCommand.h" />
+    <ClInclude Include="..\engine\include\mvc\U2TransStep.h" />
+    <ClInclude Include="..\engine\include\mvc\U2View.h" />
+    <ClInclude Include="..\engine\include\mvc\U2ViewComponent.h" />
+    <ClInclude Include="..\gamebase\U2CocosFrameListenerCollection.h" />
+    <ClInclude Include="..\gamebase\U2CocosMediator.h" />
+    <ClInclude Include="..\gamebase\U2CocosViewComponent.h" />
+    <ClInclude Include="..\gamebase\U2GameBase.h" />
+    <ClInclude Include="main.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\cocos2d\cocos\2d\libcocos2d.vcxproj">
+      <Project>{98a51ba8-fc3a-415b-ac8f-8c7bd464e93e}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\cocos2d\cocos\editor-support\spine\proj.win32\libSpine.vcxproj">
+      <Project>{b7c2a162-dec9-4418-972e-240ab3cbfcae}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\cocos2d\external\Box2D\proj.win32\libbox2d.vcxproj">
+      <Project>{929480e7-23c0-4df6-8456-096d71547116}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="game.rc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

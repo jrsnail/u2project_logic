@@ -1,0 +1,557 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="win32">
+      <UniqueIdentifier>{84a8ebd7-7cf0-47f6-b75e-d441df67da40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resource">
+      <UniqueIdentifier>{715254bc-d70b-4ec5-bf29-467dd3ace079}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{bb6c862e-70e9-49d9-81b7-3829a6f50471}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine">
+      <UniqueIdentifier>{3c8200a6-3391-4253-853f-867ab0f5e877}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\include">
+      <UniqueIdentifier>{405c0a41-a3c3-4a0a-acce-a8506fa76efa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\src">
+      <UniqueIdentifier>{ab375575-edbe-4255-ae77-e7a9039ca5b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\include\core">
+      <UniqueIdentifier>{940cbb02-9504-4473-a6af-80dcb91c188e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\include\mvc">
+      <UniqueIdentifier>{ea0d5513-ca8a-491b-b8f7-664dd8c53441}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\include\core\threading">
+      <UniqueIdentifier>{4b22e43f-a550-4890-9af5-042d13fbd21f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\include\core\threading\threadpool">
+      <UniqueIdentifier>{f3adbe2f-7358-4f2e-898c-fde278f942c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\include\core\threading\threadpool\singlethreaded">
+      <UniqueIdentifier>{c93421e2-9b1d-4e50-8b42-c24ca25d4705}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\include\core\threading\threadpool\impl">
+      <UniqueIdentifier>{aea84cad-0480-4eca-8633-976b8d73d669}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\include\core\streams">
+      <UniqueIdentifier>{3d119cce-dbdd-4062-9320-07d6689a30ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\src\core">
+      <UniqueIdentifier>{e78f74dc-0a5b-457a-8547-98e9ae59580e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\src\mvc">
+      <UniqueIdentifier>{785432d0-34ce-4949-88f3-7978ecc43e9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\src\core\threading">
+      <UniqueIdentifier>{53edb113-8118-4c7a-bbab-fda229f715a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\src\core\threading\threadpool">
+      <UniqueIdentifier>{1e14abc4-5b50-4ea2-8b33-432542956a8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\src\core\streams">
+      <UniqueIdentifier>{bddb6447-35ee-46b5-9dbd-481f7dc54578}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gamebase">
+      <UniqueIdentifier>{e33fe364-931f-4c6d-8be6-10de355101bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\application">
+      <UniqueIdentifier>{f600f433-7df4-427d-befe-127a1fac9586}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\tabinfo">
+      <UniqueIdentifier>{b22a019a-13f4-49b0-8834-7e702ef74876}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\cg">
+      <UniqueIdentifier>{09e430f6-82f2-444b-b23a-9545fbb174c2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\AppDelegate.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\U2AlignedAllocator.cpp">
+      <Filter>engine\src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\U2FactoryManager.cpp">
+      <Filter>engine\src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\U2MemoryAllocatedObject.cpp">
+      <Filter>engine\src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\U2MemoryTracker.cpp">
+      <Filter>engine\src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\U2NameGenerator.cpp">
+      <Filter>engine\src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\U2Object.cpp">
+      <Filter>engine\src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\U2PoolingObjectManager.cpp">
+      <Filter>engine\src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\U2Prerequisites.cpp">
+      <Filter>engine\src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\U2SimpleObjectManager.cpp">
+      <Filter>engine\src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\U2TypedObjectManager.cpp">
+      <Filter>engine\src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\threading\U2TaskQueue.cpp">
+      <Filter>engine\src\core\threading</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\threading\threadpool\threadpool.cpp">
+      <Filter>engine\src\core\threading\threadpool</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\threading\threadpool\threadpool_generic.cpp">
+      <Filter>engine\src\core\threading\threadpool</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\streams\U2CodeCvt.cpp">
+      <Filter>engine\src\core\streams</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\streams\U2DataFilterStream.cpp">
+      <Filter>engine\src\core\streams</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\streams\U2FileStream.cpp">
+      <Filter>engine\src\core\streams</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\streams\U2FilterStream.cpp">
+      <Filter>engine\src\core\streams</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\streams\U2Stream.cpp">
+      <Filter>engine\src\core\streams</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\mvc\U2Command.cpp">
+      <Filter>engine\src\mvc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\mvc\U2Context.cpp">
+      <Filter>engine\src\mvc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\mvc\U2ContextQueue.cpp">
+      <Filter>engine\src\mvc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\mvc\U2Controller.cpp">
+      <Filter>engine\src\mvc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\mvc\U2Facade.cpp">
+      <Filter>engine\src\mvc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\mvc\U2FrameListenerCollection.cpp">
+      <Filter>engine\src\mvc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\mvc\U2Mediator.cpp">
+      <Filter>engine\src\mvc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\mvc\U2Model.cpp">
+      <Filter>engine\src\mvc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\mvc\U2Notification.cpp">
+      <Filter>engine\src\mvc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\mvc\U2Notifier.cpp">
+      <Filter>engine\src\mvc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\mvc\U2Observer.cpp">
+      <Filter>engine\src\mvc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\mvc\U2PredefinedCommands.cpp">
+      <Filter>engine\src\mvc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\mvc\U2PredefinedFacade.cpp">
+      <Filter>engine\src\mvc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\mvc\U2PredefinedMediators.cpp">
+      <Filter>engine\src\mvc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\mvc\U2PredefinedPrerequisites.cpp">
+      <Filter>engine\src\mvc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\mvc\U2PredefinedProxies.cpp">
+      <Filter>engine\src\mvc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\mvc\U2Proxy.cpp">
+      <Filter>engine\src\mvc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\mvc\U2SimpleCommand.cpp">
+      <Filter>engine\src\mvc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\mvc\U2TransStep.cpp">
+      <Filter>engine\src\mvc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\mvc\U2View.cpp">
+      <Filter>engine\src\mvc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\mvc\U2ViewComponent.cpp">
+      <Filter>engine\src\mvc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gamebase\U2CocosFrameListenerCollection.cpp">
+      <Filter>gamebase</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gamebase\U2CocosMediator.cpp">
+      <Filter>gamebase</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gamebase\U2CocosViewComponent.cpp">
+      <Filter>gamebase</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\application\ApplicationCommands.cpp">
+      <Filter>src\application</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\application\ApplicationFacade.cpp">
+      <Filter>src\application</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\application\ApplicationMediators.cpp">
+      <Filter>src\application</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\application\ApplicationPrerequisites.cpp">
+      <Filter>src\application</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\application\ApplicationViewComponents.cpp">
+      <Filter>src\application</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tabinfo\InfoMediator.cpp">
+      <Filter>src\tabinfo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tabinfo\TabInfoCommands.cpp">
+      <Filter>src\tabinfo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tabinfo\TabInfoFacade.cpp">
+      <Filter>src\tabinfo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tabinfo\TabInfoMediator.cpp">
+      <Filter>src\tabinfo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tabinfo\TabInfoPrerequisites.cpp">
+      <Filter>src\tabinfo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tabinfo\TabInfoViewComponent.cpp">
+      <Filter>src\tabinfo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tabinfo\TabMediator.cpp">
+      <Filter>src\tabinfo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\cg\CgCommands.cpp">
+      <Filter>src\cg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\cg\CgFacade.cpp">
+      <Filter>src\cg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\cg\CgMediators.cpp">
+      <Filter>src\cg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\cg\CgPrerequisites.cpp">
+      <Filter>src\cg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\cg\CgViewComponents.cpp">
+      <Filter>src\cg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\GameContexts.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="main.h">
+      <Filter>win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\AppDelegate.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\mvc\U2Command.h">
+      <Filter>engine\include\mvc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\mvc\U2Context.h">
+      <Filter>engine\include\mvc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\mvc\U2ContextQueue.h">
+      <Filter>engine\include\mvc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\mvc\U2Controller.h">
+      <Filter>engine\include\mvc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\mvc\U2Facade.h">
+      <Filter>engine\include\mvc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\mvc\U2FrameListenerCollection.h">
+      <Filter>engine\include\mvc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\mvc\U2Mediator.h">
+      <Filter>engine\include\mvc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\mvc\U2Model.h">
+      <Filter>engine\include\mvc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\mvc\U2Mvc.h">
+      <Filter>engine\include\mvc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\mvc\U2Notification.h">
+      <Filter>engine\include\mvc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\mvc\U2Notifier.h">
+      <Filter>engine\include\mvc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\mvc\U2Observer.h">
+      <Filter>engine\include\mvc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\mvc\U2PredefinedCommands.h">
+      <Filter>engine\include\mvc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\mvc\U2PredefinedFacade.h">
+      <Filter>engine\include\mvc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\mvc\U2PredefinedMediators.h">
+      <Filter>engine\include\mvc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\mvc\U2PredefinedPrerequisites.h">
+      <Filter>engine\include\mvc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\mvc\U2PredefinedProxies.h">
+      <Filter>engine\include\mvc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\mvc\U2Proxy.h">
+      <Filter>engine\include\mvc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\mvc\U2SimpleCommand.h">
+      <Filter>engine\include\mvc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\mvc\U2TransStep.h">
+      <Filter>engine\include\mvc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\mvc\U2View.h">
+      <Filter>engine\include\mvc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\mvc\U2ViewComponent.h">
+      <Filter>engine\include\mvc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2AlignedAllocator.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2Config.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2Core.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2FactoryManager.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2FactoryObj.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2HeaderPrefix.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2HeaderSuffix.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2IteratorWrapper.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2MemoryAllocatedObject.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2MemoryAllocatorConfig.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2MemoryStdAlloc.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2MemorySTLAllocator.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2MemoryTracker.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2NameGenerator.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2Object.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2Platform.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2PoolingObjectManager.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2Prerequisites.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2SimpleObjectManager.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2Singleton.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2StdHeader.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2STLRedefined.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2TypedObjectManager.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\threading\U2TaskQueue.h">
+      <Filter>engine\include\core\threading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\threading\U2ThreadDefines.h">
+      <Filter>engine\include\core\threading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\threading\U2ThreadDefinesCpp11.h">
+      <Filter>engine\include\core\threading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\threading\U2ThreadDefinesNone.h">
+      <Filter>engine\include\core\threading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\threading\U2ThreadHeaders.h">
+      <Filter>engine\include\core\threading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\threading\U2ThreadHeadersCpp11.h">
+      <Filter>engine\include\core\threading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\threading\threadpool\make_iterator.h">
+      <Filter>engine\include\core\threading\threadpool</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\threading\threadpool\parallel_for_each.h">
+      <Filter>engine\include\core\threading\threadpool</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\threading\threadpool\parallel_transform.h">
+      <Filter>engine\include\core\threading\threadpool</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\threading\threadpool\threadpool.h">
+      <Filter>engine\include\core\threading\threadpool</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\threading\threadpool\threadpool_config.h">
+      <Filter>engine\include\core\threading\threadpool</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\threading\threadpool\impl\threadpool_generic.h">
+      <Filter>engine\include\core\threading\threadpool\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\threading\threadpool\impl\threadpool_generic_impl.h">
+      <Filter>engine\include\core\threading\threadpool\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\threading\threadpool\impl\threadpool_generic_inst.h">
+      <Filter>engine\include\core\threading\threadpool\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\threading\threadpool\impl\threadpool_impl.h">
+      <Filter>engine\include\core\threading\threadpool\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\threading\threadpool\impl\threadpool_impl_homogenous.h">
+      <Filter>engine\include\core\threading\threadpool\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\threading\threadpool\impl\threadpool_impl_util.h">
+      <Filter>engine\include\core\threading\threadpool\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\threading\threadpool\impl\threadpool_inst.h">
+      <Filter>engine\include\core\threading\threadpool\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\threading\threadpool\impl\threadpool_interface_generic.h">
+      <Filter>engine\include\core\threading\threadpool\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\threading\threadpool\impl\threadpool_interface_virtual.h">
+      <Filter>engine\include\core\threading\threadpool\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\threading\threadpool\singlethreaded\parallel_for_each.h">
+      <Filter>engine\include\core\threading\threadpool\singlethreaded</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\threading\threadpool\singlethreaded\parallel_transform.h">
+      <Filter>engine\include\core\threading\threadpool\singlethreaded</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\threading\threadpool\singlethreaded\threadpool.h">
+      <Filter>engine\include\core\threading\threadpool\singlethreaded</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\streams\U2CodeCvt.h">
+      <Filter>engine\include\core\streams</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\streams\U2DataFilterStream.h">
+      <Filter>engine\include\core\streams</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\streams\U2FileStream.h">
+      <Filter>engine\include\core\streams</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\streams\U2FilterStream.h">
+      <Filter>engine\include\core\streams</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\streams\U2Stream.h">
+      <Filter>engine\include\core\streams</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gamebase\U2CocosFrameListenerCollection.h">
+      <Filter>gamebase</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gamebase\U2CocosMediator.h">
+      <Filter>gamebase</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gamebase\U2CocosViewComponent.h">
+      <Filter>gamebase</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gamebase\U2GameBase.h">
+      <Filter>gamebase</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\application\ApplicationCommands.h">
+      <Filter>src\application</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\application\ApplicationFacade.h">
+      <Filter>src\application</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\application\ApplicationMediators.h">
+      <Filter>src\application</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\application\ApplicationPrerequisites.h">
+      <Filter>src\application</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\application\ApplicationViewComponents.h">
+      <Filter>src\application</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\tabinfo\InfoMediator.h">
+      <Filter>src\tabinfo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\tabinfo\TabInfoCommands.h">
+      <Filter>src\tabinfo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\tabinfo\TabInfoFacade.h">
+      <Filter>src\tabinfo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\tabinfo\TabInfoMediator.h">
+      <Filter>src\tabinfo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\tabinfo\TabInfoPrerequisites.h">
+      <Filter>src\tabinfo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\tabinfo\TabInfoViewComponent.h">
+      <Filter>src\tabinfo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\tabinfo\TabMediator.h">
+      <Filter>src\tabinfo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\cg\CgCommands.h">
+      <Filter>src\cg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\cg\CgFacade.h">
+      <Filter>src\cg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\cg\CgMediators.h">
+      <Filter>src\cg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\cg\CgPrerequisites.h">
+      <Filter>src\cg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\cg\CgViewComponents.h">
+      <Filter>src\cg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GameContexts.h">
+      <Filter>src</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="game.rc">
+      <Filter>resource</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

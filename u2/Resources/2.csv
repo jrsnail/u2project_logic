@@ -1,0 +1,6 @@
+ui_key,widget_key,language_key,font_name_id,font_size_id
+card_fb_login.csb,Button,,1,none
+...,text_btn_login,home_login_btn,1,40
+...,text_login,home_login_text,1,40
+...,x,,1,45
+...,number,,1,80
