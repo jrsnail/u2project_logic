@@ -64,7 +64,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     // Set the design resolution
     //glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::NO_BORDER);
-    Size frameSize = glview->getFrameSize();
+    cocos2d::Size frameSize = glview->getFrameSize();
 	//director->setContentScaleFactor(2.0f);
 	/*
     // if the frame's height is larger than the height of medium size.
@@ -98,7 +98,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	PredefinedFacade::getSingleton();
 	CgFacade::getSingleton();
 	ApplicationFacade::getSingleton().startup();
-
+    
 	
     return true;
 }
