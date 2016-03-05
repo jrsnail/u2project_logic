@@ -2,6 +2,7 @@
 
 #include "application/ApplicationFacade.h"
 #include "cg/CgFacade.h"
+#include "threadpool.h"
 
 
 
@@ -98,6 +99,23 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	PredefinedFacade::getSingleton();
 	CgFacade::getSingleton();
 	ApplicationFacade::getSingleton().startup();
+
+
+
+	// Create a thread pool
+	threadpool::ThreadPool pool;
+
+	// Run a function in the thread pool
+	for (int i = 0; i < 100; ++i)
+	{
+		cocos2d::CCLog("Hello world! = %d", i);
+		//pool.run([i] { std::cout << "Hello world! = " << i << std::endl; });
+	}
+		
+
+	// Wait for all queued functions to finish and the pool to become empty
+	//pool.wait();
+	CCLog("Hello world! Thread over!");
     
 	
     return true;

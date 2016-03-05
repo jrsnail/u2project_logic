@@ -92,7 +92,7 @@ namespace ThreadPoolImpl
 	    class HQueue : public GenericThreadPoolQueue 
         {
 
-		    /*
+		    /* cirular queue.
 		      If we would use a deque, we would have to protect
 		      against overlapping accesses to the front and the
 		      back. The standard containers do not allow this. Use a
@@ -227,8 +227,10 @@ namespace ThreadPoolImpl
 		    //std::cerr << " total_workers(" << this->total_workers << ")";
 		    auto x1 = at_scope_exit([this](){
 			    std::lock_guard<std::mutex> lock(push_mutex);
-			    if (--this->total_workers == this->idle_workers)
-				this->waiters.notify_all();;
+				if (--this->total_workers == this->idle_workers)
+				{
+					this->waiters.notify_all();
+				}
 			});
 
 		    Queue functions(1);
@@ -239,7 +241,8 @@ namespace ThreadPoolImpl
 
 			    std::size_t queue_size;
 
-			    // Try to get the next task(s)
+			    // Try to get the next task(s), 
+				// the "while" body make sure at least one task in the queue and the back is locked
 			    while ((queue_size = queue.size()) <= min_queue_size) 
                 {
                     if (static_cast<std::ptrdiff_t>(queue_size) <= return_if_idle)
@@ -259,8 +262,10 @@ namespace ThreadPoolImpl
 				        std::unique_lock<std::mutex> lock(push_mutex);
 				        while (queue.empty() && !shutting_down) 
                         {
-				            if (++idle_workers == total_workers)
-					        waiters.notify_all();;
+							if (++idle_workers == total_workers)
+							{
+								waiters.notify_all();
+							}
 
 				            waiting_workers.wait(lock); // Wait for task to be queued
 				            wakeup_is_pending = false;
