@@ -255,6 +255,18 @@
     <ClCompile Include="..\Classes\GameContexts.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\engine\src\core\threading\U2TaskGroup.cpp">
+      <Filter>engine\src\core\threading</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\threading\U2GenericThreadPool.cpp">
+      <Filter>engine\src\core\threading</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\threading\U2HomogenousQueue.cpp">
+      <Filter>engine\src\core\threading</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\threading\U2HomogenousDispatch.cpp">
+      <Filter>engine\src\core\threading</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -547,6 +559,24 @@
     </ClInclude>
     <ClInclude Include="..\Classes\GameContexts.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\threading\U2TaskGroup.h">
+      <Filter>engine\include\core\threading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\threading\U2ThreadPoolInterface.h">
+      <Filter>engine\include\core\threading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\threading\U2GenericThreadPool.h">
+      <Filter>engine\include\core\threading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\threading\U2HomogenousQueue.h">
+      <Filter>engine\include\core\threading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\threading\U2HomogenousDispatch.h">
+      <Filter>engine\include\core\threading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\threading\U2ThreadPoolUtil.h">
+      <Filter>engine\include\core\threading</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
