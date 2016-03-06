@@ -88,7 +88,7 @@ public:
 
 		typedef typename std::remove_reference<Function>::type function_type;
 
-		class WrappedFunction : public Task
+		class WrappedFunction : public ThreadPoolTask
 		{
 			Function f;
 		public:
@@ -116,7 +116,7 @@ public:
 		typedef typename std::remove_reference<Function>::type function_type;
 		typedef typename std::result_of<Function()>::type return_type;
 
-		class WrappedFunction : public Task
+		class WrappedFunction : public ThreadPoolTask
 		{
 			Function f;
 			std::promise<return_type> promise;

@@ -2,7 +2,7 @@
 
 #include "application/ApplicationFacade.h"
 #include "cg/CgFacade.h"
-#include "threadpool.h"
+#include "U2TaskGroup.h"
 
 
 
@@ -45,6 +45,9 @@ static int register_all_packages()
 }
 
 bool AppDelegate::applicationDidFinishLaunching() {
+	CCLog("Hello world! CCLog!");
+	CCLOG("Hello world! CCLOG");
+
     // initialize director
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
@@ -103,19 +106,19 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
 
 	// Create a thread pool
-	threadpool::ThreadPool pool;
+	TaskGroup group;
 
 	// Run a function in the thread pool
 	for (int i = 0; i < 100; ++i)
 	{
-		cocos2d::CCLog("Hello world! = %d", i);
+		group.run([i] { cocos2d::CCLog("Hello world! = %d", i); });
 		//pool.run([i] { std::cout << "Hello world! = " << i << std::endl; });
 	}
 		
 
 	// Wait for all queued functions to finish and the pool to become empty
-	//pool.wait();
-	CCLog("Hello world! Thread over!");
+	group.wait();
+	cocos2d::CCLog("Hello world! Thread over!");
     
 	
     return true;

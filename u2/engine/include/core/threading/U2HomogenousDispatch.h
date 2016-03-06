@@ -18,7 +18,7 @@ template<class Function>
 class HomogenousDispatch
 {
 public:
-	explicit HomogenousThreadPool(int thread_count = -1,
+	explicit HomogenousDispatch(int thread_count = -1,
 		std::size_t queue_size = 0,
 		std::size_t maxpart = 1)
 		: queue(queue_size,
@@ -26,7 +26,7 @@ public:
 		, pool(queue, thread_count)
 	{ }
 
-	virtual ~HomogenousThreadPool()
+	virtual ~HomogenousDispatch()
 	{
 		wait();
 		join();

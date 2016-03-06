@@ -7,6 +7,7 @@
 #include "U2MemoryAllocatorConfig.h"
 #include "U2ThreadHeaders.h"
 #include "U2ThreadPoolInterface.h"
+#include "U2ThreadPoolUtil.h"
 
 
 U2EG_NAMESPACE_BEGIN
