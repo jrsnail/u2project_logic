@@ -93,9 +93,6 @@
     <ClCompile Include="..\engine\src\core\U2TypedObjectManager.cpp">
       <Filter>engine\src\core</Filter>
     </ClCompile>
-    <ClCompile Include="..\engine\src\core\threading\U2TaskQueue.cpp">
-      <Filter>engine\src\core\threading</Filter>
-    </ClCompile>
     <ClCompile Include="..\engine\src\core\streams\U2CodeCvt.cpp">
       <Filter>engine\src\core\streams</Filter>
     </ClCompile>
@@ -246,8 +243,14 @@
     <ClCompile Include="..\engine\src\core\threading\U2HomogenousQueue.cpp">
       <Filter>engine\src\core\threading</Filter>
     </ClCompile>
-    <ClCompile Include="..\engine\src\core\threading\U2HomogenousDispatch.cpp">
-      <Filter>engine\src\core\threading</Filter>
+    <ClCompile Include="..\engine\src\core\U2Exception.cpp">
+      <Filter>engine\src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\U2Log.cpp">
+      <Filter>engine\src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\U2LogManager.cpp">
+      <Filter>engine\src\core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -392,22 +395,7 @@
     <ClInclude Include="..\engine\include\core\U2TypedObjectManager.h">
       <Filter>engine\include\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\engine\include\core\threading\U2TaskQueue.h">
-      <Filter>engine\include\core\threading</Filter>
-    </ClInclude>
-    <ClInclude Include="..\engine\include\core\threading\U2ThreadDefines.h">
-      <Filter>engine\include\core\threading</Filter>
-    </ClInclude>
-    <ClInclude Include="..\engine\include\core\threading\U2ThreadDefinesCpp11.h">
-      <Filter>engine\include\core\threading</Filter>
-    </ClInclude>
-    <ClInclude Include="..\engine\include\core\threading\U2ThreadDefinesNone.h">
-      <Filter>engine\include\core\threading</Filter>
-    </ClInclude>
     <ClInclude Include="..\engine\include\core\threading\U2ThreadHeaders.h">
-      <Filter>engine\include\core\threading</Filter>
-    </ClInclude>
-    <ClInclude Include="..\engine\include\core\threading\U2ThreadHeadersCpp11.h">
       <Filter>engine\include\core\threading</Filter>
     </ClInclude>
     <ClInclude Include="..\engine\include\core\streams\U2CodeCvt.h">
@@ -503,9 +491,6 @@
     <ClInclude Include="..\engine\include\core\threading\U2HomogenousQueue.h">
       <Filter>engine\include\core\threading</Filter>
     </ClInclude>
-    <ClInclude Include="..\engine\include\core\threading\U2HomogenousDispatch.h">
-      <Filter>engine\include\core\threading</Filter>
-    </ClInclude>
     <ClInclude Include="..\engine\include\core\threading\U2ThreadPoolUtil.h">
       <Filter>engine\include\core\threading</Filter>
     </ClInclude>
@@ -517,6 +502,15 @@
     </ClInclude>
     <ClInclude Include="..\engine\include\core\threading\U2ParallelTransform.h">
       <Filter>engine\include\core\threading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2Exception.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2Log.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2LogManager.h">
+      <Filter>engine\include\core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

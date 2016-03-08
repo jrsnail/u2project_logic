@@ -17,6 +17,9 @@
 #include "U2MemoryAllocatedObject.h"
 #include "U2STLRedefined.h"
 #include "U2ThreadHeaders.h"
+#include "U2Log.h"
+#include "U2LogManager.h"
+#include "U2Exception.h"
 
 
 #endif

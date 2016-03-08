@@ -7,7 +7,8 @@
 #include "U2MemoryAllocatorConfig.h"
 #include "U2ThreadHeaders.h"
 #include "U2ThreadPoolInterface.h"
-#include "U2HomogenousDispatch.h"
+#include "U2HomogenousQueue.h"
+#include "U2GenericThreadPool.h"
 
 
 U2EG_NAMESPACE_BEGIN
@@ -53,26 +54,34 @@ protected:
 	};
 
 protected:
-
-	HomogenousDispatch<QueueElement> impl;
+	HomogenousQueue<QueueElement> queue;
+	GenericThreadPool pool;
 
 public:
 
 	explicit TaskGroup(int thread_count = -1,
 		std::size_t queue_size = 0,
 		std::size_t maxpart = 1)
-		: impl(thread_count, queue_size, maxpart)
+		: queue(queue_size,
+			(maxpart != 1) ? maxpart : 3 * (GenericThreadPool::determine_thread_count(thread_count) + 1))
+		, pool(queue, thread_count)
 	{
+	}
+
+	virtual ~TaskGroup()
+	{
+		wait();
+		join();
 	}
 
 	void run(std::unique_ptr<ThreadPoolTask>&& t) override
 	{
-		impl.run(t.release());
+		queue.put(std::forward<ThreadPoolTask*>(t.release()));
 	}
 
 	void run(ThreadPoolTask* t) override
 	{
-		impl.run(t);
+		queue.put(std::forward<ThreadPoolTask*>(t));
 	}
 
 
@@ -205,9 +214,17 @@ public:
 		}
 	}
 
-	void wait() override { impl.wait(); }
+	void wait() override 
+	{
+		pool.help(true); 	// Help out instead of sitting around idly.
+		queue.wait();
+	}
 
-	void join() override { impl.join(); }
+	void join() override 
+	{
+		queue.shutdown();
+		pool.join();
+	}
 };
 
 

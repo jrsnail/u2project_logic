@@ -8,6 +8,7 @@
 U2EG_NAMESPACE_USING
 
 class FrameListenerCollection;
+class LogManager;
 
 
 /**
@@ -43,7 +44,8 @@ public:
     virtual void applicationWillEnterForeground();
 
 protected:
-	u2::FrameListenerCollection* m_pFrameListenerCollection;
+	u2::FrameListenerCollection*	m_pFrameListenerCollection;
+	u2::LogManager*					m_pLogManager;
 };
 
 #endif // _APP_DELEGATE_H_

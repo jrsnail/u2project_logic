@@ -1,5 +1,6 @@
 #include "AppDelegate.h"
 
+#include "U2Core.h"
 #include "application/ApplicationFacade.h"
 #include "cg/CgFacade.h"
 #include "U2TaskGroup.h"
@@ -14,7 +15,9 @@ static cocos2d::Size smallResolutionSize = cocos2d::Size(320, 480);
 static cocos2d::Size mediumResolutionSize = cocos2d::Size(768, 1024);
 static cocos2d::Size largeResolutionSize = cocos2d::Size(1536, 2048);
 
-AppDelegate::AppDelegate() {
+AppDelegate::AppDelegate() 
+	: m_pLogManager(nullptr)
+{
 
 }
 
@@ -45,7 +48,7 @@ static int register_all_packages()
 }
 
 bool AppDelegate::applicationDidFinishLaunching() {
-	CCLog("Hello world! CCLog!");
+	cocos2d::log("Hello world! CCLog! = %d", std::this_thread::get_id());
 	CCLOG("Hello world! CCLOG");
 
     // initialize director
@@ -104,6 +107,17 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	ApplicationFacade::getSingleton().startup();
 
 
+	// Create log manager and default log file if there is no log manager yet
+	if (u2::LogManager::getSingletonPtr() == nullptr)
+	{
+		m_pLogManager = U2_NEW u2::LogManager();
+		m_pLogManager->createLog("u2.log", true, true);
+	}
+
+// #if U2_PLATFORM == U2_PLATFORM_ANDROID
+// 	mAndroidLogger = U2_NEW AndroidLogListener();
+// 	m_pLogManager->getDefaultLog()->addListener(mAndroidLogger);
+// #endif
 
 	// Create a thread pool
 	TaskGroup group;
@@ -111,14 +125,18 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	// Run a function in the thread pool
 	for (int i = 0; i < 100; ++i)
 	{
-		group.run([i] { cocos2d::CCLog("Hello world! = %d", i); });
+		group.run([i] { 
+			//cocos2d::log("Hello world! run = %d, %d", i, std::this_thread::get_id());
+			CCLOG("Hello world! run = %d, %d", i, std::this_thread::get_id());
+			//u2::LogManager::getSingleton().stream(u2::LML_NORMAL) << "Hello world! run = " << i << ", " << std::this_thread::get_id() << "\n";
+		});
 		//pool.run([i] { std::cout << "Hello world! = " << i << std::endl; });
 	}
 		
 
 	// Wait for all queued functions to finish and the pool to become empty
 	group.wait();
-	cocos2d::CCLog("Hello world! Thread over!");
+	cocos2d::log("Hello world! Thread over!");
     
 	
     return true;
