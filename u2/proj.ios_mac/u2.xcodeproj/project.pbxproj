@@ -32,10 +32,6 @@
 		4C68AC211C8930FC007BA5BD /* U2FilterStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C68ABEB1C8930FC007BA5BD /* U2FilterStream.cpp */; };
 		4C68AC221C8930FC007BA5BD /* U2Stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C68ABEC1C8930FC007BA5BD /* U2Stream.cpp */; };
 		4C68AC231C8930FC007BA5BD /* U2Stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C68ABEC1C8930FC007BA5BD /* U2Stream.cpp */; };
-		4C68AC241C8930FC007BA5BD /* threadpool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C68ABEF1C8930FC007BA5BD /* threadpool.cpp */; };
-		4C68AC251C8930FC007BA5BD /* threadpool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C68ABEF1C8930FC007BA5BD /* threadpool.cpp */; };
-		4C68AC261C8930FC007BA5BD /* threadpool_generic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C68ABF01C8930FC007BA5BD /* threadpool_generic.cpp */; };
-		4C68AC271C8930FC007BA5BD /* threadpool_generic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C68ABF01C8930FC007BA5BD /* threadpool_generic.cpp */; };
 		4C68AC281C8930FC007BA5BD /* U2TaskQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C68ABF11C8930FC007BA5BD /* U2TaskQueue.cpp */; };
 		4C68AC291C8930FC007BA5BD /* U2TaskQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C68ABF11C8930FC007BA5BD /* U2TaskQueue.cpp */; };
 		4C68AC2A1C8930FC007BA5BD /* U2AlignedAllocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C68ABF21C8930FC007BA5BD /* U2AlignedAllocator.cpp */; };
@@ -142,6 +138,14 @@
 		4C68ACB61C893119007BA5BD /* TabInfoViewComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C68AC911C893119007BA5BD /* TabInfoViewComponent.cpp */; };
 		4C68ACB71C893119007BA5BD /* TabMediator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C68AC931C893119007BA5BD /* TabMediator.cpp */; };
 		4C68ACB81C893119007BA5BD /* TabMediator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C68AC931C893119007BA5BD /* TabMediator.cpp */; };
+		4CA911241C8EB453005FDCAE /* U2GenericThreadPool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CA911201C8EB453005FDCAE /* U2GenericThreadPool.cpp */; };
+		4CA911251C8EB453005FDCAE /* U2GenericThreadPool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CA911201C8EB453005FDCAE /* U2GenericThreadPool.cpp */; };
+		4CA911261C8EB453005FDCAE /* U2HomogenousDispatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CA911211C8EB453005FDCAE /* U2HomogenousDispatch.cpp */; };
+		4CA911271C8EB453005FDCAE /* U2HomogenousDispatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CA911211C8EB453005FDCAE /* U2HomogenousDispatch.cpp */; };
+		4CA911281C8EB453005FDCAE /* U2HomogenousQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CA911221C8EB453005FDCAE /* U2HomogenousQueue.cpp */; };
+		4CA911291C8EB453005FDCAE /* U2HomogenousQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CA911221C8EB453005FDCAE /* U2HomogenousQueue.cpp */; };
+		4CA9112A1C8EB453005FDCAE /* U2TaskGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CA911231C8EB453005FDCAE /* U2TaskGroup.cpp */; };
+		4CA9112B1C8EB453005FDCAE /* U2TaskGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CA911231C8EB453005FDCAE /* U2TaskGroup.cpp */; };
 		503AE0F817EB97AB00D1A890 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 503AE0F617EB97AB00D1A890 /* Icon.icns */; };
 		503AE10017EB989F00D1A890 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 503AE0FB17EB989F00D1A890 /* AppController.mm */; };
 		503AE10117EB989F00D1A890 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 503AE0FC17EB989F00D1A890 /* main.m */; };
@@ -238,23 +242,6 @@
 		4C68AB991C8930FC007BA5BD /* U2FileStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2FileStream.h; sourceTree = "<group>"; };
 		4C68AB9A1C8930FC007BA5BD /* U2FilterStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2FilterStream.h; sourceTree = "<group>"; };
 		4C68AB9B1C8930FC007BA5BD /* U2Stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2Stream.h; sourceTree = "<group>"; };
-		4C68AB9F1C8930FC007BA5BD /* threadpool_generic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = threadpool_generic.h; sourceTree = "<group>"; };
-		4C68ABA01C8930FC007BA5BD /* threadpool_generic_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = threadpool_generic_impl.h; sourceTree = "<group>"; };
-		4C68ABA11C8930FC007BA5BD /* threadpool_generic_inst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = threadpool_generic_inst.h; sourceTree = "<group>"; };
-		4C68ABA21C8930FC007BA5BD /* threadpool_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = threadpool_impl.h; sourceTree = "<group>"; };
-		4C68ABA31C8930FC007BA5BD /* threadpool_impl_homogenous.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = threadpool_impl_homogenous.h; sourceTree = "<group>"; };
-		4C68ABA41C8930FC007BA5BD /* threadpool_impl_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = threadpool_impl_util.h; sourceTree = "<group>"; };
-		4C68ABA51C8930FC007BA5BD /* threadpool_inst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = threadpool_inst.h; sourceTree = "<group>"; };
-		4C68ABA61C8930FC007BA5BD /* threadpool_interface_generic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = threadpool_interface_generic.h; sourceTree = "<group>"; };
-		4C68ABA71C8930FC007BA5BD /* threadpool_interface_virtual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = threadpool_interface_virtual.h; sourceTree = "<group>"; };
-		4C68ABA81C8930FC007BA5BD /* make_iterator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = make_iterator.h; sourceTree = "<group>"; };
-		4C68ABA91C8930FC007BA5BD /* parallel_for_each.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = parallel_for_each.h; sourceTree = "<group>"; };
-		4C68ABAA1C8930FC007BA5BD /* parallel_transform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = parallel_transform.h; sourceTree = "<group>"; };
-		4C68ABAC1C8930FC007BA5BD /* parallel_for_each.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = parallel_for_each.h; sourceTree = "<group>"; };
-		4C68ABAD1C8930FC007BA5BD /* parallel_transform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = parallel_transform.h; sourceTree = "<group>"; };
-		4C68ABAE1C8930FC007BA5BD /* threadpool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = threadpool.h; sourceTree = "<group>"; };
-		4C68ABAF1C8930FC007BA5BD /* threadpool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = threadpool.h; sourceTree = "<group>"; };
-		4C68ABB01C8930FC007BA5BD /* threadpool_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = threadpool_config.h; sourceTree = "<group>"; };
 		4C68ABB11C8930FC007BA5BD /* U2TaskQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2TaskQueue.h; sourceTree = "<group>"; };
 		4C68ABB21C8930FC007BA5BD /* U2ThreadDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2ThreadDefines.h; sourceTree = "<group>"; };
 		4C68ABB31C8930FC007BA5BD /* U2ThreadDefinesCpp11.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2ThreadDefinesCpp11.h; sourceTree = "<group>"; };
@@ -311,8 +298,6 @@
 		4C68ABEA1C8930FC007BA5BD /* U2FileStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2FileStream.cpp; sourceTree = "<group>"; };
 		4C68ABEB1C8930FC007BA5BD /* U2FilterStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2FilterStream.cpp; sourceTree = "<group>"; };
 		4C68ABEC1C8930FC007BA5BD /* U2Stream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2Stream.cpp; sourceTree = "<group>"; };
-		4C68ABEF1C8930FC007BA5BD /* threadpool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = threadpool.cpp; sourceTree = "<group>"; };
-		4C68ABF01C8930FC007BA5BD /* threadpool_generic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = threadpool_generic.cpp; sourceTree = "<group>"; };
 		4C68ABF11C8930FC007BA5BD /* U2TaskQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2TaskQueue.cpp; sourceTree = "<group>"; };
 		4C68ABF21C8930FC007BA5BD /* U2AlignedAllocator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2AlignedAllocator.cpp; sourceTree = "<group>"; };
 		4C68ABF31C8930FC007BA5BD /* U2FactoryManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2FactoryManager.cpp; sourceTree = "<group>"; };
@@ -388,6 +373,19 @@
 		4C68AC921C893119007BA5BD /* TabInfoViewComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabInfoViewComponent.h; sourceTree = "<group>"; };
 		4C68AC931C893119007BA5BD /* TabMediator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TabMediator.cpp; sourceTree = "<group>"; };
 		4C68AC941C893119007BA5BD /* TabMediator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabMediator.h; sourceTree = "<group>"; };
+		4CA911171C8EB433005FDCAE /* U2GenericThreadPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2GenericThreadPool.h; sourceTree = "<group>"; };
+		4CA911181C8EB433005FDCAE /* U2HomogenousDispatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2HomogenousDispatch.h; sourceTree = "<group>"; };
+		4CA911191C8EB433005FDCAE /* U2HomogenousQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2HomogenousQueue.h; sourceTree = "<group>"; };
+		4CA9111A1C8EB433005FDCAE /* U2MakeIterator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2MakeIterator.h; sourceTree = "<group>"; };
+		4CA9111B1C8EB433005FDCAE /* U2ParallelForEach.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2ParallelForEach.h; sourceTree = "<group>"; };
+		4CA9111C1C8EB433005FDCAE /* U2ParallelTransform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2ParallelTransform.h; sourceTree = "<group>"; };
+		4CA9111D1C8EB433005FDCAE /* U2TaskGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2TaskGroup.h; sourceTree = "<group>"; };
+		4CA9111E1C8EB433005FDCAE /* U2ThreadPoolInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2ThreadPoolInterface.h; sourceTree = "<group>"; };
+		4CA9111F1C8EB433005FDCAE /* U2ThreadPoolUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2ThreadPoolUtil.h; sourceTree = "<group>"; };
+		4CA911201C8EB453005FDCAE /* U2GenericThreadPool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2GenericThreadPool.cpp; sourceTree = "<group>"; };
+		4CA911211C8EB453005FDCAE /* U2HomogenousDispatch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2HomogenousDispatch.cpp; sourceTree = "<group>"; };
+		4CA911221C8EB453005FDCAE /* U2HomogenousQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2HomogenousQueue.cpp; sourceTree = "<group>"; };
+		4CA911231C8EB453005FDCAE /* U2TaskGroup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2TaskGroup.cpp; sourceTree = "<group>"; };
 		503AE0F617EB97AB00D1A890 /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
 		503AE0F717EB97AB00D1A890 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		503AE0FA17EB989F00D1A890 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppController.h; path = ios/AppController.h; sourceTree = SOURCE_ROOT; };
@@ -648,7 +646,15 @@
 		4C68AB9C1C8930FC007BA5BD /* threading */ = {
 			isa = PBXGroup;
 			children = (
-				4C68AB9D1C8930FC007BA5BD /* threadpool */,
+				4CA911171C8EB433005FDCAE /* U2GenericThreadPool.h */,
+				4CA911181C8EB433005FDCAE /* U2HomogenousDispatch.h */,
+				4CA911191C8EB433005FDCAE /* U2HomogenousQueue.h */,
+				4CA9111A1C8EB433005FDCAE /* U2MakeIterator.h */,
+				4CA9111B1C8EB433005FDCAE /* U2ParallelForEach.h */,
+				4CA9111C1C8EB433005FDCAE /* U2ParallelTransform.h */,
+				4CA9111D1C8EB433005FDCAE /* U2TaskGroup.h */,
+				4CA9111E1C8EB433005FDCAE /* U2ThreadPoolInterface.h */,
+				4CA9111F1C8EB433005FDCAE /* U2ThreadPoolUtil.h */,
 				4C68ABB11C8930FC007BA5BD /* U2TaskQueue.h */,
 				4C68ABB21C8930FC007BA5BD /* U2ThreadDefines.h */,
 				4C68ABB31C8930FC007BA5BD /* U2ThreadDefinesCpp11.h */,
@@ -657,46 +663,6 @@
 				4C68ABB61C8930FC007BA5BD /* U2ThreadHeadersCpp11.h */,
 			);
 			path = threading;
-			sourceTree = "<group>";
-		};
-		4C68AB9D1C8930FC007BA5BD /* threadpool */ = {
-			isa = PBXGroup;
-			children = (
-				4C68AB9E1C8930FC007BA5BD /* impl */,
-				4C68ABA81C8930FC007BA5BD /* make_iterator.h */,
-				4C68ABA91C8930FC007BA5BD /* parallel_for_each.h */,
-				4C68ABAA1C8930FC007BA5BD /* parallel_transform.h */,
-				4C68ABAB1C8930FC007BA5BD /* singlethreaded */,
-				4C68ABAF1C8930FC007BA5BD /* threadpool.h */,
-				4C68ABB01C8930FC007BA5BD /* threadpool_config.h */,
-			);
-			path = threadpool;
-			sourceTree = "<group>";
-		};
-		4C68AB9E1C8930FC007BA5BD /* impl */ = {
-			isa = PBXGroup;
-			children = (
-				4C68AB9F1C8930FC007BA5BD /* threadpool_generic.h */,
-				4C68ABA01C8930FC007BA5BD /* threadpool_generic_impl.h */,
-				4C68ABA11C8930FC007BA5BD /* threadpool_generic_inst.h */,
-				4C68ABA21C8930FC007BA5BD /* threadpool_impl.h */,
-				4C68ABA31C8930FC007BA5BD /* threadpool_impl_homogenous.h */,
-				4C68ABA41C8930FC007BA5BD /* threadpool_impl_util.h */,
-				4C68ABA51C8930FC007BA5BD /* threadpool_inst.h */,
-				4C68ABA61C8930FC007BA5BD /* threadpool_interface_generic.h */,
-				4C68ABA71C8930FC007BA5BD /* threadpool_interface_virtual.h */,
-			);
-			path = impl;
-			sourceTree = "<group>";
-		};
-		4C68ABAB1C8930FC007BA5BD /* singlethreaded */ = {
-			isa = PBXGroup;
-			children = (
-				4C68ABAC1C8930FC007BA5BD /* parallel_for_each.h */,
-				4C68ABAD1C8930FC007BA5BD /* parallel_transform.h */,
-				4C68ABAE1C8930FC007BA5BD /* threadpool.h */,
-			);
-			path = singlethreaded;
 			sourceTree = "<group>";
 		};
 		4C68ABCE1C8930FC007BA5BD /* mvc */ = {
@@ -771,19 +737,13 @@
 		4C68ABED1C8930FC007BA5BD /* threading */ = {
 			isa = PBXGroup;
 			children = (
-				4C68ABEE1C8930FC007BA5BD /* threadpool */,
+				4CA911201C8EB453005FDCAE /* U2GenericThreadPool.cpp */,
+				4CA911211C8EB453005FDCAE /* U2HomogenousDispatch.cpp */,
+				4CA911221C8EB453005FDCAE /* U2HomogenousQueue.cpp */,
+				4CA911231C8EB453005FDCAE /* U2TaskGroup.cpp */,
 				4C68ABF11C8930FC007BA5BD /* U2TaskQueue.cpp */,
 			);
 			path = threading;
-			sourceTree = "<group>";
-		};
-		4C68ABEE1C8930FC007BA5BD /* threadpool */ = {
-			isa = PBXGroup;
-			children = (
-				4C68ABEF1C8930FC007BA5BD /* threadpool.cpp */,
-				4C68ABF01C8930FC007BA5BD /* threadpool_generic.cpp */,
-			);
-			path = threadpool;
 			sourceTree = "<group>";
 		};
 		4C68ABFC1C8930FC007BA5BD /* mvc */ = {
@@ -1078,6 +1038,7 @@
 				4C68AC4A1C8930FC007BA5BD /* U2Mediator.cpp in Sources */,
 				4C68AC461C8930FC007BA5BD /* U2Facade.cpp in Sources */,
 				4C68AC641C8930FC007BA5BD /* U2View.cpp in Sources */,
+				4CA911281C8EB453005FDCAE /* U2HomogenousQueue.cpp in Sources */,
 				4C68AC421C8930FC007BA5BD /* U2ContextQueue.cpp in Sources */,
 				4C68AC321C8930FC007BA5BD /* U2NameGenerator.cpp in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
@@ -1087,7 +1048,6 @@
 				4C68ACB71C893119007BA5BD /* TabMediator.cpp in Sources */,
 				4C68AC441C8930FC007BA5BD /* U2Controller.cpp in Sources */,
 				4C68AC6A1C8930FC007BA5BD /* U2CocosMediator.cpp in Sources */,
-				4C68AC241C8930FC007BA5BD /* threadpool.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				4C68AC281C8930FC007BA5BD /* U2TaskQueue.cpp in Sources */,
 				4C68AC5E1C8930FC007BA5BD /* U2Proxy.cpp in Sources */,
@@ -1098,16 +1058,19 @@
 				4C68AC521C8930FC007BA5BD /* U2Observer.cpp in Sources */,
 				4C68AC341C8930FC007BA5BD /* U2Object.cpp in Sources */,
 				4C68AC3E1C8930FC007BA5BD /* U2Command.cpp in Sources */,
+				4CA911241C8EB453005FDCAE /* U2GenericThreadPool.cpp in Sources */,
 				4C68AC9D1C893119007BA5BD /* ApplicationViewComponents.cpp in Sources */,
 				4C68ACAB1C893119007BA5BD /* InfoMediator.cpp in Sources */,
 				4C68AC381C8930FC007BA5BD /* U2Prerequisites.cpp in Sources */,
 				4C68AC6C1C8930FC007BA5BD /* U2CocosViewComponent.cpp in Sources */,
 				4C68AC5C1C8930FC007BA5BD /* U2PredefinedProxies.cpp in Sources */,
 				4C68ACA31C893119007BA5BD /* CgMediators.cpp in Sources */,
+				4CA9112A1C8EB453005FDCAE /* U2TaskGroup.cpp in Sources */,
 				4C68ACA91C893119007BA5BD /* GameContexts.cpp in Sources */,
 				4C68AC1A1C8930FC007BA5BD /* U2CodeCvt.cpp in Sources */,
 				4C68ACA51C893119007BA5BD /* CgPrerequisites.cpp in Sources */,
 				4C68AC621C8930FC007BA5BD /* U2TransStep.cpp in Sources */,
+				4CA911261C8EB453005FDCAE /* U2HomogenousDispatch.cpp in Sources */,
 				4C68AC561C8930FC007BA5BD /* U2PredefinedFacade.cpp in Sources */,
 				4C68AC361C8930FC007BA5BD /* U2PoolingObjectManager.cpp in Sources */,
 				4C68AC201C8930FC007BA5BD /* U2FilterStream.cpp in Sources */,
@@ -1124,7 +1087,6 @@
 				4C68AC401C8930FC007BA5BD /* U2Context.cpp in Sources */,
 				4C68AC481C8930FC007BA5BD /* U2FrameListenerCollection.cpp in Sources */,
 				4C68ACB51C893119007BA5BD /* TabInfoViewComponent.cpp in Sources */,
-				4C68AC261C8930FC007BA5BD /* threadpool_generic.cpp in Sources */,
 				4C68AC9B1C893119007BA5BD /* ApplicationPrerequisites.cpp in Sources */,
 				4C68AC951C893119007BA5BD /* ApplicationCommands.cpp in Sources */,
 				4C68ACB31C893119007BA5BD /* TabInfoPrerequisites.cpp in Sources */,
@@ -1148,7 +1110,6 @@
 				4C68AC9E1C893119007BA5BD /* ApplicationViewComponents.cpp in Sources */,
 				4C68AC511C8930FC007BA5BD /* U2Notifier.cpp in Sources */,
 				4C68ACA81C893119007BA5BD /* CgViewComponents.cpp in Sources */,
-				4C68AC251C8930FC007BA5BD /* threadpool.cpp in Sources */,
 				4C68AC331C8930FC007BA5BD /* U2NameGenerator.cpp in Sources */,
 				4C68AC3D1C8930FC007BA5BD /* U2TypedObjectManager.cpp in Sources */,
 				4C68AC2D1C8930FC007BA5BD /* U2FactoryManager.cpp in Sources */,
@@ -1172,15 +1133,18 @@
 				4C68ACB41C893119007BA5BD /* TabInfoPrerequisites.cpp in Sources */,
 				4C68AC2F1C8930FC007BA5BD /* U2MemoryAllocatedObject.cpp in Sources */,
 				4C68ACA01C893119007BA5BD /* CgCommands.cpp in Sources */,
+				4CA911251C8EB453005FDCAE /* U2GenericThreadPool.cpp in Sources */,
 				46880B8919C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				4C68AC5F1C8930FC007BA5BD /* U2Proxy.cpp in Sources */,
 				4C68AC671C8930FC007BA5BD /* U2ViewComponent.cpp in Sources */,
+				4CA911271C8EB453005FDCAE /* U2HomogenousDispatch.cpp in Sources */,
 				4C68AC3F1C8930FC007BA5BD /* U2Command.cpp in Sources */,
 				4C68AC9C1C893119007BA5BD /* ApplicationPrerequisites.cpp in Sources */,
 				4C68AC6D1C8930FC007BA5BD /* U2CocosViewComponent.cpp in Sources */,
 				4C68AC4D1C8930FC007BA5BD /* U2Model.cpp in Sources */,
 				4C68AC451C8930FC007BA5BD /* U2Controller.cpp in Sources */,
 				4C68AC411C8930FC007BA5BD /* U2Context.cpp in Sources */,
+				4CA9112B1C8EB453005FDCAE /* U2TaskGroup.cpp in Sources */,
 				4C68AC471C8930FC007BA5BD /* U2Facade.cpp in Sources */,
 				4C68AC431C8930FC007BA5BD /* U2ContextQueue.cpp in Sources */,
 				4C68AC1F1C8930FC007BA5BD /* U2FileStream.cpp in Sources */,
@@ -1194,6 +1158,7 @@
 				4C68AC611C8930FC007BA5BD /* U2SimpleCommand.cpp in Sources */,
 				4C68AC981C893119007BA5BD /* ApplicationFacade.cpp in Sources */,
 				4C68ACA21C893119007BA5BD /* CgFacade.cpp in Sources */,
+				4CA911291C8EB453005FDCAE /* U2HomogenousQueue.cpp in Sources */,
 				4C68ACB61C893119007BA5BD /* TabInfoViewComponent.cpp in Sources */,
 				4C68AC961C893119007BA5BD /* ApplicationCommands.cpp in Sources */,
 				4C68AC4B1C8930FC007BA5BD /* U2Mediator.cpp in Sources */,
@@ -1201,7 +1166,6 @@
 				4C68ACB01C893119007BA5BD /* TabInfoFacade.cpp in Sources */,
 				503AE10517EB98FF00D1A890 /* main.cpp in Sources */,
 				4C68AC1D1C8930FC007BA5BD /* U2DataFilterStream.cpp in Sources */,
-				4C68AC271C8930FC007BA5BD /* threadpool_generic.cpp in Sources */,
 				4C68AC1B1C8930FC007BA5BD /* U2CodeCvt.cpp in Sources */,
 				4C68AC6B1C8930FC007BA5BD /* U2CocosMediator.cpp in Sources */,
 				4C68AC5D1C8930FC007BA5BD /* U2PredefinedProxies.cpp in Sources */,
@@ -1252,7 +1216,6 @@
 					"$(SRCROOT)/../engine/include/core",
 					"$(SRCROOT)/../engine/include/core/streams",
 					"$(SRCROOT)/../engine/include/core/threading",
-					"$(SRCROOT)/../engine/include/core/threading/threadpool/impl",
 					"$(SRCROOT)/../engine/include/mvc",
 					"$(SRCROOT)/../gamebase",
 				);
@@ -1296,7 +1259,6 @@
 					"$(SRCROOT)/../engine/include/core",
 					"$(SRCROOT)/../engine/include/core/streams",
 					"$(SRCROOT)/../engine/include/core/threading",
-					"$(SRCROOT)/../engine/include/core/threading/threadpool/impl",
 					"$(SRCROOT)/../engine/include/mvc",
 					"$(SRCROOT)/../gamebase",
 				);
