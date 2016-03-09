@@ -252,6 +252,9 @@
     <ClCompile Include="..\engine\src\core\U2LogManager.cpp">
       <Filter>engine\src\core</Filter>
     </ClCompile>
+    <ClCompile Include="..\engine\src\core\threading\U2Worker.cpp">
+      <Filter>engine\src\core\threading</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -511,6 +514,9 @@
     </ClInclude>
     <ClInclude Include="..\engine\include\core\U2LogManager.h">
       <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\threading\U2Worker.h">
+      <Filter>engine\include\core\threading</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -20,8 +20,11 @@ GenericThreadPool::GenericThreadPool(ThreadPoolQueue& queue, int thread_count)
 	, thread_count(determine_thread_count(thread_count))
 	, workers(this->thread_count)
 {
-	for (Worker& w : workers)
-		w = std::move(std::thread(std::bind(&GenericThreadPool::_work, this)));
+	for (Worker* w : workers)
+	{
+		//w = std::move(std::thread(std::bind(&GenericThreadPool::_work, this)));
+		w = WorkerManager::getSingleton().createObject(std::bind(&GenericThreadPool::_work, this));
+	}	
 }
 //-----------------------------------------------------------------------
 GenericThreadPool::~GenericThreadPool()
@@ -116,6 +119,6 @@ void GenericThreadPool::_work()
 void GenericThreadPool::_join_workers()
 {
 	_work();		// Instead of hanging around, help the workers!
-	for (Worker& w : workers)
-		w.join();
+	for (Worker* w : workers)
+		w->join();
 }

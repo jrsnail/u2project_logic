@@ -5,8 +5,10 @@
 #include "U2Prerequisites.h"
 #include "U2STLRedefined.h"
 #include "U2MemoryAllocatorConfig.h"
-#include "U2ThreadHeaders.h"
 #include "U2ThreadPoolInterface.h"
+#include "U2Worker.h"
+#include "U2ThreadHeaders.h"
+
 
 
 U2EG_NAMESPACE_BEGIN
@@ -14,6 +16,7 @@ U2EG_NAMESPACE_BEGIN
 
 class GenericThreadPool : public ThreadPool
 {
+	/*
 protected:
 	class Worker
 	{
@@ -23,7 +26,9 @@ protected:
 	public:
 		Worker& operator=(std::thread&& t) { thread = std::move(t); return *this; }
 		void join() { if (thread.joinable()) thread.join(); }
+		std::thread::id getThreadId() { return thread.get_id(); };
 	};
+	*/
 
 public:
 	/**
@@ -160,7 +165,7 @@ protected:
 	std::exception_ptr pending_exception;
 	ThreadPoolQueue& queue;
 	const unsigned int thread_count; /// The number of threads
-	std::vector<Worker> workers;
+	std::vector<Worker*> workers;
 
 };
 

@@ -33,7 +33,7 @@ public:
 protected:
     String                  m_szType;       //< 子类类型
     String                  m_szName;       //< 对象名称
-    String                  m_szGuid;       //< 唯一标识消息，每个消息递增
+    String                  m_szGuid;       //< 唯一标识对象，每个对象递增
 };
 
 

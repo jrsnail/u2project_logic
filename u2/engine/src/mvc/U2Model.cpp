@@ -14,15 +14,17 @@
 U2EG_NAMESPACE_USING
 
 
+//-----------------------------------------------------------------------
+//-----------------------------------------------------------------------
 Model::Model(const String& type, const String& name)
     : Object(type, name)
 {
 	
 }
-
+//-----------------------------------------------------------------------
 inline void Model::initializeModel(void)
 { }
-
+//-----------------------------------------------------------------------
 void Model::registerProxy(Proxy* proxy)
 {
 	proxy->initializeNotifier(m_szName);
@@ -34,12 +36,12 @@ void Model::registerProxy(Proxy* proxy)
 	} while (false);
 	proxy->onRegister();
 }
-
+//-----------------------------------------------------------------------
 Proxy const& Model::retrieveProxy(const String& proxy_name) const
 {
     return const_cast<Proxy const&>(static_cast<Model const&>(*this).retrieveProxy(proxy_name));
 }
-
+//-----------------------------------------------------------------------
 inline Proxy& Model::retrieveProxy(const String& proxy_name)
 {
     U2_LOCK_AUTO_MUTEX;
@@ -53,13 +55,13 @@ inline Proxy& Model::retrieveProxy(const String& proxy_name)
 
     return *result->second;
 }
-
+//-----------------------------------------------------------------------
 inline bool Model::hasProxy(const String& proxy_name)
 {
     U2_LOCK_AUTO_MUTEX;
 	return m_ProxyMap.find(proxy_name) != m_ProxyMap.end();
 }
-
+//-----------------------------------------------------------------------
 Proxy* Model::removeProxy(const String& proxy_name)
 {
 	ProxyMap::value_type::second_type proxy = NULL;
@@ -82,7 +84,7 @@ Proxy* Model::removeProxy(const String& proxy_name)
 	if (proxy != NULL) proxy->onRemove();
 	return proxy;
 }
-
+//-----------------------------------------------------------------------
 void Model::removeModel(const String& name)
 {
     Model* pObj = ModelManager::getSingleton().retrieveObject(name);
@@ -92,7 +94,7 @@ void Model::removeModel(const String& name)
     }
     ModelManager::getSingleton().destoryObject(pObj);
 }
-
+//-----------------------------------------------------------------------
 Model::ProxyNames Model::listProxyNames(void) const
 {
     ProxyNames names;
@@ -107,7 +109,7 @@ Model::ProxyNames Model::listProxyNames(void) const
 
     return names;
 }
-
+//-----------------------------------------------------------------------
 Model::~Model(void)
 {
 	//removeModel(_multiton_key);
