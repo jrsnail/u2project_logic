@@ -22,7 +22,7 @@ GenericThreadPool::GenericThreadPool(ThreadPoolQueue& queue, int thread_count)
 {
 	for (Worker* w : workers)
 	{
-		//w = std::move(std::thread(std::bind(&GenericThreadPool::_work, this)));
+		//std::thread t = std::move(std::thread(std::bind(&GenericThreadPool::_work, this)));
 		w = WorkerManager::getSingleton().createObject(std::bind(&GenericThreadPool::_work, this));
 	}	
 }

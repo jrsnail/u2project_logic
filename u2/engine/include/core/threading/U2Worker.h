@@ -19,8 +19,7 @@ class Worker : public Object
 public:
 	Worker(const String& type, const String& name = BLANK);
 
-	template<class _Fn,
-	class... _Args>
+	template<class _Fn, class... _Args>
 	void initialize(_Fn&& _Fx, _Args&&... _Ax)
 	{
 		m_Thread = std::move(std::thread(std::forward<_Fn>(_Fx), std::forward<_Args>(_Ax)...));
@@ -51,15 +50,17 @@ public:
 	*/
 	virtual ~WorkerManager();
 
-// 	template<class _Fn,
-// 	class... _Args,
-// 	class = typename enable_if<
-// 		!is_same<typename decay<_Fn>::type, thread>::value>::type>
-	template<class _Fn,
-	class... _Args>
+	template<class _Fn, class... _Args>
 	Worker* createObject(_Fn&& _Fx, _Args&&... _Ax)
 	{
-		Worker* pObj = createObject(GET_OBJECT_TYPE(Worker), BLANK);
+		// Worker用SimpleObjectManager，
+		// SimpleObjectManager应该改成guid为主键，name为辅键的形式，
+		// 这样创建Worker时就不会改变key了，
+		static size_t i = 0;
+		StringStream ss;
+		ss << i++;
+
+		Worker* pObj = SimpleObjectManager<Worker>::createObject(GET_OBJECT_TYPE(Worker), ss.str());
 		if (pObj != nullptr)
 		{
 			pObj->initialize(std::forward<_Fn>(_Fx), std::forward<_Args>(_Ax)...);
