@@ -119,6 +119,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 // 	m_pLogManager->getDefaultLog()->addListener(mAndroidLogger);
 // #endif
 
+	/*
 	// Create a thread pool
 	TaskGroup group;
 
@@ -137,6 +138,9 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	// Wait for all queued functions to finish and the pool to become empty
 	group.wait();
 	cocos2d::log("Hello world! Thread over!");
+	*/
+
+	ObjectCollection<u2::Context> collect;
     
 	
     return true;

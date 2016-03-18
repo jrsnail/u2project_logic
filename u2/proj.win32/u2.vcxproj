@@ -71,7 +71,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(EngineRoot)cocos\audio\include;$(EngineRoot)external;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;..\engine;..\engine\include;..\engine\include\core;..\engine\include\core\streams;..\engine\include\core\threading;..\engine\include\core\threading\threadpool;..\engine\include\mvc;..\gamebase;..\Classes;..;%(AdditionalIncludeDirectories);$(_COCOS_HEADER_WIN32_BEGIN);$(_COCOS_HEADER_WIN32_END)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot)cocos\audio\include;$(EngineRoot)external;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;..\..\Dependenices\include;..\..\Dependenices\include\boost;..\engine;..\engine\include;..\engine\include\core;..\engine\include\core\streams;..\engine\include\core\threading;..\engine\include\core\threading\threadpool;..\engine\include\mvc;..\gamebase;..\Classes;..;%(AdditionalIncludeDirectories);$(_COCOS_HEADER_WIN32_BEGIN);$(_COCOS_HEADER_WIN32_END)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_CHIPMUNK_INTEGRATION=1;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;U2_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -84,9 +84,9 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>%(AdditionalDependencies);$(_COCOS_LIB_WIN32_BEGIN);$(_COCOS_LIB_WIN32_END)</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies);$(_COCOS_LIB_WIN32_BEGIN);$(_COCOS_LIB_WIN32_END);libboost_container-vc140-mt-sgd-1_59.lib</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
-      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories);$(_COCOS_LIB_PATH_WIN32_BEGIN);$(_COCOS_LIB_PATH_WIN32_END)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories);$(_COCOS_LIB_PATH_WIN32_BEGIN);$(_COCOS_LIB_PATH_WIN32_END);..\..\Dependenices\libs\win32</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
@@ -264,6 +264,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\engine\include\core\U2MemoryTracker.h" />
     <ClInclude Include="..\engine\include\core\U2NameGenerator.h" />
     <ClInclude Include="..\engine\include\core\U2Object.h" />
+    <ClInclude Include="..\engine\include\core\U2ObjectCollection.h" />
     <ClInclude Include="..\engine\include\core\U2Platform.h" />
     <ClInclude Include="..\engine\include\core\U2PoolingObjectManager.h" />
     <ClInclude Include="..\engine\include\core\U2Prerequisites.h" />
@@ -272,6 +273,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\engine\include\core\U2StdHeader.h" />
     <ClInclude Include="..\engine\include\core\U2STLRedefined.h" />
     <ClInclude Include="..\engine\include\core\U2TypedObjectManager.h" />
+    <ClInclude Include="..\engine\include\core\U2ValueList.h" />
     <ClInclude Include="..\engine\include\mvc\U2Command.h" />
     <ClInclude Include="..\engine\include\mvc\U2Context.h" />
     <ClInclude Include="..\engine\include\mvc\U2ContextQueue.h" />

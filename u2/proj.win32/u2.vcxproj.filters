@@ -518,6 +518,12 @@
     <ClInclude Include="..\engine\include\core\threading\U2Worker.h">
       <Filter>engine\include\core\threading</Filter>
     </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2ObjectCollection.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2ValueList.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">

@@ -9,6 +9,7 @@
 #include "U2IteratorWrapper.h"
 #include "U2NameGenerator.h"
 #include "U2FactoryManager.h"
+#include "U2ObjectCollection.h"
 #include "U2SimpleObjectManager.h"
 #include "U2TypedObjectManager.h"
 #include "U2PoolingObjectManager.h"
