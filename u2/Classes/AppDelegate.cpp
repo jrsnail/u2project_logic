@@ -119,6 +119,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 // 	m_pLogManager->getDefaultLog()->addListener(mAndroidLogger);
 // #endif
 
+	//------------------------------- Test Thread ----------------------------------------
 	/*
 	// Create a thread pool
 	TaskGroup group;
@@ -140,7 +141,40 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	cocos2d::log("Hello world! Thread over!");
 	*/
 
+	//------------------------------- Test ObjectCollection ----------------------------------------
+	/* 
 	ObjectCollection<u2::Context> collect;
+	collect.createObject(OT_Context, "aaa");
+	collect.createObject(OT_Context, "ddd");
+	collect.createObject(OT_Context, "eee");
+	collect.createObject(OT_Context, "www");
+	collect.createObject(OT_Context, "ccc");
+	collect.createObject(OT_Context, "www");
+
+	ObjectCollection<u2::Context>::ObjectQueueIterator objIt = collect.retrieveAllObjectsByName("www");
+	while (objIt.hasMoreElements())
+	{
+		u2::Context* pContext = dynamic_cast<u2::Context*>(objIt.getNext());
+		CCLOG("=========Name, %s, %s", pContext->getName().c_str(), pContext->getGuid().c_str());
+	}
+
+	ObjectCollection<u2::Context>::ObjectQueueIterator objIt2 = collect.retrieveAllObjectsByTN(OT_Context, "www");
+	while (objIt2.hasMoreElements())
+	{
+		u2::Context* pContext = dynamic_cast<u2::Context*>(objIt2.getNext());
+		CCLOG("=========TN, %s, %s", pContext->getName().c_str(), pContext->getGuid().c_str());
+	}
+
+	ObjectCollection<u2::Context>::ObjectQueueIterator objIt3 = collect.retrieveAllObjectsByType(OT_Context);
+	while (objIt3.hasMoreElements())
+	{
+		u2::Context* pContext = dynamic_cast<u2::Context*>(objIt3.getNext());
+		CCLOG("=========Type, %s, %s", pContext->getName().c_str(), pContext->getGuid().c_str());
+	}
+
+	u2::Context* pContext = collect.retrieveObjectByGuid("class u2::Context6");
+	CCLOG("=========Guid, %s, %s", pContext->getName().c_str(), pContext->getGuid().c_str());
+	*/
     
 	
     return true;

@@ -44,14 +44,14 @@ public:
 	ConstObjectQueueIterator retrieveAllObjectsByName(const String& name) const
 	{
 		MultiKeyMap::const_iterator bit = mObjects.lower_bound(VLIST_1(name));
-		MultiKeyMap::const_iterator eit = mObjects.lower_bound(VLIST_1(name));
+		MultiKeyMap::const_iterator eit = mObjects.upper_bound(VLIST_1(name));
 		return ConstObjectQueueIterator(bit, eit);
 	}
 
 	ObjectQueueIterator retrieveAllObjectsByName(const String& name)
 	{
 		MultiKeyMap::iterator bit = mObjects.lower_bound(VLIST_1(name));
-		MultiKeyMap::iterator eit = mObjects.lower_bound(VLIST_1(name));
+		MultiKeyMap::iterator eit = mObjects.upper_bound(VLIST_1(name));
 		return ObjectQueueIterator(bit, eit);
 	}
 
@@ -59,17 +59,39 @@ public:
 
 	T* retrieveObjectByName(const String& name);
 
+	ConstObjectQueueIterator retrieveAllObjectsByType(const String& type) const
+	{
+		MultiKeyMap::const_iterator bit = mObjects.lower_bound(VLIST_2(KeyHolder<String>(), type));
+		MultiKeyMap::const_iterator eit = mObjects.upper_bound(VLIST_2(KeyHolder<String>(), type));
+		return ConstObjectQueueIterator(bit, eit);
+	}
+
+	ObjectQueueIterator retrieveAllObjectsByType(const String& type)
+	{
+		MultiKeyMap::iterator bit = mObjects.lower_bound(VLIST_2(KeyHolder<String>(), type));
+		MultiKeyMap::iterator eit = mObjects.upper_bound(VLIST_2(KeyHolder<String>(), type));
+		return ObjectQueueIterator(bit, eit);
+	}
+
+	const T* retrieveObjectByType(const String& type) const;
+
+	T* retrieveObjectByType(const String& type);
+
+	const T* retrieveObjectByGuid(const String& guid) const;
+
+	T* retrieveObjectByGuid(const String& guid);
+
 	ConstObjectQueueIterator retrieveAllObjectsByTN(const String& type, const String& name) const
 	{
-		MultiKeyMap::const_iterator bit = mObjects.lower_bound(VLIST_2(type, name));
-		MultiKeyMap::const_iterator eit = mObjects.lower_bound(VLIST_2(type, name));
+		MultiKeyMap::const_iterator bit = mObjects.lower_bound(VLIST_2(name, type));
+		MultiKeyMap::const_iterator eit = mObjects.upper_bound(VLIST_2(name, type));
 		return ConstObjectQueueIterator(bit, eit);
 	}
 
 	ObjectQueueIterator retrieveAllObjectsByTN(const String& type, const String& name)
 	{
-		MultiKeyMap::iterator bit = mObjects.lower_bound(VLIST_2(type, name));
-		MultiKeyMap::iterator eit = mObjects.lower_bound(VLIST_2(type, name));
+		MultiKeyMap::iterator bit = mObjects.lower_bound(VLIST_2(name, type));
+		MultiKeyMap::iterator eit = mObjects.upper_bound(VLIST_2(name, type));
 		return ObjectQueueIterator(bit, eit);
 	}
 
@@ -104,28 +126,8 @@ ObjectCollection<T>::~ObjectCollection()
 }
 //-----------------------------------------------------------------------
 template <class T>
-const T* ObjectCollection<T>::retrieveObjectByName(const String& name) const
-{
-    return const_cast<const T*>(this->retrieveObjectByN(name));
-}
-//-----------------------------------------------------------------------
-template <class T>
-T* ObjectCollection<T>::retrieveObjectByName(const String& name)
-{
-	typename MultiKeyMap::iterator it = mObjects.find(VLIST_1(name));
-    if (it != mObjects.end())
-    {
-		return it->second;
-    }
-
-    return nullptr;
-}
-//-----------------------------------------------------------------------
-template <class T>
 T* ObjectCollection<T>::createObject(const String& type, const String& name)
 {
-	assert(retrieveObjectByTN(type, name) == nullptr);
-
 	T* pObj = dynamic_cast<T*>(FactoryManager::getSingleton().createObject(type, name));
 	mObjects[VLIST_3(pObj->getName(), pObj->getType(), pObj->getGuid())] = pObj;
 	return pObj;
@@ -144,15 +146,69 @@ void ObjectCollection<T>::destoryObject(T* obj)
 }
 //-----------------------------------------------------------------------
 template <class T>
+const T* ObjectCollection<T>::retrieveObjectByName(const String& name) const
+{
+    return const_cast<const T*>(this->retrieveObjectByName(name));
+}
+//-----------------------------------------------------------------------
+template <class T>
+T* ObjectCollection<T>::retrieveObjectByName(const String& name)
+{
+	typename MultiKeyMap::iterator it = mObjects.find(VLIST_1(name));
+    if (it != mObjects.end())
+    {
+		return it->second;
+    }
+
+    return nullptr;
+}
+//-----------------------------------------------------------------------
+template <class T>
 const T* ObjectCollection<T>::retrieveObjectByTN(const String& type, const String& name) const
 {
-	return const_cast<const T*>(this->retrieveObjectByN(name));
+	return const_cast<const T*>(this->retrieveObjectByTN(type, name));
 }
 //-----------------------------------------------------------------------
 template <class T>
 T* ObjectCollection<T>::retrieveObjectByTN(const String& type, const String& name)
 {
-	typename MultiKeyMap::iterator it = mObjects.find(VLIST_2(type, name));
+	typename MultiKeyMap::iterator it = mObjects.find(VLIST_2(name, type));
+	if (it != mObjects.end())
+	{
+		return it->second;
+	}
+
+	return nullptr;
+}
+//-----------------------------------------------------------------------
+template <class T>
+const T* ObjectCollection<T>::retrieveObjectByType(const String& type) const
+{
+	return const_cast<const T*>(this->retrieveObjectByType(type));
+}
+//-----------------------------------------------------------------------
+template <class T>
+T* ObjectCollection<T>::retrieveObjectByType(const String& type)
+{
+	typename MultiKeyMap::iterator it = mObjects.find(VLIST_2(KeyHolder<String>(), type));
+	if (it != mObjects.end())
+	{
+		return it->second;
+	}
+
+	return nullptr;
+}
+//-----------------------------------------------------------------------
+template <class T>
+const T* ObjectCollection<T>::retrieveObjectByGuid(const String& guid) const
+{
+	return const_cast<const T*>(this->retrieveObjectByGuid(guid));
+}
+//-----------------------------------------------------------------------
+template <class T>
+T* ObjectCollection<T>::retrieveObjectByGuid(const String& guid)
+{
+	typename MultiKeyMap::iterator it = mObjects.find(VLIST_3(KeyHolder<String>(), KeyHolder<String>(), guid));
 	if (it != mObjects.end())
 	{
 		return it->second;

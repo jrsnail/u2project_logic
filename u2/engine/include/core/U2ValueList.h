@@ -42,7 +42,7 @@ struct KeyHolder
 	
 	KeyHolder() : m_avail(false) {}
 
-	explicit KeyHolder(const T& v) :m_val(v), m_avail(true) {}
+	explicit KeyHolder(const T& v) : m_val(v), m_avail(true) {}
 
 	template<class V>
 	KeyHolder(const KeyHolder<V>& rhs) : m_avail(rhs.m_avail), m_val(rhs.m_val) {}
