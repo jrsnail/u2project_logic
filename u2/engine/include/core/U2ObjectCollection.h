@@ -37,9 +37,13 @@ public:
     typedef MapIterator<MultiKeyMap>		ObjectQueueIterator;
 	typedef ConstMapIterator<MultiKeyMap>	ConstObjectQueueIterator;
 
-	T* createObject(const String& type, const String& name);
+	T* createObject(const String& type, const String& name = BLANK);
 
 	void destoryObject(T* obj);
+
+	void addObject(T* obj);
+
+	void removeObject(T* obj);
 
 	ConstObjectQueueIterator retrieveAllObjectsByName(const String& name) const
 	{
@@ -136,11 +140,30 @@ T* ObjectCollection<T>::createObject(const String& type, const String& name)
 template <class T>
 void ObjectCollection<T>::destoryObject(T* obj)
 {
-	assert(obj);
+	assert(obj != nullptr);
 	typename ObjectQueueMap::iterator it = mObjects.find(VLIST_3(obj->getName(), obj->getType(), obj->getGuid()));
 	if (it != mObjects.end())
 	{
 		FactoryManager::getSingleton().destroyObject(obj);
+		mObjects.erase(it);
+	}
+}
+//-----------------------------------------------------------------------
+template <class T>
+void ObjectCollection<T>::addObject(T* obj)
+{
+	assert(obj != nullptr);
+	assert(retrieveObjectByGuid(obj->getGuid()) == nullptr);
+	mObjects[VLIST_3(obj->getName(), obj->getType(), obj->getGuid())] = obj;
+}
+//-----------------------------------------------------------------------
+template <class T>
+void ObjectCollection<T>::removeObject(T* obj)
+{
+	assert(obj != nullptr);
+	typename ObjectQueueMap::iterator it = mObjects.find(VLIST_3(obj->getName(), obj->getType(), obj->getGuid()));
+	if (it != mObjects.end())
+	{
 		mObjects.erase(it);
 	}
 }

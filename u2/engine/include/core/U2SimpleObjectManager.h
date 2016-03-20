@@ -11,12 +11,8 @@ U2EG_NAMESPACE_BEGIN
 
 
 template <class T> 
-class SimpleObjectManager
+class SimpleObjectManager : public ObjectCollection<T>
 {
-protected:
-    /// <name, T*>
-    typedef std::map<String, T*>                ObjectMap;
-
 public:
     /** Default constructor - should never get called by a client app.
     */
@@ -28,31 +24,76 @@ public:
 
     T* createObject(const String& type, const String& name);
 
-	const T* retrieveObject(const String& name) const;
-
-    T* retrieveObject(const String& name);
-
-	bool hasObject(const String& name) const;
-
-	void destoryObject(T* obj);
-
-    typedef MapIterator<ObjectMap>          ObjectMapIterator;
-    typedef ConstMapIterator<ObjectMap>     ConstObjectMapIterator;
-
-    /** Get an iterator over the Archives in this Manager. */
-    ObjectMapIterator getObjectIterator()
-    {
-        return ObjectMapIterator(mObjects.begin(), mObjects.end());
-    }
-
-    ConstObjectMapIterator getConstObjectIterator()
-    {
-        return ConstObjectMapIterator(mObjects.begin(), mObjects.end());
-    }
-
 protected:
-	/// Currently loaded archives
-    ObjectMap                                   mObjects;
+	ConstObjectQueueIterator retrieveAllObjectsByName(const String& name) const
+	{
+		return ObjectCollection<T>::retrieveAllObjectsByName(name);
+	}
+
+	ObjectQueueIterator retrieveAllObjectsByName(const String& name)
+	{
+		return ObjectCollection<T>::retrieveAllObjectsByName(name);
+	}
+
+	ConstObjectQueueIterator retrieveAllObjectsByType(const String& type) const
+	{
+		return ObjectCollection<T>::retrieveAllObjectsByType(type);
+	}
+
+	ObjectQueueIterator retrieveAllObjectsByType(const String& type)
+	{
+		return ObjectCollection<T>::retrieveAllObjectsByType(type);
+	}
+
+	const T* retrieveObjectByType(const String& type) const
+	{
+		return ObjectCollection<T>::retrieveObjectByType(type);
+	}
+
+	T* retrieveObjectByType(const String& type)
+	{
+		return ObjectCollection<T>::retrieveObjectByType(type);
+	}
+
+	const T* retrieveObjectByGuid(const String& guid) const
+	{
+		return ObjectCollection<T>::retrieveObjectByGuid(guid);
+	}
+
+	T* retrieveObjectByGuid(const String& guid)
+	{
+		return ObjectCollection<T>::retrieveObjectByGuid(guid);
+	}
+
+	ConstObjectQueueIterator retrieveAllObjectsByTN(const String& type, const String& name) const
+	{
+		return ObjectCollection<T>::retrieveAllObjectsByTN(type, name);
+	}
+
+	ObjectQueueIterator retrieveAllObjectsByTN(const String& type, const String& name)
+	{
+		return ObjectCollection<T>::retrieveAllObjectsByTN(type, name);
+	}
+
+	const T* retrieveObjectByTN(const String& type, const String& name) const
+	{
+		return ObjectCollection<T>::retrieveObjectByTN(type, name);
+	}
+
+	T* retrieveObjectByTN(const String& type, const String& name)
+	{
+		return ObjectCollection<T>::retrieveObjectByTN(type, name);
+	}
+
+	void addObject(T* obj)
+	{
+		ObjectCollection<T>::addObject(obj);
+	}
+
+	void removeObject(T* obj)
+	{
+		ObjectCollection<T>::removeObject(obj);
+	}
 };
 
 
@@ -68,66 +109,13 @@ SimpleObjectManager<T>::SimpleObjectManager()
 template <class T>
 SimpleObjectManager<T>::~SimpleObjectManager()
 {
-    // Unload & delete resources in turn
-    for (typename ObjectMap::iterator it = mObjects.begin(); it != mObjects.end(); ++it)
-    {
-		FactoryManager::getSingleton().destroyObject(it->second);
-    }
-    // Empty the list
-    mObjects.clear();
 }
 //-----------------------------------------------------------------------
 template <class T>
 T* SimpleObjectManager<T>::createObject(const String& type, const String& name)
 {
-	typename ObjectMap::iterator i = mObjects.find(name);
-    T* pObj = nullptr;
-
-    if (i == mObjects.end())
-    {
-		pObj = dynamic_cast<T*>(FactoryManager::getSingleton().createObject(type, name));
-        mObjects[name] = pObj;
-    }
-    else
-    {
-        pObj = i->second;
-    }
-    return pObj;
-}
-//-----------------------------------------------------------------------
-template <class T>
-const T* SimpleObjectManager<T>::retrieveObject(const String& name) const
-{
-    return const_cast<const T*>(this->retrieveObject(name));
-}
-//-----------------------------------------------------------------------
-template <class T>
-T* SimpleObjectManager<T>::retrieveObject(const String& name)
-{
-	typename ObjectMap::iterator itr = mObjects.find(name);
-    if (itr != mObjects.end())
-    {
-        return itr->second;
-    }
-
-    return nullptr;
-}
-//-----------------------------------------------------------------------
-template <class T>
-bool SimpleObjectManager<T>::hasObject(const String& name) const
-{
-    return nullptr != retrieveObject(name);
-}
-//-----------------------------------------------------------------------
-template <class T>
-void SimpleObjectManager<T>::destoryObject(T* obj)
-{
-	typename ObjectMap::iterator it = mObjects.find(obj->getName());
-    if (it != mObjects.end())
-    {
-		FactoryManager::getSingleton().destroyObject(it->second);
-        mObjects.erase(it);
-    }
+	assert(retrieveObjectByName(name) != nullptr);
+    return ObjectCollection<T>::createObject(type, name);
 }
 
 
