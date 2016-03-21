@@ -69,6 +69,11 @@ typedef __int64                     u2int64;
 typedef unsigned long long          u2uint64;
 typedef long long                   u2int64;
 #endif
+
+#if U2_COMPILER == U2_COMPILER_MSVC
+#include <BaseTsd.h>
+typedef	SSIZE_T						sszie_t;
+#endif
 }
 // ////////////////////// data type end ///////////////////////
 

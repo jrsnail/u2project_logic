@@ -34,14 +34,21 @@ FileHandleInStream::~FileHandleInStream()
 	close();
 }
 //-----------------------------------------------------------------------
-u2int32 FileHandleInStream::read(u2byte* s, std::streamsize n)
+size_t FileHandleInStream::read(u2byte* s, size_t n)
 {
 	return fread(s, 1, n, mFileHandle);
 }
 //-----------------------------------------------------------------------
-std::streamoff FileHandleInStream::skip(std::streamoff count)
+ssize_t FileHandleInStream::skip(ssize_t count)
 {
+	size_t uOrigin = tell();
 	fseek(mFileHandle, count, SEEK_CUR);
+	return tell() - uOrigin;
+}
+//-----------------------------------------------------------------------
+size_t FileHandleInStream::tell(void) const
+{
+	return ftell(mFileHandle);
 }
 //-----------------------------------------------------------------------
 bool FileHandleInStream::eof() const
@@ -75,13 +82,9 @@ FileHandleOutStream::~FileHandleOutStream()
 {
 }
 //-----------------------------------------------------------------------
-size_t FileHandleOutStream::write(const u2byte* s, std::streamsize n)
+size_t FileHandleOutStream::write(const u2byte* s, size_t n)
 {
 	return fwrite(s, 1, n, mFileHandle);
-}
-//-----------------------------------------------------------------------
-void FileHandleOutStream::flush()
-{
 }
 //-----------------------------------------------------------------------
 void FileHandleOutStream::close()

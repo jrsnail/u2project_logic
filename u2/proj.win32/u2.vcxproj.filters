@@ -258,6 +258,12 @@
     <ClCompile Include="..\engine\src\core\streams\U2PipedStream.cpp">
       <Filter>engine\src\core\streams</Filter>
     </ClCompile>
+    <ClCompile Include="..\engine\src\core\streams\U2FileHandleStream.cpp">
+      <Filter>engine\src\core\streams</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\streams\U2ZipStream.cpp">
+      <Filter>engine\src\core\streams</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -528,6 +534,12 @@
       <Filter>engine\include\core</Filter>
     </ClInclude>
     <ClInclude Include="..\engine\include\core\streams\U2PipedStream.h">
+      <Filter>engine\include\core\streams</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\streams\U2FileHandleStream.h">
+      <Filter>engine\include\core\streams</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\streams\U2ZipStream.h">
       <Filter>engine\include\core\streams</Filter>
     </ClInclude>
   </ItemGroup>

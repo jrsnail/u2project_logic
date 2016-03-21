@@ -26,9 +26,13 @@ public:
 
     void connect(std::shared_ptr<InStream> in);
 
-    virtual u2int32 read(u2byte* s, std::streamsize n) override;
+    virtual size_t read(u2byte* s, size_t n) override;
 
-    virtual std::streamoff skip(std::streamoff off) override;
+    virtual ssize_t skip(ssize_t count) override;
+
+	virtual void seek(size_t pos) override;
+
+	virtual size_t tell(void) const override;
 
     virtual void close() override;
 
@@ -47,9 +51,7 @@ public:
 
     void connect(std::shared_ptr<OutStream> out);
 
-    virtual size_t write(const u2byte* s, std::streamsize n) override;
-
-    virtual void flush() override;
+    virtual size_t write(const u2byte* s, size_t n) override;
 
     virtual void close() override;
 
@@ -69,9 +71,13 @@ public:
     FilterInQueue(const String& name, va_list argp);
     virtual ~FilterInQueue();
 
-    virtual u2int32 read(u2byte* s, std::streamsize n) override;
+    virtual size_t read(u2byte* s, size_t n) override;
 
-    virtual std::streamoff skip(std::streamoff off) override;
+    virtual ssize_t skip(ssize_t count) override;
+
+	virtual void seek(size_t pos) override;
+
+	virtual size_t tell(void) const override;
 
     virtual void close() override;
 
@@ -134,9 +140,7 @@ public:
     FilterOutQueue(const String& name, va_list argp);
     virtual ~FilterOutQueue();
 
-    virtual void write(const u2byte* s, std::streamsize n) override;
-
-    virtual void flush() override;
+    virtual size_t write(const u2byte* s, size_t n) override;
 
     virtual void close() override;
 

@@ -58,13 +58,13 @@ void FileInStream::open(const u2::String& filename, std::ios_base::openmode mode
     }
 }
 //-----------------------------------------------------------------------
-u2int32 FileInStream::read(u2byte* s, std::streamsize n)
+size_t FileInStream::read(u2byte* s, size_t n)
 {
     m_pFInStream->read((char*)s, n);
     return (u2int32)m_pFInStream->gcount();
 }
 //-----------------------------------------------------------------------
-std::streamoff FileInStream::skip(std::streamoff count)
+ssize_t FileInStream::skip(ssize_t count)
 {
 #if defined(STLPORT)
     // Workaround for STLport issues: After reached eof of file stream,
@@ -80,9 +80,21 @@ std::streamoff FileInStream::skip(std::streamoff count)
     }
 #endif
     std::streampos nStart = m_pFInStream->tellg();
-    m_pFInStream->clear(); //Clear fail status in case eof was set
+    ->clear(); //Clear fail status in case eof was set
     m_pFInStream->seekg(static_cast<std::ifstream::pos_type>(count), std::ios::cur);
     return m_pFInStream->tellg() - nStart;
+}
+//-----------------------------------------------------------------------
+void FileInStream::seek(size_t pos)
+{
+	m_pFInStream->clear(); //Clear fail status in case eof was set
+	m_pFInStream->seekg(static_cast<std::streamoff>(pos), std::ios::beg);
+}
+//-----------------------------------------------------------------------
+size_t FileInStream::tell(void) const
+{
+	m_pFInStream->clear(); //Clear fail status in case eof was set
+	return (size_t)m_pFInStream->tellg();
 }
 //-----------------------------------------------------------------------
 bool FileInStream::eof() const
@@ -141,7 +153,7 @@ void FileOutStream::open(const u2::String& filename, std::ios_base::openmode mod
     }
 }
 //-----------------------------------------------------------------------
-size_t FileOutStream::write(const u2byte* s, std::streamsize n)
+size_t FileOutStream::write(const u2byte* s, size_t n)
 {
 	size_t written = 0;
 	if (m_pFOutStream)
@@ -150,11 +162,6 @@ size_t FileOutStream::write(const u2byte* s, std::streamsize n)
 		written = n;
 	}
 	return written;
-}
-//-----------------------------------------------------------------------
-void FileOutStream::flush()
-{
-    m_pFOutStream->flush();
 }
 //-----------------------------------------------------------------------
 void FileOutStream::close()

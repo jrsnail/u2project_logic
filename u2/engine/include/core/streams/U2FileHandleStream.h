@@ -23,9 +23,11 @@ public:
     FileHandleInStream(const String& name, FILE* handle);
     virtual ~FileHandleInStream();
 
-    virtual u2int32 read(u2byte* s, std::streamsize n) override;
+    virtual size_t read(u2byte* s, size_t n) override;
 
-    virtual std::streamoff skip(std::streamoff count) override;
+    virtual ssize_t skip(ssize_t count) override;
+
+	virtual size_t tell(void) const override;
 
     virtual bool eof() const override;
 
@@ -46,9 +48,7 @@ public:
     FileHandleOutStream(const String& name, FILE* handle);
     virtual ~FileHandleOutStream();
 
-    virtual size_t write(const u2byte* s, std::streamsize n) override;
-
-    virtual void flush() override;
+    virtual size_t write(const u2byte* s, size_t n) override;
 
     virtual void close() override;
 

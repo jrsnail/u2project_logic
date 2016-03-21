@@ -18,11 +18,13 @@ U2EG_NAMESPACE_USING
 //-----------------------------------------------------------------------
 InStream::InStream(const String& type, const String& name)
 : Object(type, name)
+, m_uSize(0)
 {
 }
 //-----------------------------------------------------------------------
 InStream::InStream(const String& type, const String& name, va_list argp)
     : Object(type, name)
+	, m_uSize(0)
 {
 
 }
@@ -31,13 +33,13 @@ InStream::~InStream()
 {
 }
 //-----------------------------------------------------------------------
-std::streamoff InStream::skip(std::streamoff count)
-{
-    u2byte* s = static_cast<u2byte*>(U2_MALLOC(count, MEMCATEGORY_GENERAL));
-    u2int32 actually = read(s, count);
-    U2_FREE(s, MEMCATEGORY_GENERAL);
-    return actually;
-}
+// std::streamoff InStream::skip(std::streamoff count)
+// {
+//     u2byte* s = static_cast<u2byte*>(U2_MALLOC(count, MEMCATEGORY_GENERAL));
+//     u2int32 actually = read(s, count);
+//     U2_FREE(s, MEMCATEGORY_GENERAL);
+//     return actually;
+// }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
 OutStream::OutStream(const String& type, const String& name)

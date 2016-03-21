@@ -35,16 +35,28 @@ void FilterInStream::connect(std::shared_ptr<InStream> in)
     m_pIn = in;
 }
 //-----------------------------------------------------------------------
-u2int32 FilterInStream::read(u2byte* s, std::streamsize n)
+size_t FilterInStream::read(u2byte* s, size_t n)
 {
     assert(m_pIn.get());
     return m_pIn->read(s, n);
 }
 //-----------------------------------------------------------------------
-std::streamoff FilterInStream::skip(std::streamoff off)
+ssize_t FilterInStream::skip(ssize_t count)
 {
     assert(m_pIn.get());
-    return m_pIn->skip(off);
+    return m_pIn->skip(count);
+}
+//-----------------------------------------------------------------------
+void FilterInStream::seek(size_t pos)
+{
+	assert(m_pIn.get());
+	return m_pIn->seek(pos);
+}
+//-----------------------------------------------------------------------
+size_t FilterInStream::tell(void) const
+{
+	assert(m_pIn.get());
+	return m_pIn->tell();
 }
 //-----------------------------------------------------------------------
 void FilterInStream::close()
@@ -74,16 +86,10 @@ void FilterOutStream::connect(std::shared_ptr<OutStream> out)
     m_pOut = out;
 }
 //-----------------------------------------------------------------------
-size_t FilterOutStream::write(const u2byte* s, std::streamsize n)
+size_t FilterOutStream::write(const u2byte* s, size_t n)
 {
     assert(m_pOut.get());
     return m_pOut->write(s, n);
-}
-//-----------------------------------------------------------------------
-void FilterOutStream::flush()
-{
-    assert(m_pOut.get());
-    return m_pOut->flush();
 }
 //-----------------------------------------------------------------------
 void FilterOutStream::close()
@@ -108,7 +114,7 @@ FilterInQueue::~FilterInQueue()
 {
 }
 //-----------------------------------------------------------------------
-u2int32 FilterInQueue::read(u2byte* s, std::streamsize n)
+size_t FilterInQueue::read(u2byte* s, size_t n)
 {
     if (m_OutterStreams.get())
     {
@@ -120,16 +126,36 @@ u2int32 FilterInQueue::read(u2byte* s, std::streamsize n)
     }
 }
 //-----------------------------------------------------------------------
-std::streamoff FilterInQueue::skip(std::streamoff off)
+ssize_t FilterInQueue::skip(ssize_t count)
 {
     if (m_OutterStreams.get())
     {
-        return m_OutterStreams->skip(off);
+        return m_OutterStreams->skip(count);
     }
     else
     {
         return 0;
     }
+}
+//-----------------------------------------------------------------------
+void FilterInQueue::seek(size_t pos)
+{
+	if (m_OutterStreams.get())
+	{
+		return m_OutterStreams->seek(pos);
+	}
+}
+//-----------------------------------------------------------------------
+size_t FilterInQueue::tell(void) const
+{
+	if (m_OutterStreams.get())
+	{
+		return m_OutterStreams->tell();
+	}
+	else
+	{
+		return 0;
+	}
 }
 //-----------------------------------------------------------------------
 void FilterInQueue::close()
@@ -156,19 +182,11 @@ FilterOutQueue::~FilterOutQueue()
 {
 }
 //-----------------------------------------------------------------------
-void FilterOutQueue::write(const u2byte* s, std::streamsize n)
+size_t FilterOutQueue::write(const u2byte* s, size_t n)
 {
     if (m_InnerStreams.get())
     {
         return m_InnerStreams->write(s, n);
-    }
-}
-//-----------------------------------------------------------------------
-void FilterOutQueue::flush()
-{
-    if (m_InnerStreams.get())
-    {
-        return m_InnerStreams->flush();
     }
 }
 //-----------------------------------------------------------------------
