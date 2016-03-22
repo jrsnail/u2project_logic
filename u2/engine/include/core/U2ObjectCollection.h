@@ -34,8 +34,8 @@ public:
     */
     virtual ~ObjectCollection();
 
-    typedef MapIterator<MultiKeyMap>		ObjectQueueIterator;
-	typedef ConstMapIterator<MultiKeyMap>	ConstObjectQueueIterator;
+    typedef MapIterator<MultiKeyMap>		ObjectMapIterator;
+	typedef ConstMapIterator<MultiKeyMap>	ConstObjectMapIterator;
 
 	T* createObject(const String& type, const String& name = BLANK);
 
@@ -45,36 +45,50 @@ public:
 
 	void removeObject(T* obj);
 
-	ConstObjectQueueIterator retrieveAllObjectsByName(const String& name) const
+	ConstObjectMapIterator retrieveAllObjects() const
+	{
+		MultiKeyMap::const_iterator bit = mObjects.begin();
+		MultiKeyMap::const_iterator eit = mObjects.end();
+		return ConstObjectMapIterator(bit, eit);
+	}
+
+	ObjectMapIterator retrieveAllObjects()
+	{
+		MultiKeyMap::iterator bit = mObjects.begin();
+		MultiKeyMap::iterator eit = mObjects.end();
+		return ObjectMapIterator(bit, eit);
+	}
+
+	ConstObjectMapIterator retrieveAllObjectsByName(const String& name) const
 	{
 		MultiKeyMap::const_iterator bit = mObjects.lower_bound(VLIST_1(name));
 		MultiKeyMap::const_iterator eit = mObjects.upper_bound(VLIST_1(name));
-		return ConstObjectQueueIterator(bit, eit);
+		return ConstObjectMapIterator(bit, eit);
 	}
 
-	ObjectQueueIterator retrieveAllObjectsByName(const String& name)
+	ObjectMapIterator retrieveAllObjectsByName(const String& name)
 	{
 		MultiKeyMap::iterator bit = mObjects.lower_bound(VLIST_1(name));
 		MultiKeyMap::iterator eit = mObjects.upper_bound(VLIST_1(name));
-		return ObjectQueueIterator(bit, eit);
+		return ObjectMapIterator(bit, eit);
 	}
 
 	const T* retrieveObjectByName(const String& name) const;
 
 	T* retrieveObjectByName(const String& name);
 
-	ConstObjectQueueIterator retrieveAllObjectsByType(const String& type) const
+	ConstObjectMapIterator retrieveAllObjectsByType(const String& type) const
 	{
 		MultiKeyMap::const_iterator bit = mObjects.lower_bound(VLIST_2(KeyHolder<String>(), type));
 		MultiKeyMap::const_iterator eit = mObjects.upper_bound(VLIST_2(KeyHolder<String>(), type));
-		return ConstObjectQueueIterator(bit, eit);
+		return ConstObjectMapIterator(bit, eit);
 	}
 
-	ObjectQueueIterator retrieveAllObjectsByType(const String& type)
+	ObjectMapIterator retrieveAllObjectsByType(const String& type)
 	{
 		MultiKeyMap::iterator bit = mObjects.lower_bound(VLIST_2(KeyHolder<String>(), type));
 		MultiKeyMap::iterator eit = mObjects.upper_bound(VLIST_2(KeyHolder<String>(), type));
-		return ObjectQueueIterator(bit, eit);
+		return ObjectMapIterator(bit, eit);
 	}
 
 	const T* retrieveObjectByType(const String& type) const;
@@ -85,18 +99,18 @@ public:
 
 	T* retrieveObjectByGuid(const String& guid);
 
-	ConstObjectQueueIterator retrieveAllObjectsByTN(const String& type, const String& name) const
+	ConstObjectMapIterator retrieveAllObjectsByTN(const String& type, const String& name) const
 	{
 		MultiKeyMap::const_iterator bit = mObjects.lower_bound(VLIST_2(name, type));
 		MultiKeyMap::const_iterator eit = mObjects.upper_bound(VLIST_2(name, type));
-		return ConstObjectQueueIterator(bit, eit);
+		return ConstObjectMapIterator(bit, eit);
 	}
 
-	ObjectQueueIterator retrieveAllObjectsByTN(const String& type, const String& name)
+	ObjectMapIterator retrieveAllObjectsByTN(const String& type, const String& name)
 	{
 		MultiKeyMap::iterator bit = mObjects.lower_bound(VLIST_2(name, type));
 		MultiKeyMap::iterator eit = mObjects.upper_bound(VLIST_2(name, type));
-		return ObjectQueueIterator(bit, eit);
+		return ObjectMapIterator(bit, eit);
 	}
 
 	const T* retrieveObjectByTN(const String& type, const String& name) const;
@@ -141,7 +155,7 @@ template <class T>
 void ObjectCollection<T>::destoryObject(T* obj)
 {
 	assert(obj != nullptr);
-	typename ObjectQueueMap::iterator it = mObjects.find(VLIST_3(obj->getName(), obj->getType(), obj->getGuid()));
+	typename MultiKeyMap::iterator it = mObjects.find(VLIST_3(obj->getName(), obj->getType(), obj->getGuid()));
 	if (it != mObjects.end())
 	{
 		FactoryManager::getSingleton().destroyObject(obj);
@@ -161,7 +175,7 @@ template <class T>
 void ObjectCollection<T>::removeObject(T* obj)
 {
 	assert(obj != nullptr);
-	typename ObjectQueueMap::iterator it = mObjects.find(VLIST_3(obj->getName(), obj->getType(), obj->getGuid()));
+	typename MultiKeyMap::iterator it = mObjects.find(VLIST_3(obj->getName(), obj->getType(), obj->getGuid()));
 	if (it != mObjects.end())
 	{
 		mObjects.erase(it);

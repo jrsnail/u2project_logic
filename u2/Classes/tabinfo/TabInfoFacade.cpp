@@ -18,7 +18,7 @@ TabInfoFacade::TabInfoFacade(const String& type, const String& name)
 //-----------------------------------------------------------------------
 TabInfoFacade& TabInfoFacade::getInstance(void)
 {
-    Facade* pFacade = FacadeManager::getSingleton().retrieveObject("TabInfoFacade");
+    Facade* pFacade = FacadeManager::getSingleton().retrieveObjectByName("TabInfoFacade");
     if (pFacade == nullptr)
     {
         pFacade = FacadeManager::getSingleton().createObject(ObjectTypeTabInfoFacade, "TabInfoFacade");

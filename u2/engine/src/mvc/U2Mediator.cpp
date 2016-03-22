@@ -32,7 +32,7 @@ Mediator::~Mediator(void)
 void Mediator::startup(const u2::Context* context)
 {
 	m_bCreator = false;
-    m_pViewComp = ViewComponentManager::getSingleton().retrieveObject(context->getViewCompClass(), context->getViewCompName());
+    m_pViewComp = ViewComponentManager::getSingleton().retrieveObjectByTN(context->getViewCompClass(), context->getViewCompName());
 	if (m_pViewComp == nullptr)
 	{
         m_pViewComp = ViewComponentManager::getSingleton().createObject(context->getViewCompClass(), context->getViewCompName());

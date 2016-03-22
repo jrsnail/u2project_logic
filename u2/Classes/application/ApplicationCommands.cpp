@@ -69,7 +69,7 @@ Trans2LogoCommand::~Trans2LogoCommand()
 void Trans2LogoCommand::go(const Notification& notification)
 {
     // create context tree
-    u2::Context* pRoot = ContextManager::getSingleton().retrieveObject(ON_Context_Root);
+    u2::Context* pRoot = ContextManager::getSingleton().retrieveObjectByName(ON_Context_Root);
     u2::Context* pLogo = pRoot->createChild(
         OT_Context, ON_Context_LogoScene
         , getFacade().getName()

@@ -129,7 +129,7 @@ inline Command& Controller::retrieveCommand(const String& notification)
 
 void Controller::removeController(const String& name)
 {
-    Controller* pObj = ControllerManager::getSingleton().retrieveObject(name);
+    Controller* pObj = ControllerManager::getSingleton().retrieveObjectByName(name);
     if (pObj == nullptr)
     {
         return;

@@ -76,7 +76,7 @@ void View::removeObserver(const String& notification_name, const Object* const t
         if (observer->compareNotifyTarget(target))
         {
             m_ObserverMap.erase(result);
-            bool bExist = ObserverManager::getSingleton().hasObject(observer->getGuid());
+            bool bExist = (ObserverManager::getSingleton().retrieveObjectByGuid(observer->getGuid()) != nullptr);
             if (bExist)
             {
                 ObserverManager::getSingleton().recycleObject(observer);
@@ -182,7 +182,7 @@ inline bool View::hasMediator(const String& mediator_name)
 
 void View::removeView(const String& name)
 {
-    View* pObj = ViewManager::getSingleton().retrieveObject(name);
+    View* pObj = ViewManager::getSingleton().retrieveObjectByName(name);
     if (pObj == nullptr)
     {
         return;
@@ -211,10 +211,10 @@ View::~View(void)
     for (; iter != m_ObserverMap.end(); ++iter)
     {
         ObserverMap::value_type::second_type observer = iter->second;
-        bool bExist = ObserverManager::getSingleton().hasObject(observer->getGuid());
+        bool bExist = (ObserverManager::getSingleton().retrieveObjectByGuid(observer->getGuid()) != nullptr);
         if (bExist)
         {
-            ObserverManager::getSingleton().recycleObject(iter->second);
+            ObserverManager::getSingleton().recycleObject(observer);
         }
         else
         {

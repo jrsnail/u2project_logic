@@ -87,7 +87,7 @@ Proxy* Model::removeProxy(const String& proxy_name)
 //-----------------------------------------------------------------------
 void Model::removeModel(const String& name)
 {
-    Model* pObj = ModelManager::getSingleton().retrieveObject(name);
+    Model* pObj = ModelManager::getSingleton().retrieveObjectByName(name);
     if (pObj == nullptr)
     {
         return;
@@ -99,13 +99,12 @@ Model::ProxyNames Model::listProxyNames(void) const
 {
     ProxyNames names;
 
-    ModelManager::ObjectMapIterator mapIterator = ModelManager::getSingleton().getObjectIterator();
-    while (mapIterator.hasMoreElements())
-    {
-        String szKey = mapIterator.peekNextKey();
-        names.push_back(szKey);
-        mapIterator.moveNext();
-    }
+	for (ProxyMap::const_iterator it = m_ProxyMap.begin(); 
+		it != m_ProxyMap.end();
+		it++)
+	{
+		names.push_back(it->first);
+	}
 
     return names;
 }

@@ -2,8 +2,7 @@
 #define __U2PoolingObjectManager_H__
 
 #include "U2Prerequisites.h"
-#include "U2IteratorWrapper.h"
-#include "U2FactoryManager.h"
+#include "U2ObjectCollection.h"
 #include "U2Object.h"
 
 
@@ -14,7 +13,7 @@ class ObjectFactory;
 
 
 template <class T> 
-class PoolingObjectManager : ObjectCollection<T>
+class PoolingObjectManager : public ObjectCollection<T>
 {
 public:
     /** Default constructor - should never get called by a client app.
@@ -83,7 +82,7 @@ T* PoolingObjectManager<T>::reuseObjectAsName(const String& type, const String& 
 	addObject(pObj);
 	pObj->postReuseFromPool();
 
-    return nullptr;
+    return pObj;
 }
 //-----------------------------------------------------------------------
 template<class T>
@@ -101,7 +100,7 @@ void PoolingObjectManager<T>::recycleObject(T* obj)
 template<class T>
 void PoolingObjectManager<T>::destoryUnusedObject(const String& type)
 {
-	ObjectCollection<T>::ObjectQueueIterator it = mUnusedObjects.retrieveAllObjectsByType(type);
+	ObjectCollection<T>::ObjectMapIterator it = mUnusedObjects.retrieveAllObjectsByType(type);
 	while (it.hasMoreElements())
 	{
 		T* pObj = dynamic_cast<T*>(it.getNext());

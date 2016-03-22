@@ -68,7 +68,7 @@ void ContextProxy::replace(const String& name, u2::Context* from, u2::Context* t
 //-----------------------------------------------------------------------
 ContextQueue* ContextProxy::_retrieveContextQueue(const String& name)
 {
-    ContextQueue* pQueue = retrieveObject(name);
+    ContextQueue* pQueue = retrieveObjectByName(name);
     if (pQueue == nullptr)
     {
         assert(0);
@@ -78,7 +78,7 @@ ContextQueue* ContextProxy::_retrieveContextQueue(const String& name)
 //-----------------------------------------------------------------------
 void ContextProxy::erase(const u2::String& name)
 {
-    for (ObjectMap::iterator it = mObjects.begin(); it != mObjects.end(); it++)
+    for (MultiKeyMap::iterator it = mObjects.begin(); it != mObjects.end(); it++)
     {
         ContextQueue* pQueue = it->second;
         if (pQueue == nullptr)
@@ -99,7 +99,7 @@ void ContextProxy::erase(const u2::Context* context)
     {
         return;
     }
-    for (ObjectMap::iterator it = mObjects.begin(); it != mObjects.end(); it++)
+    for (MultiKeyMap::iterator it = mObjects.begin(); it != mObjects.end(); it++)
     {
         ContextQueue* pQueue = it->second;
         if (pQueue == nullptr)
@@ -124,7 +124,7 @@ void ContextProxy::_switch(u2::Context* from, ContextQueue::eTransType transType
 ContextQueue* ContextProxy::createContextQueue(const String& type, const String& name
     , ContextQueue::eTransType defaultTransType, ContextQueue::eBackKeyPriority priority)
 {
-    ContextQueue* pQueue = retrieveObject(name);
+    ContextQueue* pQueue = retrieveObjectByName(name);
     if (pQueue == nullptr)
     {
         pQueue = createObject(type, name);

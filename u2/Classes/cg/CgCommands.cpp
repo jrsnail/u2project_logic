@@ -27,7 +27,7 @@ Trans2CgCommand::~Trans2CgCommand()
 void Trans2CgCommand::go(const Notification& notification)
 {
     // create context tree
-    u2::Context* pRoot = ContextManager::getSingleton().retrieveObject(ON_Context_Root);
+    u2::Context* pRoot = ContextManager::getSingleton().retrieveObjectByName(ON_Context_Root);
     u2::Context* pCg = pRoot->createChild(
         OT_Context, ON_Context_CgScene
         , getFacade().getName()
@@ -51,7 +51,7 @@ Trans2StartPageCommand::~Trans2StartPageCommand()
 void Trans2StartPageCommand::go(const Notification& notification)
 {
     // create context tree
-    u2::Context* pRoot = ContextManager::getSingleton().retrieveObject(ON_Context_Root);
+    u2::Context* pRoot = ContextManager::getSingleton().retrieveObjectByName(ON_Context_Root);
     u2::Context* pStartPage = pRoot->createChild(
         OT_Context, ON_Context_StartPageScene
         , getFacade().getName()

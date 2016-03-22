@@ -46,5 +46,5 @@ Observer* ObserverManager::createOrReuseObserver(const String& type, Observer::N
 //-----------------------------------------------------------------------
 Observer* ObserverManager::createOrReuseObject(const String& type)
 {
-    return PoolingObjectManager<Observer>::createOrReuseObject(type);
+    return PoolingObjectManager<Observer>::reuseObjectAsName(type);
 }

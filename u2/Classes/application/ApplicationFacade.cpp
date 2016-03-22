@@ -21,7 +21,7 @@ ApplicationFacade* ApplicationFacade::getSingletonPtr(void)
 {
 	if (msSingleton == nullptr)
 	{
-        Facade* pFacade = FacadeManager::getSingleton().retrieveObject(ON_Facade_Application);
+        Facade* pFacade = FacadeManager::getSingleton().retrieveObjectByName(ON_Facade_Application);
 		if (pFacade == nullptr)
 		{
             pFacade = Facade::createFacade<ApplicationFacade>(ON_Facade_Application);

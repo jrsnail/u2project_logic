@@ -246,12 +246,12 @@ inline void Facade::notifyObservers(const Notification& notification)
 
 bool Facade::hasCore(const String& name)
 {
-    return FacadeManager::getSingleton().retrieveObject(name) != nullptr;
+    return FacadeManager::getSingleton().retrieveObjectByName(name) != nullptr;
 }
 
 void Facade::removeCore(const String& name)
 {
-    Facade* pObj = FacadeManager::getSingleton().retrieveObject(name);
+    Facade* pObj = FacadeManager::getSingleton().retrieveObjectByName(name);
     if (pObj == nullptr)
     {
         return;
@@ -264,7 +264,7 @@ void Facade::removeCore(const String& name)
 
 void Facade::broadcastNotification(const Notification& notification)
 {
-    FacadeManager::ObjectMapIterator mapIterator = FacadeManager::getSingleton().getObjectIterator();
+    FacadeManager::ObjectMapIterator mapIterator = FacadeManager::getSingleton().retrieveAllObjects();
     while (mapIterator.hasMoreElements())
     {
         Facade* pFacade = dynamic_cast<Facade*>(mapIterator.getNext());

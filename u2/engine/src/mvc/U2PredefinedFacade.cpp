@@ -21,7 +21,7 @@ PredefinedFacade* PredefinedFacade::getSingletonPtr(void)
 {
 	if (msSingleton == nullptr)
 	{
-        Facade* pFacade = FacadeManager::getSingleton().retrieveObject(ON_Facade_Predefined);
+        Facade* pFacade = FacadeManager::getSingleton().retrieveObjectByName(ON_Facade_Predefined);
 		if (pFacade == nullptr)
 		{
             pFacade = Facade::createFacade<PredefinedFacade>(ON_Facade_Predefined);

@@ -53,7 +53,7 @@ void TransMediator::startup(const u2::Context* from, ContextQueue::eTransType ty
     ViewComponent* pFromViewComp = nullptr;
     if (from != nullptr)
     {
-        pFromViewComp = ViewComponentManager::getSingleton().retrieveObject(from->getViewCompClass(), from->getViewCompName());
+        pFromViewComp = ViewComponentManager::getSingleton().retrieveObjectByTN(from->getViewCompClass(), from->getViewCompName());
         if (pFromViewComp == nullptr)
         {
             pFromViewComp = ViewComponentManager::getSingleton().createObject(from->getViewCompClass(), from->getViewCompName());
@@ -68,10 +68,10 @@ void TransMediator::startup(const u2::Context* from, ContextQueue::eTransType ty
 
             if (pParent && pParent->getName() != BLANK)
             {
-                m_pFromContext = ContextManager::getSingleton().retrieveObject(pParent->getName());
+                m_pFromContext = ContextManager::getSingleton().retrieveObjectByName(pParent->getName());
                 if (m_pFromContext)
                 {
-                    pFromViewComp = ViewComponentManager::getSingleton().retrieveObject(
+                    pFromViewComp = ViewComponentManager::getSingleton().retrieveObjectByTN(
                         m_pFromContext->getViewCompClass(), m_pFromContext->getViewCompName());
                     pFromViewComp->addListener(this);
                 }
@@ -82,7 +82,7 @@ void TransMediator::startup(const u2::Context* from, ContextQueue::eTransType ty
     ViewComponent* pToViewComp = nullptr;
     if (to != nullptr)
     {
-        pToViewComp = ViewComponentManager::getSingleton().retrieveObject(to->getViewCompClass(), to->getViewCompName());
+        pToViewComp = ViewComponentManager::getSingleton().retrieveObjectByTN(to->getViewCompClass(), to->getViewCompName());
         if (pToViewComp == nullptr)
         {
             pToViewComp = ViewComponentManager::getSingleton().createObject(to->getViewCompClass(), to->getViewCompName());
@@ -241,7 +241,7 @@ void TransMediator::_startupToContext(const u2::Context* context)
         return;
     }
 
-    Mediator* pMediator = MediatorManager::getSingleton().retrieveObject(context->getMediatorName());
+    Mediator* pMediator = MediatorManager::getSingleton().retrieveObjectByName(context->getMediatorName());
     if (pMediator != nullptr)
     {
         pMediator->startup(m_pToContext);

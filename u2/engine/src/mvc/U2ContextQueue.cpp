@@ -39,7 +39,7 @@ u2::Context* ContextQueue::top()
 //-----------------------------------------------------------------------
 bool ContextQueue::hasContext(const u2::String& name)
 {
-    Context* pContext = ContextManager::getSingleton().retrieveObject(name);
+    Context* pContext = ContextManager::getSingleton().retrieveObjectByName(name);
     return hasContext(pContext);
 }
 //-----------------------------------------------------------------------
@@ -62,7 +62,7 @@ bool ContextQueue::hasContext(const u2::Context* context)
 //-----------------------------------------------------------------------
 void ContextQueue::erase(const u2::String& name)
 {
-    Context* pContext = ContextManager::getSingleton().retrieveObject(name);
+    Context* pContext = ContextManager::getSingleton().retrieveObjectByName(name);
     erase(pContext);
 }
 //-----------------------------------------------------------------------

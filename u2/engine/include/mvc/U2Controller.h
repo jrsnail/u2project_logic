@@ -164,7 +164,7 @@ template <typename T>
 void Controller::initializeView(const String& name)
 {
     CREATE_FACTORY(T);
-	m_pView = ViewManager::getSingleton().retrieveObject(name);
+	m_pView = ViewManager::getSingleton().retrieveObjectByName(name);
 	if (m_pView == nullptr)
 	{
 		m_pView = ViewManager::getSingleton().createObject(GET_OBJECT_TYPE(T), name);

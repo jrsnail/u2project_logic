@@ -10,7 +10,7 @@ U2EG_NAMESPACE_BEGIN
 
 
 template <class T> 
-class TypedObjectManager : ObjectCollection<T>
+class TypedObjectManager : public ObjectCollection<T>
 {
 protected:
 	void addObject(T* obj)

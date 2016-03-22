@@ -49,11 +49,11 @@ void DestoryContextCommand::_destroyContext(u2::Context* context)
     }
 
     // destroy mediator
-    Mediator* pMediator = MediatorManager::getSingleton().retrieveObject(context->getMediatorName());
+    Mediator* pMediator = MediatorManager::getSingleton().retrieveObjectByName(context->getMediatorName());
     if (pMediator != nullptr)
     {
         pMediator->end();
-        Facade* pFacade = FacadeManager::getSingleton().retrieveObject(context->getFacadeName());
+        Facade* pFacade = FacadeManager::getSingleton().retrieveObjectByName(context->getFacadeName());
         if (pFacade != nullptr)
         {
             pFacade->removeMediator(context->getMediatorName());
@@ -138,7 +138,7 @@ BackKeyCommand::~BackKeyCommand()
 //-----------------------------------------------------------------------
 void BackKeyCommand::go(const Notification& notification)
 {
-    ContextProxy* pProxy = dynamic_cast<ContextProxy*>(ProxyManager::getSingleton().retrieveObject("ContextProxy"));
+    ContextProxy* pProxy = dynamic_cast<ContextProxy*>(ProxyManager::getSingleton().retrieveObjectByName(ON_Proxy_Context));
     if (pProxy == nullptr)
     {
         return;
@@ -172,7 +172,7 @@ bool BackKeyCommand::_dispatchBack(u2::Context* context)
         return false;
     }
 
-    Mediator* pMediator = MediatorManager::getSingleton().retrieveObject(context->getMediatorName());
+    Mediator* pMediator = MediatorManager::getSingleton().retrieveObjectByName(context->getMediatorName());
     if (pMediator == nullptr)
     {
         return false;

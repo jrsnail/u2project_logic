@@ -404,7 +404,7 @@ public:
 template <typename T>
 void Facade::initializeController(const String& name)
 {
-	_controller = ControllerManager::getSingleton().retrieveObject(name);
+	_controller = ControllerManager::getSingleton().retrieveObjectByName(name);
 	if (_controller == nullptr)
 	{
 		_controller = ControllerManager::getSingleton().createObject(GET_OBJECT_TYPE(T), name);
@@ -415,7 +415,7 @@ void Facade::initializeController(const String& name)
 template <typename T>
 void Facade::initializeModel(const String& name)
 {
-	_model = ModelManager::getSingleton().retrieveObject(name);
+	_model = ModelManager::getSingleton().retrieveObjectByName(name);
 	if (_model == nullptr)
 	{
 		_model = ModelManager::getSingleton().createObject(GET_OBJECT_TYPE(T), name);
@@ -426,7 +426,7 @@ void Facade::initializeModel(const String& name)
 template <typename T>
 void Facade::initializeView(const String& name)
 {
-	_view = ViewManager::getSingleton().retrieveObject(name);
+	_view = ViewManager::getSingleton().retrieveObjectByName(name);
 	if (_view == nullptr)
 	{
 		_view = ViewManager::getSingleton().createObject(GET_OBJECT_TYPE(T), name);

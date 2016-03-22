@@ -2,8 +2,7 @@
 #define __U2SimpleObjectManager_H__
 
 #include "U2Prerequisites.h"
-#include "U2IteratorWrapper.h"
-#include "U2FactoryManager.h"
+#include "U2ObjectCollection.h"
 
 
 U2EG_NAMESPACE_BEGIN
@@ -25,22 +24,22 @@ public:
     T* createObject(const String& type, const String& name);
 
 protected:
-	ConstObjectQueueIterator retrieveAllObjectsByName(const String& name) const
+	ConstObjectMapIterator retrieveAllObjectsByName(const String& name) const
 	{
 		return ObjectCollection<T>::retrieveAllObjectsByName(name);
 	}
 
-	ObjectQueueIterator retrieveAllObjectsByName(const String& name)
+	ObjectMapIterator retrieveAllObjectsByName(const String& name)
 	{
 		return ObjectCollection<T>::retrieveAllObjectsByName(name);
 	}
 
-	ConstObjectQueueIterator retrieveAllObjectsByType(const String& type) const
+	ConstObjectMapIterator retrieveAllObjectsByType(const String& type) const
 	{
 		return ObjectCollection<T>::retrieveAllObjectsByType(type);
 	}
 
-	ObjectQueueIterator retrieveAllObjectsByType(const String& type)
+	ObjectMapIterator retrieveAllObjectsByType(const String& type)
 	{
 		return ObjectCollection<T>::retrieveAllObjectsByType(type);
 	}
@@ -65,12 +64,12 @@ protected:
 		return ObjectCollection<T>::retrieveObjectByGuid(guid);
 	}
 
-	ConstObjectQueueIterator retrieveAllObjectsByTN(const String& type, const String& name) const
+	ConstObjectMapIterator retrieveAllObjectsByTN(const String& type, const String& name) const
 	{
 		return ObjectCollection<T>::retrieveAllObjectsByTN(type, name);
 	}
 
-	ObjectQueueIterator retrieveAllObjectsByTN(const String& type, const String& name)
+	ObjectMapIterator retrieveAllObjectsByTN(const String& type, const String& name)
 	{
 		return ObjectCollection<T>::retrieveAllObjectsByTN(type, name);
 	}
@@ -114,7 +113,7 @@ SimpleObjectManager<T>::~SimpleObjectManager()
 template <class T>
 T* SimpleObjectManager<T>::createObject(const String& type, const String& name)
 {
-	assert(retrieveObjectByName(name) != nullptr);
+	assert(retrieveObjectByName(name) == nullptr);
     return ObjectCollection<T>::createObject(type, name);
 }
 
