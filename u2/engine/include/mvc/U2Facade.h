@@ -66,6 +66,9 @@ public:
 	*/
 	virtual void initializeFacade(void);
 
+	template <typename T>
+	static T* createFacade(const String& name);
+
 protected:
 	/**
 	* Initialize the <code>Controller</code>.
@@ -143,8 +146,7 @@ protected:
 	template <typename T>
 	void initializeView(const String& name);
 
-	template <typename T>
-	static Facade* createFacade(const String& name);
+	
 
 public:
 	/**
@@ -435,10 +437,10 @@ void Facade::initializeView(const String& name)
 }
 //-----------------------------------------------------------------------
 template <typename T>
-Facade* Facade::createFacade(const String& name)
+T* Facade::createFacade(const String& name)
 {
 	CREATE_FACTORY(T);
-	Facade* pFacade = FacadeManager::getSingleton().createObject(GET_OBJECT_TYPE(T), name);
+	T* pFacade = dynamic_cast<T*>(FacadeManager::getSingleton().createObject(GET_OBJECT_TYPE(T), name));
 	pFacade->initializeFacade();
 	return pFacade;
 }

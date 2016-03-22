@@ -15,31 +15,19 @@
 
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-template<> CgFacade* Singleton<CgFacade>::msSingleton = 0;
-//-----------------------------------------------------------------------
-CgFacade* CgFacade::getSingletonPtr(void)
-{
-	if (msSingleton == nullptr)
-	{
-        Facade* pFacade = FacadeManager::getSingleton().retrieveObjectByName(ON_Facade_Cg);
-		if (pFacade == nullptr)
-		{
-            pFacade = Facade::createFacade<CgFacade>(ON_Facade_Cg);
-		}
-		msSingleton = dynamic_cast<CgFacade*>(pFacade);
-	}
-	
-	return msSingleton;
-}
-//-----------------------------------------------------------------------
-CgFacade& CgFacade::getSingleton(void)
-{
-	return (*getSingletonPtr());
-}
+CgFacade* CgFacade::ms_pSingleton = nullptr;
 //-----------------------------------------------------------------------
 CgFacade::CgFacade(const u2::String& type, const u2::String& name)
     : Facade(type, name)
 {
+	if (ms_pSingleton != nullptr)
+	{
+		assert(0);
+		return;
+	}
+
+	ms_pSingleton = this;
+
     // command factory
     CREATE_FACTORY(Trans2CgCommand);
     CREATE_FACTORY(Trans2StartPageCommand);
@@ -55,6 +43,7 @@ CgFacade::CgFacade(const u2::String& type, const u2::String& name)
 //-----------------------------------------------------------------------
 CgFacade::~CgFacade(void)
 {
+	ms_pSingleton = nullptr;
 }
 //-----------------------------------------------------------------------
 void CgFacade::initializeController(void)

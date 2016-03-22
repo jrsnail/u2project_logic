@@ -1,7 +1,9 @@
 #include "AppDelegate.h"
 
 #include "U2Core.h"
+#include "U2Mvc.h"
 #include "application/ApplicationFacade.h"
+#include "application/ApplicationPrerequisites.h"
 #include "cg/CgFacade.h"
 #include "U2TaskGroup.h"
 
@@ -102,9 +104,18 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
 	m_pFrameListenerCollection = new CocosFrameListenerCollection;
 
-	PredefinedFacade::getSingleton();
-	CgFacade::getSingleton();
-	ApplicationFacade::getSingleton().startup();
+// 	PredefinedFacade::getSingleton();
+// 	CgFacade::getSingleton();
+// 	ApplicationFacade::getSingleton().startup();
+
+	Facade::createFacade<PredefinedFacade>(ON_Facade_Predefined);
+	Facade::createFacade<CgFacade>(ON_Facade_Cg);
+	ApplicationFacade* pAppFacade = Facade::createFacade<ApplicationFacade>(ON_Facade_Application);
+	if (pAppFacade != nullptr)
+	{
+		pAppFacade->startup();
+	}
+	
 
 
 	// Create log manager and default log file if there is no log manager yet

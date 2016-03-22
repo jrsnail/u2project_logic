@@ -15,31 +15,19 @@
 
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-template<> ApplicationFacade* Singleton<ApplicationFacade>::msSingleton = 0;
-//-----------------------------------------------------------------------
-ApplicationFacade* ApplicationFacade::getSingletonPtr(void)
-{
-	if (msSingleton == nullptr)
-	{
-        Facade* pFacade = FacadeManager::getSingleton().retrieveObjectByName(ON_Facade_Application);
-		if (pFacade == nullptr)
-		{
-            pFacade = Facade::createFacade<ApplicationFacade>(ON_Facade_Application);
-		}
-		msSingleton = dynamic_cast<ApplicationFacade*>(pFacade);
-	}
-	
-	return msSingleton;
-}
-//-----------------------------------------------------------------------
-ApplicationFacade& ApplicationFacade::getSingleton(void)
-{
-	return (*getSingletonPtr());
-}
+ApplicationFacade* ApplicationFacade::ms_pSingleton = nullptr;
 //-----------------------------------------------------------------------
 ApplicationFacade::ApplicationFacade(const u2::String& type, const u2::String& name)
     : Facade(type, name)
 {
+	if (ms_pSingleton != nullptr)
+	{
+		assert(0);
+		return;
+	}
+
+	ms_pSingleton = this;
+
     // proxy factory
 
     // command factory
@@ -59,6 +47,7 @@ ApplicationFacade::ApplicationFacade(const u2::String& type, const u2::String& n
 //-----------------------------------------------------------------------
 ApplicationFacade::~ApplicationFacade(void)
 {
+	ms_pSingleton = nullptr;
 }
 //-----------------------------------------------------------------------
 void ApplicationFacade::initializeFacade(void)

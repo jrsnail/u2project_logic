@@ -15,31 +15,19 @@
 
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-template<> PredefinedFacade* Singleton<PredefinedFacade>::msSingleton = 0;
-//-----------------------------------------------------------------------
-PredefinedFacade* PredefinedFacade::getSingletonPtr(void)
-{
-	if (msSingleton == nullptr)
-	{
-        Facade* pFacade = FacadeManager::getSingleton().retrieveObjectByName(ON_Facade_Predefined);
-		if (pFacade == nullptr)
-		{
-            pFacade = Facade::createFacade<PredefinedFacade>(ON_Facade_Predefined);
-		}
-		msSingleton = dynamic_cast<PredefinedFacade*>(pFacade);
-	}
-	
-	return msSingleton;
-}
-//-----------------------------------------------------------------------
-PredefinedFacade& PredefinedFacade::getSingleton(void)
-{
-	return (*getSingletonPtr());
-}
+PredefinedFacade* PredefinedFacade::ms_pSingleton = nullptr;
 //-----------------------------------------------------------------------
 PredefinedFacade::PredefinedFacade(const String& type, const String& name)
     : Facade(type, name)
 {
+	if (ms_pSingleton != nullptr)
+	{
+		assert(0);
+		return;
+	}
+
+	ms_pSingleton = this;
+
     // command factory
     CREATE_FACTORY(DestoryContextCommand);
     CREATE_FACTORY(BackKeyCommand);
@@ -56,6 +44,7 @@ PredefinedFacade::PredefinedFacade(const String& type, const String& name)
 //-----------------------------------------------------------------------
 PredefinedFacade::~PredefinedFacade(void)
 {
+	ms_pSingleton = nullptr;
 }
 //-----------------------------------------------------------------------
 void PredefinedFacade::initializeController(void)
