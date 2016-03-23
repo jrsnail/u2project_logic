@@ -9,6 +9,7 @@ U2EG_NAMESPACE_USING
 Worker::Worker(const String& type, const String& name)
 	: Object(type, name)
 {
+
 }
 //-----------------------------------------------------------------------
 void Worker::join() 
@@ -51,9 +52,48 @@ WorkerManager::WorkerManager()
 //-----------------------------------------------------------------------
 WorkerManager::~WorkerManager()
 {
+	m_Workers.clear();
+}
+//-----------------------------------------------------------------------
+void WorkerManager::destoryObject(Worker* obj)
+{
+	assert(obj != nullptr);
+
+	WorkerMap::iterator it = m_Workers.find(obj->getThreadId());
+	if (it != m_Workers.end())
+	{
+		m_Workers.erase(it);
+	}
+
+	SimpleObjectManager<Worker>::destoryObject(obj);
+}
+//-----------------------------------------------------------------------
+Worker* WorkerManager::retrieveObjectByThreadId(const std::thread::id& tid)
+{
+	WorkerMap::iterator it = m_Workers.find(tid);
+	if (it != m_Workers.end())
+	{
+		return it->second;
+	}
+	return nullptr;
 }
 //-----------------------------------------------------------------------
 Worker* WorkerManager::createObject(const String& type, const String& name)
 {
 	return SimpleObjectManager<Worker>::createObject(type, name);
+}
+//-----------------------------------------------------------------------
+void WorkerManager::addObject(Worker* obj)
+{
+	return SimpleObjectManager<Worker>::addObject(obj);
+}
+//-----------------------------------------------------------------------
+void WorkerManager::removeObject(Worker* obj)
+{
+	return SimpleObjectManager<Worker>::removeObject(obj);
+}
+//-----------------------------------------------------------------------
+Worker* WorkerManager::retrieveObjectByName(const String& name)
+{
+	return SimpleObjectManager<Worker>::retrieveObjectByName(name);
 }

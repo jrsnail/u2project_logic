@@ -20,10 +20,9 @@ public:
 	Worker(const String& type, const String& name = BLANK);
 
 	template<class _Fn, class... _Args>
-	void initialize(_Fn&& _Fx, _Args&&... _Ax)
+	void initialize(_Fn&& _Fx, _Args&&... _Ax) 
 	{
 		m_Thread = std::move(std::thread(std::forward<_Fn>(_Fx), std::forward<_Args>(_Ax)...));
-		m_szGuid = Worker::threadId2String(m_Thread.get_id());
 	}
 
 	void join();
@@ -53,23 +52,36 @@ public:
 	template<class _Fn, class... _Args>
 	Worker* createObject(_Fn&& _Fx, _Args&&... _Ax)
 	{
-		// Worker用SimpleObjectManager，
-		// SimpleObjectManager应该改成guid为主键，name为辅键的形式，
-		// 这样创建Worker时就不会改变key了，
-		static size_t i = 0;
-		StringStream ss;
-		ss << i++;
-
-		Worker* pObj = SimpleObjectManager<Worker>::createObject(GET_OBJECT_TYPE(Worker), ss.str());
+		Worker* pObj = SimpleObjectManager<Worker>::createObject(GET_OBJECT_TYPE(Worker));
 		if (pObj != nullptr)
 		{
 			pObj->initialize(std::forward<_Fn>(_Fx), std::forward<_Args>(_Ax)...);
+
+			std::thread::id tid = pObj->getThreadId();
+			if (m_Workers.find(tid) == m_Workers.end())
+			{
+				m_Workers[tid] = pObj;
+			}
+			else
+			{
+				assert(0);
+			}
 		}
 		return pObj;
 	}
 
+	void destoryObject(Worker* obj);
+
+	Worker* retrieveObjectByThreadId(const std::thread::id& tid);
+
 protected:
 	virtual Worker* createObject(const String& type, const String& name);
+
+	void addObject(Worker* obj);
+
+	void removeObject(Worker* obj);
+
+	Worker* retrieveObjectByName(const String& name);
 
 public:
 	/** Override standard Singleton retrieval.
@@ -105,6 +117,10 @@ public:
 	preventing link errors.
 	*/
 	static WorkerManager* getSingletonPtr(void);
+
+protected:
+	typedef map<std::thread::id, Worker*>::type				WorkerMap;
+	WorkerMap		m_Workers;
 };
 
 

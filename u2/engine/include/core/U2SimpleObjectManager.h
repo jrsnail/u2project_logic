@@ -21,22 +21,13 @@ public:
     */
     virtual ~SimpleObjectManager();
 
-    T* createObject(const String& type, const String& name);
+    T* createObject(const String& type, const String& name = BLANK);
+	
 
 protected:
-	ConstObjectMapIterator retrieveAllObjectsByName(const String& name) const
-	{
-		return ObjectCollection<T>::retrieveAllObjectsByName(name);
-	}
-
 	ObjectMapIterator retrieveAllObjectsByName(const String& name)
 	{
 		return ObjectCollection<T>::retrieveAllObjectsByName(name);
-	}
-
-	ConstObjectMapIterator retrieveAllObjectsByType(const String& type) const
-	{
-		return ObjectCollection<T>::retrieveAllObjectsByType(type);
 	}
 
 	ObjectMapIterator retrieveAllObjectsByType(const String& type)
@@ -44,19 +35,9 @@ protected:
 		return ObjectCollection<T>::retrieveAllObjectsByType(type);
 	}
 
-	const T* retrieveObjectByType(const String& type) const
-	{
-		return ObjectCollection<T>::retrieveObjectByType(type);
-	}
-
 	T* retrieveObjectByType(const String& type)
 	{
 		return ObjectCollection<T>::retrieveObjectByType(type);
-	}
-
-	const T* retrieveObjectByGuid(const String& guid) const
-	{
-		return ObjectCollection<T>::retrieveObjectByGuid(guid);
 	}
 
 	T* retrieveObjectByGuid(const String& guid)
@@ -64,19 +45,9 @@ protected:
 		return ObjectCollection<T>::retrieveObjectByGuid(guid);
 	}
 
-	ConstObjectMapIterator retrieveAllObjectsByTN(const String& type, const String& name) const
-	{
-		return ObjectCollection<T>::retrieveAllObjectsByTN(type, name);
-	}
-
 	ObjectMapIterator retrieveAllObjectsByTN(const String& type, const String& name)
 	{
 		return ObjectCollection<T>::retrieveAllObjectsByTN(type, name);
-	}
-
-	const T* retrieveObjectByTN(const String& type, const String& name) const
-	{
-		return ObjectCollection<T>::retrieveObjectByTN(type, name);
 	}
 
 	T* retrieveObjectByTN(const String& type, const String& name)

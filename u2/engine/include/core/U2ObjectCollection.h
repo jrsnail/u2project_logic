@@ -45,25 +45,11 @@ public:
 
 	void removeObject(T* obj);
 
-	ConstObjectMapIterator retrieveAllObjects() const
-	{
-		MultiKeyMap::const_iterator bit = mObjects.begin();
-		MultiKeyMap::const_iterator eit = mObjects.end();
-		return ConstObjectMapIterator(bit, eit);
-	}
-
 	ObjectMapIterator retrieveAllObjects()
 	{
 		MultiKeyMap::iterator bit = mObjects.begin();
 		MultiKeyMap::iterator eit = mObjects.end();
 		return ObjectMapIterator(bit, eit);
-	}
-
-	ConstObjectMapIterator retrieveAllObjectsByName(const String& name) const
-	{
-		MultiKeyMap::const_iterator bit = mObjects.lower_bound(VLIST_1(name));
-		MultiKeyMap::const_iterator eit = mObjects.upper_bound(VLIST_1(name));
-		return ConstObjectMapIterator(bit, eit);
 	}
 
 	ObjectMapIterator retrieveAllObjectsByName(const String& name)
@@ -73,16 +59,7 @@ public:
 		return ObjectMapIterator(bit, eit);
 	}
 
-	const T* retrieveObjectByName(const String& name) const;
-
 	T* retrieveObjectByName(const String& name);
-
-	ConstObjectMapIterator retrieveAllObjectsByType(const String& type) const
-	{
-		MultiKeyMap::const_iterator bit = mObjects.lower_bound(VLIST_2(KeyHolder<String>(), type));
-		MultiKeyMap::const_iterator eit = mObjects.upper_bound(VLIST_2(KeyHolder<String>(), type));
-		return ConstObjectMapIterator(bit, eit);
-	}
 
 	ObjectMapIterator retrieveAllObjectsByType(const String& type)
 	{
@@ -91,20 +68,9 @@ public:
 		return ObjectMapIterator(bit, eit);
 	}
 
-	const T* retrieveObjectByType(const String& type) const;
-
 	T* retrieveObjectByType(const String& type);
 
-	const T* retrieveObjectByGuid(const String& guid) const;
-
 	T* retrieveObjectByGuid(const String& guid);
-
-	ConstObjectMapIterator retrieveAllObjectsByTN(const String& type, const String& name) const
-	{
-		MultiKeyMap::const_iterator bit = mObjects.lower_bound(VLIST_2(name, type));
-		MultiKeyMap::const_iterator eit = mObjects.upper_bound(VLIST_2(name, type));
-		return ConstObjectMapIterator(bit, eit);
-	}
 
 	ObjectMapIterator retrieveAllObjectsByTN(const String& type, const String& name)
 	{
@@ -112,8 +78,6 @@ public:
 		MultiKeyMap::iterator eit = mObjects.upper_bound(VLIST_2(name, type));
 		return ObjectMapIterator(bit, eit);
 	}
-
-	const T* retrieveObjectByTN(const String& type, const String& name) const;
 
 	T* retrieveObjectByTN(const String& type, const String& name);
 
@@ -183,12 +147,6 @@ void ObjectCollection<T>::removeObject(T* obj)
 }
 //-----------------------------------------------------------------------
 template <class T>
-const T* ObjectCollection<T>::retrieveObjectByName(const String& name) const
-{
-    return const_cast<const T*>(this->retrieveObjectByName(name));
-}
-//-----------------------------------------------------------------------
-template <class T>
 T* ObjectCollection<T>::retrieveObjectByName(const String& name)
 {
 	typename MultiKeyMap::iterator it = mObjects.find(VLIST_1(name));
@@ -198,12 +156,6 @@ T* ObjectCollection<T>::retrieveObjectByName(const String& name)
     }
 
     return nullptr;
-}
-//-----------------------------------------------------------------------
-template <class T>
-const T* ObjectCollection<T>::retrieveObjectByTN(const String& type, const String& name) const
-{
-	return const_cast<const T*>(this->retrieveObjectByTN(type, name));
 }
 //-----------------------------------------------------------------------
 template <class T>
@@ -219,12 +171,6 @@ T* ObjectCollection<T>::retrieveObjectByTN(const String& type, const String& nam
 }
 //-----------------------------------------------------------------------
 template <class T>
-const T* ObjectCollection<T>::retrieveObjectByType(const String& type) const
-{
-	return const_cast<const T*>(this->retrieveObjectByType(type));
-}
-//-----------------------------------------------------------------------
-template <class T>
 T* ObjectCollection<T>::retrieveObjectByType(const String& type)
 {
 	typename MultiKeyMap::iterator it = mObjects.find(VLIST_2(KeyHolder<String>(), type));
@@ -234,12 +180,6 @@ T* ObjectCollection<T>::retrieveObjectByType(const String& type)
 	}
 
 	return nullptr;
-}
-//-----------------------------------------------------------------------
-template <class T>
-const T* ObjectCollection<T>::retrieveObjectByGuid(const String& guid) const
-{
-	return const_cast<const T*>(this->retrieveObjectByGuid(guid));
 }
 //-----------------------------------------------------------------------
 template <class T>

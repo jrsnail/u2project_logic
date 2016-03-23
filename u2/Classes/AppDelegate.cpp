@@ -130,62 +130,68 @@ bool AppDelegate::applicationDidFinishLaunching() {
 // 	m_pLogManager->getDefaultLog()->addListener(mAndroidLogger);
 // #endif
 
-	//------------------------------- Test Thread ----------------------------------------
-	/*
-	// Create a thread pool
-	TaskGroup group;
-
-	// Run a function in the thread pool
-	for (int i = 0; i < 100; ++i)
 	{
-		group.run([i] { 
-			//cocos2d::log("Hello world! run = %d, %d", i, std::this_thread::get_id());
-			CCLOG("Hello world! run = %d, %d", i, std::this_thread::get_id());
-			//u2::LogManager::getSingleton().stream(u2::LML_NORMAL) << "Hello world! run = " << i << ", " << std::this_thread::get_id() << "\n";
-		});
-		//pool.run([i] { std::cout << "Hello world! = " << i << std::endl; });
+		//------------------------------- Test Thread ----------------------------------------
+		/*
+		// Create a thread pool
+		TaskGroup group;
+
+		// Run a function in the thread pool
+		for (int i = 0; i < 100; ++i)
+		{
+			group.run([i] {
+				//cocos2d::log("Hello world! run = %d, %d", i, std::this_thread::get_id());
+				CCLOG("Hello world! run = %d, %d", i, std::this_thread::get_id());
+				//u2::LogManager::getSingleton().stream(u2::LML_NORMAL) << "Hello world! run = " << i << ", " << std::this_thread::get_id() << "\n";
+				});
+			//pool.run([i] { std::cout << "Hello world! = " << i << std::endl; });
+		}
+
+		// Wait for all queued functions to finish and the pool to become empty
+		group.wait();
+		cocos2d::log("Hello world! Thread over!");
+		*/
 	}
-		
+	
 
-	// Wait for all queued functions to finish and the pool to become empty
-	group.wait();
-	cocos2d::log("Hello world! Thread over!");
-	*/
-
-	//------------------------------- Test ObjectCollection ----------------------------------------
-	/* 
-	ObjectCollection<u2::Context> collect;
-	collect.createObject(OT_Context, "aaa");
-	collect.createObject(OT_Context, "ddd");
-	collect.createObject(OT_Context, "eee");
-	collect.createObject(OT_Context, "www");
-	collect.createObject(OT_Context, "ccc");
-	collect.createObject(OT_Context, "www");
-
-	ObjectCollection<u2::Context>::ObjectQueueIterator objIt = collect.retrieveAllObjectsByName("www");
-	while (objIt.hasMoreElements())
 	{
-		u2::Context* pContext = dynamic_cast<u2::Context*>(objIt.getNext());
-		CCLOG("=========Name, %s, %s", pContext->getName().c_str(), pContext->getGuid().c_str());
-	}
+		//------------------------------- Test ObjectCollection ----------------------------------------
+		/*
+		ObjectCollection<u2::Context> collect;
+		collect.createObject(OT_Context, "aaa");
+		collect.createObject(OT_Context, "ddd");
+		collect.createObject(OT_Context, "eee");
+		collect.createObject(OT_Context, "www");
+		collect.createObject(OT_Context, "ccc");
+		collect.createObject(OT_Context, "www");
 
-	ObjectCollection<u2::Context>::ObjectQueueIterator objIt2 = collect.retrieveAllObjectsByTN(OT_Context, "www");
-	while (objIt2.hasMoreElements())
-	{
-		u2::Context* pContext = dynamic_cast<u2::Context*>(objIt2.getNext());
-		CCLOG("=========TN, %s, %s", pContext->getName().c_str(), pContext->getGuid().c_str());
-	}
+		ObjectCollection<u2::Context>::ObjectMapIterator objIt = collect.retrieveAllObjectsByName("www");
+		while (objIt.hasMoreElements())
+		{
+			u2::Context* pContext = dynamic_cast<u2::Context*>(objIt.getNext());
+			CCLOG("=========Name, %s, %s", pContext->getName().c_str(), pContext->getGuid().c_str());
+		}
 
-	ObjectCollection<u2::Context>::ObjectQueueIterator objIt3 = collect.retrieveAllObjectsByType(OT_Context);
-	while (objIt3.hasMoreElements())
-	{
-		u2::Context* pContext = dynamic_cast<u2::Context*>(objIt3.getNext());
-		CCLOG("=========Type, %s, %s", pContext->getName().c_str(), pContext->getGuid().c_str());
-	}
+		ObjectCollection<u2::Context>::ObjectMapIterator objIt2 = collect.retrieveAllObjectsByTN(OT_Context, "www");
+		while (objIt2.hasMoreElements())
+		{
+			u2::Context* pContext = dynamic_cast<u2::Context*>(objIt2.getNext());
+			CCLOG("=========TN, %s, %s", pContext->getName().c_str(), pContext->getGuid().c_str());
+		}
 
-	u2::Context* pContext = collect.retrieveObjectByGuid("class u2::Context6");
-	CCLOG("=========Guid, %s, %s", pContext->getName().c_str(), pContext->getGuid().c_str());
-	*/
+		ObjectCollection<u2::Context>::ObjectMapIterator objIt3 = collect.retrieveAllObjectsByType(OT_Context);
+		while (objIt3.hasMoreElements())
+		{
+			u2::Context* pContext = dynamic_cast<u2::Context*>(objIt3.getNext());
+			CCLOG("=========Type, %s, %s", pContext->getName().c_str(), pContext->getGuid().c_str());
+		}
+
+		u2::Context* pContext = collect.retrieveObjectByGuid("class u2::Context6");
+		CCLOG("=========Guid, %s, %s", pContext->getName().c_str(), pContext->getGuid().c_str());
+		*/
+	}
+	
+
     
 	
     return true;
