@@ -5,6 +5,7 @@
 #include "U2Prerequisites.h"
 #include "U2STLRedefined.h"
 #include "U2MemoryAllocatorConfig.h"
+#include "U2LogManager.h"
 #include "U2ThreadHeaders.h"
 #include "U2ThreadPoolInterface.h"
 #include "U2HomogenousQueue.h"

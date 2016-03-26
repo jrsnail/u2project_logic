@@ -132,25 +132,30 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
 	{
 		//------------------------------- Test Thread ----------------------------------------
-		/*
+		
 		// Create a thread pool
-		TaskGroup group;
+		TaskGroup group(1);
 
 		// Run a function in the thread pool
-		for (int i = 0; i < 100; ++i)
+		for (int i = 0; i < 1; ++i)
 		{
 			group.run([i] {
 				//cocos2d::log("Hello world! run = %d, %d", i, std::this_thread::get_id());
-				CCLOG("Hello world! run = %d, %d", i, std::this_thread::get_id());
-				//u2::LogManager::getSingleton().stream(u2::LML_NORMAL) << "Hello world! run = " << i << ", " << std::this_thread::get_id() << "\n";
+				//CCLOG("Hello world! run = %d, %d", i, std::this_thread::get_id());
+				u2::LogManager::getSingleton().stream(u2::LML_NORMAL) 
+					<< "Hello world! run = " << i << ", " << std::this_thread::get_id() 
+					<< "\n";
 				});
 			//pool.run([i] { std::cout << "Hello world! = " << i << std::endl; });
 		}
 
 		// Wait for all queued functions to finish and the pool to become empty
 		group.wait();
+		u2::LogManager::getSingleton().stream(u2::LML_NORMAL)
+			<< "Hello world! main = " << std::this_thread::get_id()
+			<< "\n";
 		cocos2d::log("Hello world! Thread over!");
-		*/
+		
 	}
 	
 

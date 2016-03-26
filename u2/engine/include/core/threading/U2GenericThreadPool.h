@@ -165,7 +165,7 @@ protected:
 	std::exception_ptr pending_exception;
 	ThreadPoolQueue& queue;
 	const unsigned int thread_count; /// The number of threads
-	std::vector<Worker*> workers;
+	std::vector<Worker> workers;
 
 };
 

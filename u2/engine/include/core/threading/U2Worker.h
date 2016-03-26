@@ -6,38 +6,60 @@
 #include "U2STLRedefined.h"
 #include "U2MemoryAllocatorConfig.h"
 #include "U2Singleton.h"
-#include "U2SimpleObjectManager.h"
-#include "U2Object.h"
 #include "U2ThreadHeaders.h"
 
 
 U2EG_NAMESPACE_BEGIN
 
 
-class Worker : public Object
+class Worker
 {
 public:
-	Worker(const String& type, const String& name = BLANK);
-
-	template<class _Fn, class... _Args>
-	void initialize(_Fn&& _Fx, _Args&&... _Ax) 
+	Worker()
 	{
-		m_Thread = std::move(std::thread(std::forward<_Fn>(_Fx), std::forward<_Args>(_Ax)...));
+		m_OriginThreadId = getThreadId();
+	}
+
+	Worker& operator=(std::thread&& t)
+	{
+		if (isInitialized())
+		{
+			assert(0);
+		}
+		else
+		{
+			m_Thread = std::move(t);
+		}
+		return *this; 
+	}
+
+	Worker(const Worker& rhs) = delete;
+	Worker& operator=(const Worker& rhs) = delete;
+	Worker(Worker&& rhs) = delete;
+	Worker& operator=(Worker&& rhs) = delete;
+
+	bool isInitialized()
+	{
+		return !(m_OriginThreadId == getThreadId());
 	}
 
 	void join();
 
-	inline std::thread::id getThreadId() const;
+	std::thread::id getThreadId() const
+	{
+		return m_Thread.get_id();
+	}
 
 	static String threadId2String(std::thread::id& tid);
 
 protected:
 	std::thread			m_Thread;
-};
+	std::thread::id		m_OriginThreadId;
+};
 
 
 
-class WorkerManager : public SimpleObjectManager<Worker>, public Singleton < WorkerManager >
+class WorkerManager : public Singleton < WorkerManager >
 {
 protected:
 	/** Default constructor - should never get called by a client app.
@@ -50,38 +72,13 @@ public:
 	virtual ~WorkerManager();
 
 	template<class _Fn, class... _Args>
-	Worker* createObject(_Fn&& _Fx, _Args&&... _Ax)
+	Worker& createObject(_Fn&& _Fx, _Args&&... _Ax)
 	{
-		Worker* pObj = SimpleObjectManager<Worker>::createObject(GET_OBJECT_TYPE(Worker));
-		if (pObj != nullptr)
-		{
-			pObj->initialize(std::forward<_Fn>(_Fx), std::forward<_Args>(_Ax)...);
-
-			std::thread::id tid = pObj->getThreadId();
-			if (m_Workers.find(tid) == m_Workers.end())
-			{
-				m_Workers[tid] = pObj;
-			}
-			else
-			{
-				assert(0);
-			}
-		}
-		return pObj;
+// 		Worker worker;
+// 		worker = std::move(std::thread(std::forward<_Fn>(_Fx), std::forward<_Args>(_Ax)...));
+// 		m_Workers[worker.getThreadId()] = worker;
+		return worker;
 	}
-
-	void destoryObject(Worker* obj);
-
-	Worker* retrieveObjectByThreadId(const std::thread::id& tid);
-
-protected:
-	virtual Worker* createObject(const String& type, const String& name);
-
-	void addObject(Worker* obj);
-
-	void removeObject(Worker* obj);
-
-	Worker* retrieveObjectByName(const String& name);
 
 public:
 	/** Override standard Singleton retrieval.
@@ -119,7 +116,7 @@ public:
 	static WorkerManager* getSingletonPtr(void);
 
 protected:
-	typedef map<std::thread::id, Worker*>::type				WorkerMap;
+	typedef map<std::thread::id, Worker>::type				WorkerMap;
 	WorkerMap		m_Workers;
 };
 
