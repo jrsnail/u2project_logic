@@ -167,6 +167,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\engine\src\core\streams\U2DataFilterStream.cpp" />
     <ClCompile Include="..\engine\src\core\streams\U2FileStream.cpp" />
     <ClCompile Include="..\engine\src\core\streams\U2FilterStream.cpp" />
+    <ClCompile Include="..\engine\src\core\streams\U2PipedStream.cpp" />
     <ClCompile Include="..\engine\src\core\streams\U2Stream.cpp" />
     <ClCompile Include="..\engine\src\core\threading\U2GenericThreadPool.cpp" />
     <ClCompile Include="..\engine\src\core\threading\U2HomogenousQueue.cpp" />
@@ -235,6 +236,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\engine\include\core\streams\U2DataFilterStream.h" />
     <ClInclude Include="..\engine\include\core\streams\U2FileStream.h" />
     <ClInclude Include="..\engine\include\core\streams\U2FilterStream.h" />
+    <ClInclude Include="..\engine\include\core\streams\U2PipedStream.h" />
     <ClInclude Include="..\engine\include\core\streams\U2Stream.h" />
     <ClInclude Include="..\engine\include\core\threading\U2GenericThreadPool.h" />
     <ClInclude Include="..\engine\include\core\threading\U2HomogenousQueue.h" />

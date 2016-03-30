@@ -255,6 +255,9 @@
     <ClCompile Include="..\engine\src\core\threading\U2Worker.cpp">
       <Filter>engine\src\core\threading</Filter>
     </ClCompile>
+    <ClCompile Include="..\engine\src\core\streams\U2PipedStream.cpp">
+      <Filter>engine\src\core\streams</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -523,6 +526,9 @@
     </ClInclude>
     <ClInclude Include="..\engine\include\core\U2ValueList.h">
       <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\streams\U2PipedStream.h">
+      <Filter>engine\include\core\streams</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
