@@ -74,7 +74,7 @@ void FilterOutStream::connect(std::shared_ptr<OutStream> out)
     m_pOut = out;
 }
 //-----------------------------------------------------------------------
-void FilterOutStream::write(const u2byte* s, std::streamsize n)
+size_t FilterOutStream::write(const u2byte* s, std::streamsize n)
 {
     assert(m_pOut.get());
     return m_pOut->write(s, n);

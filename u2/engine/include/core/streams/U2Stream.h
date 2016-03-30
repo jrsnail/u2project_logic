@@ -69,7 +69,7 @@ public:
     @param s the buffer to be written.
     @param n the number of bytes from {@code buffer} to write to this stream.
     */
-    virtual void write(const u2byte* s, std::streamsize n) {};
+    virtual size_t write(const u2byte* s, std::streamsize n) {};
 
     /** Flushes this stream. Implementations of this method should ensure that
         any buffered data is written out. This implementation does nothing.

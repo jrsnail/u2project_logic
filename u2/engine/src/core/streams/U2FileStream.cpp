@@ -141,9 +141,15 @@ void FileOutStream::open(const u2::String& filename, std::ios_base::openmode mod
     }
 }
 //-----------------------------------------------------------------------
-void FileOutStream::write(const u2byte* s, std::streamsize n)
+size_t FileOutStream::write(const u2byte* s, std::streamsize n)
 {
-    m_pFOutStream->write((const char*)s, n);
+	size_t written = 0;
+	if (m_pFOutStream)
+	{
+		m_pFOutStream->write((const char*)s, n);
+		written = n;
+	}
+	return written;
 }
 //-----------------------------------------------------------------------
 void FileOutStream::flush()

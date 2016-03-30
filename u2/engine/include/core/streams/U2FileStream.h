@@ -32,7 +32,7 @@ public:
 
     virtual void close() override;
 
-    virtual void open(const u2::String& filename, std::ios_base::openmode mode = std::ios_base::in);
+    void open(const u2::String& filename, std::ios_base::openmode mode = std::ios_base::in);
 
 protected:
     std::ifstream*      m_pFInStream;
@@ -47,13 +47,13 @@ public:
     FileOutStream(const String& name, va_list argp);
     virtual ~FileOutStream();
 
-    virtual void write(const u2byte* s, std::streamsize n) override;
+    virtual size_t write(const u2byte* s, std::streamsize n) override;
 
     virtual void flush() override;
 
     virtual void close() override;
 
-    virtual void open(const u2::String& filename, std::ios_base::openmode mode = std::ios_base::in);
+    void open(const u2::String& filename, std::ios_base::openmode mode = std::ios_base::in);
 
 protected:
     std::ofstream*      m_pFOutStream;

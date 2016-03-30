@@ -47,7 +47,7 @@ public:
 
     void connect(std::shared_ptr<OutStream> out);
 
-    virtual void write(const u2byte* s, std::streamsize n) override;
+    virtual size_t write(const u2byte* s, std::streamsize n) override;
 
     virtual void flush() override;
 
