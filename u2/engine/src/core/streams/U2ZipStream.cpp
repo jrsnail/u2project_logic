@@ -13,19 +13,20 @@
 
 
 
+
 U2EG_NAMESPACE_USING
 
 
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
 ZipInStream::ZipInStream(const String& name, ZZIP_FILE* zzipFile, size_t uncompressedSize)
-: InStream(GET_OBJECT_TYPE(ZipInStream), name)
+: FilterInStream(GET_OBJECT_TYPE(ZipInStream), name)
 , mZzipFile(zzipFile)
 {
 }
 //-----------------------------------------------------------------------
 ZipInStream::ZipInStream(const String& name, va_list argp)
-    : InStream(GET_OBJECT_TYPE(ZipInStream), name)
+    : FilterInStream(GET_OBJECT_TYPE(ZipInStream), name)
 {
 }
 //-----------------------------------------------------------------------
@@ -36,25 +37,27 @@ ZipInStream::~ZipInStream()
 //-----------------------------------------------------------------------
 size_t ZipInStream::read(u2byte* s, size_t n)
 {
-	size_t was_avail = mCache.read(buf, count);
+	size_t was_avail = mCache.read(s, n);
 	zzip_ssize_t r = 0;
-	if (was_avail < count)
+	if (was_avail < n)
 	{
-		r = zzip_file_read(mZzipFile, (char*)buf + was_avail, count - was_avail);
+		r = zzip_file_read(mZzipFile, (char*)s + was_avail, n - was_avail);
 		if (r < 0) {
 			ZZIP_DIR *dir = zzip_dirhandle(mZzipFile);
 			String msg = zzip_strerror_of(dir);
 			U2_EXCEPT(Exception::ERR_INTERNAL_ERROR,
-				mName + " - error from zziplib: " + msg,
+				m_szName + " - error from zziplib: " + msg,
 				"ZipInStream::read");
 		}
-		mCache.cacheData((char*)buf + was_avail, (size_t)r);
+		mCache.cacheData((char*)s + was_avail, (size_t)r);
 	}
 	return was_avail + (size_t)r;
 }
 //-----------------------------------------------------------------------
-ssize_t ZipInStream::skip(ssize_t count)
+u2sszie_t ZipInStream::skip(u2sszie_t count)
 {
+	size_t uStart = tell();
+
 	long was_avail = static_cast<long>(mCache.avail());
 	if (count > 0)
 	{
@@ -66,6 +69,8 @@ ssize_t ZipInStream::skip(ssize_t count)
 		if (!mCache.rewind((size_t)(-count)))
 			zzip_seek(mZzipFile, static_cast<zzip_off_t>(count + was_avail), SEEK_CUR);
 	}
+
+	return tell() - uStart;
 }
 //-----------------------------------------------------------------------
 void ZipInStream::seek(size_t pos)
@@ -95,6 +100,7 @@ size_t ZipInStream::tell(void) const
 //-----------------------------------------------------------------------
 bool ZipInStream::eof() const
 {
+	return (tell() >= m_uSize);
 }
 //-----------------------------------------------------------------------
 void ZipInStream::close()

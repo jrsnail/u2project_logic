@@ -43,8 +43,8 @@ public:
 	* pipe and notifies all threads waiting to read or write.
 	*/
 	virtual void close() override;
-	virtual u2int32 read(u2byte* s, std::streamsize n) override;
-	void receive(const u2byte* s, std::streamsize n);
+	virtual size_t read(u2byte* s, size_t n) override;
+	size_t receive(const u2byte* s, std::streamsize n);
 	void done();
 
 private:
@@ -55,6 +55,12 @@ private:
 	PipedInStream& operator=(const PipedInStream& rhs) = delete;
 	PipedInStream(PipedInStream&& rhs) = delete;
 	PipedInStream& operator=(PipedInStream&& rhs) = delete;
+
+	virtual u2sszie_t skip(u2sszie_t count) override { return 0; };
+
+	virtual void seek(size_t pos) override {};
+
+	virtual size_t tell(void) const override { return 0; };
 
 protected:
 	U2_AUTO_MUTEX;
@@ -109,8 +115,7 @@ public:
 
 	virtual void close() override;
 	void connect(PipedInStream* stream);
-	virtual void flush() override;
-	virtual void write(const u2byte* s, std::streamsize n) override;
+	virtual size_t write(const u2byte* s, size_t n) override;
 
 private:
 	PipedOutStream(const String& type, const String& name);

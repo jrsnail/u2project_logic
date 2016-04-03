@@ -41,7 +41,7 @@ size_t FilterInStream::read(u2byte* s, size_t n)
     return m_pIn->read(s, n);
 }
 //-----------------------------------------------------------------------
-ssize_t FilterInStream::skip(ssize_t count)
+u2sszie_t FilterInStream::skip(u2sszie_t count)
 {
     assert(m_pIn.get());
     return m_pIn->skip(count);
@@ -126,7 +126,7 @@ size_t FilterInQueue::read(u2byte* s, size_t n)
     }
 }
 //-----------------------------------------------------------------------
-ssize_t FilterInQueue::skip(ssize_t count)
+u2sszie_t FilterInQueue::skip(u2sszie_t count)
 {
     if (m_OutterStreams.get())
     {

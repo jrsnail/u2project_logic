@@ -157,7 +157,7 @@ public:
 		@param count Number of bytes to skip
         @return the number of bytes actually skipped.
     */
-    virtual ssize_t skip(ssize_t count) = 0;
+    virtual u2sszie_t skip(u2sszie_t count) = 0;
 
 	/** Repositions the read point to a specified byte.
 	*/

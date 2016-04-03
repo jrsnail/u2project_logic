@@ -26,7 +26,7 @@ public:
 
     virtual size_t read(u2byte* s, size_t n) override;
 
-    virtual ssize_t skip(ssize_t count) override;
+    virtual u2sszie_t skip(u2sszie_t count) override;
 
 	virtual void seek(size_t pos) override;
 

@@ -39,7 +39,7 @@ size_t FileHandleInStream::read(u2byte* s, size_t n)
 	return fread(s, 1, n, mFileHandle);
 }
 //-----------------------------------------------------------------------
-ssize_t FileHandleInStream::skip(ssize_t count)
+u2sszie_t FileHandleInStream::skip(u2sszie_t count)
 {
 	size_t uOrigin = tell();
 	fseek(mFileHandle, count, SEEK_CUR);

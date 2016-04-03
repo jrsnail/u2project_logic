@@ -10,8 +10,15 @@
 
 
 #include "U2Prerequisites.h"
-#include "U2STLRedefined.h"
 #include "U2FilterStream.h"
+#include <zzip/zzip.h>
+#include <zzip/plugin.h>
+#include "U2STLRedefined.h"
+
+
+typedef struct zzip_dir			ZZIP_DIR;
+typedef struct zzip_file		ZZIP_FILE;
+typedef union _zzip_plugin_io	zzip_plugin_io_handlers;
 
 
 U2EG_NAMESPACE_BEGIN
@@ -25,7 +32,7 @@ public:
 
     virtual size_t read(u2byte* s, size_t n) override;
 
-    virtual ssize_t skip(ssize_t count) override;
+    virtual u2sszie_t skip(u2sszie_t count) override;
 
 	virtual void seek(size_t pos) override;
 

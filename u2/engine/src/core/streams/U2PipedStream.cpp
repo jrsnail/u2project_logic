@@ -91,7 +91,7 @@ void PipedInStream::close()
 	m_pBuffer = nullptr;
 }
 //-----------------------------------------------------------------------
-u2int32 PipedInStream::read(u2byte* s, std::streamsize n)
+size_t PipedInStream::read(u2byte* s, size_t n)
 {
 	if (n == 0)
 	{
@@ -165,11 +165,11 @@ u2int32 PipedInStream::read(u2byte* s, std::streamsize n)
 	return totalCopied;
 }
 //-----------------------------------------------------------------------
-void PipedInStream::receive(const u2byte* s, std::streamsize n)
+size_t PipedInStream::receive(const u2byte* s, std::streamsize n)
 {
 	if (n == 0)
 	{
-		return;
+		return 0;
 	}
 	U2_LOCK_AUTO_MUTEX;
 	U2Assert(m_pBuffer != nullptr && !m_bIsClosed, "Pipe is closed");
@@ -221,6 +221,8 @@ void PipedInStream::receive(const u2byte* s, std::streamsize n)
 	}
 
 	U2_THREAD_NOTIFY_ALL(m_ReadableSync);
+
+	return totalCopied;
 }
 //-----------------------------------------------------------------------
 void PipedInStream::done()
@@ -228,6 +230,19 @@ void PipedInStream::done()
 	U2_LOCK_AUTO_MUTEX;
 	m_bIsClosed = true;
 }
+//-----------------------------------------------------------------------
+// u2sszie_t PipedInStream::skip(u2sszie_t count)
+// {
+// 	u2byte c;
+// 	for (size_t i = 0; i < count;)
+// 	{
+// 		size_t n = read(&c, 1);
+// 		if (n == 1)
+// 		{
+// 			i++;
+// 		}
+// 	}
+// }
 
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
@@ -280,19 +295,8 @@ void PipedOutStream::connect(PipedInStream* stream)
 	m_pTarget = stream;
 }
 //-----------------------------------------------------------------------
-void PipedOutStream::flush()
-{
-	U2_LOCK_AUTO_MUTEX;
-
-	if (m_pTarget == nullptr)
-	{
-		return;
-	}
-	//m_pTarget->notifyAll();
-}
-//-----------------------------------------------------------------------
-void PipedOutStream::write(const u2byte* s, std::streamsize n)
+size_t PipedOutStream::write(const u2byte* s, size_t n)
 {
 	U2Assert(m_pTarget != nullptr, "Pipe not connected");
-	m_pTarget->receive(s, n);
+	return m_pTarget->receive(s, n);
 }

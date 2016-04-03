@@ -64,7 +64,7 @@ size_t FileInStream::read(u2byte* s, size_t n)
     return (u2int32)m_pFInStream->gcount();
 }
 //-----------------------------------------------------------------------
-ssize_t FileInStream::skip(ssize_t count)
+u2sszie_t FileInStream::skip(u2sszie_t count)
 {
 #if defined(STLPORT)
     // Workaround for STLport issues: After reached eof of file stream,
@@ -80,7 +80,7 @@ ssize_t FileInStream::skip(ssize_t count)
     }
 #endif
     std::streampos nStart = m_pFInStream->tellg();
-    ->clear(); //Clear fail status in case eof was set
+	m_pFInStream->clear(); //Clear fail status in case eof was set
     m_pFInStream->seekg(static_cast<std::ifstream::pos_type>(count), std::ios::cur);
     return m_pFInStream->tellg() - nStart;
 }
