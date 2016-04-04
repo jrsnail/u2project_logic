@@ -152,7 +152,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     auto glview = director->getOpenGLView();
     if(!glview) {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-        glview = GLViewImpl::createWithRect("u2", Rect(0, 0, winResolutionSize.width, winResolutionSize.height));
+        glview = GLViewImpl::createWithRect("u2", cocos2d::Rect(0, 0, winResolutionSize.width, winResolutionSize.height));
 #else
         glview = GLViewImpl::create("u2");
 #endif
@@ -222,7 +222,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
 // #if U2_PLATFORM == U2_PLATFORM_ANDROID
 // 	mAndroidLogger = U2_NEW AndroidLogListener();
 // 	m_pLogManager->getDefaultLog()->addListener(mAndroidLogger);
-// #endif
+// #endif
+
 
 	{
 		//------------------------------- Test Thread ----------------------------------------
@@ -314,16 +315,16 @@ bool AppDelegate::applicationDidFinishLaunching() {
 // 		in.push<DataFilterInStream>("bbb");
 // 		u2int64 n = in->readInt64();
 
-		PipedInStream* pPipeIn = new PipedInStream;
-		PipedOutStream* pPipeOut = new PipedOutStream;
-		pPipeIn->connect(pPipeOut);
-
-		TestInThread* pInTread = new TestInThread(pPipeIn);
-		TestOutThread* pOutTread = new TestOutThread(pPipeOut);
-		TaskGroup group(2);
-		group.run(pInTread);
-		group.run(pOutTread);
-		group.wait();
+//		PipedInStream* pPipeIn = new PipedInStream;
+//		PipedOutStream* pPipeOut = new PipedOutStream;
+//		pPipeIn->connect(pPipeOut);
+//
+//		TestInThread* pInTread = new TestInThread(pPipeIn);
+//		TestOutThread* pOutTread = new TestOutThread(pPipeOut);
+//		TaskGroup group(2);
+//		group.run(pInTread);
+//		group.run(pOutTread);
+//		group.wait();
 
 		int bbb = 0;
 	}

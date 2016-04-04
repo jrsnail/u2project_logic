@@ -204,6 +204,7 @@
 		521A8EA919F11F5000D177D7 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 521A8EA819F11F5000D177D7 /* fonts */; };
 		521A8EAA19F11F5000D177D7 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 521A8EA819F11F5000D177D7 /* fonts */; };
 		52B47A471A53D09C004E4C60 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52B47A461A53D09B004E4C60 /* Security.framework */; };
+		674690391CB263E000784E6F /* libzziplib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 674690381CB263E000784E6F /* libzziplib.a */; };
 		8262943E1AAF051F00CB7CF7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8262943D1AAF051F00CB7CF7 /* Security.framework */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
@@ -468,6 +469,7 @@
 		521A8E6319F0C34300D177D7 /* Default-736h@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-736h@3x.png"; sourceTree = "<group>"; };
 		521A8EA819F11F5000D177D7 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
 		52B47A461A53D09B004E4C60 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
+		674690381CB263E000784E6F /* libzziplib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libzziplib.a; path = ../../Dependenices/libs/OSX/libzziplib.a; sourceTree = "<group>"; };
 		8262943D1AAF051F00CB7CF7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -506,6 +508,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				674690391CB263E000784E6F /* libzziplib.a in Frameworks */,
 				ED545A7E1B68A1FA00C3958E /* libiconv.dylib in Frameworks */,
 				1AC6FB21180E996B004C840B /* libcocos2d Mac.a in Frameworks */,
 				5087E76717EB910900C73F5D /* libz.dylib in Frameworks */,
@@ -576,6 +579,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				674690381CB263E000784E6F /* libzziplib.a */,
 				4CA4AAD01CC0F053007B5F39 /* libzziplib.a */,
 				4CA4AACE1CC0ED88007B5F39 /* libzziplib.a */,
 				ED545A7D1B68A1FA00C3958E /* libiconv.dylib */,
@@ -1311,7 +1315,6 @@
 					"$(SRCROOT)/../engine/include/mvc",
 					"$(SRCROOT)/../gamebase",
 					"$(SRCROOT)/../../Dependenices/include",
-					"$(SRCROOT)/../../Dependenices/include/zzip",
 				);
 				INFOPLIST_FILE = ios/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
@@ -1357,7 +1360,6 @@
 					"$(SRCROOT)/../engine/include/mvc",
 					"$(SRCROOT)/../gamebase",
 					"$(SRCROOT)/../../Dependenices/include",
-					"$(SRCROOT)/../../Dependenices/include/zzip",
 				);
 				INFOPLIST_FILE = ios/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
@@ -1396,9 +1398,18 @@
 					"$(inherited)",
 					"$(SRCROOT)/../cocos2d/cocos/platform/mac",
 					"$(SRCROOT)/../cocos2d/external/glfw3/include/mac",
+					"$(SRCROOT)/../Classes",
+					"$(SRCROOT)/../engine",
+					"$(SRCROOT)/../engine/include",
+					"$(SRCROOT)/../engine/include/core",
+					"$(SRCROOT)/../engine/include/core/streams",
+					"$(SRCROOT)/../engine/include/core/threading",
+					"$(SRCROOT)/../engine/include/mvc",
+					"$(SRCROOT)/../gamebase",
+					"$(SRCROOT)/../../Dependenices/include",
 				);
 				INFOPLIST_FILE = mac/Info.plist;
-				LIBRARY_SEARCH_PATHS = "";
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../../Dependenices/libs/OSX";
 				OTHER_LDFLAGS = (
 					"$(_COCOS_LIB_MAC_BEGIN)",
 					"$(_COCOS_LIB_MAC_END)",
@@ -1427,9 +1438,18 @@
 					"$(inherited)",
 					"$(SRCROOT)/../cocos2d/cocos/platform/mac",
 					"$(SRCROOT)/../cocos2d/external/glfw3/include/mac",
+					"$(SRCROOT)/../Classes",
+					"$(SRCROOT)/../engine",
+					"$(SRCROOT)/../engine/include",
+					"$(SRCROOT)/../engine/include/core",
+					"$(SRCROOT)/../engine/include/core/streams",
+					"$(SRCROOT)/../engine/include/core/threading",
+					"$(SRCROOT)/../engine/include/mvc",
+					"$(SRCROOT)/../gamebase",
+					"$(SRCROOT)/../../Dependenices/include",
 				);
 				INFOPLIST_FILE = mac/Info.plist;
-				LIBRARY_SEARCH_PATHS = "";
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../../Dependenices/libs/OSX";
 				OTHER_LDFLAGS = (
 					"$(_COCOS_LIB_MAC_BEGIN)",
 					"$(_COCOS_LIB_MAC_END)",
