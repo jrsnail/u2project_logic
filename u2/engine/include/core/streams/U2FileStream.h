@@ -55,7 +55,7 @@ public:
 
     virtual void close() override;
 
-    void open(const u2::String& filename, std::ios_base::openmode mode = std::ios_base::in);
+    void open(const u2::String& filename, std::ios_base::openmode mode = std::ios_base::out);
 
 protected:
     std::ofstream*      m_pFOutStream;

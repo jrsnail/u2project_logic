@@ -159,23 +159,16 @@ namespace U2EG_NAMESPACE_NAME
 {
 	// Useful shortcuts
 	typedef CategorisedAllocPolicy<U2EG_NAMESPACE_NAME::MEMCATEGORY_GENERAL>       GeneralAllocPolicy;
-	typedef CategorisedAllocPolicy<U2EG_NAMESPACE_NAME::MEMCATEGORY_SCRIPTING>     ScriptingAllocPolicy;
 
 	// Now define all the base classes for each allocation
 	typedef AllocatedObject<GeneralAllocPolicy>                                    GeneralAllocatedObject;
-	typedef AllocatedObject<ScriptingAllocPolicy>                                  ScriptingAllocatedObject;
 
 
 	// Per-class allocators defined here
 	// NOTE: small, non-virtual classes should not subclass an allocator
 	// the virtual function table could double their size and make them less efficient
 	// use primitive or STL allocators / deallocators for those
-	typedef GeneralAllocatedObject		ConfigAlloc;
-	typedef GeneralAllocatedObject		LogAlloc;
-	typedef GeneralAllocatedObject		StreamAlloc;
-	typedef GeneralAllocatedObject		ArchiveAlloc;
-	typedef GeneralAllocatedObject		TimerAlloc;
-	typedef GeneralAllocatedObject		FileSystemLayerAlloc;
+	
 
 	// Containers (by-value only)
 	// Will  be of the form:

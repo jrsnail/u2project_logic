@@ -45,7 +45,7 @@ void FileInStream::open(const u2::String& filename, std::ios_base::openmode mode
         assert(0);
     }
     if ((mode & std::ios_base::out)
-        || (mode & std::ios_base::ate) 
+        || (mode & std::ios_base::ate)
         || (mode & std::ios_base::app)
         || (mode & std::ios_base::trunc))
     {
@@ -123,7 +123,7 @@ FileOutStream::FileOutStream(const String& name, const u2::String& filename, std
 }
 //-----------------------------------------------------------------------
 FileOutStream::FileOutStream(const String& name, va_list argp)
-    : OutStream(GET_OBJECT_TYPE(FileInStream), name)
+    : OutStream(GET_OBJECT_TYPE(FileOutStream), name)
     , m_pFOutStream(nullptr)
 {
     u2::String filename = va_arg(argp, const char*);

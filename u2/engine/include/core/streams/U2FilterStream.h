@@ -61,31 +61,58 @@ protected:
 };
 
 
-class FilterInQueue : public FilterInStream
+template <class T>
+class FilterInQueue : public Object
 {
 public:
     typedef std::shared_ptr<InStream>       InStreamPtr;
 
 public:
-    FilterInQueue(const String& name);
-    FilterInQueue(const String& name, va_list argp);
-    virtual ~FilterInQueue();
+    FilterInQueue()
+		: Object(GET_OBJECT_TYPE(FilterInQueue), BLANK)
+	{
+	}
 
-    virtual size_t read(u2byte* s, size_t n) override;
+    virtual ~FilterInQueue()
+	{
+	}
 
-    virtual u2sszie_t skip(u2sszie_t count) override;
+    template <class Y>
+    void push(const char* name, ...)
+	{
+		va_list argp;
+		va_start(argp, name);
+		InStream* pIn = U2_NEW Y(name, argp);
+		InStreamPtr thisStream(pIn);
+		va_end(argp);
 
-	virtual void seek(size_t pos) override;
+		// when push non first stream
+		if (m_OutterStreams.get())
+		{
+			FilterInStream* pFilter = dynamic_cast<FilterInStream*>(thisStream.get());
+			if (pFilter == nullptr)
+			{
+			}
+			else
+			{
+				pFilter->connect(m_OutterStreams);
+				m_OutterStreams = thisStream;
+			}
+		}
+		// when push first stream
+		else
+		{
+			m_OutterStreams = thisStream;
+			m_InnerStreams = m_OutterStreams;
+		}
+	}
 
-	virtual size_t tell(void) const override;
-
-    virtual void close() override;
-
-    template <class T>
-    void push(const String& name, ...);
-
-    template <class T>
-    InStreamPtr& operator->();
+    T* operator->()
+	{
+		T* pObj = dynamic_cast<T*>(m_OutterStreams.get());
+		assert(pObj != nullptr);
+		return pObj;
+	}
 
 protected:
     InStreamPtr    m_OutterStreams;
@@ -93,104 +120,65 @@ protected:
 };
 
 
-//-----------------------------------------------------------------------
-//-----------------------------------------------------------------------
+
 template <class T>
-void FilterInQueue::push(const String& name, ...)
-{
-    va_list argp;
-    va_start(argp, name);
-    InStream* pIn = U2_NEW T(name, argp);
-    InStreamPtr thisStream = std::make_shared<InStream>(pIn);
-    va_end(argp);
-
-
-    if (m_OutterStreams.get())
-    {
-        FilterInStream* pFilter = dynamic_cast<FilterInStream*>(m_InnerStreams.get());
-        if (pFilter != nullptr)
-        {
-            pFilter->connect(thisStream);
-        }
-        m_InnerStreams = thisStream;
-    }
-    else
-    {
-        m_OutterStreams = thisStream;
-        m_InnerStreams = m_OutterStreams;
-    }
-    
-}
-//-----------------------------------------------------------------------
-template <class T>
-FilterInQueue::InStreamPtr& FilterInQueue::operator->()
-{
-    return m_OutterStreams;
-}
-
-
-
-class FilterOutQueue : public FilterOutStream
+class FilterOutQueue : public Object
 {
 public:
     typedef std::shared_ptr<OutStream>       OutStreamPtr;
 
 public:
-    FilterOutQueue(const String& name);
-    FilterOutQueue(const String& name, va_list argp);
-    virtual ~FilterOutQueue();
+    FilterOutQueue()
+		: Object(GET_OBJECT_TYPE(FilterOutQueue), BLANK)
+	{
+	}
 
-    virtual size_t write(const u2byte* s, size_t n) override;
+	virtual ~FilterOutQueue()
+	{
 
-    virtual void close() override;
+	}
 
-    template <class T>
-    void push(const String& name, ...);
+    template <class Y>
+	void push(const char* name, ...)
+	{
+		va_list argp;
+		va_start(argp, name);
+		OutStream* pOut = U2_NEW Y(name, argp);
+		OutStreamPtr thisStream(pOut);
+		va_end(argp);
 
-    template <class T>
-    OutStreamPtr& operator->();
+		// when push non first stream
+		if (m_OutterStreams.get())
+		{
+			FilterOutStream* pFilter = dynamic_cast<FilterOutStream*>(thisStream.get());
+			if (pFilter == nullptr)
+			{
+			}
+			else
+			{
+				pFilter->connect(m_OutterStreams);
+				m_OutterStreams = thisStream;
+			}
+		}
+		// when push first stream
+		else
+		{
+			m_OutterStreams = thisStream;
+			m_InnerStreams = m_OutterStreams;
+		}
+	}
+
+	T* operator->()
+	{
+		T* pObj = dynamic_cast<T*>(m_OutterStreams.get());
+		assert(pObj != nullptr);
+		return pObj;
+	}
 
 protected:
     OutStreamPtr    m_OutterStreams;
     OutStreamPtr    m_InnerStreams;
 };
-
-
-//-----------------------------------------------------------------------
-//-----------------------------------------------------------------------
-template <class T>
-void FilterOutQueue::push(const String& name, ...)
-{
-    va_list argp;
-    va_start(argp, name);
-    OutStream* pOut = U2_NEW T(name, argp);
-    OutStreamPtr thisStream = std::make_shared<OutStream>(pOut);
-    va_end(argp);
-
-
-    if (m_OutterStreams.get())
-    {
-        FilterOutStream* pFilter = dynamic_cast<FilterOutStream*>(m_InnerStreams.get());
-        if (pFilter != nullptr)
-        {
-            pFilter->connect(thisStream);
-        }
-        m_InnerStreams = thisStream;
-    }
-    else
-    {
-        m_OutterStreams = thisStream;
-        m_InnerStreams = m_OutterStreams;
-    }
-
-}
-//-----------------------------------------------------------------------
-template <class T>
-FilterOutQueue::OutStreamPtr& FilterOutQueue::operator->()
-{
-    return m_OutterStreams;
-}
-
 
 
 U2EG_NAMESPACE_END

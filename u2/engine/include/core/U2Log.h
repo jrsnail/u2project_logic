@@ -69,7 +69,7 @@ public:
 @note
     <br>Should not be used directly, but trough the LogManager class.
 */
-class _U2Export Log : public LogAlloc
+class _U2Export Log : public GeneralAllocatedObject
 {
 protected:
     std::ofstream   mLog;

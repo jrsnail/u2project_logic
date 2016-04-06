@@ -35,7 +35,7 @@ U2EG_NAMESPACE_BEGIN
         you've created one yourself and won't create one of its own, thus
         using all your logging preferences from the first instance.
 */
-class _U2Export LogManager : public Singleton<LogManager>, public LogAlloc
+class _U2Export LogManager : public Singleton<LogManager>, public GeneralAllocatedObject
 {
 protected:
     typedef map<String, Log*>::type LogList;

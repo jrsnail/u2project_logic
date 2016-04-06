@@ -130,7 +130,7 @@ public:
 };
 
 
-class InStream : public Object
+class InStream : public Object, public GeneralAllocatedObject
 {
 public:
     InStream(const String& type, const String& name);
@@ -182,10 +182,10 @@ protected:
 };
 
 
-class OutStream : public Object
+class OutStream : public Object, public GeneralAllocatedObject
 {
 public:
-    OutStream(const String& type, const String& name);
+	OutStream(const String& type, const String& name);
     OutStream(const String& type, const String& name, va_list argp);
     virtual ~OutStream();
 
