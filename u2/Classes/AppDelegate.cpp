@@ -8,7 +8,9 @@
 #include "U2TaskGroup.h"
 #include "U2FilterStream.h"
 #include "U2FileStream.h"
+#include "U2FileHandleStream.h"
 #include "U2DataFilterStream.h"
+#include "U2StreamQueue.h"
 
 
 
@@ -201,15 +203,27 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	
 	{
 		// Test Stream
-		FilterOutQueue<DataFilterOutStream> out;
-		out.push<FileOutStream>("aaa", "D://aaa.txt", std::ios_base::out);
-		out.push<DataFilterOutStream>("bbb");
-		out->writeInt32(100);
+// 		FilterOutQueue<DataFilterOutStream> out;
+// 		out.push<FileOutStream>("aaa", "D://aaa.txt", std::ios_base::out);
+// 		out.push<DataFilterOutStream>("bbb");
+// 		out->writeInt32(100);
+// 		out->close();
+// 
+// 		FilterInQueue<DataFilterInStream> in;
+// 		in.push<FileInStream>("aaa", "D://aaa.txt", std::ios_base::in);
+// 		in.push<DataFilterInStream>("bbb");
+// 		u2int32 n = in->readInt32();
 
-		FilterInQueue<DataFilterInStream> in;
-		in.push<FileInStream>("aaa", "D://aaa.txt", std::ios_base::in);
+		OutStreamQueue<DataFilterOutStream> out;
+		out.push<FileHandleOutStream>("aaa", "D://aaa.txt", "wb");
+		out.push<DataFilterOutStream>("bbb");
+		out->writeInt64(150);
+		out->close();
+
+		InStreamQueue<DataFilterInStream> in;
+		in.push<FileHandleInStream>("aaa", "D://aaa.txt", "rb");
 		in.push<DataFilterInStream>("bbb");
-		u2int32 n = in->readInt32();
+		u2int64 n = in->readInt64();
 
 		int a = 0;
 	}

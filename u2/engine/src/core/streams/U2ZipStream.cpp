@@ -23,6 +23,7 @@ ZipInStream::ZipInStream(const String& name, ZZIP_FILE* zzipFile, size_t uncompr
 : FilterInStream(GET_OBJECT_TYPE(ZipInStream), name)
 , mZzipFile(zzipFile)
 {
+	m_uSize = uncompressedSize;
 }
 //-----------------------------------------------------------------------
 ZipInStream::ZipInStream(const String& name, va_list argp)

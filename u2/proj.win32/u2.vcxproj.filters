@@ -542,6 +542,9 @@
     <ClInclude Include="..\engine\include\core\streams\U2ZipStream.h">
       <Filter>engine\include\core\streams</Filter>
     </ClInclude>
+    <ClInclude Include="..\engine\include\core\streams\U2StreamQueue.h">
+      <Filter>engine\include\core\streams</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">

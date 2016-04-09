@@ -241,6 +241,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\engine\include\core\streams\U2FilterStream.h" />
     <ClInclude Include="..\engine\include\core\streams\U2PipedStream.h" />
     <ClInclude Include="..\engine\include\core\streams\U2Stream.h" />
+    <ClInclude Include="..\engine\include\core\streams\U2StreamQueue.h" />
     <ClInclude Include="..\engine\include\core\streams\U2ZipStream.h" />
     <ClInclude Include="..\engine\include\core\threading\U2GenericThreadPool.h" />
     <ClInclude Include="..\engine\include\core\threading\U2HomogenousQueue.h" />

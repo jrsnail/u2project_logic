@@ -21,11 +21,15 @@ class FileHandleInStream : public InStream
 {
 public:
     FileHandleInStream(const String& name, FILE* handle);
+	FileHandleInStream(const String& name, const char* filename, const char* mode);
+	FileHandleInStream(const String& name, va_list argp);
     virtual ~FileHandleInStream();
 
     virtual size_t read(u2byte* s, size_t n) override;
 
     virtual u2sszie_t skip(u2sszie_t count) override;
+
+	virtual void seek(size_t pos) override;
 
 	virtual size_t tell(void) const override;
 
@@ -33,8 +37,7 @@ public:
 
     virtual void close() override;
 
-private:
-	FileHandleInStream(const String& name, va_list argp);
+	void open(const char* filename, const char* mode);
 
 protected:
 	FILE*      mFileHandle;
@@ -46,14 +49,15 @@ class FileHandleOutStream : public OutStream
 {
 public:
     FileHandleOutStream(const String& name, FILE* handle);
+	FileHandleOutStream(const String& name, const char* filename, const char* mode);
+	FileHandleOutStream(const String& name, va_list argp);
     virtual ~FileHandleOutStream();
 
     virtual size_t write(const u2byte* s, size_t n) override;
 
     virtual void close() override;
 
-private:
-	FileHandleOutStream(const String& name, va_list argp);
+	void open(const char* filename, const char* mode);
 
 protected:
 	FILE*      mFileHandle;

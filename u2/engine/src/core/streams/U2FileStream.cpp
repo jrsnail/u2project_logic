@@ -51,11 +51,19 @@ void FileInStream::open(const u2::String& filename, std::ios_base::openmode mode
     {
         assert(0);
     }
-    m_pFInStream = new std::ifstream(filename, mode);
+	m_pFInStream = U2_NEW_T(std::ifstream, MEMCATEGORY_GENERAL)();
+	m_pFInStream->open(filename, mode);
     if (!m_pFInStream->is_open())
     {
         assert(0);
     }
+	else
+	{
+		// calculate the size
+		m_pFInStream->seekg(0, std::ios_base::end);
+		m_uSize = (size_t)m_pFInStream->tellg();
+		m_pFInStream->seekg(0, std::ios_base::beg);
+	}
 }
 //-----------------------------------------------------------------------
 size_t FileInStream::read(u2byte* s, size_t n)
@@ -146,7 +154,8 @@ void FileOutStream::open(const u2::String& filename, std::ios_base::openmode mod
     {
         assert(0);
     }
-    m_pFOutStream = new std::ofstream(filename, mode);
+	m_pFOutStream = U2_NEW_T(std::ofstream, MEMCATEGORY_GENERAL)();
+	m_pFOutStream->open(filename, mode);
     if (!m_pFOutStream->is_open())
     {
         assert(0);
@@ -168,6 +177,7 @@ void FileOutStream::close()
 {
     if (m_pFOutStream)
     {
+		m_pFOutStream->flush();
         m_pFOutStream->close();
 
         // delete the stream too

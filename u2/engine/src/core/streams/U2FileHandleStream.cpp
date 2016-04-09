@@ -23,10 +23,20 @@ FileHandleInStream::FileHandleInStream(const String& name, FILE* handle)
 {
 }
 //-----------------------------------------------------------------------
-FileHandleInStream::FileHandleInStream(const String& name, va_list argp)
-    : InStream(GET_OBJECT_TYPE(FileHandleInStream), name)
-    , mFileHandle(nullptr)
+FileHandleInStream::FileHandleInStream(const String& name, const char* filename, const char* mode)
+	: InStream(GET_OBJECT_TYPE(FileHandleInStream), name)
+	, mFileHandle(nullptr)
 {
+	open(filename, mode);
+}
+//-----------------------------------------------------------------------
+FileHandleInStream::FileHandleInStream(const String& name, va_list argp)
+	: InStream(GET_OBJECT_TYPE(FileHandleInStream), name)
+	, mFileHandle(nullptr)
+{
+	const char* pFilename = va_arg(argp, const char*);
+	const char* pMode = va_arg(argp, const char*);
+	open(pFilename, pMode);
 }
 //-----------------------------------------------------------------------
 FileHandleInStream::~FileHandleInStream()
@@ -44,6 +54,11 @@ u2sszie_t FileHandleInStream::skip(u2sszie_t count)
 	size_t uOrigin = tell();
 	fseek(mFileHandle, count, SEEK_CUR);
 	return tell() - uOrigin;
+}
+//-----------------------------------------------------------------------
+void FileHandleInStream::seek(size_t pos)
+{
+	fseek(mFileHandle, static_cast<long>(pos), SEEK_SET);
 }
 //-----------------------------------------------------------------------
 size_t FileHandleInStream::tell(void) const
@@ -65,6 +80,23 @@ void FileHandleInStream::close()
 	}
 }
 //-----------------------------------------------------------------------
+void FileHandleInStream::open(const char* filename, const char* mode)
+{
+	assert(mFileHandle == nullptr);
+	mFileHandle = fopen(filename, mode);
+	if (mFileHandle == nullptr)
+	{
+		assert(0);
+	}
+	else
+	{
+		// Determine size
+		fseek(mFileHandle, 0, SEEK_END);
+		m_uSize = ftell(mFileHandle);
+		fseek(mFileHandle, 0, SEEK_SET);
+	}
+}
+//-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
 FileHandleOutStream::FileHandleOutStream(const String& name, FILE* handle)
     : OutStream(GET_OBJECT_TYPE(FileHandleOutStream), name)
@@ -72,10 +104,20 @@ FileHandleOutStream::FileHandleOutStream(const String& name, FILE* handle)
 {
 }
 //-----------------------------------------------------------------------
+FileHandleOutStream::FileHandleOutStream(const String& name, const char* filename, const char* mode)
+	: OutStream(GET_OBJECT_TYPE(FileHandleOutStream), name)
+	, mFileHandle(nullptr)
+{
+	open(filename, mode);
+}
+//-----------------------------------------------------------------------
 FileHandleOutStream::FileHandleOutStream(const String& name, va_list argp)
-    : OutStream(GET_OBJECT_TYPE(FileHandleInStream), name)
+    : OutStream(GET_OBJECT_TYPE(FileHandleOutStream), name)
     , mFileHandle(nullptr)
 {
+	const char* pFilename = va_arg(argp, const char*);
+	const char* pMode = va_arg(argp, const char*);
+	open(pFilename, pMode);
 }
 //-----------------------------------------------------------------------
 FileHandleOutStream::~FileHandleOutStream()
@@ -93,5 +135,15 @@ void FileHandleOutStream::close()
 	{
 		fclose(mFileHandle);
 		mFileHandle = nullptr;
+	}
+}
+//-----------------------------------------------------------------------
+void FileHandleOutStream::open(const char* filename, const char* mode)
+{
+	assert(mFileHandle == nullptr);
+	mFileHandle = fopen(filename, mode);
+	if (mFileHandle == nullptr)
+	{
+		assert(0);
 	}
 }
