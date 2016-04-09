@@ -264,6 +264,9 @@
     <ClCompile Include="..\engine\src\core\streams\U2ZipStream.cpp">
       <Filter>engine\src\core\streams</Filter>
     </ClCompile>
+    <ClCompile Include="..\engine\src\core\streams\U2MemoryStream.cpp">
+      <Filter>engine\src\core\streams</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -543,6 +546,9 @@
       <Filter>engine\include\core\streams</Filter>
     </ClInclude>
     <ClInclude Include="..\engine\include\core\streams\U2StreamQueue.h">
+      <Filter>engine\include\core\streams</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\streams\U2MemoryStream.h">
       <Filter>engine\include\core\streams</Filter>
     </ClInclude>
   </ItemGroup>

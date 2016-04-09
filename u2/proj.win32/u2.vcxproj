@@ -168,6 +168,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\engine\src\core\streams\U2FileHandleStream.cpp" />
     <ClCompile Include="..\engine\src\core\streams\U2FileStream.cpp" />
     <ClCompile Include="..\engine\src\core\streams\U2FilterStream.cpp" />
+    <ClCompile Include="..\engine\src\core\streams\U2MemoryStream.cpp" />
     <ClCompile Include="..\engine\src\core\streams\U2PipedStream.cpp" />
     <ClCompile Include="..\engine\src\core\streams\U2Stream.cpp" />
     <ClCompile Include="..\engine\src\core\streams\U2ZipStream.cpp" />
@@ -239,6 +240,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\engine\include\core\streams\U2FileHandleStream.h" />
     <ClInclude Include="..\engine\include\core\streams\U2FileStream.h" />
     <ClInclude Include="..\engine\include\core\streams\U2FilterStream.h" />
+    <ClInclude Include="..\engine\include\core\streams\U2MemoryStream.h" />
     <ClInclude Include="..\engine\include\core\streams\U2PipedStream.h" />
     <ClInclude Include="..\engine\include\core\streams\U2Stream.h" />
     <ClInclude Include="..\engine\include\core\streams\U2StreamQueue.h" />
