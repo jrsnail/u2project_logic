@@ -108,7 +108,7 @@ size_t PipedInStream::read(u2byte* s, size_t n)
 			// Are we at end of stream?
 			if (m_bIsClosed)
 			{
-				return -1;
+				return 0;
 			}
 			if (attempts-- <= 0) 
 			{
@@ -231,6 +231,11 @@ void PipedInStream::done()
 	m_bIsClosed = true;
 }
 //-----------------------------------------------------------------------
+bool PipedInStream::eof() const
+{
+	return m_bIsClosed && (m_nIn == -1);
+}
+//-----------------------------------------------------------------------
 // u2sszie_t PipedInStream::skip(u2sszie_t count)
 // {
 // 	u2byte c;
@@ -289,8 +294,8 @@ void PipedOutStream::connect(PipedInStream* stream)
 {
 	U2Assert(stream != nullptr, "stream == nullptr");
 	U2_LOCK_AUTO_MUTEX;
-	U2Assert(m_pTarget != nullptr, "Already connected");
-	U2Assert(!m_pTarget->isConnected(), "Pipe already connected");
+	U2Assert(m_pTarget == nullptr, "Already connected");
+	U2Assert(!stream->isConnected(), "Pipe already connected");
 	stream->establishConnection();
 	m_pTarget = stream;
 }

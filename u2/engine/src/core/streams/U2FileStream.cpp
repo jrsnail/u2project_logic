@@ -68,8 +68,8 @@ void FileInStream::open(const u2::String& filename, std::ios_base::openmode mode
 //-----------------------------------------------------------------------
 size_t FileInStream::read(u2byte* s, size_t n)
 {
-    m_pFInStream->read((char*)s, n);
-    return (u2int32)m_pFInStream->gcount();
+	m_pFInStream->read((char*)(s), static_cast<std::streamsize>(n));
+    return (size_t)m_pFInStream->gcount();
 }
 //-----------------------------------------------------------------------
 u2sszie_t FileInStream::skip(u2sszie_t count)

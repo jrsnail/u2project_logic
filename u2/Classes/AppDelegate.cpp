@@ -11,6 +11,7 @@
 #include "U2FileHandleStream.h"
 #include "U2DataFilterStream.h"
 #include "U2StreamQueue.h"
+#include "U2PipedStream.h"
 
 
 
@@ -53,6 +54,94 @@ static int register_all_packages()
 {
     return 0; //flag for packages manager
 }
+
+class TestInThread : public ThreadPoolTask
+{
+public:
+	TestInThread(PipedInStream* in) 
+		: ThreadPoolTask()
+		, m_pInStream(in)
+	{
+
+	}
+
+	virtual void operator()() override
+	{
+// 		size_t uTotal = 23;
+// 		size_t uCurCount = 0;
+// 		u2byte* pBuf = static_cast<u2byte*>(U2_MALLOC(uTotal, MEMCATEGORY_GENERAL));
+// 		while (uCurCount < uTotal)
+// 		{
+// 			uCurCount += m_pInStream->read(pBuf + uCurCount, uTotal - uCurCount);
+// 		}
+// 
+// 		u2::String s((const char*)pBuf);
+// 		int a = 0;
+
+		FileOutStream* pFileOut = U2_NEW FileOutStream("bbb", "D://bbb.zip", std::ios_base::out | std::ios_base::binary);
+		const size_t BUF_SIZE = 1000;
+		u2char s[BUF_SIZE] = { 0 };
+		size_t uTotal = 0;
+		while (!m_pInStream->eof())
+		{
+			size_t uReadCount = m_pInStream->read(s, BUF_SIZE);
+			size_t uWriteCount = 0;
+			while (uWriteCount < uReadCount)
+			{
+				uWriteCount += pFileOut->write(s + uWriteCount, uReadCount - uWriteCount);
+			}
+			uTotal += uWriteCount;
+		}
+		pFileOut->close();
+		m_pInStream->close();
+	}
+
+private:
+	PipedInStream* m_pInStream;
+};
+
+class TestOutThread : public ThreadPoolTask
+{
+public:
+	TestOutThread(PipedOutStream* out)
+		: ThreadPoolTask()
+		, m_pOutStream(out)
+	{
+
+	}
+
+	virtual void operator()() override
+	{
+// 		u2::String szStr = "abcdefghijklmnopqrstuv";
+// 		size_t uCurCount = 0;
+// 		while (uCurCount < szStr.size())
+// 		{
+// 			uCurCount += m_pOutStream->write((const u2byte*)szStr.c_str() + uCurCount, szStr.size());
+// 		}
+// 		
+// 		int a = 0;
+
+		FileInStream* pFileIn = U2_NEW FileInStream("aaa", "D://messagebox.zip", std::ios_base::in | std::ios_base::binary);
+		const size_t BUF_SIZE = 1000;
+		u2char s[BUF_SIZE] = {0};
+		size_t uTotal = 0;
+		while (!pFileIn->eof())
+		{
+			size_t uReadCount = pFileIn->read(s, BUF_SIZE);
+			size_t uWriteCount = 0;
+			while (uWriteCount < uReadCount)
+			{
+				uWriteCount += m_pOutStream->write(s + uWriteCount, uReadCount - uWriteCount);
+			}
+			uTotal += uWriteCount;
+		}
+		pFileIn->close();
+		m_pOutStream->close();
+	}
+
+private:
+	PipedOutStream* m_pOutStream;
+};
 
 bool AppDelegate::applicationDidFinishLaunching() {
 	cocos2d::log("Hello world! CCLog! = %d", std::this_thread::get_id());
@@ -137,7 +226,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
 	{
 		//------------------------------- Test Thread ----------------------------------------
-		
+		/*
 		// Create a thread pool
 		TaskGroup group(1);
 
@@ -160,7 +249,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 			<< "Hello world! main = " << std::this_thread::get_id()
 			<< "\n";
 		cocos2d::log("Hello world! Thread over!");
-		
+		*/
 	}
 	
 
@@ -214,18 +303,33 @@ bool AppDelegate::applicationDidFinishLaunching() {
 // 		in.push<DataFilterInStream>("bbb");
 // 		u2int32 n = in->readInt32();
 
-		OutStreamQueue<DataFilterOutStream> out;
-		out.push<FileHandleOutStream>("aaa", "D://aaa.txt", "wb");
-		out.push<DataFilterOutStream>("bbb");
-		out->writeInt64(150);
-		out->close();
-
-		InStreamQueue<DataFilterInStream> in;
-		in.push<FileHandleInStream>("aaa", "D://aaa.txt", "rb");
-		in.push<DataFilterInStream>("bbb");
-		u2int64 n = in->readInt64();
+// 		OutStreamQueue<DataFilterOutStream> out;
+// 		out.push<FileHandleOutStream>("aaa", "D://aaa.txt", "wb");
+// 		out.push<DataFilterOutStream>("bbb");
+// 		out->writeInt64(150);
+// 		out->close();
+// 
+// 		InStreamQueue<DataFilterInStream> in;
+// 		in.push<FileHandleInStream>("aaa", "D://aaa.txt", "rb");
+// 		in.push<DataFilterInStream>("bbb");
+// 		u2int64 n = in->readInt64();
 
 		int a = 0;
+
+
+
+		PipedInStream* pPipeIn = new PipedInStream;
+		PipedOutStream* pPipeOut = new PipedOutStream(pPipeIn);
+		//pPipeIn->connect(pPipeOut);
+
+		TestInThread* pInTread = new TestInThread(pPipeIn);
+		TestOutThread* pOutTread = new TestOutThread(pPipeOut);
+		TaskGroup group(2);
+		group.run(pInTread);
+		group.run(pOutTread);
+		group.wait();
+
+		int bbb = 0;
 	}
 
     

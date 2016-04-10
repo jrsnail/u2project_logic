@@ -46,6 +46,7 @@ public:
 	virtual size_t read(u2byte* s, size_t n) override;
 	size_t receive(const u2byte* s, std::streamsize n);
 	void done();
+	virtual bool eof() const override;
 
 private:
 	PipedInStream(const String& type, const String& name);
