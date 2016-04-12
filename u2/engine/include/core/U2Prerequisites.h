@@ -74,6 +74,8 @@ typedef long long                   u2int64;
 //#include <BaseTsd.h>
 //typedef	SSIZE_T						u2sszie_t;
 typedef	long						u2sszie_t;
+#else
+typedef	long						u2sszie_t;
 #endif
 }
 // ////////////////////// data type end ///////////////////////

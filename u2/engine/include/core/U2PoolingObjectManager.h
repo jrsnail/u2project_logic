@@ -38,7 +38,7 @@ protected:
 
 	void destoryObject(T* obj)
 	{
-		ObjectCollection<T>::destoryObject(type, name);
+		ObjectCollection<T>::destoryObject(obj);
 	}
 
 	void addObject(T* obj)
@@ -100,7 +100,7 @@ void PoolingObjectManager<T>::recycleObject(T* obj)
 template<class T>
 void PoolingObjectManager<T>::destoryUnusedObject(const String& type)
 {
-	ObjectCollection<T>::ObjectMapIterator it = mUnusedObjects.retrieveAllObjectsByType(type);
+	typename ObjectCollection<T>::ObjectMapIterator it = mUnusedObjects.retrieveAllObjectsByType(type);
 	while (it.hasMoreElements())
 	{
 		T* pObj = dynamic_cast<T*>(it.getNext());

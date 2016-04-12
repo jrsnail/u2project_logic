@@ -25,12 +25,12 @@ public:
 	
 
 protected:
-	ObjectMapIterator retrieveAllObjectsByName(const String& name)
+	typename ObjectCollection<T>::ObjectMapIterator retrieveAllObjectsByName(const String& name)
 	{
 		return ObjectCollection<T>::retrieveAllObjectsByName(name);
 	}
 
-	ObjectMapIterator retrieveAllObjectsByType(const String& type)
+	typename ObjectCollection<T>::ObjectMapIterator retrieveAllObjectsByType(const String& type)
 	{
 		return ObjectCollection<T>::retrieveAllObjectsByType(type);
 	}
@@ -45,7 +45,7 @@ protected:
 		return ObjectCollection<T>::retrieveObjectByGuid(guid);
 	}
 
-	ObjectMapIterator retrieveAllObjectsByTN(const String& type, const String& name)
+	typename ObjectCollection<T>::ObjectMapIterator retrieveAllObjectsByTN(const String& type, const String& name)
 	{
 		return ObjectCollection<T>::retrieveAllObjectsByTN(type, name);
 	}
@@ -84,7 +84,7 @@ SimpleObjectManager<T>::~SimpleObjectManager()
 template <class T>
 T* SimpleObjectManager<T>::createObject(const String& type, const String& name)
 {
-	assert(retrieveObjectByName(name) == nullptr);
+	assert(SimpleObjectManager<T>::retrieveObjectByName(name) == nullptr);
     return ObjectCollection<T>::createObject(type, name);
 }
 

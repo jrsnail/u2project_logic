@@ -330,7 +330,7 @@ namespace U2EG_NAMESPACE_NAME
 	template<typename T>
 	void freePtr(T* ptr)
 	{
-		U2_FREE(mObject, MEMCATEGORY_GENERAL);
+		U2_FREE(ptr, MEMCATEGORY_GENERAL);
 	}
 }
 

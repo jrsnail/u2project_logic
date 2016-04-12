@@ -47,15 +47,15 @@ public:
 
 	ObjectMapIterator retrieveAllObjects()
 	{
-		MultiKeyMap::iterator bit = mObjects.begin();
-		MultiKeyMap::iterator eit = mObjects.end();
+		typename MultiKeyMap::iterator bit = mObjects.begin();
+		typename MultiKeyMap::iterator eit = mObjects.end();
 		return ObjectMapIterator(bit, eit);
 	}
 
 	ObjectMapIterator retrieveAllObjectsByName(const String& name)
 	{
-		MultiKeyMap::iterator bit = mObjects.lower_bound(VLIST_1(name));
-		MultiKeyMap::iterator eit = mObjects.upper_bound(VLIST_1(name));
+		typename MultiKeyMap::iterator bit = mObjects.lower_bound(VLIST_1(name));
+		typename MultiKeyMap::iterator eit = mObjects.upper_bound(VLIST_1(name));
 		return ObjectMapIterator(bit, eit);
 	}
 
@@ -63,8 +63,8 @@ public:
 
 	ObjectMapIterator retrieveAllObjectsByType(const String& type)
 	{
-		MultiKeyMap::iterator bit = mObjects.lower_bound(VLIST_2(KeyHolder<String>(), type));
-		MultiKeyMap::iterator eit = mObjects.upper_bound(VLIST_2(KeyHolder<String>(), type));
+		typename MultiKeyMap::iterator bit = mObjects.lower_bound(VLIST_2(KeyHolder<String>(), type));
+		typename MultiKeyMap::iterator eit = mObjects.upper_bound(VLIST_2(KeyHolder<String>(), type));
 		return ObjectMapIterator(bit, eit);
 	}
 
@@ -74,8 +74,8 @@ public:
 
 	ObjectMapIterator retrieveAllObjectsByTN(const String& type, const String& name)
 	{
-		MultiKeyMap::iterator bit = mObjects.lower_bound(VLIST_2(name, type));
-		MultiKeyMap::iterator eit = mObjects.upper_bound(VLIST_2(name, type));
+		typename MultiKeyMap::iterator bit = mObjects.lower_bound(VLIST_2(name, type));
+		typename MultiKeyMap::iterator eit = mObjects.upper_bound(VLIST_2(name, type));
 		return ObjectMapIterator(bit, eit);
 	}
 

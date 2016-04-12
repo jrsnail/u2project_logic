@@ -315,8 +315,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
 // 		u2int64 n = in->readInt64();
 
 		PipedInStream* pPipeIn = new PipedInStream;
-		PipedOutStream* pPipeOut = new PipedOutStream(pPipeIn);
-		//pPipeIn->connect(pPipeOut);
+		PipedOutStream* pPipeOut = new PipedOutStream;
+		pPipeIn->connect(pPipeOut);
 
 		TestInThread* pInTread = new TestInThread(pPipeIn);
 		TestOutThread* pOutTread = new TestOutThread(pPipeOut);
