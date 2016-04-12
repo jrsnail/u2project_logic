@@ -21,6 +21,7 @@ class FileInStream : public InStream
 {
 public:
     FileInStream(const String& name, const u2::String& filename, std::ios_base::openmode mode = std::ios_base::in);
+	FileInStream(const String& name, std::ifstream* s, size_t inSize);
     FileInStream(const String& name, va_list argp);
     virtual ~FileInStream();
 
@@ -48,6 +49,7 @@ class FileOutStream : public OutStream
 {
 public:
     FileOutStream(const String& name, const u2::String& filename, std::ios_base::openmode mode = std::ios_base::out);
+	FileOutStream(const String& name, std::ofstream* s);
     FileOutStream(const String& name, va_list argp);
     virtual ~FileOutStream();
 

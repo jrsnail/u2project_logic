@@ -24,6 +24,13 @@ FileInStream::FileInStream(const String& name, const u2::String& filename, std::
     open(filename, mode);
 }
 //-----------------------------------------------------------------------
+FileInStream::FileInStream(const String& name, std::ifstream* s, size_t inSize)
+	: InStream(GET_OBJECT_TYPE(FileInStream), name)
+	, m_pFInStream(s)
+{
+	m_uSize = inSize;
+}
+//-----------------------------------------------------------------------
 FileInStream::FileInStream(const String& name, va_list argp)
     : InStream(GET_OBJECT_TYPE(FileInStream), name)
     , m_pFInStream(nullptr)
@@ -128,6 +135,13 @@ FileOutStream::FileOutStream(const String& name, const u2::String& filename, std
     , m_pFOutStream(nullptr)
 {
     open(filename, mode);
+}
+//-----------------------------------------------------------------------
+FileOutStream::FileOutStream(const String& name, std::ofstream* s)
+	: OutStream(GET_OBJECT_TYPE(FileOutStream), name)
+	, m_pFOutStream(s)
+{
+
 }
 //-----------------------------------------------------------------------
 FileOutStream::FileOutStream(const String& name, va_list argp)

@@ -182,6 +182,9 @@ protected:
 };
 
 
+typedef std::shared_ptr<InStream>		InStreamPtr;
+
+
 class OutStream : public Object, public GeneralAllocatedObject
 {
 public:
@@ -200,6 +203,9 @@ public:
     */
     virtual void close() = 0;
 };
+
+
+typedef std::shared_ptr<OutStream>		OutStreamPtr;
 
 
 U2EG_NAMESPACE_END

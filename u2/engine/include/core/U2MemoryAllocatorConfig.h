@@ -320,7 +320,20 @@ namespace U2EG_NAMESPACE_NAME
 	{
 		U2_DELETE ptr;
 	}
+
+	template<typename T>
+	void deleteTPtr(T* ptr)
+	{
+		U2_DELETE_T(ptr, T, MEMCATEGORY_GENERAL);
+	}
+
+	template<typename T>
+	void freePtr(T* ptr)
+	{
+		U2_FREE(mObject, MEMCATEGORY_GENERAL);
+	}
 }
+
 
 
 #include "U2HeaderSuffix.h"

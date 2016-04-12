@@ -314,10 +314,6 @@ bool AppDelegate::applicationDidFinishLaunching() {
 // 		in.push<DataFilterInStream>("bbb");
 // 		u2int64 n = in->readInt64();
 
-		int a = 0;
-
-
-
 		PipedInStream* pPipeIn = new PipedInStream;
 		PipedOutStream* pPipeOut = new PipedOutStream(pPipeIn);
 		//pPipeIn->connect(pPipeOut);

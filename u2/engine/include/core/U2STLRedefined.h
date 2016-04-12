@@ -153,8 +153,7 @@ namespace U2EG_NAMESPACE_NAME
     
     typedef _StringBase             String;
     typedef _StringStreamBase       StringStream;
-
-
+	
 };
 
 
@@ -327,6 +326,13 @@ namespace U2EG_NAMESPACE_NAME
     
 } // U2EG_NAMESPACE_NAME
 
+
+// for StringVector
+namespace U2EG_NAMESPACE_NAME
+{
+	typedef vector<String>::type			StringVector;
+	typedef std::shared_ptr<StringVector>	StringVectorPtr;
+} // U2EG_NAMESPACE_NAME
 
 
 #endif

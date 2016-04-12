@@ -211,7 +211,7 @@
 #endif
 
 
-// Library suffixes
+// ////////////////////////// Library suffixes //////////////////////////////
 // "_d" for debug builds, nothing otherwise
 #if U2_DEBUG_MODE
 #   define U2_BUILD_SUFFIX               "_d"
@@ -220,13 +220,23 @@
 #endif
 
 
-// Android Settings
+// ////////////////////////// Android Settings //////////////////////////////
 #if U2_PLATFORM == U2_PLATFORM_ANDROID
 // A quick define to overcome different names for the same function
 #   define stricmp strcasecmp
 #   ifndef CLOCKS_PER_SEC
 #       define CLOCKS_PER_SEC  1000
 #   endif
+#endif
+
+
+// ////////////////////////// locale //////////////////////////////
+// Set the default locale for strings
+#if U2_PLATFORM == U2_PLATFORM_ANDROID
+//  Locales are not supported by the C lib you have to go through JNI.
+#   define U2_DEFAULT_LOCALE				""
+#else
+#   define U2_DEFAULT_LOCALE				"C"
 #endif
 
 

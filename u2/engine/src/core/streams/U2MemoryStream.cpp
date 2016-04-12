@@ -23,6 +23,13 @@ MemoryInStream::MemoryInStream(const String& name, void* pMem, size_t inSize)
 	open(pMem, inSize);
 }
 //-----------------------------------------------------------------------
+MemoryInStream::MemoryInStream(const String& name, std::shared_ptr<u2byte> pMemPtr, size_t inSize)
+	: InStream(GET_OBJECT_TYPE(MemoryInStream), name)
+	, m_MemPtr(pMemPtr)
+{
+	open(m_MemPtr.get(), inSize);
+}
+//-----------------------------------------------------------------------
 MemoryInStream::MemoryInStream(const String& name, va_list argp)
     : InStream(GET_OBJECT_TYPE(MemoryInStream), name)
 {

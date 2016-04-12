@@ -267,6 +267,18 @@
     <ClCompile Include="..\engine\src\core\streams\U2MemoryStream.cpp">
       <Filter>engine\src\core\streams</Filter>
     </ClCompile>
+    <ClCompile Include="..\engine\src\core\U2StringUtil.cpp">
+      <Filter>engine\src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\U2Archive.cpp">
+      <Filter>engine\src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\U2FileSystemArchive.cpp">
+      <Filter>engine\src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\U2ZipArchive.cpp">
+      <Filter>engine\src\core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -550,6 +562,18 @@
     </ClInclude>
     <ClInclude Include="..\engine\include\core\streams\U2MemoryStream.h">
       <Filter>engine\include\core\streams</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2StringUtil.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2Archive.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2FileSystemArchive.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2ZipArchive.h">
+      <Filter>engine\include\core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

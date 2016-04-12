@@ -21,6 +21,7 @@ class MemoryInStream : public InStream
 {
 public:
 	MemoryInStream(const String& name, void* pMem, size_t inSize);
+	MemoryInStream(const String& name, std::shared_ptr<u2byte> pMemPtr, size_t inSize);
 	MemoryInStream(const String& name, va_list argp);
     virtual ~MemoryInStream();
 
@@ -45,6 +46,7 @@ protected:
 	u2uchar* m_pPos;
 	/// Pointer to the end of the memory
 	u2uchar* m_pEnd;
+	std::shared_ptr<u2byte> m_MemPtr;
 };
 
 
