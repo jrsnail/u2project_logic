@@ -10,7 +10,7 @@
     U2_PLATFORM == U2_PLATFORM_ANDROID || \
     U2_PLATFORM == U2_PLATFORM_NACL || \
     U2_PLATFORM == U2_PLATFORM_EMSCRIPTEN
-#   include "OgreSearchOps.h"
+#   include "U2SearchOps.h"
 #   include <sys/param.h>
 #   define MAX_PATH MAXPATHLEN
 #endif

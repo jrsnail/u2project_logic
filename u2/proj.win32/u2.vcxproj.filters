@@ -279,6 +279,9 @@
     <ClCompile Include="..\engine\src\core\U2ZipArchive.cpp">
       <Filter>engine\src\core</Filter>
     </ClCompile>
+    <ClCompile Include="..\engine\src\core\U2SearchOps.cpp">
+      <Filter>engine\src\core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -573,6 +576,9 @@
       <Filter>engine\include\core</Filter>
     </ClInclude>
     <ClInclude Include="..\engine\include\core\U2ZipArchive.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2SearchOps.h">
       <Filter>engine\include\core</Filter>
     </ClInclude>
   </ItemGroup>

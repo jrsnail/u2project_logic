@@ -5,7 +5,6 @@
 #include "U2STLRedefined.h"
 #include "U2Stream.h"
 #include "U2Exception.h"
-#include <ctime>
 #include "U2SimpleObjectManager.h"
 #include "U2HeaderPrefix.h"
 
