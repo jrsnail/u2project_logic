@@ -5,6 +5,7 @@ include $(CLEAR_VARS)
 $(call import-add-path,$(LOCAL_PATH)/../../../cocos2d)
 $(call import-add-path,$(LOCAL_PATH)/../../../cocos2d/external)
 $(call import-add-path,$(LOCAL_PATH)/../../../cocos2d/cocos)
+$(call import-add-path,$(LOCAL_PATH)/../../../../Dependenices/libs/Android/armeabi-v7a)
 
 LOCAL_MODULE := cocos2dcpp_shared
 
@@ -57,12 +58,11 @@ LOCAL_STATIC_LIBRARIES := cocos2dx_static
 # _COCOS_LIB_ANDROID_END
 
 
-LOCAL_LDLIBS	+= -L$(LOCAL_PATH)/../../../../Dependenices/libs/Android/armeabi-v7a
-
-
 include $(BUILD_SHARED_LIBRARY)
 
+$(call import-module,libzziplib) 
 $(call import-module,.)
+
 
 # _COCOS_LIB_IMPORT_ANDROID_BEGIN
 # _COCOS_LIB_IMPORT_ANDROID_END
