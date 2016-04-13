@@ -20,7 +20,7 @@ U2EG_NAMESPACE_BEGIN
 class ApkZipArchiveFactory : public EmbeddedZipArchiveFactory
 {
 public:
-	ApkZipArchiveFactory(AAssetManager* assetMgr) : mAssetMgr(assetMgr) {}
+	ApkZipArchiveFactory(AAssetManager* assetMgr);
 
 	virtual const String& getType() const override;
 

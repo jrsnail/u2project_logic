@@ -18,13 +18,13 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../Classes \
                     $(LOCAL_PATH)/../../../engine \
                     $(LOCAL_PATH)/../../../engine/include \
                     $(LOCAL_PATH)/../../../engine/include/core \
+					$(LOCAL_PATH)/../../../engine/include/core/Android \
                     $(LOCAL_PATH)/../../../engine/include/core/streams \
                     $(LOCAL_PATH)/../../../engine/include/core/threading \
-                    $(LOCAL_PATH)/../../../engine/include/core/threading/threadpool \
-                    $(LOCAL_PATH)/../../../engine/include/core/threading/threadpool/impl \
-                    $(LOCAL_PATH)/../../../engine/include/core/threading/threadpool/singlethreaded \
                     $(LOCAL_PATH)/../../../engine/include/mvc \
                     $(LOCAL_PATH)/../../../gamebase
+					
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/../../../../Dependenices/include
 
 
 # 遍历目录及子目录的函数
@@ -55,6 +55,10 @@ LOCAL_STATIC_LIBRARIES := cocos2dx_static
 
 # _COCOS_LIB_ANDROID_BEGIN
 # _COCOS_LIB_ANDROID_END
+
+
+LOCAL_LDLIBS	+= -L$(LOCAL_PATH)/../../../../Dependenices/libs/Android/armeabi-v7a
+
 
 include $(BUILD_SHARED_LIBRARY)
 

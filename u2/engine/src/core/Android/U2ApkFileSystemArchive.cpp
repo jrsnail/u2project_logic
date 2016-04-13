@@ -74,7 +74,7 @@ InStreamPtr ApkFileSystemArchive::openForRead(const String& filename)
 	if (asset)
 	{
 		off_t length = AAsset_getLength(asset);
-		void* membuf = U2_MALLOC(length, MEMCATEGORY_GENERAL);
+		u2byte* membuf = static_cast<u2byte*>(U2_MALLOC(length, MEMCATEGORY_GENERAL));
 		memcpy(membuf, AAsset_getBuffer(asset), length);
 		AAsset_close(asset);
 

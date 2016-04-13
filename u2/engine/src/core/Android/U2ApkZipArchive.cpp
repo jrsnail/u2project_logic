@@ -7,7 +7,7 @@ U2EG_NAMESPACE_USING
 
 //-----------------------------------------------------------------------
 ApkZipArchiveFactory::ApkZipArchiveFactory(AAssetManager* assetMgr)
-	: TemplateObjectFactory<ZipArchive>()
+	: EmbeddedZipArchiveFactory()
 	, mAssetMgr(assetMgr)
 {
 }
