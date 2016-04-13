@@ -1,8 +1,9 @@
 #include "Android/U2AndroidLogListener.h"
 #include <android/log.h>
 
-#define LOGI(...) ((void)__android_log_print(ANDROID_LOG_INFO, "u2", __VA_ARGS__))
-#define LOGE(...) ((void)__android_log_print(ANDROID_LOG_ERROR, "u2", __VA_ARGS__))
+#define LOG_TAG   "u2"
+#define LOGI(msg) ((void)__android_log_write(ANDROID_LOG_INFO, LOG_TAG, msg))
+#define LOGE(msg) ((void)__android_log_write(ANDROID_LOG_ERROR, LOG_TAG, msg))
 
 namespace u2
 {

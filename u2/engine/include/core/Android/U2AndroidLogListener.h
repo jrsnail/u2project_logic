@@ -6,7 +6,7 @@
 namespace u2
 {
     
-    class AndroidLogListener : public u2::LogListener, public u2::LogAlloc
+    class AndroidLogListener : public u2::LogListener, public u2::GeneralAllocatedObject
     {
     public:
         AndroidLogListener();
