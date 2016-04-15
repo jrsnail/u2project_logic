@@ -89,7 +89,7 @@ template<class T>
 void PoolingObjectManager<T>::recycleObject(T* obj)
 {
 	assert(obj != nullptr);
-	assert(retrieveObjectByGuid(obj->getGuid()) != nullptr);
+	assert(this->retrieveObjectByGuid(obj->getGuid()) != nullptr);
 	assert(mUnusedObjects.retrieveObjectByGuid(obj->getGuid()) == nullptr);
 
 	obj->preRecycleByPool();

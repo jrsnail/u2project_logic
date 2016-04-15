@@ -15,6 +15,6 @@ void Worker::join()
 String Worker::threadId2String(std::thread::id& tid)
 {
 	StringStream stream;
-	tid._To_text(stream);
+    stream << tid;
 	return stream.str();
 }
