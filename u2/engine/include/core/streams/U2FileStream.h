@@ -37,6 +37,10 @@ public:
 
     virtual void close() override;
 
+	/** @copydoc DataStream::readLine
+	*/
+	virtual size_t readLine(char* buf, size_t maxCount, const String& delim = "\n") override;
+
     void open(const u2::String& filename, std::ios_base::openmode mode = std::ios_base::in);
 
 protected:

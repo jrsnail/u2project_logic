@@ -121,6 +121,8 @@ namespace U2EG_NAMESPACE_NAME
 		MEMCATEGORY_GENERAL = 0,
 		/// Scripting
 		MEMCATEGORY_SCRIPTING = 1,
+		/// Other resources
+		MEMCATEGORY_RESOURCE = 2,
 
 		// sentinel value, do not use 
 		MEMCATEGORY_COUNT = 2
@@ -158,10 +160,12 @@ namespace U2EG_NAMESPACE_NAME
 namespace U2EG_NAMESPACE_NAME
 {
 	// Useful shortcuts
-	typedef CategorisedAllocPolicy<U2EG_NAMESPACE_NAME::MEMCATEGORY_GENERAL>       GeneralAllocPolicy;
+	typedef CategorisedAllocPolicy<U2EG_NAMESPACE_NAME::MEMCATEGORY_GENERAL>        GeneralAllocPolicy;
+	typedef CategorisedAllocPolicy<U2EG_NAMESPACE_NAME::MEMCATEGORY_RESOURCE>		ResourceAllocPolicy;
 
 	// Now define all the base classes for each allocation
-	typedef AllocatedObject<GeneralAllocPolicy>                                    GeneralAllocatedObject;
+	typedef AllocatedObject<GeneralAllocPolicy>                                     GeneralAllocatedObject;
+	typedef AllocatedObject<ResourceAllocPolicy>									ResourceAllocatedObject;
 
 
 	// Per-class allocators defined here

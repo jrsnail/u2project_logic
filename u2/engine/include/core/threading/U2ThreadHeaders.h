@@ -16,7 +16,9 @@
 // lock
 #define U2_AUTO_MUTEX_NAME          m_mtx
 #define U2_AUTO_MUTEX               mutable std::mutex		U2_AUTO_MUTEX_NAME
-#define U2_LOCK_AUTO_MUTEX          std::unique_lock<std::mutex> lck(U2_AUTO_MUTEX_NAME)
+#define U2_STATIC_MUTEX(name)		static std::mutex name
+#define U2_STATIC_MUTEX_INSTANCE(name)	std::mutex name
+#define U2_LOCK_AUTO_MUTEX          std::unique_lock<std::mutex> autolck(U2_AUTO_MUTEX_NAME)
 #define U2_MUTEX(name)				mutable std::mutex		name
 #define U2_LOCK_MUTEX(name)			std::unique_lock<std::mutex> lck(name)
 #define U2_LOCK_MUTEX_NAMED(mutexName, lockName)	std::unique_lock<std::mutex> lockName(mutexName)

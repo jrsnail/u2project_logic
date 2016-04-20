@@ -116,7 +116,7 @@ size_t PipedInStream::read(u2byte* s, size_t n)
 			}
 			// Notify callers of receive()
 			U2_THREAD_NOTIFY_ALL(m_WritableSync);
-			U2_THREAD_WAIT_FOR(m_ReadableSync, lck, 1000);
+			U2_THREAD_WAIT_FOR(m_ReadableSync, autolck, 1000);
 		}
 	}
 
@@ -178,7 +178,7 @@ size_t PipedInStream::receive(const u2byte* s, std::streamsize n)
 		while (m_pBuffer != nullptr && m_nOut == m_nIn) 
 		{
 			U2_THREAD_NOTIFY_ALL(m_ReadableSync);
-			U2_THREAD_WAIT_FOR(m_WritableSync, lck, 1000);
+			U2_THREAD_WAIT_FOR(m_WritableSync, autolck, 1000);
 		}
 	}
 

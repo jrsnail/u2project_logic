@@ -46,7 +46,6 @@ private:
 	ZipInStream(const String& name, va_list argp);
 
 protected:
-#	define U2_STREAM_TEMP_SIZE		128
 	ZZIP_FILE* mZzipFile;
 	/// We need caching because sometimes serializers step back in data stream and zziplib behaves slow
 	StaticCache<2 * U2_STREAM_TEMP_SIZE> mCache;
