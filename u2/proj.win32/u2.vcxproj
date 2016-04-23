@@ -201,6 +201,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\engine\src\core\U2StringUtil.cpp" />
     <ClCompile Include="..\engine\src\core\U2TypedObjectManager.cpp" />
     <ClCompile Include="..\engine\src\core\U2ZipArchive.cpp" />
+    <ClCompile Include="..\engine\src\core\Win\U2FileSystemLayer.cpp" />
     <ClCompile Include="..\engine\src\mvc\U2Command.cpp" />
     <ClCompile Include="..\engine\src\mvc\U2Context.cpp" />
     <ClCompile Include="..\engine\src\mvc\U2ContextQueue.cpp" />
@@ -278,6 +279,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\engine\include\core\U2FactoryManager.h" />
     <ClInclude Include="..\engine\include\core\U2FactoryObj.h" />
     <ClInclude Include="..\engine\include\core\U2FileSystemArchive.h" />
+    <ClInclude Include="..\engine\include\core\U2FileSystemLayer.h" />
     <ClInclude Include="..\engine\include\core\U2HeaderPrefix.h" />
     <ClInclude Include="..\engine\include\core\U2HeaderSuffix.h" />
     <ClInclude Include="..\engine\include\core\U2IteratorWrapper.h" />

@@ -55,6 +55,9 @@
     <Filter Include="src\cg">
       <UniqueIdentifier>{09e430f6-82f2-444b-b23a-9545fbb174c2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="engine\src\core\Win">
+      <UniqueIdentifier>{28b14ed7-c72b-4cae-bc82-c6ff5e275b5b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -282,9 +285,6 @@
     <ClCompile Include="..\engine\src\core\U2SearchOps.cpp">
       <Filter>engine\src\core</Filter>
     </ClCompile>
-    <ClCompile Include="..\engine\src\core\U2AtomicScalar.cpp">
-      <Filter>engine\src\core</Filter>
-    </ClCompile>
     <ClCompile Include="..\engine\src\core\U2Resource.cpp">
       <Filter>engine\src\core</Filter>
     </ClCompile>
@@ -302,6 +302,12 @@
     </ClCompile>
     <ClCompile Include="..\engine\src\core\U2ConfigFile.cpp">
       <Filter>engine\src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\U2AtomicScalar.cpp">
+      <Filter>engine\src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\Win\U2FileSystemLayer.cpp">
+      <Filter>engine\src\core\Win</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -602,9 +608,6 @@
     <ClInclude Include="..\engine\include\core\U2SearchOps.h">
       <Filter>engine\include\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\engine\include\core\U2AtomicScalar.h">
-      <Filter>engine\include\core</Filter>
-    </ClInclude>
     <ClInclude Include="..\engine\include\core\U2Resource.h">
       <Filter>engine\include\core</Filter>
     </ClInclude>
@@ -624,6 +627,12 @@
       <Filter>engine\include\core</Filter>
     </ClInclude>
     <ClInclude Include="..\engine\include\core\U2ConfigFile.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2AtomicScalar.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2FileSystemLayer.h">
       <Filter>engine\include\core</Filter>
     </ClInclude>
   </ItemGroup>
