@@ -89,6 +89,12 @@ protected:
 };
 
 
+class ZipArchiveFactory : public TemplateObjectFactory < ZipArchive >
+{
+public:
+	virtual const String& getType() const override;
+};
+
 
 class EmbeddedZipArchiveFactory : public TemplateObjectFactory < ZipArchive >
 {

@@ -102,6 +102,14 @@ protected:
 };
 
 
+
+class FileSystemArchiveFactory : public TemplateObjectFactory < FileSystemArchive >
+{
+public:
+	virtual const String& getType() const override;
+};
+
+
 /** @} */
 /** @} */
 

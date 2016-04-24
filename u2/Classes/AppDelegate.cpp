@@ -12,6 +12,14 @@
 #include "U2DataFilterStream.h"
 #include "U2StreamQueue.h"
 #include "U2PipedStream.h"
+#include "U2ConfigFile.h"
+#include "U2ResourceGroupManager.h"
+#include "U2FileSystemLayer.h"
+#include "U2FileSystemArchive.h"
+#if U2_PLATFORM == U2_PLATFORM_ANDROID
+#	include "U2ApkFileSystemArchive.h"
+#	include "U2ApkZipArchive.h"
+#endif
 
 
 
@@ -223,6 +231,47 @@ bool AppDelegate::applicationDidFinishLaunching() {
 // 	mAndroidLogger = U2_NEW AndroidLogListener();
 // 	m_pLogManager->getDefaultLog()->addListener(mAndroidLogger);
 // #endif
+
+	{
+		//------------------------------- Test Resource ----------------------------------------
+#if U2_PLATFORM == U2_PLATFORM_APPLE || U2_PLATFORM == U2_PLATFORM_APPLE_IOS
+		Archive* pConfigArchive = ArchiveManager::getSingleton().createObject(
+			"FileSystem", macBundlePath(), true);
+#elif U2_PLATFORM == U2_PLATFORM_ANDROID
+		Archive* pConfigArchive = ArchiveManager::getSingleton().createObject(
+			"ApkFileSystem", ".", true);
+#else
+		Archive* pConfigArchive = ArchiveManager::getSingleton().createObject(
+			"FileSystem", ".", true);
+#endif
+		InStreamPtr stream = pConfigArchive->openForRead("resources.cfg");
+
+		u2::String secName, typeName, archName;
+		ConfigFile cf;
+		cf.load(stream);
+
+		u2::ConfigFile::SectionIterator seci = cf.getSectionIterator();
+		while (seci.hasMoreElements())
+		{
+			secName = seci.peekNextKey();
+			ConfigFile::SettingsMultiMap *settings = seci.getNext();
+			ConfigFile::SettingsMultiMap::iterator i;
+			for (i = settings->begin(); i != settings->end(); ++i)
+			{
+				typeName = i->first;
+				archName = i->second;
+#if U2_PLATFORM == U2_PLATFORM_APPLE || U2_PLATFORM == U2_PLATFORM_APPLE_IOS
+				// OS X does not set the working directory relative to the app,
+				// In order to make things portable on OS X we need to provide
+				// the loading with it's own bundle path location
+				if (!StringUtil::startsWith(archName, "/", false)) // only adjust relative dirs
+					archName = String(macBundlePath() + "/" + archName);
+#endif
+				ResourceGroupManager::getSingleton().addResourceLocation(archName, typeName, secName);
+			}
+		}
+	}
+	
 
 
 	{

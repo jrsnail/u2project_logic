@@ -15,11 +15,15 @@ U2EG_NAMESPACE_USING
 template<> ResourceGroupManager* Singleton<ResourceGroupManager>::msSingleton = 0;
 ResourceGroupManager* ResourceGroupManager::getSingletonPtr(void)
 {
-    return msSingleton;
+	if (msSingleton == nullptr)
+	{
+		msSingleton = U2_NEW ResourceGroupManager;
+	}
+	return msSingleton;
 }
 ResourceGroupManager& ResourceGroupManager::getSingleton(void)
 {  
-    assert( msSingleton );  return ( *msSingleton );  
+	return (*getSingletonPtr());
 }
 String ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME = "General";
 String ResourceGroupManager::INTERNAL_RESOURCE_GROUP_NAME = "Internal";
@@ -505,7 +509,7 @@ void ResourceGroupManager::addResourceLocation(const String& name,
     U2_LOCK_MUTEX(grp->U2_AUTO_MUTEX_NAME); // lock group mutex
 
     // Get archive
-    Archive* pArch = ArchiveManager::getSingleton().createObject( name, locType, readOnly );
+    Archive* pArch = ArchiveManager::getSingleton().createObject(locType, name, readOnly );
     // Add to location list
     ResourceLocation* loc = U2_NEW_T(ResourceLocation, MEMCATEGORY_RESOURCE);
     loc->archive = pArch;

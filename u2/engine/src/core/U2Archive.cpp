@@ -4,7 +4,10 @@
 #include "U2FactoryManager.h"
 #include "U2FileSystemArchive.h"
 #include "U2ZipArchive.h"
-
+// #if U2_PLATFORM == U2_PLATFORM_ANDROID
+// #	include "U2ApkFileSystemArchive.h"
+// #	include "U2ApkZipArchive.h"
+// #end
 
 U2EG_NAMESPACE_USING
 
@@ -42,13 +45,34 @@ ArchiveManager& ArchiveManager::getSingleton(void)
 //-----------------------------------------------------------------------
 ArchiveManager::ArchiveManager()
 {
-	CREATE_FACTORY(FileSystemArchive);
-	CREATE_FACTORY(ZipArchive);
+	if (!u2::FactoryManager::getSingleton().hasObjectFactory("FileSystem"))
+	{
+		u2::ObjectFactory* pObjectFactory = new FileSystemArchiveFactory;
+		u2::FactoryManager::getSingleton().addObjectFactory(pObjectFactory);
+	}
+	if (!u2::FactoryManager::getSingleton().hasObjectFactory("Zip"))
+	{
+		u2::ObjectFactory* pObjectFactory = new ZipArchiveFactory;
+		u2::FactoryManager::getSingleton().addObjectFactory(pObjectFactory);
+	}
 	if (!u2::FactoryManager::getSingleton().hasObjectFactory("EmbeddedZip"))
 	{
 		u2::ObjectFactory* pObjectFactory = new EmbeddedZipArchiveFactory;
 		u2::FactoryManager::getSingleton().addObjectFactory(pObjectFactory);
 	}
+
+// #if U2_PLATFORM == U2_PLATFORM_ANDROID
+// 	if (!u2::FactoryManager::getSingleton().hasObjectFactory("ApkFileSystem"))
+// 	{
+// 		u2::ObjectFactory* pObjectFactory = new ApkFileSystemArchiveFactory;
+// 		u2::FactoryManager::getSingleton().addObjectFactory(pObjectFactory);
+// 	}
+// 	if (!u2::FactoryManager::getSingleton().hasObjectFactory("ApkZip"))
+// 	{
+// 		u2::ObjectFactory* pObjectFactory = new ApkZipArchiveFactory;
+// 		u2::FactoryManager::getSingleton().addObjectFactory(pObjectFactory);
+// 	}
+// #endif
 }
 //-----------------------------------------------------------------------
 ArchiveManager::~ArchiveManager()

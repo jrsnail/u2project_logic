@@ -376,3 +376,10 @@ time_t FileSystemArchive::getModifiedTime(const String& filename)
     }
 
 }
+//-----------------------------------------------------------------------
+//-----------------------------------------------------------------------
+const String& FileSystemArchiveFactory::getType() const
+{
+	static String name = "FileSystem";
+	return name;
+}

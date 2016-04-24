@@ -82,6 +82,8 @@ class ApkFileSystemArchiveFactory : public TemplateObjectFactory < ApkFileSystem
 {
 public:
 	ApkFileSystemArchiveFactory(AAssetManager* AssetMgr);
+	
+	virtual const String& getType() const override;
 
 	virtual Object* createInstance(const String& name) override;
 

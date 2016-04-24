@@ -220,3 +220,9 @@ Object* ApkFileSystemArchiveFactory::createInstance(const String& name)
 	}
 	return pObj;
 }
+//-----------------------------------------------------------------------
+const String& ApkFileSystemArchiveFactory::getType() const
+{
+	static String name = "ApkFileSystem";
+	return name;
+}

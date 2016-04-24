@@ -32,9 +32,19 @@ define walk
     $(wildcard $(1)) $(foreach e, $(wildcard $(1)/*), $(call walk, $(e)))
 endef
 
+# 遍历指定目录的函数，不含子目录
+define walk_weak
+    $(wildcard $(1))
+endef
+
+
 # 遍历Classes目录
 ALLFILES = $(call walk, $(LOCAL_PATH)/../../../Classes)
-ALLFILES += $(call walk, $(LOCAL_PATH)/../../../engine)
+ALLFILES += $(wildcard $(LOCAL_PATH)/../../../engine/src/core/*)
+ALLFILES += $(wildcard $(LOCAL_PATH)/../../../engine/src/core/streams/*)
+ALLFILES += $(wildcard $(LOCAL_PATH)/../../../engine/src/core/threading/*)
+ALLFILES += $(wildcard $(LOCAL_PATH)/../../../engine/src/core/Android/*)
+ALLFILES += $(wildcard $(LOCAL_PATH)/../../../engine/src/mvc/*)
 ALLFILES += $(call walk, $(LOCAL_PATH)/../../../gamebase)
 
 FILE_LIST := hellocpp/main.cpp
