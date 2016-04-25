@@ -22,6 +22,7 @@
 #	include <android/asset_manager_jni.h>
 #	include "U2ApkFileSystemArchive.h"
 #	include "U2ApkZipArchive.h"
+#	include "U2AndroidLogListener.h"
 #endif
 
 
@@ -230,10 +231,10 @@ bool AppDelegate::applicationDidFinishLaunching() {
 		m_pLogManager->createLog("u2.log", true, true);
 	}
 
-// #if U2_PLATFORM == U2_PLATFORM_ANDROID
-// 	mAndroidLogger = U2_NEW AndroidLogListener();
-// 	m_pLogManager->getDefaultLog()->addListener(mAndroidLogger);
-// #endif
+#if U2_PLATFORM == U2_PLATFORM_ANDROID
+	AndroidLogListener* mAndroidLogger = U2_NEW AndroidLogListener();
+	m_pLogManager->getDefaultLog()->addListener(mAndroidLogger);
+#endif
 
 	{
 		//------------------------------- Test Resource ----------------------------------------
@@ -289,6 +290,10 @@ bool AppDelegate::applicationDidFinishLaunching() {
 					archName = String(macBundlePath() + "/" + archName);
 #endif
 				ResourceGroupManager::getSingleton().addResourceLocation(archName, typeName, secName);
+				u2::LogManager::getSingleton().stream(u2::LML_NORMAL) 
+					<< "archName:" << archName 
+					<< ", typeName:" << typeName 
+					<< ", secName:" << secName << "\n";
 			}
 		}
 	}
