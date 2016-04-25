@@ -17,6 +17,9 @@
 #include "U2FileSystemLayer.h"
 #include "U2FileSystemArchive.h"
 #if U2_PLATFORM == U2_PLATFORM_ANDROID
+#	include "CCFileUtils-android.h"
+#	include <android/asset_manager.h>
+#	include <android/asset_manager_jni.h>
 #	include "U2ApkFileSystemArchive.h"
 #	include "U2ApkZipArchive.h"
 #endif
@@ -234,6 +237,24 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
 	{
 		//------------------------------- Test Resource ----------------------------------------
+#if U2_PLATFORM == U2_PLATFORM_ANDROID
+		//AAssetManager* pAssetMgr = AAssetManager_fromJava(env, assetManager);
+		AAssetManager* pAssetMgr = FileUtilsAndroid::getAssetManager();
+		if (pAssetMgr)
+		{
+			if (!u2::FactoryManager::getSingleton().hasObjectFactory("ApkFileSystem"))
+			{
+				u2::ObjectFactory* pObjectFactory = new ApkFileSystemArchiveFactory(pAssetMgr);
+				u2::FactoryManager::getSingleton().addObjectFactory(pObjectFactory);
+			}
+			if (!u2::FactoryManager::getSingleton().hasObjectFactory("ApkZip"))
+			{
+				u2::ObjectFactory* pObjectFactory = new ApkZipArchiveFactory(pAssetMgr);
+				u2::FactoryManager::getSingleton().addObjectFactory(pObjectFactory);
+			}
+		}
+#endif
+
 #if U2_PLATFORM == U2_PLATFORM_APPLE || U2_PLATFORM == U2_PLATFORM_APPLE_IOS
 		Archive* pConfigArchive = ArchiveManager::getSingleton().createObject(
 			"FileSystem", macBundlePath(), true);
