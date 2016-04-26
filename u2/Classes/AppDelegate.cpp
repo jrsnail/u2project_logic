@@ -265,6 +265,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
 #else
 		Archive* pConfigArchive = ArchiveManager::getSingleton().createObject(
 			"FileSystem", ".", true);
+// 		Archive* pConfigArchive = ArchiveManager::getSingleton().createObject(
+// 			"Zip", "./Test.zip", true);
 #endif
 		InStreamPtr stream = pConfigArchive->openForRead("resources.cfg");
 

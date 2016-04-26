@@ -77,7 +77,7 @@ void ZipArchive::load()
 	if (!mZzipDir)
 	{
 		zzip_error_t zzipError;
-		mZzipDir = zzip_dir_open_ext_io(mName.c_str(), &zzipError, 0, mPluginIo);
+		mZzipDir = zzip_dir_open_ext_io(m_szName.c_str(), &zzipError, 0, mPluginIo);
 		checkZzipError(zzipError, "opening archive");
 
 		// Cache names
@@ -146,7 +146,7 @@ InStreamPtr ZipArchive::openForRead(const String& filename)
 		int zerr = zzip_error(mZzipDir);
 		String zzDesc = getZzipErrorDescription((zzip_error_t)zerr);
 		LogManager::getSingleton().logMessage(
-			mName + " - Unable to open file " + lookUpFileName + ", error was '" + zzDesc + "'", LML_CRITICAL);
+			m_szName + " - Unable to open file " + lookUpFileName + ", error was '" + zzDesc + "'", LML_CRITICAL);
 
 		// return null pointer
 		return InStreamPtr();
@@ -271,7 +271,7 @@ time_t ZipArchive::getModifiedTime(const String& filename)
 	// Zziplib doesn't yet support getting the modification time of individual files
 	// so just check the mod time of the zip itself
 	struct stat tagStat;
-	bool ret = (stat(mName.c_str(), &tagStat) == 0);
+	bool ret = (stat(m_szName.c_str(), &tagStat) == 0);
 
 	if (ret)
 	{
@@ -291,7 +291,7 @@ void ZipArchive::checkZzipError(int zzipError, const String& operation) const
 		String errorMsg = getZzipErrorDescription(static_cast<zzip_error_t>(zzipError));
 
 		U2_EXCEPT(Exception::ERR_INTERNAL_ERROR,
-			mName + " - error whilst " + operation + ": " + errorMsg,
+			m_szName + " - error whilst " + operation + ": " + errorMsg,
 			"ZipArchive::checkZzipError");
 	}
 }
