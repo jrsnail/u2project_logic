@@ -1,11 +1,4 @@
-﻿//
-//  CRemoteMsgManager.h
-//  myGame
-//
-//  Created by jiang on 13-7-23.
-//
-//
-#ifndef __U2Command__
+﻿#ifndef __U2Command__
 #define __U2Command__
 
 

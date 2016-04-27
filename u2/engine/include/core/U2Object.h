@@ -30,6 +30,10 @@ public:
     const String& getName() const { return m_szName; };
     const String& getGuid() const { return m_szGuid; };
 
+	/** You should not call this in any way.
+	*/
+	void renameForPooling(const String& name) { m_szName = name; };
+
 protected:
     String                  m_szType;       //< 子类类型
     String                  m_szName;       //< 对象名称
@@ -97,9 +101,11 @@ public:
     ReusableObject(const String& type);
     virtual ~ReusableObject();
 
-    virtual void preRecycleByPool() {};
-    virtual void postReuseFromPool() {};
+	virtual void preRecycleByPool() { m_bUsing = false; };
+    virtual void postReuseFromPool() { m_bUsing = true; };
 
+protected:
+	bool m_bUsing;
 };
 
 

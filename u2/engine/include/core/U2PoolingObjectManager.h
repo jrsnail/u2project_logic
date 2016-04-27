@@ -76,9 +76,14 @@ T* PoolingObjectManager<T>::reuseObjectAsName(const String& type, const String& 
 	if (pObj == nullptr)
 	{
 		pObj = mUnusedObjects.createObject(type, name);
+		mUnusedObjects.removeObject(pObj);
+	}
+	else
+	{
+		mUnusedObjects.removeObject(pObj);
+		pObj->renameForPooling(name);
 	}
 	
-	mUnusedObjects.removeObject(pObj);
 	addObject(pObj);
 	pObj->postReuseFromPool();
 

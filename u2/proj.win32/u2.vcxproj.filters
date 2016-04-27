@@ -309,6 +309,9 @@
     <ClCompile Include="..\engine\src\core\Win\U2FileSystemLayer.cpp">
       <Filter>engine\src\core\Win</Filter>
     </ClCompile>
+    <ClCompile Include="..\engine\src\core\U2NetMsg.cpp">
+      <Filter>engine\src\core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -633,6 +636,9 @@
       <Filter>engine\include\core</Filter>
     </ClInclude>
     <ClInclude Include="..\engine\include\core\U2FileSystemLayer.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2NetMsg.h">
       <Filter>engine\include\core</Filter>
     </ClInclude>
   </ItemGroup>

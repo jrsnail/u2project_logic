@@ -190,6 +190,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\engine\src\core\U2MemoryAllocatedObject.cpp" />
     <ClCompile Include="..\engine\src\core\U2MemoryTracker.cpp" />
     <ClCompile Include="..\engine\src\core\U2NameGenerator.cpp" />
+    <ClCompile Include="..\engine\src\core\U2NetMsg.cpp" />
     <ClCompile Include="..\engine\src\core\U2Object.cpp" />
     <ClCompile Include="..\engine\src\core\U2PoolingObjectManager.cpp" />
     <ClCompile Include="..\engine\src\core\U2Prerequisites.cpp" />
@@ -292,6 +293,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\engine\include\core\U2MemorySTLAllocator.h" />
     <ClInclude Include="..\engine\include\core\U2MemoryTracker.h" />
     <ClInclude Include="..\engine\include\core\U2NameGenerator.h" />
+    <ClInclude Include="..\engine\include\core\U2NetMsg.h" />
     <ClInclude Include="..\engine\include\core\U2Object.h" />
     <ClInclude Include="..\engine\include\core\U2ObjectCollection.h" />
     <ClInclude Include="..\engine\include\core\U2Platform.h" />
