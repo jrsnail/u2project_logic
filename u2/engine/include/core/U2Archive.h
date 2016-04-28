@@ -65,10 +65,6 @@ typedef std::shared_ptr<FileInfoList>	FileInfoListPtr;
 class _U2Export Archive : public Object, public GeneralAllocatedObject
 {
 protected:
-    /// Archive name
-    String mName; 
-    /// Archive type code
-    String mType;
     /// Read-only flag
     bool mReadOnly;
 

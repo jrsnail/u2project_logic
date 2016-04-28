@@ -40,7 +40,7 @@ ApkFileSystemArchive::ApkFileSystemArchive(const String& type, const String& nam
 //-----------------------------------------------------------------------
 ApkFileSystemArchive::~ApkFileSystemArchive()
 {
-	map<String, vector< String >::type >::iterator iter = mFiles.find(mName);
+	map<String, vector< String >::type >::iterator iter = mFiles.find(m_szName);
 	iter->second.clear();
 	mFiles.erase(iter);
 	unload();

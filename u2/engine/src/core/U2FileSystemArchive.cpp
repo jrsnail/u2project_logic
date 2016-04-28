@@ -84,7 +84,7 @@ void FileSystemArchive::findFiles(const String& pattern, bool recursive,
     if (pos1 != pattern.npos)
         directory = pattern.substr (0, pos1 + 1);
 
-    String full_pattern = concatenate_path(mName, pattern);
+    String full_pattern = concatenate_path(m_szName, pattern);
 
     lHandle = _findfirst(full_pattern.c_str(), &tagData);
     res = 0;
@@ -119,10 +119,10 @@ void FileSystemArchive::findFiles(const String& pattern, bool recursive,
     // Now find directories
     if (recursive)
     {
-        String base_dir = mName;
+        String base_dir = m_szName;
         if (!directory.empty ())
         {
-            base_dir = concatenate_path(mName, directory);
+            base_dir = concatenate_path(m_szName, directory);
             // Remove the last '/'
             base_dir.erase (base_dir.length () - 1);
         }
@@ -173,7 +173,7 @@ void FileSystemArchive::unload()
 //-----------------------------------------------------------------------
 InStreamPtr FileSystemArchive::openForRead(const String& filename)
 {
-    String full_path = concatenate_path(mName, filename);
+    String full_path = concatenate_path(m_szName, filename);
 
     // Use filesystem to determine size 
     // (quicker than streaming to the end and back)
@@ -204,7 +204,7 @@ InStreamPtr FileSystemArchive::openForRead(const String& filename)
 //---------------------------------------------------------------------
 OutStreamPtr FileSystemArchive::openForWrite(const String& filename, bool append)
 {
-	String full_path = concatenate_path(mName, filename);
+	String full_path = concatenate_path(m_szName, filename);
 
 	// Use filesystem to determine size 
 	// (quicker than streaming to the end and back)
@@ -254,7 +254,7 @@ OutStreamPtr FileSystemArchive::create(const String& filename)
             "FileSystemArchive::remove");
     }
 
-    String full_path = concatenate_path(mName, filename);
+    String full_path = concatenate_path(m_szName, filename);
 
     // Always open in binary mode
     // Also, always include reading
@@ -285,7 +285,7 @@ void FileSystemArchive::remove(const String& filename)
             "Cannot remove a file from a read-only archive", 
             "FileSystemArchive::remove");
     }
-    String full_path = concatenate_path(mName, filename);
+    String full_path = concatenate_path(m_szName, filename);
     ::remove(full_path.c_str());
 }
 //-----------------------------------------------------------------------
@@ -335,7 +335,7 @@ FileInfoListPtr FileSystemArchive::findFileInfo(const String& pattern,
 //-----------------------------------------------------------------------
 bool FileSystemArchive::exists(const String& filename)
 {
-    String full_path = concatenate_path(mName, filename);
+    String full_path = concatenate_path(m_szName, filename);
 
     struct stat tagStat;
     bool ret = (stat(full_path.c_str(), &tagStat) == 0);
@@ -347,12 +347,12 @@ bool FileSystemArchive::exists(const String& filename)
         // only valid if full path starts with our base
 #if U2_PLATFORM == U2_PLATFORM_WIN32 || U2_PLATFORM == U2_PLATFORM_WINRT
         // case insensitive on windows
-        String lowerCaseName = mName;
+        String lowerCaseName = m_szName;
         StringUtil::toLowerCase(lowerCaseName);
         ret = StringUtil::startsWith(full_path, lowerCaseName, true);
 #else
         // case sensitive
-        ret = StringUtil::startsWith(full_path, mName, false);
+        ret = StringUtil::startsWith(full_path, m_szName, false);
 #endif
     }
 
@@ -361,7 +361,7 @@ bool FileSystemArchive::exists(const String& filename)
 //---------------------------------------------------------------------
 time_t FileSystemArchive::getModifiedTime(const String& filename)
 {
-    String full_path = concatenate_path(mName, filename);
+    String full_path = concatenate_path(m_szName, filename);
 
     struct stat tagStat;
     bool ret = (stat(full_path.c_str(), &tagStat) == 0);
