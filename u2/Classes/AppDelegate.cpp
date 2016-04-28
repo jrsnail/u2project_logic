@@ -24,6 +24,12 @@
 #	include "U2ApkZipArchive.h"
 #	include "U2AndroidLogListener.h"
 #endif
+#if U2_PLATFORM == U2_PLATFORM_APPLE_IOS
+#	include "macUtils.h"
+#endif
+#if U2_PLATFORM == U2_PLATFORM_APPLE
+#	include "macUtils.h"
+#endif
 
 
 
@@ -258,7 +264,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
 #if U2_PLATFORM == U2_PLATFORM_APPLE || U2_PLATFORM == U2_PLATFORM_APPLE_IOS
 		Archive* pConfigArchive = ArchiveManager::getSingleton().createObject(
-			"FileSystem", macBundlePath(), true);
+			"Zip", macBundlePath(), true);
 #elif U2_PLATFORM == U2_PLATFORM_ANDROID
 		Archive* pConfigArchive = ArchiveManager::getSingleton().createObject(
 			"ApkFileSystem", ".", true);
@@ -287,7 +293,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 				// In order to make things portable on OS X we need to provide
 				// the loading with it's own bundle path location
 				if (!StringUtil::startsWith(archName, "/", false)) // only adjust relative dirs
-					archName = String(macBundlePath() + "/" + archName);
+                    archName = u2::String(macBundlePath() + "/" + archName);
 #endif
 				ResourceGroupManager::getSingleton().addResourceLocation(archName, typeName, secName);
 				u2::LogManager::getSingleton().stream(u2::LML_NORMAL) 
