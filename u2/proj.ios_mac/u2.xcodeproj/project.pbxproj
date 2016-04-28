@@ -22,7 +22,6 @@
 		46880B8219C43A67006E1F66 /* HelloWorld.png in Resources */ = {isa = PBXBuildFile; fileRef = 46880B7A19C43A67006E1F66 /* HelloWorld.png */; };
 		46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8419C43A87006E1F66 /* AppDelegate.cpp */; };
 		46880B8919C43A87006E1F66 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8419C43A87006E1F66 /* AppDelegate.cpp */; };
-		4C1EE4B81CD1B74E00CD21F1 /* macUtils.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4C1EE4B31CD1B74E00CD21F1 /* macUtils.mm */; };
 		4C1EE4BA1CD1B74E00CD21F1 /* U2FileSystemLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4C1EE4B41CD1B74E00CD21F1 /* U2FileSystemLayer.mm */; };
 		4C1EE4BD1CD1B74E00CD21F1 /* macUtils.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4C1EE4B61CD1B74E00CD21F1 /* macUtils.mm */; };
 		4C1EE4BF1CD1B74E00CD21F1 /* U2FileSystemLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C1EE4B71CD1B74E00CD21F1 /* U2FileSystemLayer.cpp */; };
@@ -42,6 +41,7 @@
 		4C1EE4DA1CD1C17D00CD21F1 /* U2StringInterface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C1EE4CC1CD1C17D00CD21F1 /* U2StringInterface.cpp */; };
 		4C1EE4E51CD1DE7700CD21F1 /* resources.cfg in Resources */ = {isa = PBXBuildFile; fileRef = 4C1EE4E41CD1DE7700CD21F1 /* resources.cfg */; };
 		4C1EE4E61CD1DE7700CD21F1 /* resources.cfg in Resources */ = {isa = PBXBuildFile; fileRef = 4C1EE4E41CD1DE7700CD21F1 /* resources.cfg */; };
+		4C1EE4ED1CD2016400CD21F1 /* iosUtils.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4C1EE4EC1CD2016400CD21F1 /* iosUtils.mm */; };
 		4C68AC1A1C8930FC007BA5BD /* U2CodeCvt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C68ABE81C8930FC007BA5BD /* U2CodeCvt.cpp */; };
 		4C68AC1B1C8930FC007BA5BD /* U2CodeCvt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C68ABE81C8930FC007BA5BD /* U2CodeCvt.cpp */; };
 		4C68AC1C1C8930FC007BA5BD /* U2DataFilterStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C68ABE91C8930FC007BA5BD /* U2DataFilterStream.cpp */; };
@@ -281,7 +281,6 @@
 		46880B7A19C43A67006E1F66 /* HelloWorld.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HelloWorld.png; sourceTree = "<group>"; };
 		46880B8419C43A87006E1F66 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		46880B8519C43A87006E1F66 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		4C1EE4B31CD1B74E00CD21F1 /* macUtils.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = macUtils.mm; sourceTree = "<group>"; };
 		4C1EE4B41CD1B74E00CD21F1 /* U2FileSystemLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = U2FileSystemLayer.mm; sourceTree = "<group>"; };
 		4C1EE4B61CD1B74E00CD21F1 /* macUtils.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = macUtils.mm; sourceTree = "<group>"; };
 		4C1EE4B71CD1B74E00CD21F1 /* U2FileSystemLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2FileSystemLayer.cpp; sourceTree = "<group>"; };
@@ -303,6 +302,8 @@
 		4C1EE4E31CD1C19B00CD21F1 /* U2StringInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2StringInterface.h; sourceTree = "<group>"; };
 		4C1EE4E41CD1DE7700CD21F1 /* resources.cfg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = resources.cfg; sourceTree = "<group>"; };
 		4C1EE4E81CD1E9E800CD21F1 /* macUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macUtils.h; sourceTree = "<group>"; };
+		4C1EE4EB1CD2014700CD21F1 /* iosUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iosUtils.h; sourceTree = "<group>"; };
+		4C1EE4EC1CD2016400CD21F1 /* iosUtils.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = iosUtils.mm; sourceTree = "<group>"; };
 		4C68AB971C8930FC007BA5BD /* U2CodeCvt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2CodeCvt.h; sourceTree = "<group>"; };
 		4C68AB981C8930FC007BA5BD /* U2DataFilterStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2DataFilterStream.h; sourceTree = "<group>"; };
 		4C68AB991C8930FC007BA5BD /* U2FileStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2FileStream.h; sourceTree = "<group>"; };
@@ -679,7 +680,7 @@
 		4C1EE4B21CD1B74E00CD21F1 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
-				4C1EE4B31CD1B74E00CD21F1 /* macUtils.mm */,
+				4C1EE4EC1CD2016400CD21F1 /* iosUtils.mm */,
 				4C1EE4B41CD1B74E00CD21F1 /* U2FileSystemLayer.mm */,
 			);
 			path = iOS;
@@ -700,6 +701,14 @@
 				4C1EE4E81CD1E9E800CD21F1 /* macUtils.h */,
 			);
 			path = OSX;
+			sourceTree = "<group>";
+		};
+		4C1EE4E91CD2001C00CD21F1 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				4C1EE4EB1CD2014700CD21F1 /* iosUtils.h */,
+			);
+			path = iOS;
 			sourceTree = "<group>";
 		};
 		4C68AB931C8930FC007BA5BD /* engine */ = {
@@ -724,6 +733,7 @@
 		4C68AB951C8930FC007BA5BD /* core */ = {
 			isa = PBXGroup;
 			children = (
+				4C1EE4E91CD2001C00CD21F1 /* iOS */,
 				4C1EE4E71CD1E9E800CD21F1 /* OSX */,
 				4C1EE4DB1CD1C19B00CD21F1 /* U2AtomicScalar.h */,
 				4C1EE4DC1CD1C19B00CD21F1 /* U2Common.h */,
@@ -1236,7 +1246,6 @@
 				4C68ACA31C893119007BA5BD /* CgMediators.cpp in Sources */,
 				4C68ACA91C893119007BA5BD /* GameContexts.cpp in Sources */,
 				4C1EE4D31CD1C17D00CD21F1 /* U2Resource.cpp in Sources */,
-				4C1EE4B81CD1B74E00CD21F1 /* macUtils.mm in Sources */,
 				4C68AC1A1C8930FC007BA5BD /* U2CodeCvt.cpp in Sources */,
 				4C68ACA51C893119007BA5BD /* CgPrerequisites.cpp in Sources */,
 				4C68AC621C8930FC007BA5BD /* U2TransStep.cpp in Sources */,
@@ -1250,6 +1259,7 @@
 				4C68AC2C1C8930FC007BA5BD /* U2FactoryManager.cpp in Sources */,
 				4C68AC2E1C8930FC007BA5BD /* U2MemoryAllocatedObject.cpp in Sources */,
 				4C68AC3C1C8930FC007BA5BD /* U2TypedObjectManager.cpp in Sources */,
+				4C1EE4ED1CD2016400CD21F1 /* iosUtils.mm in Sources */,
 				4CA4AAAD1CC0EB20007B5F39 /* U2LogManager.cpp in Sources */,
 				4C68AC5A1C8930FC007BA5BD /* U2PredefinedPrerequisites.cpp in Sources */,
 				4CA4AAAB1CC0EB20007B5F39 /* U2Log.cpp in Sources */,

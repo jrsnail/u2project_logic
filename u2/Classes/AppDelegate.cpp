@@ -24,7 +24,10 @@
 #	include "U2ApkZipArchive.h"
 #	include "U2AndroidLogListener.h"
 #endif
-#if U2_PLATFORM == U2_PLATFORM_APPLE_IOS || U2_PLATFORM == U2_PLATFORM_APPLE
+#if U2_PLATFORM == U2_PLATFORM_APPLE_IOS
+#	include "iosUtils.h"
+#endif
+#if U2_PLATFORM == U2_PLATFORM_APPLE
 #	include "macUtils.h"
 #endif
 
