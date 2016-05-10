@@ -53,7 +53,7 @@ protected:
 class StringOutStream : public OutStream
 {
 public:
-	StringOutStream(const String& name, String* str, size_t start);
+	StringOutStream(const String& name, String* str, size_t start = 0);
 	StringOutStream(const String& name, va_list argp);
 	virtual ~StringOutStream();
 

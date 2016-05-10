@@ -375,41 +375,43 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	}
 	
 	{
-		// Test Stream
-// 		FilterOutQueue<DataFilterOutStream> out;
-// 		out.push<FileOutStream>("aaa", "D://aaa.txt", std::ios_base::out);
-// 		out.push<DataFilterOutStream>("bbb");
-// 		out->writeInt32(100);
-// 		out->close();
-// 
-// 		FilterInQueue<DataFilterInStream> in;
-// 		in.push<FileInStream>("aaa", "D://aaa.txt", std::ios_base::in);
-// 		in.push<DataFilterInStream>("bbb");
-// 		u2int32 n = in->readInt32();
+		//------------------------------- Test Stream ----------------------------------------
+		/*
+		FilterOutQueue<DataFilterOutStream> out;
+		out.push<FileOutStream>("aaa", "D://aaa.txt", std::ios_base::out);
+		out.push<DataFilterOutStream>("bbb");
+		out->writeInt32(100);
+		out->close();
 
-// 		OutStreamQueue<DataFilterOutStream> out;
-// 		out.push<FileHandleOutStream>("aaa", "D://aaa.txt", "wb");
-// 		out.push<DataFilterOutStream>("bbb");
-// 		out->writeInt64(150);
-// 		out->close();
-// 
-// 		InStreamQueue<DataFilterInStream> in;
-// 		in.push<FileHandleInStream>("aaa", "D://aaa.txt", "rb");
-// 		in.push<DataFilterInStream>("bbb");
-// 		u2int64 n = in->readInt64();
+		FilterInQueue<DataFilterInStream> in;
+		in.push<FileInStream>("aaa", "D://aaa.txt", std::ios_base::in);
+		in.push<DataFilterInStream>("bbb");
+		u2int32 n = in->readInt32();
 
-//		PipedInStream* pPipeIn = new PipedInStream;
-//		PipedOutStream* pPipeOut = new PipedOutStream;
-//		pPipeIn->connect(pPipeOut);
-//
-//		TestInThread* pInTread = new TestInThread(pPipeIn);
-//		TestOutThread* pOutTread = new TestOutThread(pPipeOut);
-//		TaskGroup group(2);
-//		group.run(pInTread);
-//		group.run(pOutTread);
-//		group.wait();
+		OutStreamQueue<DataFilterOutStream> out;
+		out.push<FileHandleOutStream>("aaa", "D://aaa.txt", "wb");
+		out.push<DataFilterOutStream>("bbb");
+		out->writeInt64(150);
+		out->close();
+
+		InStreamQueue<DataFilterInStream> in;
+		in.push<FileHandleInStream>("aaa", "D://aaa.txt", "rb");
+		in.push<DataFilterInStream>("bbb");
+		u2int64 n = in->readInt64();
+
+		PipedInStream* pPipeIn = new PipedInStream;
+		PipedOutStream* pPipeOut = new PipedOutStream;
+		pPipeIn->connect(pPipeOut);
+
+		TestInThread* pInTread = new TestInThread(pPipeIn);
+		TestOutThread* pOutTread = new TestOutThread(pPipeOut);
+		TaskGroup group(2);
+		group.run(pInTread);
+		group.run(pOutTread);
+		group.wait();
 
 		int bbb = 0;
+		*/
 	}
 
     

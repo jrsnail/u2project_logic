@@ -72,7 +72,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(EngineRoot)cocos\audio\include;$(EngineRoot)external;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;..\..\Dependenices\include;..\..\Dependenices\include\boost;..\engine;..\engine\include;..\engine\include\core;..\engine\include\core\streams;..\engine\include\core\threading;..\engine\include\core\threading\threadpool;..\engine\include\mvc;..\gamebase;..\Classes;..;%(AdditionalIncludeDirectories);$(_COCOS_HEADER_WIN32_BEGIN);$(_COCOS_HEADER_WIN32_END)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot)cocos\audio\include;$(EngineRoot)external;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;..\..\Dependenices\include;..\..\Dependenices\include\boost;..\engine;..\engine\include;..\engine\include\core;..\engine\include\core\streams;..\engine\include\core\threading;..\engine\include\core\threading\threadpool;..\engine\include\core\sserver;..\engine\include\mvc;..\gamebase;..\Classes;..;%(AdditionalIncludeDirectories);$(_COCOS_HEADER_WIN32_BEGIN);$(_COCOS_HEADER_WIN32_END)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_CHIPMUNK_INTEGRATION=1;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;U2_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -164,6 +164,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\tabinfo\TabInfoPrerequisites.cpp" />
     <ClCompile Include="..\Classes\tabinfo\TabInfoViewComponent.cpp" />
     <ClCompile Include="..\Classes\tabinfo\TabMediator.cpp" />
+    <ClCompile Include="..\engine\src\core\sserver\U2SServerMsgCenter.cpp" />
     <ClCompile Include="..\engine\src\core\streams\U2CodeCvt.cpp" />
     <ClCompile Include="..\engine\src\core\streams\U2DataFilterStream.cpp" />
     <ClCompile Include="..\engine\src\core\streams\U2FileHandleStream.cpp" />
@@ -172,6 +173,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\engine\src\core\streams\U2MemoryStream.cpp" />
     <ClCompile Include="..\engine\src\core\streams\U2PipedStream.cpp" />
     <ClCompile Include="..\engine\src\core\streams\U2Stream.cpp" />
+    <ClCompile Include="..\engine\src\core\streams\U2StringStream.cpp" />
     <ClCompile Include="..\engine\src\core\streams\U2ZipStream.cpp" />
     <ClCompile Include="..\engine\src\core\threading\U2GenericThreadPool.cpp" />
     <ClCompile Include="..\engine\src\core\threading\U2HomogenousQueue.cpp" />
@@ -185,15 +187,19 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\engine\src\core\U2Exception.cpp" />
     <ClCompile Include="..\engine\src\core\U2FactoryManager.cpp" />
     <ClCompile Include="..\engine\src\core\U2FileSystemArchive.cpp" />
+    <ClCompile Include="..\engine\src\core\U2HttpClient.cpp" />
     <ClCompile Include="..\engine\src\core\U2Log.cpp" />
     <ClCompile Include="..\engine\src\core\U2LogManager.cpp" />
     <ClCompile Include="..\engine\src\core\U2MemoryAllocatedObject.cpp" />
     <ClCompile Include="..\engine\src\core\U2MemoryTracker.cpp" />
     <ClCompile Include="..\engine\src\core\U2NameGenerator.cpp" />
     <ClCompile Include="..\engine\src\core\U2NetMsg.cpp" />
+    <ClCompile Include="..\engine\src\core\U2NetMsgCenter.cpp" />
+    <ClCompile Include="..\engine\src\core\U2NetMsgProxy.cpp" />
     <ClCompile Include="..\engine\src\core\U2Object.cpp" />
     <ClCompile Include="..\engine\src\core\U2PoolingObjectManager.cpp" />
     <ClCompile Include="..\engine\src\core\U2Prerequisites.cpp" />
+    <ClCompile Include="..\engine\src\core\U2Queue.cpp" />
     <ClCompile Include="..\engine\src\core\U2Resource.cpp" />
     <ClCompile Include="..\engine\src\core\U2ResourceGroupManager.cpp" />
     <ClCompile Include="..\engine\src\core\U2ResourceManager.cpp" />
@@ -250,6 +256,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\tabinfo\TabInfoPrerequisites.h" />
     <ClInclude Include="..\Classes\tabinfo\TabInfoViewComponent.h" />
     <ClInclude Include="..\Classes\tabinfo\TabMediator.h" />
+    <ClInclude Include="..\engine\include\core\sserver\U2SServerMsgCenter.h" />
     <ClInclude Include="..\engine\include\core\streams\U2CodeCvt.h" />
     <ClInclude Include="..\engine\include\core\streams\U2DataFilterStream.h" />
     <ClInclude Include="..\engine\include\core\streams\U2FileHandleStream.h" />
@@ -259,6 +266,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\engine\include\core\streams\U2PipedStream.h" />
     <ClInclude Include="..\engine\include\core\streams\U2Stream.h" />
     <ClInclude Include="..\engine\include\core\streams\U2StreamQueue.h" />
+    <ClInclude Include="..\engine\include\core\streams\U2StringStream.h" />
     <ClInclude Include="..\engine\include\core\streams\U2ZipStream.h" />
     <ClInclude Include="..\engine\include\core\threading\U2GenericThreadPool.h" />
     <ClInclude Include="..\engine\include\core\threading\U2HomogenousQueue.h" />
@@ -284,6 +292,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\engine\include\core\U2FileSystemLayer.h" />
     <ClInclude Include="..\engine\include\core\U2HeaderPrefix.h" />
     <ClInclude Include="..\engine\include\core\U2HeaderSuffix.h" />
+    <ClInclude Include="..\engine\include\core\U2HttpClient.h" />
     <ClInclude Include="..\engine\include\core\U2IteratorWrapper.h" />
     <ClInclude Include="..\engine\include\core\U2Log.h" />
     <ClInclude Include="..\engine\include\core\U2LogManager.h" />
@@ -294,11 +303,14 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\engine\include\core\U2MemoryTracker.h" />
     <ClInclude Include="..\engine\include\core\U2NameGenerator.h" />
     <ClInclude Include="..\engine\include\core\U2NetMsg.h" />
+    <ClInclude Include="..\engine\include\core\U2NetMsgCenter.h" />
+    <ClInclude Include="..\engine\include\core\U2NetMsgProxy.h" />
     <ClInclude Include="..\engine\include\core\U2Object.h" />
     <ClInclude Include="..\engine\include\core\U2ObjectCollection.h" />
     <ClInclude Include="..\engine\include\core\U2Platform.h" />
     <ClInclude Include="..\engine\include\core\U2PoolingObjectManager.h" />
     <ClInclude Include="..\engine\include\core\U2Prerequisites.h" />
+    <ClInclude Include="..\engine\include\core\U2Queue.h" />
     <ClInclude Include="..\engine\include\core\U2Resource.h" />
     <ClInclude Include="..\engine\include\core\U2ResourceGroupManager.h" />
     <ClInclude Include="..\engine\include\core\U2ResourceManager.h" />

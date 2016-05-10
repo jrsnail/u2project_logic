@@ -58,6 +58,12 @@
     <Filter Include="engine\src\core\Win">
       <UniqueIdentifier>{28b14ed7-c72b-4cae-bc82-c6ff5e275b5b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="engine\include\core\sserver">
+      <UniqueIdentifier>{b5338893-1a0b-4ae4-b3af-32b1e4815c3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\src\core\sserver">
+      <UniqueIdentifier>{7a346ec8-3491-4bbd-954d-b6e097c8c1a6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -311,6 +317,24 @@
     </ClCompile>
     <ClCompile Include="..\engine\src\core\U2NetMsg.cpp">
       <Filter>engine\src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\U2Queue.cpp">
+      <Filter>engine\src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\U2NetMsgCenter.cpp">
+      <Filter>engine\src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\U2HttpClient.cpp">
+      <Filter>engine\src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\U2NetMsgProxy.cpp">
+      <Filter>engine\src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\streams\U2StringStream.cpp">
+      <Filter>engine\src\core\streams</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\sserver\U2SServerMsgCenter.cpp">
+      <Filter>engine\src\core\sserver</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -640,6 +664,24 @@
     </ClInclude>
     <ClInclude Include="..\engine\include\core\U2NetMsg.h">
       <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2Queue.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2NetMsgCenter.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2HttpClient.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2NetMsgProxy.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\streams\U2StringStream.h">
+      <Filter>engine\include\core\streams</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\sserver\U2SServerMsgCenter.h">
+      <Filter>engine\include\core\sserver</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
