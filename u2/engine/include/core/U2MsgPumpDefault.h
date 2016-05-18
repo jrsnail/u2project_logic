@@ -27,6 +27,8 @@ protected:
     bool m_bKeepRunning;
     // The time at which we should call DoDelayedWork.
     TimeTicks m_DelayedWorkTime;
+
+    DISALLOW_COPY_AND_ASSIGN(MsgPumpDefault);
 };
 
 
