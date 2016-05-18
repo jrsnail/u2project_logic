@@ -336,6 +336,24 @@
     <ClCompile Include="..\engine\src\core\sserver\U2SServerMsgCenter.cpp">
       <Filter>engine\src\core\sserver</Filter>
     </ClCompile>
+    <ClCompile Include="..\engine\src\core\U2ScopedRunnableMethodFactory.cpp">
+      <Filter>engine\src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\U2Task.cpp">
+      <Filter>engine\src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\U2MsgPump.cpp">
+      <Filter>engine\src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\U2MsgLoop.cpp">
+      <Filter>engine\src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\U2TrackedObjs.cpp">
+      <Filter>engine\src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\U2Time.cpp">
+      <Filter>engine\src\core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -682,6 +700,24 @@
     </ClInclude>
     <ClInclude Include="..\engine\include\core\sserver\U2SServerMsgCenter.h">
       <Filter>engine\include\core\sserver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2ScopedRunnableMethodFactory.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2Task.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2MsgPump.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2MsgLoop.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2TrackedObjs.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2Time.h">
+      <Filter>engine\include\core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

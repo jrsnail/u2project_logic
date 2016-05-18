@@ -96,6 +96,17 @@ protected:
 };
 
 
+class PredictableMsg : public OutMsg
+{
+public:
+	PredictableMsg(const String& type);
+	virtual ~PredictableMsg();
+
+protected:
+	InMsg*					m_pPredictedMsg;
+};
+
+
 class InMsg : public Msg
 {
 public:
