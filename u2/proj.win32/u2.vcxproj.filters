@@ -354,6 +354,9 @@
     <ClCompile Include="..\engine\src\core\U2Time.cpp">
       <Filter>engine\src\core</Filter>
     </ClCompile>
+    <ClCompile Include="..\engine\src\core\U2MsgPumpDefault.cpp">
+      <Filter>engine\src\core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -717,6 +720,9 @@
       <Filter>engine\include\core</Filter>
     </ClInclude>
     <ClInclude Include="..\engine\include\core\U2Time.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2MsgPumpDefault.h">
       <Filter>engine\include\core</Filter>
     </ClInclude>
   </ItemGroup>

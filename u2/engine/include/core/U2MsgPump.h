@@ -4,6 +4,7 @@
 #include "U2Prerequisites.h"
 #include "U2STLRedefined.h"
 #include "U2Object.h"
+#include "U2Time.h"
 #include "U2HeaderPrefix.h"
 
 
@@ -122,9 +123,6 @@ public:
     virtual void ScheduleDelayedWork(const TimeTicks& delayed_work_time) = 0;
 };
 
-
-/** @} */
-/** @} */
 
 U2EG_NAMESPACE_END
 

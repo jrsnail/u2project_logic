@@ -194,6 +194,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\engine\src\core\U2MemoryTracker.cpp" />
     <ClCompile Include="..\engine\src\core\U2MsgLoop.cpp" />
     <ClCompile Include="..\engine\src\core\U2MsgPump.cpp" />
+    <ClCompile Include="..\engine\src\core\U2MsgPumpDefault.cpp" />
     <ClCompile Include="..\engine\src\core\U2NameGenerator.cpp" />
     <ClCompile Include="..\engine\src\core\U2NetMsg.cpp" />
     <ClCompile Include="..\engine\src\core\U2NetMsgCenter.cpp" />
@@ -309,6 +310,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\engine\include\core\U2MemoryTracker.h" />
     <ClInclude Include="..\engine\include\core\U2MsgLoop.h" />
     <ClInclude Include="..\engine\include\core\U2MsgPump.h" />
+    <ClInclude Include="..\engine\include\core\U2MsgPumpDefault.h" />
     <ClInclude Include="..\engine\include\core\U2NameGenerator.h" />
     <ClInclude Include="..\engine\include\core\U2NetMsg.h" />
     <ClInclude Include="..\engine\include\core\U2NetMsgCenter.h" />
