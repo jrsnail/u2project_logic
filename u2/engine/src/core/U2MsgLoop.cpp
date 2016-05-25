@@ -9,36 +9,8 @@ U2EG_NAMESPACE_USING
 
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
-MsgLoop::AutoRunState::AutoRunState(MsgLoop* loop) 
-    : m_pLoop(loop)
-{
-    // Make the loop reference us.
-    m_pPreviousState = m_pLoop->m_pState;
-    if (m_pPreviousState) 
-    {
-        nRunDepth = m_pPreviousState->nRunDepth + 1;
-    }
-    else 
-    {
-        nRunDepth = 1;
-    }
-    m_pLoop->m_pState = this;
-
-    // Initialize the other fields:
-    bQuitReceived = false;
-}
-//---------------------------------------------------------------------
-MsgLoop::AutoRunState::~AutoRunState()
-{
-    m_pLoop->m_pState = m_pPreviousState;
-}
-//---------------------------------------------------------------------
-//---------------------------------------------------------------------
 MsgLoop::MsgLoop(Type type)
     : m_eType(type)
-    , m_nNextSequenceNum(0)
-    , m_bNestableTasksAllowed(true)
-    , m_pState(nullptr)
 {
     /*
 #if defined(OS_WIN)
@@ -80,8 +52,6 @@ MsgLoop::MsgLoop(Type type)
 //---------------------------------------------------------------------
 MsgLoop::~MsgLoop()
 {
-    U2Assert(m_pState == nullptr, "state should be null when destroyed.");
-
     DestructionListenerList::iterator it = m_DestructionListeners.begin();
     while (it != m_DestructionListeners.end())
     {
@@ -111,10 +81,13 @@ MsgLoop::~MsgLoop()
 //---------------------------------------------------------------------
 MsgLoop* MsgLoop::current()
 {
-    // TODO(darin): sadly, we cannot enable this yet since people call us even
-    // when they have no intention of using us.
-    // DCHECK(loop) << "Ouch, did you forget to initialize me?";
-    return lazy_tls_ptr.Pointer()->Get();
+    std::thread::id tid = std::this_thread::get_id();
+    StringStream stream;
+    stream << tid;
+    String&& szTid = stream.str();
+    map<String, std::shared_ptr<MsgLoop> >::iterator it = ms_MsgLoops.find(szTid);
+    assert(it != ms_MsgLoops.end());
+    return it->second.get();
 }
 //---------------------------------------------------------------------
 void MsgLoop::AddDestructionObserver(DestructionObserver* destruction_observer) 
@@ -139,7 +112,7 @@ void MsgLoop::RemoveDestructionObserver(DestructionObserver* destruction_observe
 //---------------------------------------------------------------------
 void MsgLoop::AddTaskObserver(TaskObserver* task_observer)
 {
-    DCHECK_EQ(this, current());
+    assert(this == current());
     TaskListenerList::iterator it
         = std::find(m_TaskListeners.begin(), m_TaskListeners.end(), task_observer);
     if (it != m_TaskListeners.end())
@@ -150,7 +123,7 @@ void MsgLoop::AddTaskObserver(TaskObserver* task_observer)
 //---------------------------------------------------------------------
 void MsgLoop::RemoveTaskObserver(TaskObserver* task_observer)
 {
-    DCHECK_EQ(this, current());
+    assert(this == current());
     TaskListenerList::iterator it
         = std::find(m_TaskListeners.begin(), m_TaskListeners.end(), task_observer);
     if (it != m_TaskListeners.end())
@@ -174,59 +147,25 @@ void MsgLoop::_addToIncomingQueue(PendingTask* pending_task)
     m_spPump->ScheduleWork();
 }
 //---------------------------------------------------------------------
-void MsgLoop::_addToDelayedWorkQueue(PendingTask* pending_task) 
-{
-    // Move to the delayed work queue.  Initialize the sequence number
-    // before inserting into the delayed_work_queue_.  The sequence number
-    // is used to faciliate FIFO sorting when two tasks have the same
-    // delayed_run_time value.
-    PendingTask* new_pending_task = new PendingTask(*pending_task);
-    new_pending_task->sequence_num = m_nNextSequenceNum++;
-    delayed_work_queue_.push(new_pending_task);
-}
-//---------------------------------------------------------------------
-TimeTicks MsgLoop::_calculateDelayedRuntime(u2int64 delay_ms) 
-{
-    TimeTicks delayed_run_time;
-    if (delay_ms > 0) 
-    {
-        delayed_run_time = TimeTicks::Now() + TimeDelta::FromMilliseconds(delay_ms);
-    }
-    else 
-    {
-        U2Assert(delay_ms >= 0, "delay should not be negative.");
-    }
-    return delayed_run_time;
-}
-//---------------------------------------------------------------------
 void MsgLoop::Run()
 {
-    AutoRunState save_state(this);
     _runInternal();
 }
 //---------------------------------------------------------------------
 void MsgLoop::RunAllPending()
 {
-    AutoRunState save_state(this);
-    m_pState->bQuitReceived = true;  // Means run until we would otherwise block.
     _runInternal();
 }
 //---------------------------------------------------------------------
 void MsgLoop::_runInternal()
 {
-    DCHECK_EQ(this, current());
+    assert(this == current());
 
     m_spPump->Run(this);
 }
 //---------------------------------------------------------------------
 bool MsgLoop::DoWork() 
 {
-    if (!m_bNestableTasksAllowed) 
-    {
-        // Task can't be executed right now.
-        return false;
-    }
-
     for (;;) 
     {
         _reloadWorkQueue();
@@ -238,18 +177,8 @@ bool MsgLoop::DoWork()
         {
             PendingTask* pending_task = m_WorkQueue.front();
             m_WorkQueue.pop();
-            if (!pending_task->delayed_run_time.is_null()) 
-            {
-                _addToDelayedWorkQueue(pending_task);
-                // If we changed the topmost task, then it is time to reschedule.
-                if (delayed_work_queue_.top().task.Equals(pending_task.task))
-                    m_spPump->ScheduleDelayedWork(pending_task->delayed_run_time);
-            }
-            else 
-            {
-                if (_deferOrRunPendingTask(pending_task))
-                    return true;
-            }
+            _runTask(pending_task);
+            return true;
         } while (!m_WorkQueue.empty());
     }
 
@@ -257,79 +186,12 @@ bool MsgLoop::DoWork()
     return false;
 }
 //---------------------------------------------------------------------
-bool MsgLoop::DoDelayedWork(TimeTicks* next_delayed_work_time) 
-{
-    if (!m_bNestableTasksAllowed || delayed_work_queue_.empty())
-    {
-        m_RecentTime = *next_delayed_work_time = TimeTicks();
-        return false;
-    }
-
-    // When we "fall behind," there will be a lot of tasks in the delayed work
-    // queue that are ready to run.  To increase efficiency when we fall behind,
-    // we will only call Time::Now() intermittently, and then process all tasks
-    // that are ready to run before calling it again.  As a result, the more we
-    // fall behind (and have a lot of ready-to-run delayed tasks), the more
-    // efficient we'll be at handling the tasks.
-
-    TimeTicks next_run_time = delayed_work_queue_.top()->delayed_run_time;
-    if (next_run_time > m_RecentTime)
-    {
-        m_RecentTime = TimeTicks::Now();  // Get a better view of Now();
-        if (next_run_time > m_RecentTime)
-        {
-            *next_delayed_work_time = next_run_time;
-            return false;
-        }
-    }
-
-    PendingTask* pending_task = delayed_work_queue_.top();
-    delayed_work_queue_.pop();
-
-    if (!delayed_work_queue_.empty())
-        *next_delayed_work_time = delayed_work_queue_.top()->delayed_run_time;
-
-    return _deferOrRunPendingTask(pending_task);
-}
-//---------------------------------------------------------------------
-bool MsgLoop::DoIdleWork()
-{
-    if (_processNextDelayedNonNestableTask())
-        return true;
-
-    if (m_pState->bQuitReceived)
-        m_spPump->Quit();
-
-    return false;
-}
-//---------------------------------------------------------------------
-bool MsgLoop::_deferOrRunPendingTask(PendingTask* pending_task)
-{
-    if (pending_task->nestable || m_pState->nRunDepth == 1)
-    {
-        _runTask(pending_task);
-        // Show that we ran a task (Note: a new one might arrive as a
-        // consequence!).
-        return true;
-    }
-
-    // We couldn't run the task now because we're in a nested message loop
-    // and the task isn't nestable.
-    m_DeferredNonNestableWorkQueue.push(pending_task);
-    return false;
-}
-//---------------------------------------------------------------------
 void MsgLoop::_runTask(PendingTask* pending_task)
 {
-    U2Assert(m_bNestableTasksAllowed, "");
-
-    // Execute the task and assume the worst: It is probably not reentrant.
-    m_bNestableTasksAllowed = false;
-
     for (TaskListenerList::iterator it = m_TaskListeners.begin(); 
         it != m_TaskListeners.end(); it++)
     {
-        (*it)->WillProcessTask(pending_task->time_posted);
+        (*it)->WillProcessTask();
     }
 
     (*pending_task)();
@@ -337,27 +199,8 @@ void MsgLoop::_runTask(PendingTask* pending_task)
     for (TaskListenerList::iterator it = m_TaskListeners.begin();
         it != m_TaskListeners.end(); it++)
     {
-        (*it)->DidProcessTask(pending_task->time_posted);
+        (*it)->DidProcessTask();
     }
-
-    m_bNestableTasksAllowed = true;
-}
-//---------------------------------------------------------------------
-void MsgLoop::SetNestableTasksAllowed(bool allowed) 
-{
-    if (m_bNestableTasksAllowed != allowed) 
-    {
-        m_bNestableTasksAllowed = allowed;
-        if (!m_bNestableTasksAllowed)
-            return;
-        // Start the native pump if we are not already pumping.
-        m_spPump->ScheduleWork();
-    }
-}
-//---------------------------------------------------------------------
-bool MsgLoop::isNestableTasksAllowed() const 
-{
-    return m_bNestableTasksAllowed;
 }
 //---------------------------------------------------------------------
 void MsgLoop::_reloadWorkQueue()
@@ -379,35 +222,7 @@ void MsgLoop::_reloadWorkQueue()
     }
 }
 //---------------------------------------------------------------------
-bool MsgLoop::_processNextDelayedNonNestableTask()
-{
-    if (m_pState->nRunDepth != 1)
-        return false;
-
-    if (m_DeferredNonNestableWorkQueue.empty())
-        return false;
-
-    PendingTask* pending_task = m_DeferredNonNestableWorkQueue.front();
-    m_DeferredNonNestableWorkQueue.pop();
-
-    _runTask(pending_task);
-    return true;
-}
-//---------------------------------------------------------------------
 void MsgLoop::Quit() 
 {
-    DCHECK_EQ(this, current());
-    if (m_pState) 
-    {
-        m_pState->bQuitReceived = true;
-    }
-}
-//---------------------------------------------------------------------
-void MsgLoop::QuitNow() 
-{
-    DCHECK_EQ(this, current());
-    if (m_pState)
-    {
-        m_spPump->Quit();
-    }
+    m_spPump->Quit();
 }

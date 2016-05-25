@@ -67,10 +67,10 @@ public:
         TaskObserver() {};
 
         // This method is called before processing a task.
-        virtual void WillProcessTask(TimeTicks time_posted) = 0;
+        virtual void WillProcessTask() = 0;
 
         // This method is called after processing a task.
-        virtual void DidProcessTask(TimeTicks time_posted) = 0;
+        virtual void DidProcessTask() = 0;
 
     protected:
         virtual ~TaskObserver() {};
@@ -123,34 +123,9 @@ public:
             Function f;
         public:
             WrappedFunction(function_type&& f) 
-                : PendingTask(_calculateDelayedRuntime(0), true)
+                : PendingTask(true)
                 , f(std::move(f))
             { }
-            virtual void operator()() override
-            {
-                f();
-                delete this;
-            }
-        };
-
-        _addToIncomingQueue(new WrappedFunction(std::forward<Function>(f)));
-    }
-
-    template<class Function>
-    typename std::enable_if<!std::is_pointer<typename std::remove_reference<Function>::type>::value &&
-        std::is_void<decltype(std::declval<typename std::remove_pointer<typename std::remove_reference<Function>::type>::type>()())>::value
-    >::type PostDelayedTask(Function&& f, u2uint64 delay_ms)
-    {
-
-        typedef typename std::remove_reference<Function>::type function_type;
-
-        class WrappedFunction : public PendingTask
-        {
-            Function f;
-        public:
-            WrappedFunction(function_type&& f)
-                : PendingTask(_calculateDelayedRuntime(delay_ms), true)
-                , f(std::move(f)) { }
             virtual void operator()() override
             {
                 f();
@@ -186,36 +161,7 @@ public:
         _addToIncomingQueue(new WrappedFunction(std::forward<Function>(f)));
     }
 
-    template<class Function>
-    typename std::enable_if<!std::is_pointer<typename std::remove_reference<Function>::type>::value &&
-        std::is_void<decltype(std::declval<typename std::remove_pointer<typename std::remove_reference<Function>::type>::type>()())>::value
-    >::type PostNonNestableDelayedTask(Function&& f, u2uint64 delay_ms)
-    {
-
-        typedef typename std::remove_reference<Function>::type function_type;
-
-        class WrappedFunction : public PendingTask
-        {
-            Function f;
-        public:
-            WrappedFunction(function_type&& f)
-                : PendingTask(_calculateDelayedRuntime(delay_ms), false)
-                , f(std::move(f)) { }
-            virtual void operator()() override
-            {
-                f();
-                delete this;
-            }
-        };
-
-        _addToIncomingQueue(new WrappedFunction(std::forward<Function>(f)));
-    }
-
     virtual bool DoWork() override;
-
-    virtual bool DoDelayedWork(TimeTicks* next_delayed_work_time) override;
-
-    virtual bool DoIdleWork() override;
 
     // Run the message loop.
     void Run();
@@ -234,32 +180,6 @@ public:
     // run loop you are quitting, so be careful!
     void Quit();
 
-    // This method is a variant of Quit, that does not wait for pending messages
-    // to be processed before returning from Run.
-    void QuitNow();
-
-    // Enables or disables the recursive task processing. This happens in the case
-    // of recursive message loops. Some unwanted message loop may occurs when
-    // using common controls or printer functions. By default, recursive task
-    // processing is disabled.
-    //
-    // Please utilize |ScopedNestableTaskAllower| instead of calling these methods
-    // directly.  In general nestable message loops are to be avoided.  They are
-    // dangerous and difficult to get right, so please use with extreme caution.
-    //
-    // The specific case where tasks get queued is:
-    // - The thread is running a message loop.
-    // - It receives a task #1 and execute it.
-    // - The task #1 implicitly start a message loop, like a MessageBox in the
-    //   unit test. This can also be StartDoc or GetSaveFileName.
-    // - The thread receives a task #2 before or while in this second message
-    //   loop.
-    // - With NestableTasksAllowed set to true, the task #2 will run right away.
-    //   Otherwise, it will get executed right after task #1 completes at "thread
-    //   message loop level".
-    void SetNestableTasksAllowed(bool allowed);
-    inline bool isNestableTasksAllowed() const;
-
     // These functions can only be called on the same thread that |this| is
     // running on.
     void AddTaskObserver(TaskObserver* task_observer);
@@ -268,20 +188,10 @@ public:
 protected:
     void _addToIncomingQueue(PendingTask* pending_task);
 
-    // Adds the pending task to delayed_work_queue_.
-    void _addToDelayedWorkQueue(PendingTask* pending_task);
-
-    // Calculates the time at which a PendingTask should run.
-    TimeTicks _calculateDelayedRuntime(u2int64 delay_ms);
-
     // A surrounding stack frame around the running of the message loop that
     // supports all saving and restoring of state, as is needed for any/all (ugly)
     // recursive calls.
     void _runInternal();
-
-    // Calls RunTask or queues the pending_task on the deferred task list if it
-    // cannot be run right now.  Returns true if the task was run.
-    bool _deferOrRunPendingTask(PendingTask* pending_task);
 
     // Load tasks from the incoming_queue_ into work_queue_ if the latter is
     // empty.  The former requires a lock to access, while the latter is directly
@@ -291,32 +201,10 @@ protected:
     // Runs the specified PendingTask.
     void _runTask(PendingTask* pending_task);
 
-    // Called to process any delayed non-nestable tasks.
-    bool _processNextDelayedNonNestableTask();
 
 protected:
-    struct RunState 
-    {
-        // Used to count how many Run() invocations are on the stack.
-        u2int32 nRunDepth;
+    static map<String, std::shared_ptr<MsgLoop> >::type      ms_MsgLoops;
 
-        // Used to record that Quit() was called, or that we should quit the pump
-        // once it becomes idle.
-        bool bQuitReceived;
-    };
-
-     class _U2Export AutoRunState : RunState
-     {
-     public:
-         explicit AutoRunState(MsgLoop* loop);
-         ~AutoRunState();
-     private:
-         MsgLoop* m_pLoop;
-         RunState* m_pPreviousState;
-     };
-
-
-protected:
     typedef vector<DestructionObserver*>::type DestructionListenerList;
     DestructionListenerList m_DestructionListeners;
 
@@ -326,11 +214,6 @@ protected:
     Type m_eType;
     std::unique_ptr<MsgPump> m_spPump;
 
-    // PendingTasks are sorted by their |delayed_run_time| property.
-    typedef std::priority_queue<PendingTask*> DelayedTaskQueue;
-    // Contains delayed tasks, sorted by their 'delayed_run_time' property.
-    DelayedTaskQueue delayed_work_queue_;
-
     // A null terminated list which creates an incoming_queue of tasks that are
     // acquired under a mutex for processing on this instance's thread. These
     // tasks have not yet been sorted out into items for our work_queue_ vs items
@@ -339,26 +222,10 @@ protected:
     // Protect access to m_IncomingQueue.
     U2_MUTEX(m_mtxIncomingQueue);
 
-    // A queue of non-nestable tasks that we had to defer because when it came
-    // time to execute them we were in a nested message loop.  They will execute
-    // once we're out of nested message loops.
-    std::queue<PendingTask*> m_DeferredNonNestableWorkQueue;
-
     // A list of tasks that need to be processed by this instance.  Note that
     // this queue is only accessed (push/pop) by our current thread.
     std::queue<PendingTask*> m_WorkQueue;
 
-    // The next sequence number to use for delayed tasks.
-    u2int32 m_nNextSequenceNum;
-
-    // A recursion block that prevents accidentally running additional tasks when
-    // insider a (accidentally induced?) nested message pump.
-    bool m_bNestableTasksAllowed;
-
-    RunState* m_pState;
-
-    // A recent snapshot of Time::Now(), used to check delayed_work_queue_.
-    TimeTicks m_RecentTime;
 };
 
 

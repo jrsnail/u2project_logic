@@ -6,33 +6,48 @@ U2EG_NAMESPACE_USING
 
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
-PendingTask::PendingTask()
-    : sequence_num(0)
-    , nestable(true)
+//-----------------------------------------------------------------------
+//-----------------------------------------------------------------------
+template<> TaskManager* Singleton<TaskManager>::msSingleton = 0;
+TaskManager* TaskManager::getSingletonPtr(void)
+{
+    if (msSingleton == nullptr)
+    {
+        msSingleton = new TaskManager;
+    }
+    return msSingleton;
+}
+TaskManager& TaskManager::getSingleton(void)
+{
+    return (*getSingletonPtr());
+}
+//-----------------------------------------------------------------------
+TaskManager::TaskManager()
 {
 }
-//---------------------------------------------------------------------
-PendingTask::PendingTask(TimeTicks delayed_run_time, bool nestable)
-    : delayed_run_time(delayed_run_time)
-    , sequence_num(0)
-    , nestable(nestable)
+//-----------------------------------------------------------------------
+TaskManager::~TaskManager()
 {
-
 }
-//---------------------------------------------------------------------
-bool PendingTask::operator<(const PendingTask& other) const 
+//-----------------------------------------------------------------------
+Task* TaskManager::createObject(const String& type, const String& name)
 {
-    // Since the top of a priority queue is defined as the "greatest" element, we
-    // need to invert the comparison here.  We want the smaller time to be at the
-    // top of the heap.
-
-    if (delayed_run_time < other.delayed_run_time)
-        return false;
-
-    if (delayed_run_time > other.delayed_run_time)
-        return true;
-
-    // If the times happen to match, then we use the sequence number to decide.
-    // Compare the difference to support integer roll-over.
-    return (sequence_num - other.sequence_num) > 0;
+    Task* pObj = createObject(type, name);
+    if (pObj != nullptr)
+    {
+        // do some init
+    }
+    return pObj;
+}
+//-----------------------------------------------------------------------
+Task* TaskManager::createObject(const String& type, const String& name)
+{
+    return SimpleObjectManager<Task>::createObject(type, name);
+}
+//-----------------------------------------------------------------------
+void TaskManager::destoryObject(Task* obj)
+{
+    assert(obj != nullptr);
+    assert(obj == SimpleObjectManager<Task>::retrieveObjectByGuid(obj->getGuid()));
+    SimpleObjectManager<Task>::destoryObject(obj);
 }

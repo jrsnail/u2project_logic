@@ -19,14 +19,10 @@ public:
 
     virtual void Run(Delegate* delegate) override;
     virtual void Quit() override;
-    virtual void ScheduleWork() override;
-    virtual void ScheduleDelayedWork(const TimeTicks& delayed_work_time) override;
 
 protected:
     // This flag is set to false when Run should return.
     bool m_bKeepRunning;
-    // The time at which we should call DoDelayedWork.
-    TimeTicks m_DelayedWorkTime;
 
     DISALLOW_COPY_AND_ASSIGN(MsgPumpDefault);
 };

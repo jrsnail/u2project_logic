@@ -59,7 +59,7 @@ public:
     template <class Method, class A>
     inline Task* createRunnableMethod(Method method, const A& a)
     {
-        return new RunnableMethod<Method, std::tuple<A> >(
+        return U2_NEW RunnableMethod<Method, std::tuple<A> >(
             m_wpObj, method, std::make_tuple<A>(a)
             );
     }

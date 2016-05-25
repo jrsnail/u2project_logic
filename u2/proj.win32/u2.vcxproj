@@ -182,6 +182,8 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\engine\src\core\U2AlignedAllocator.cpp" />
     <ClCompile Include="..\engine\src\core\U2Archive.cpp" />
     <ClCompile Include="..\engine\src\core\U2AtomicScalar.cpp" />
+    <ClCompile Include="..\engine\src\core\U2CancelableRequest.cpp" />
+    <ClCompile Include="..\engine\src\core\U2CancelableTaskTracker.cpp" />
     <ClCompile Include="..\engine\src\core\U2Common.cpp" />
     <ClCompile Include="..\engine\src\core\U2ConfigFile.cpp" />
     <ClCompile Include="..\engine\src\core\U2Exception.cpp" />
@@ -201,6 +203,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\engine\src\core\U2NetMsgProxy.cpp" />
     <ClCompile Include="..\engine\src\core\U2Object.cpp" />
     <ClCompile Include="..\engine\src\core\U2PoolingObjectManager.cpp" />
+    <ClCompile Include="..\engine\src\core\U2PostTaskAndReplyImpl.cpp" />
     <ClCompile Include="..\engine\src\core\U2Prerequisites.cpp" />
     <ClCompile Include="..\engine\src\core\U2Queue.cpp" />
     <ClCompile Include="..\engine\src\core\U2Resource.cpp" />
@@ -212,9 +215,11 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\engine\src\core\U2StringInterface.cpp" />
     <ClCompile Include="..\engine\src\core\U2StringUtil.cpp" />
     <ClCompile Include="..\engine\src\core\U2Task.cpp" />
+    <ClCompile Include="..\engine\src\core\U2TaskRunner.cpp" />
     <ClCompile Include="..\engine\src\core\U2Time.cpp" />
     <ClCompile Include="..\engine\src\core\U2TrackedObjs.cpp" />
     <ClCompile Include="..\engine\src\core\U2TypedObjectManager.cpp" />
+    <ClCompile Include="..\engine\src\core\U2WorkerPool.cpp" />
     <ClCompile Include="..\engine\src\core\U2ZipArchive.cpp" />
     <ClCompile Include="..\engine\src\core\Win\U2FileSystemLayer.cpp" />
     <ClCompile Include="..\engine\src\mvc\U2Command.cpp" />
@@ -288,6 +293,8 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\engine\include\core\U2AlignedAllocator.h" />
     <ClInclude Include="..\engine\include\core\U2Archive.h" />
     <ClInclude Include="..\engine\include\core\U2AtomicScalar.h" />
+    <ClInclude Include="..\engine\include\core\U2CancelableRequest.h" />
+    <ClInclude Include="..\engine\include\core\U2CancelableTaskTracker.h" />
     <ClInclude Include="..\engine\include\core\U2Common.h" />
     <ClInclude Include="..\engine\include\core\U2Config.h" />
     <ClInclude Include="..\engine\include\core\U2ConfigFile.h" />
@@ -319,6 +326,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\engine\include\core\U2ObjectCollection.h" />
     <ClInclude Include="..\engine\include\core\U2Platform.h" />
     <ClInclude Include="..\engine\include\core\U2PoolingObjectManager.h" />
+    <ClInclude Include="..\engine\include\core\U2PostTaskAndReplyImpl.h" />
     <ClInclude Include="..\engine\include\core\U2Prerequisites.h" />
     <ClInclude Include="..\engine\include\core\U2Queue.h" />
     <ClInclude Include="..\engine\include\core\U2Resource.h" />
@@ -334,10 +342,12 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\engine\include\core\U2StringInterface.h" />
     <ClInclude Include="..\engine\include\core\U2StringUtil.h" />
     <ClInclude Include="..\engine\include\core\U2Task.h" />
+    <ClInclude Include="..\engine\include\core\U2TaskRunner.h" />
     <ClInclude Include="..\engine\include\core\U2Time.h" />
     <ClInclude Include="..\engine\include\core\U2TrackedObjs.h" />
     <ClInclude Include="..\engine\include\core\U2TypedObjectManager.h" />
     <ClInclude Include="..\engine\include\core\U2ValueList.h" />
+    <ClInclude Include="..\engine\include\core\U2WorkerPool.h" />
     <ClInclude Include="..\engine\include\core\U2ZipArchive.h" />
     <ClInclude Include="..\engine\include\mvc\U2Command.h" />
     <ClInclude Include="..\engine\include\mvc\U2Context.h" />
