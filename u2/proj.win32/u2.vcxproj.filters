@@ -321,9 +321,6 @@
     <ClCompile Include="..\engine\src\core\U2Queue.cpp">
       <Filter>engine\src\core</Filter>
     </ClCompile>
-    <ClCompile Include="..\engine\src\core\U2NetMsgCenter.cpp">
-      <Filter>engine\src\core</Filter>
-    </ClCompile>
     <ClCompile Include="..\engine\src\core\U2HttpClient.cpp">
       <Filter>engine\src\core</Filter>
     </ClCompile>
@@ -342,34 +339,13 @@
     <ClCompile Include="..\engine\src\core\U2Task.cpp">
       <Filter>engine\src\core</Filter>
     </ClCompile>
-    <ClCompile Include="..\engine\src\core\U2MsgPump.cpp">
-      <Filter>engine\src\core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\engine\src\core\U2MsgLoop.cpp">
-      <Filter>engine\src\core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\engine\src\core\U2TrackedObjs.cpp">
-      <Filter>engine\src\core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\engine\src\core\U2Time.cpp">
-      <Filter>engine\src\core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\engine\src\core\U2MsgPumpDefault.cpp">
-      <Filter>engine\src\core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\engine\src\core\U2CancelableRequest.cpp">
-      <Filter>engine\src\core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\engine\src\core\U2TaskRunner.cpp">
-      <Filter>engine\src\core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\engine\src\core\U2PostTaskAndReplyImpl.cpp">
-      <Filter>engine\src\core</Filter>
-    </ClCompile>
     <ClCompile Include="..\engine\src\core\U2CancelableTaskTracker.cpp">
       <Filter>engine\src\core</Filter>
     </ClCompile>
-    <ClCompile Include="..\engine\src\core\U2WorkerPool.cpp">
+    <ClCompile Include="..\engine\src\core\U2HttpClient2.cpp">
+      <Filter>engine\src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\U2TaskLoop.cpp">
       <Filter>engine\src\core</Filter>
     </ClCompile>
   </ItemGroup>
@@ -704,9 +680,6 @@
     <ClInclude Include="..\engine\include\core\U2Queue.h">
       <Filter>engine\include\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\engine\include\core\U2NetMsgCenter.h">
-      <Filter>engine\include\core</Filter>
-    </ClInclude>
     <ClInclude Include="..\engine\include\core\U2HttpClient.h">
       <Filter>engine\include\core</Filter>
     </ClInclude>
@@ -725,34 +698,13 @@
     <ClInclude Include="..\engine\include\core\U2Task.h">
       <Filter>engine\include\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\engine\include\core\U2MsgPump.h">
-      <Filter>engine\include\core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\engine\include\core\U2MsgLoop.h">
-      <Filter>engine\include\core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\engine\include\core\U2TrackedObjs.h">
-      <Filter>engine\include\core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\engine\include\core\U2Time.h">
-      <Filter>engine\include\core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\engine\include\core\U2MsgPumpDefault.h">
-      <Filter>engine\include\core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\engine\include\core\U2CancelableRequest.h">
-      <Filter>engine\include\core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\engine\include\core\U2TaskRunner.h">
-      <Filter>engine\include\core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\engine\include\core\U2PostTaskAndReplyImpl.h">
-      <Filter>engine\include\core</Filter>
-    </ClInclude>
     <ClInclude Include="..\engine\include\core\U2CancelableTaskTracker.h">
       <Filter>engine\include\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\engine\include\core\U2WorkerPool.h">
+    <ClInclude Include="..\engine\include\core\U2HttpClient2.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2TaskLoop.h">
       <Filter>engine\include\core</Filter>
     </ClInclude>
   </ItemGroup>

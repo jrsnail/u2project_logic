@@ -47,7 +47,7 @@ protected:
     void RequestCompleted(Handle handle);
 
 private:
-    DISALLOW_COPY_AND_ASSIGN(CancelableRequestProvider);
+    U2_DISALLOW_COPY_AND_ASSIGN(CancelableRequestProvider);
 
 private:
     U2_MUTEX(m_mtxPendingRequests);
@@ -504,7 +504,7 @@ protected:
     {
         if (force_async || m_pCallbackThread != MsgLoop::current())
         {
-            m_pCallbackThread->PostTask(f);
+            m_pCallbackThread->postTask(f);
         }
         else
         {
@@ -553,7 +553,7 @@ private:
             NotifyCompleted();
     }
 
-    DISALLOW_COPY_AND_ASSIGN(CancelableRequestBase);
+    U2_DISALLOW_COPY_AND_ASSIGN(CancelableRequestBase);
 
 private:
     // The message loop that this request was created on. The callback will

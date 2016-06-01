@@ -49,7 +49,7 @@ private:
     // zero because non-zero delays are not supported.
     bool PostDelayedTaskAssertZeroDelay(Task* task, TimeDelta delay);
 
-    DISALLOW_COPY_AND_ASSIGN(WorkerPoolTaskRunner);
+    U2_DISALLOW_COPY_AND_ASSIGN(WorkerPoolTaskRunner);
 
 private:
     const bool tasks_are_slow_;

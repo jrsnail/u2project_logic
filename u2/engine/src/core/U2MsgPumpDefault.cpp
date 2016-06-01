@@ -1,5 +1,7 @@
 #include "U2MsgPumpDefault.h"
 
+#include "U2Exception.h"
+
 
 U2EG_NAMESPACE_USING
 
@@ -16,13 +18,13 @@ MsgPumpDefault::~MsgPumpDefault()
 
 }
 //---------------------------------------------------------------------
-void MsgPumpDefault::Run(Delegate* delegate)
+void MsgPumpDefault::run(Delegate* delegate)
 {
-    DCHECK(m_bKeepRunning) << "Quit must have been called outside of Run!";
+    U2Assert(m_bKeepRunning, "Quit must have been called outside of Run!");
 
     for (;;)
     {
-        bool bDidWork = delegate->DoWork();
+        bool bDidWork = delegate->doWork();
         if (!m_bKeepRunning)
             break;
 
@@ -34,7 +36,7 @@ void MsgPumpDefault::Run(Delegate* delegate)
     m_bKeepRunning = true;
 }
 //---------------------------------------------------------------------
-void MsgPumpDefault::Quit()
+void MsgPumpDefault::quit()
 {
     m_bKeepRunning = false;
 }

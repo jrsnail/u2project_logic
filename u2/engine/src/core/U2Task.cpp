@@ -1,11 +1,46 @@
 #include "U2Task.h"
 
+#include "U2TaskLoop.h"
+
 
 U2EG_NAMESPACE_USING
 
 
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
+PostTaskAndReplyRelay::PostTaskAndReplyRelay(const String& type, const String& name)
+    : Task(GET_OBJECT_TYPE(PostTaskAndReplyRelay), name)
+    , m_spOriginLoop(TaskLoop::current())
+{
+
+}
+//---------------------------------------------------------------------
+PostTaskAndReplyRelay::~PostTaskAndReplyRelay()
+{
+}
+//---------------------------------------------------------------------
+void PostTaskAndReplyRelay::initialize(Task* task, Task* reply)
+{
+    m_pTask = task;
+    m_pReply = reply;
+}
+//---------------------------------------------------------------------
+void PostTaskAndReplyRelay::run()
+{
+    m_pTask->run();
+    m_spOriginLoop->postTask(
+        TaskManager::getSingleton().createObject([=] { this->runReplyAndSelfDestruct(); })
+        );
+}
+//---------------------------------------------------------------------
+void PostTaskAndReplyRelay::runReplyAndSelfDestruct()
+{
+    m_pReply->run();
+
+    TaskManager::getSingleton().destoryObject(m_pTask);
+    TaskManager::getSingleton().destoryObject(m_pReply);
+    TaskManager::getSingleton().destoryObject(this);
+}
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
 template<> TaskManager* Singleton<TaskManager>::msSingleton = 0;
@@ -43,6 +78,17 @@ Task* TaskManager::createObject(const String& type, const String& name)
 Task* TaskManager::createObject(const String& type, const String& name)
 {
     return SimpleObjectManager<Task>::createObject(type, name);
+}
+//-----------------------------------------------------------------------
+PostTaskAndReplyRelay* TaskManager::createObject(
+    const String& type, const String& name, Task* task, Task* reply)
+{
+    PostTaskAndReplyRelay* pRelay = dynamic_cast<PostTaskAndReplyRelay*>(createObject(type, name));
+    if (pRelay != nullptr)
+    {
+        pRelay->initialize(task, reply);
+    }
+    return pRelay;
 }
 //-----------------------------------------------------------------------
 void TaskManager::destoryObject(Task* obj)

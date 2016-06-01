@@ -26,7 +26,7 @@ public:
         // pump would otherwise call DoDelayedWork.  Returns true to indicate that
         // work was done.  DoDelayedWork will still be called if DoWork returns
         // true, but DoIdleWork will not.
-        virtual bool DoWork() = 0;
+        virtual bool doWork() = 0;
 
     };
 
@@ -92,11 +92,11 @@ public:
     // pump.  DoWork in particular must never be starved for time slices unless
     // it returns false (meaning it has run out of things to do).
     //
-    virtual void Run(Delegate* delegate) = 0;
+    virtual void run(Delegate* delegate) = 0;
 
     // Quit immediately from the most recently entered run loop.  This method may
     // only be used on the thread that called Run.
-    virtual void Quit() = 0;
+    virtual void quit() = 0;
 
 };
 

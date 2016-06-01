@@ -48,7 +48,7 @@ protected:
     void Untrack(const String& taskId);
 
 private:
-    DISALLOW_COPY_AND_ASSIGN(CancelableTaskTracker);
+    U2_DISALLOW_COPY_AND_ASSIGN(CancelableTaskTracker);
 
 public:
     static const String kBadTaskId;

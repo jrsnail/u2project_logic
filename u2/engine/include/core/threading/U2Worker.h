@@ -33,11 +33,6 @@ public:
 		return *this; 
 	}
 
-	Worker(const Worker& rhs) = delete;
-	Worker& operator=(const Worker& rhs) = delete;
-	Worker(Worker&& rhs) = delete;
-	Worker& operator=(Worker&& rhs) = delete;
-
 	bool isInitialized()
 	{
 		return !(m_OriginThreadId == getThreadId());
@@ -51,6 +46,9 @@ public:
 	}
 
 	static String threadId2String(std::thread::id& tid);
+
+private:
+    U2_DISALLOW_COPY_AND_ASSIGN(Worker);
 
 protected:
 	std::thread			m_Thread;

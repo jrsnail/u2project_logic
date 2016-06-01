@@ -30,8 +30,6 @@ public:
 };
 
 
-typedef Task PendingTask;
-
 
 template<class Function>
 class WrappedFunction : public Task
@@ -50,11 +48,41 @@ public:
         f = std::move(f);
     }
 
-    virtual void operator()() override
+    virtual void run() override
     {
         f();
         //delete this;
     }
+};
+
+
+// This relay class remembers the MessageLoop that it was created on, and
+// ensures that both the |task| and |reply| Closures are deleted on this same
+// thread. Also, |task| is guaranteed to be deleted before |reply| is run or
+// deleted.
+//
+// If this is not possible because the originating MessageLoop is no longer
+// available, the the |task| and |reply| Closures are leaked.  Leaking is
+// considered preferable to having a thread-safetey violations caused by
+// invoking the Closure destructor on the wrong thread.
+class PostTaskAndReplyRelay : public Task 
+{
+public:
+    PostTaskAndReplyRelay(const String& type, const String& name);
+    
+    virtual ~PostTaskAndReplyRelay();
+
+    void initialize(Task* task, Task* reply);
+
+    virtual void run();
+
+protected:
+    void runReplyAndSelfDestruct();
+
+protected:
+    std::shared_ptr<TaskLoop> m_spOriginLoop;
+    Task* m_pReply;
+    Task* m_pTask;
 };
 
 
@@ -87,6 +115,8 @@ public:
         }
         return pObj;
     }
+
+    PostTaskAndReplyRelay* createObject(const String& type, const String& name, Task* task, Task* reply);
 
     virtual void destoryObject(Task* obj);
 

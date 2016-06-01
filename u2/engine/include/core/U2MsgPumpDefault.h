@@ -17,14 +17,14 @@ public:
     MsgPumpDefault();
     virtual ~MsgPumpDefault();
 
-    virtual void Run(Delegate* delegate) override;
-    virtual void Quit() override;
+    virtual void run(Delegate* delegate) override;
+    virtual void quit() override;
 
 protected:
     // This flag is set to false when Run should return.
     bool m_bKeepRunning;
 
-    DISALLOW_COPY_AND_ASSIGN(MsgPumpDefault);
+    U2_DISALLOW_COPY_AND_ASSIGN(MsgPumpDefault);
 };
 
 
