@@ -42,6 +42,7 @@
 		4C1EE4E51CD1DE7700CD21F1 /* resources.cfg in Resources */ = {isa = PBXBuildFile; fileRef = 4C1EE4E41CD1DE7700CD21F1 /* resources.cfg */; };
 		4C1EE4E61CD1DE7700CD21F1 /* resources.cfg in Resources */ = {isa = PBXBuildFile; fileRef = 4C1EE4E41CD1DE7700CD21F1 /* resources.cfg */; };
 		4C1EE4ED1CD2016400CD21F1 /* iosUtils.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4C1EE4EC1CD2016400CD21F1 /* iosUtils.mm */; };
+		4C462E8C1D17B99D001F3CC1 /* U2TNedObjectManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C462E8B1D17B99D001F3CC1 /* U2TNedObjectManager.cpp */; };
 		4C68AC1A1C8930FC007BA5BD /* U2CodeCvt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C68ABE81C8930FC007BA5BD /* U2CodeCvt.cpp */; };
 		4C68AC1B1C8930FC007BA5BD /* U2CodeCvt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C68ABE81C8930FC007BA5BD /* U2CodeCvt.cpp */; };
 		4C68AC1C1C8930FC007BA5BD /* U2DataFilterStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C68ABE91C8930FC007BA5BD /* U2DataFilterStream.cpp */; };
@@ -156,6 +157,7 @@
 		4C68ACB61C893119007BA5BD /* TabInfoViewComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C68AC911C893119007BA5BD /* TabInfoViewComponent.cpp */; };
 		4C68ACB71C893119007BA5BD /* TabMediator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C68AC931C893119007BA5BD /* TabMediator.cpp */; };
 		4C68ACB81C893119007BA5BD /* TabMediator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C68AC931C893119007BA5BD /* TabMediator.cpp */; };
+		4C70EBBE1D162EBA003D7B3E /* U2ObjectCollection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C70EBBD1D162EBA003D7B3E /* U2ObjectCollection.cpp */; };
 		4CA4AAA51CC0EB20007B5F39 /* U2Archive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CA4AA9D1CC0EB20007B5F39 /* U2Archive.cpp */; };
 		4CA4AAA61CC0EB20007B5F39 /* U2Archive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CA4AA9D1CC0EB20007B5F39 /* U2Archive.cpp */; };
 		4CA4AAA71CC0EB20007B5F39 /* U2Exception.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CA4AA9E1CC0EB20007B5F39 /* U2Exception.cpp */; };
@@ -189,6 +191,9 @@
 		4CA4AACB1CC0EB44007B5F39 /* U2Worker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CA4AAC41CC0EB44007B5F39 /* U2Worker.cpp */; };
 		4CA4AACC1CC0EB44007B5F39 /* U2Worker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CA4AAC41CC0EB44007B5F39 /* U2Worker.cpp */; };
 		4CA4AAD21CC0F070007B5F39 /* libzziplib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CA4AACE1CC0ED88007B5F39 /* libzziplib.a */; };
+		4CBA3BDB1D05227B00255CC7 /* U2Task.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CBA3BD91D05227B00255CC7 /* U2Task.cpp */; };
+		4CBA3BDC1D05227B00255CC7 /* U2TaskLoop.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CBA3BDA1D05227B00255CC7 /* U2TaskLoop.cpp */; };
+		4CBA3BDE1D05230600255CC7 /* U2HttpClient2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CBA3BDD1D05230600255CC7 /* U2HttpClient2.cpp */; };
 		503AE0F817EB97AB00D1A890 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 503AE0F617EB97AB00D1A890 /* Icon.icns */; };
 		503AE10017EB989F00D1A890 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 503AE0FB17EB989F00D1A890 /* AppController.mm */; };
 		503AE10117EB989F00D1A890 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 503AE0FC17EB989F00D1A890 /* main.m */; };
@@ -304,6 +309,8 @@
 		4C1EE4E81CD1E9E800CD21F1 /* macUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macUtils.h; sourceTree = "<group>"; };
 		4C1EE4EB1CD2014700CD21F1 /* iosUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iosUtils.h; sourceTree = "<group>"; };
 		4C1EE4EC1CD2016400CD21F1 /* iosUtils.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = iosUtils.mm; sourceTree = "<group>"; };
+		4C462E8A1D17B989001F3CC1 /* U2TNedObjectManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2TNedObjectManager.h; sourceTree = "<group>"; };
+		4C462E8B1D17B99D001F3CC1 /* U2TNedObjectManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2TNedObjectManager.cpp; sourceTree = "<group>"; };
 		4C68AB971C8930FC007BA5BD /* U2CodeCvt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2CodeCvt.h; sourceTree = "<group>"; };
 		4C68AB981C8930FC007BA5BD /* U2DataFilterStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2DataFilterStream.h; sourceTree = "<group>"; };
 		4C68AB991C8930FC007BA5BD /* U2FileStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2FileStream.h; sourceTree = "<group>"; };
@@ -433,6 +440,7 @@
 		4C68AC921C893119007BA5BD /* TabInfoViewComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabInfoViewComponent.h; sourceTree = "<group>"; };
 		4C68AC931C893119007BA5BD /* TabMediator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TabMediator.cpp; sourceTree = "<group>"; };
 		4C68AC941C893119007BA5BD /* TabMediator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabMediator.h; sourceTree = "<group>"; };
+		4C70EBBD1D162EBA003D7B3E /* U2ObjectCollection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2ObjectCollection.cpp; sourceTree = "<group>"; };
 		4CA4AA841CC0EAD0007B5F39 /* U2Archive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2Archive.h; sourceTree = "<group>"; };
 		4CA4AA851CC0EAD0007B5F39 /* U2Exception.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2Exception.h; sourceTree = "<group>"; };
 		4CA4AA861CC0EAD0007B5F39 /* U2FileSystemArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2FileSystemArchive.h; sourceTree = "<group>"; };
@@ -476,6 +484,13 @@
 		4CA4AAC41CC0EB44007B5F39 /* U2Worker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2Worker.cpp; sourceTree = "<group>"; };
 		4CA4AACE1CC0ED88007B5F39 /* libzziplib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libzziplib.a; path = ../../Dependenices/libs/iOS/simulator/libzziplib.a; sourceTree = "<group>"; };
 		4CA4AAD01CC0F053007B5F39 /* libzziplib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libzziplib.a; path = ../../Dependenices/libs/iOS/device_universal/libzziplib.a; sourceTree = "<group>"; };
+		4CBA3BD61D05225D00255CC7 /* U2CancelableTaskTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2CancelableTaskTracker.h; sourceTree = "<group>"; };
+		4CBA3BD71D05225E00255CC7 /* U2Task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2Task.h; sourceTree = "<group>"; };
+		4CBA3BD81D05225E00255CC7 /* U2TaskLoop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2TaskLoop.h; sourceTree = "<group>"; };
+		4CBA3BD91D05227B00255CC7 /* U2Task.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2Task.cpp; sourceTree = "<group>"; };
+		4CBA3BDA1D05227B00255CC7 /* U2TaskLoop.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2TaskLoop.cpp; sourceTree = "<group>"; };
+		4CBA3BDD1D05230600255CC7 /* U2HttpClient2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2HttpClient2.cpp; sourceTree = "<group>"; };
+		4CBA3BDF1D05232200255CC7 /* U2HttpClient2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2HttpClient2.h; sourceTree = "<group>"; };
 		503AE0F617EB97AB00D1A890 /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
 		503AE0F717EB97AB00D1A890 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		503AE0FA17EB989F00D1A890 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppController.h; path = ios/AppController.h; sourceTree = SOURCE_ROOT; };
@@ -733,6 +748,11 @@
 		4C68AB951C8930FC007BA5BD /* core */ = {
 			isa = PBXGroup;
 			children = (
+				4C462E8A1D17B989001F3CC1 /* U2TNedObjectManager.h */,
+				4CBA3BDF1D05232200255CC7 /* U2HttpClient2.h */,
+				4CBA3BD61D05225D00255CC7 /* U2CancelableTaskTracker.h */,
+				4CBA3BD71D05225E00255CC7 /* U2Task.h */,
+				4CBA3BD81D05225E00255CC7 /* U2TaskLoop.h */,
 				4C1EE4E91CD2001C00CD21F1 /* iOS */,
 				4C1EE4E71CD1E9E800CD21F1 /* OSX */,
 				4C1EE4DB1CD1C19B00CD21F1 /* U2AtomicScalar.h */,
@@ -858,6 +878,11 @@
 		4C68ABE61C8930FC007BA5BD /* core */ = {
 			isa = PBXGroup;
 			children = (
+				4C462E8B1D17B99D001F3CC1 /* U2TNedObjectManager.cpp */,
+				4C70EBBD1D162EBA003D7B3E /* U2ObjectCollection.cpp */,
+				4CBA3BDD1D05230600255CC7 /* U2HttpClient2.cpp */,
+				4CBA3BD91D05227B00255CC7 /* U2Task.cpp */,
+				4CBA3BDA1D05227B00255CC7 /* U2TaskLoop.cpp */,
 				4C1EE4C61CD1C17D00CD21F1 /* U2AtomicScalar.cpp */,
 				4C1EE4C71CD1C17D00CD21F1 /* U2Common.cpp */,
 				4C1EE4C81CD1C17D00CD21F1 /* U2ConfigFile.cpp */,
@@ -1225,6 +1250,7 @@
 				4C68ACB71C893119007BA5BD /* TabMediator.cpp in Sources */,
 				4C68AC441C8930FC007BA5BD /* U2Controller.cpp in Sources */,
 				4C68AC6A1C8930FC007BA5BD /* U2CocosMediator.cpp in Sources */,
+				4CBA3BDC1D05227B00255CC7 /* U2TaskLoop.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				4C68AC5E1C8930FC007BA5BD /* U2Proxy.cpp in Sources */,
 				4C68AC971C893119007BA5BD /* ApplicationFacade.cpp in Sources */,
@@ -1272,10 +1298,13 @@
 				4CA4AABB1CC0EB2F007B5F39 /* U2MemoryStream.cpp in Sources */,
 				4C1EE4BA1CD1B74E00CD21F1 /* U2FileSystemLayer.mm in Sources */,
 				4CA4AACB1CC0EB44007B5F39 /* U2Worker.cpp in Sources */,
+				4C70EBBE1D162EBA003D7B3E /* U2ObjectCollection.cpp in Sources */,
 				4C68ACA11C893119007BA5BD /* CgFacade.cpp in Sources */,
 				4C68AC401C8930FC007BA5BD /* U2Context.cpp in Sources */,
 				4C68AC481C8930FC007BA5BD /* U2FrameListenerCollection.cpp in Sources */,
 				4C1EE4CF1CD1C17D00CD21F1 /* U2Common.cpp in Sources */,
+				4CBA3BDE1D05230600255CC7 /* U2HttpClient2.cpp in Sources */,
+				4C462E8C1D17B99D001F3CC1 /* U2TNedObjectManager.cpp in Sources */,
 				4C68ACB51C893119007BA5BD /* TabInfoViewComponent.cpp in Sources */,
 				4C68AC9B1C893119007BA5BD /* ApplicationPrerequisites.cpp in Sources */,
 				4C68AC951C893119007BA5BD /* ApplicationCommands.cpp in Sources */,
@@ -1283,6 +1312,7 @@
 				4C1EE4D71CD1C17D00CD21F1 /* U2ResourceManager.cpp in Sources */,
 				4C68AC2A1C8930FC007BA5BD /* U2AlignedAllocator.cpp in Sources */,
 				4C68AC581C8930FC007BA5BD /* U2PredefinedMediators.cpp in Sources */,
+				4CBA3BDB1D05227B00255CC7 /* U2Task.cpp in Sources */,
 				4C68AC9F1C893119007BA5BD /* CgCommands.cpp in Sources */,
 				4C68AC3A1C8930FC007BA5BD /* U2SimpleObjectManager.cpp in Sources */,
 				4C68AC4E1C8930FC007BA5BD /* U2Notification.cpp in Sources */,
@@ -1500,7 +1530,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1543,7 +1572,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;

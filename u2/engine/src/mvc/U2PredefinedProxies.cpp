@@ -78,7 +78,7 @@ ContextQueue* ContextProxy::_retrieveContextQueue(const String& name)
 //-----------------------------------------------------------------------
 void ContextProxy::erase(const u2::String& name)
 {
-    for (MultiKeyMap::iterator it = mObjects.begin(); it != mObjects.end(); it++)
+    for (NamedObjectMap::iterator it = m_NamedMap.begin(); it != m_NamedMap.end(); it++)
     {
         ContextQueue* pQueue = it->second;
         if (pQueue == nullptr)
@@ -99,7 +99,7 @@ void ContextProxy::erase(const u2::Context* context)
     {
         return;
     }
-    for (MultiKeyMap::iterator it = mObjects.begin(); it != mObjects.end(); it++)
+    for (NamedObjectMap::iterator it = m_NamedMap.begin(); it != m_NamedMap.end(); it++)
     {
         ContextQueue* pQueue = it->second;
         if (pQueue == nullptr)

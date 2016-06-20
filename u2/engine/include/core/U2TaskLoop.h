@@ -3,6 +3,9 @@
 
 #include "U2Prerequisites.h"
 #include "U2STLRedefined.h"
+#include "U2Object.h"
+#include "U2Singleton.h"
+#include "U2SimpleObjectManager.h"
 #include "U2HeaderPrefix.h"
 
 

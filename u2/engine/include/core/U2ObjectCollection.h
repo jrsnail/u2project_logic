@@ -6,24 +6,20 @@
 #include "U2STLRedefined.h"
 #include "U2IteratorWrapper.h"
 #include "U2FactoryManager.h"
-#include "U2ValueList.h"
+#include "U2Singleton.h"
+#include "U2Object.h"
 
 
 U2EG_NAMESPACE_BEGIN
 
 
-class ObjectFactory;
 
 
-template <class T> 
-class ObjectCollection
+class ObjectCollection : public Singleton < ObjectCollection >
 {
 protected:
-	// <name, type, guid>
-	// guid: sole
-	// type: multi
-	// name: multi
-	typedef std::map<TYPE_KVLIST_3(String, String, String), T*>		MultiKeyMap;
+	// <guid, u2::Object*>
+    typedef std::map<String, u2::Object*>       ObjectMap;
 
 public:
     /** Default constructor - should never get called by a client app.
@@ -34,165 +30,63 @@ public:
     */
     virtual ~ObjectCollection();
 
-    typedef MapIterator<MultiKeyMap>		ObjectMapIterator;
-	typedef ConstMapIterator<MultiKeyMap>	ConstObjectMapIterator;
+    typedef MapIterator<ObjectMap>          ObjectMapIterator;
+	typedef ConstMapIterator<ObjectMap>     ConstObjectMapIterator;
 
-	T* createObject(const String& type, const String& name = BLANK);
+	u2::Object* createObject(const String& type, const String& name = BLANK);
 
-	void destoryObject(T* obj);
+	void destoryObject(u2::Object* obj);
 
-	void addObject(T* obj);
-
-	void removeObject(T* obj);
-
-	ObjectMapIterator retrieveAllObjects()
+    ObjectCollection::ObjectMapIterator retrieveAllObjects()
 	{
-		typename MultiKeyMap::iterator bit = mObjects.begin();
-		typename MultiKeyMap::iterator eit = mObjects.end();
+		ObjectMap::iterator bit = mObjects.begin();
+		ObjectMap::iterator eit = mObjects.end();
 		return ObjectMapIterator(bit, eit);
 	}
 
-	ObjectMapIterator retrieveAllObjectsByName(const String& name)
-	{
-		typename MultiKeyMap::iterator bit = mObjects.lower_bound(VLIST_1(name));
-		typename MultiKeyMap::iterator eit = mObjects.upper_bound(VLIST_1(name));
-		return ObjectMapIterator(bit, eit);
-	}
-
-	T* retrieveObjectByName(const String& name);
-
-	ObjectMapIterator retrieveAllObjectsByType(const String& type)
-	{
-		typename MultiKeyMap::iterator bit = mObjects.lower_bound(VLIST_2(KeyHolder<String>(), type));
-		typename MultiKeyMap::iterator eit = mObjects.upper_bound(VLIST_2(KeyHolder<String>(), type));
-		return ObjectMapIterator(bit, eit);
-	}
-
-	T* retrieveObjectByType(const String& type);
-
-	T* retrieveObjectByGuid(const String& guid);
-
-	ObjectMapIterator retrieveAllObjectsByTN(const String& type, const String& name)
-	{
-		typename MultiKeyMap::iterator bit = mObjects.lower_bound(VLIST_2(name, type));
-		typename MultiKeyMap::iterator eit = mObjects.upper_bound(VLIST_2(name, type));
-		return ObjectMapIterator(bit, eit);
-	}
-
-	T* retrieveObjectByTN(const String& type, const String& name);
+	u2::Object* retrieveObjectByGuid(const String& guid);
+    
+    
+public:
+    /** Override standard Singleton retrieval.
+     @remarks
+     Why do we do this? Well, it's because the Singleton
+     implementation is in a .h file, which means it gets compiled
+     into anybody who includes it. This is needed for the
+     Singleton template to work, but we actually only want it
+     compiled into the implementation of the class based on the
+     Singleton, not all of them. If we don't change this, we get
+     link errors when trying to use the Singleton-based class from
+     an outside dll.
+     @par
+     This method just delegates to the template version anyway,
+     but the implementation stays in this single compilation unit,
+     preventing link errors.
+     */
+    static ObjectCollection& getSingleton(void);
+    
+    /** Override standard Singleton retrieval.
+     @remarks
+     Why do we do this? Well, it's because the Singleton
+     implementation is in a .h file, which means it gets compiled
+     into anybody who includes it. This is needed for the
+     Singleton template to work, but we actually only want it
+     compiled into the implementation of the class based on the
+     Singleton, not all of them. If we don't change this, we get
+     link errors when trying to use the Singleton-based class from
+     an outside dll.
+     @par
+     This method just delegates to the template version anyway,
+     but the implementation stays in this single compilation unit,
+     preventing link errors.
+     */
+    static ObjectCollection* getSingletonPtr(void);
 
 
 protected:
-	MultiKeyMap					mObjects;
+	ObjectMap					mObjects;
 };
 
-
-
-//-----------------------------------------------------------------------
-//-----------------------------------------------------------------------
-template <class T>
-ObjectCollection<T>::ObjectCollection()
-{
-}
-//-----------------------------------------------------------------------
-template <class T>
-ObjectCollection<T>::~ObjectCollection()
-{
-    for (typename MultiKeyMap::iterator it = mObjects.begin();
-		it != mObjects.end();
-        ++it)
-    {
-		FactoryManager::getSingleton().destroyObject(it->second);
-    }
-    mObjects.clear();
-}
-//-----------------------------------------------------------------------
-template <class T>
-T* ObjectCollection<T>::createObject(const String& type, const String& name)
-{
-	T* pObj = dynamic_cast<T*>(FactoryManager::getSingleton().createObject(type, name));
-	mObjects[VLIST_3(pObj->getName(), pObj->getType(), pObj->getGuid())] = pObj;
-	return pObj;
-}
-//-----------------------------------------------------------------------
-template <class T>
-void ObjectCollection<T>::destoryObject(T* obj)
-{
-	assert(obj != nullptr);
-	typename MultiKeyMap::iterator it = mObjects.find(VLIST_3(obj->getName(), obj->getType(), obj->getGuid()));
-	if (it != mObjects.end())
-	{
-		FactoryManager::getSingleton().destroyObject(obj);
-		mObjects.erase(it);
-	}
-}
-//-----------------------------------------------------------------------
-template <class T>
-void ObjectCollection<T>::addObject(T* obj)
-{
-	assert(obj != nullptr);
-	assert(retrieveObjectByGuid(obj->getGuid()) == nullptr);
-	mObjects[VLIST_3(obj->getName(), obj->getType(), obj->getGuid())] = obj;
-}
-//-----------------------------------------------------------------------
-template <class T>
-void ObjectCollection<T>::removeObject(T* obj)
-{
-	assert(obj != nullptr);
-	typename MultiKeyMap::iterator it = mObjects.find(VLIST_3(obj->getName(), obj->getType(), obj->getGuid()));
-	if (it != mObjects.end())
-	{
-		mObjects.erase(it);
-	}
-}
-//-----------------------------------------------------------------------
-template <class T>
-T* ObjectCollection<T>::retrieveObjectByName(const String& name)
-{
-	typename MultiKeyMap::iterator it = mObjects.find(VLIST_1(name));
-    if (it != mObjects.end())
-    {
-		return it->second;
-    }
-
-    return nullptr;
-}
-//-----------------------------------------------------------------------
-template <class T>
-T* ObjectCollection<T>::retrieveObjectByTN(const String& type, const String& name)
-{
-	typename MultiKeyMap::iterator it = mObjects.find(VLIST_2(name, type));
-	if (it != mObjects.end())
-	{
-		return it->second;
-	}
-
-	return nullptr;
-}
-//-----------------------------------------------------------------------
-template <class T>
-T* ObjectCollection<T>::retrieveObjectByType(const String& type)
-{
-	typename MultiKeyMap::iterator it = mObjects.find(VLIST_2(KeyHolder<String>(), type));
-	if (it != mObjects.end())
-	{
-		return it->second;
-	}
-
-	return nullptr;
-}
-//-----------------------------------------------------------------------
-template <class T>
-T* ObjectCollection<T>::retrieveObjectByGuid(const String& guid)
-{
-	typename MultiKeyMap::iterator it = mObjects.find(VLIST_3(KeyHolder<String>(), KeyHolder<String>(), guid));
-	if (it != mObjects.end())
-	{
-		return it->second;
-	}
-
-	return nullptr;
-}
 
 
 U2EG_NAMESPACE_END

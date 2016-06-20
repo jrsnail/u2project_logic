@@ -10,8 +10,11 @@ U2EG_NAMESPACE_BEGIN
 
 
 template <class T> 
-class SimpleObjectManager : public ObjectCollection<T>
+class SimpleObjectManager
 {
+protected:
+    typedef std::map<String, T*>        NamedObjectMap;
+    
 public:
     /** Default constructor - should never get called by a client app.
     */
@@ -22,48 +25,28 @@ public:
     virtual ~SimpleObjectManager();
 
     T* createObject(const String& type, const String& name = BLANK);
+    
+    void destoryObject(T* obj);
+    
+    T* retrieveObjectByName(const String& name);
+    
+    T* retrieveObjectByGuid(const String& guid);
+    
+    bool hasObjectByName(const String& name);
+    
+    typedef MapIterator<NamedObjectMap>          ObjectMapIterator;
+    typedef ConstMapIterator<NamedObjectMap>     ConstObjectMapIterator;
+    
+    ObjectMapIterator retrieveAllObjects()
+    {
+        typename NamedObjectMap::iterator bit = m_NamedMap.begin();
+        typename NamedObjectMap::iterator eit = m_NamedMap.end();
+        return ObjectMapIterator(bit, eit);
+    }
 	
 
 protected:
-	typename ObjectCollection<T>::ObjectMapIterator retrieveAllObjectsByName(const String& name)
-	{
-		return ObjectCollection<T>::retrieveAllObjectsByName(name);
-	}
-
-	typename ObjectCollection<T>::ObjectMapIterator retrieveAllObjectsByType(const String& type)
-	{
-		return ObjectCollection<T>::retrieveAllObjectsByType(type);
-	}
-
-	T* retrieveObjectByType(const String& type)
-	{
-		return ObjectCollection<T>::retrieveObjectByType(type);
-	}
-
-	T* retrieveObjectByGuid(const String& guid)
-	{
-		return ObjectCollection<T>::retrieveObjectByGuid(guid);
-	}
-
-	typename ObjectCollection<T>::ObjectMapIterator retrieveAllObjectsByTN(const String& type, const String& name)
-	{
-		return ObjectCollection<T>::retrieveAllObjectsByTN(type, name);
-	}
-
-	T* retrieveObjectByTN(const String& type, const String& name)
-	{
-		return ObjectCollection<T>::retrieveObjectByTN(type, name);
-	}
-
-	void addObject(T* obj)
-	{
-		ObjectCollection<T>::addObject(obj);
-	}
-
-	void removeObject(T* obj)
-	{
-		ObjectCollection<T>::removeObject(obj);
-	}
+    NamedObjectMap          m_NamedMap;
 };
 
 
@@ -84,8 +67,59 @@ SimpleObjectManager<T>::~SimpleObjectManager()
 template <class T>
 T* SimpleObjectManager<T>::createObject(const String& type, const String& name)
 {
-	assert(SimpleObjectManager<T>::retrieveObjectByName(name) == nullptr);
-    return ObjectCollection<T>::createObject(type, name);
+    // As simple object manager, we index object with name which should be an unique key
+    assert(SimpleObjectManager<T>::retrieveObjectByName(name) == nullptr);
+    
+    T* pObj = dynamic_cast<T*>(ObjectCollection::getSingleton().createObject(type, name));
+    if (pObj != nullptr)
+    {
+        m_NamedMap[name] = pObj;
+    }
+    return pObj;
+}
+//-----------------------------------------------------------------------
+template <class T>
+void SimpleObjectManager<T>::destoryObject(T* obj)
+{
+    assert(obj);
+    // manager can only destroy objects which managed by itself
+    assert(SimpleObjectManager<T>::retrieveObjectByName(obj->getName()) == nullptr);
+    
+    ObjectCollection::getSingleton().destoryObject(obj);
+}
+//-----------------------------------------------------------------------
+template <class T>
+T* SimpleObjectManager<T>::retrieveObjectByName(const String& name)
+{
+    typename NamedObjectMap::iterator it = m_NamedMap.find(name);
+    if (it != m_NamedMap.end())
+    {
+        return it->second;
+    }
+    else
+    {
+        return nullptr;
+    }
+}
+//-----------------------------------------------------------------------
+template <class T>
+bool SimpleObjectManager<T>::hasObjectByName(const String& name)
+{
+    return retrieveObjectByName(name) != nullptr;
+}
+//-----------------------------------------------------------------------
+template <class T>
+T* SimpleObjectManager<T>::retrieveObjectByGuid(const String& guid)
+{
+    for (typename NamedObjectMap::iterator it = m_NamedMap.begin(); it != m_NamedMap.end(); it++)
+    {
+        T* pObj = it->second;
+        if (pObj->getGuid() == guid)
+        {
+            return pObj;
+        }
+    }
+    return nullptr;
 }
 
 

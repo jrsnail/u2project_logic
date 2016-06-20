@@ -2,18 +2,16 @@
 #define __U2PoolingObjectManager_H__
 
 #include "U2Prerequisites.h"
-#include "U2ObjectCollection.h"
+#include "U2TypedObjectManager.h"
 #include "U2Object.h"
 
 
 U2EG_NAMESPACE_BEGIN
 
 
-class ObjectFactory;
-
 
 template <class T> 
-class PoolingObjectManager : public ObjectCollection<T>
+class PoolingObjectManager : public TypedObjectManager<T>
 {
 public:
     /** Default constructor - should never get called by a client app.
@@ -33,26 +31,27 @@ public:
 protected:
 	T* createObject(const String& type, const String& name = BLANK)
 	{
-		return ObjectCollection<T>::createObject(type, name);
+		return TypedObjectManager<T>::createObject(type, name);
 	}
 
 	void destoryObject(T* obj)
 	{
-		ObjectCollection<T>::destoryObject(obj);
+		TypedObjectManager<T>::destoryObject(obj);
 	}
+    
+    void addObject(T* obj)
+    {
+        TypedObjectManager<T>::addObject(obj);
+    }
+    
+    void removeObject(T* obj)
+    {
+        TypedObjectManager<T>::removeObject(obj);
+    }
 
-	void addObject(T* obj)
-	{
-		ObjectCollection<T>::addObject(obj);
-	}
-
-	void removeObject(T* obj)
-	{
-		ObjectCollection<T>::removeObject(obj);
-	}
 
 protected:
-	ObjectCollection<T>                         mUnusedObjects;
+	TypedObjectManager<T>                         mUnusedObjects;
 };
 
 
@@ -105,11 +104,10 @@ void PoolingObjectManager<T>::recycleObject(T* obj)
 template<class T>
 void PoolingObjectManager<T>::destoryUnusedObject(const String& type)
 {
-	typename ObjectCollection<T>::ObjectMapIterator it = mUnusedObjects.retrieveAllObjectsByType(type);
+	typename PoolingObjectManager<T>::ObjectMapIterator it = mUnusedObjects.retrieveAllObjectsByType(type);
 	while (it.hasMoreElements())
 	{
-		T* pObj = dynamic_cast<T*>(it.getNext());
-		mUnusedObjects.destoryObject(pObj);
+		mUnusedObjects.destoryObject(it.getNext());
 	}
 }
 
