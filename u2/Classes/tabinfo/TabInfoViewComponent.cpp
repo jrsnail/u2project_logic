@@ -21,7 +21,7 @@ TabInfoViewComponent::~TabInfoViewComponent(void)
 
 }
 //-----------------------------------------------------------------------
-const String& TabInfoViewComponent::getUiName() const
+u2::String TabInfoViewComponent::getUiName() const
 {
     static String name = "HomePage.csb";
     return name;

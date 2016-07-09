@@ -56,23 +56,6 @@ void ObjectCollection::destoryObject(Object* obj)
     }
 }
 //-----------------------------------------------------------------------
-void ObjectCollection::addObject(Object* obj)
-{
-    assert(obj != nullptr);
-    assert(retrieveObjectByGuid(obj->getGuid()) == nullptr);
-    mObjects[obj->getGuid()] = obj;
-}
-//-----------------------------------------------------------------------
-void ObjectCollection::removeObject(Object* obj)
-{
-    assert(obj != nullptr);
-    ObjectMap::iterator it = mObjects.find(obj->getGuid());
-    if (it != mObjects.end())
-    {
-        mObjects.erase(it);
-    }
-}
-//-----------------------------------------------------------------------
 Object* ObjectCollection::retrieveObjectByGuid(const String& guid)
 {
     ObjectMap::iterator it = mObjects.find(guid);

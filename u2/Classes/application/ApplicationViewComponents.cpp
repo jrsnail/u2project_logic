@@ -22,7 +22,7 @@ ShadeViewComponent::~ShadeViewComponent(void)
 
 }
 //-----------------------------------------------------------------------
-const u2::String& ShadeViewComponent::getUiName() const
+u2::String ShadeViewComponent::getUiName() const
 {
     static u2::String name = BLANK;
     return name;
@@ -81,7 +81,7 @@ LogoViewComponent::~LogoViewComponent(void)
 
 }
 //-----------------------------------------------------------------------
-const u2::String& LogoViewComponent::getUiName() const
+u2::String LogoViewComponent::getUiName() const
 {
     static u2::String name = BLANK;
     return name;

@@ -8,6 +8,7 @@
 #include "U2StreamQueue.h"
 #include "U2DataFilterStream.h"
 #include "U2StringStream.h"
+#include "cocos2d.h"
 
 
 U2EG_NAMESPACE_USING
@@ -91,6 +92,7 @@ void HttpRequest::run()
 HttpResponse::HttpResponse(const String& type, const String& name)
     : Task(type, name)
     , m_lResultCode(0L)
+    , m_bSucceed(false)
 {
 }
 //-----------------------------------------------------------------------
@@ -116,29 +118,22 @@ HttpResponse::~HttpResponse()
 //     m_szErrorBuffer = BLANK;
 // }
 //-----------------------------------------------------------------------
+u2char* HttpResponse::getData()
+{
+    if (m_Data.size() != 0)
+        return &(m_Data.front());
+
+    return nullptr;
+}
+//-----------------------------------------------------------------------
+size_t HttpResponse::getDataSize()
+{
+    return m_Data.size();
+}
+//-----------------------------------------------------------------------
 void HttpResponse::run()
 {
 
-}
-//-----------------------------------------------------------------------
-//-----------------------------------------------------------------------
-HttpRelay::HttpRelay(const String& type, const String& name)
-    : PostTaskAndReplyRelay(type, name)
-{
-}
-//-----------------------------------------------------------------------
-HttpRelay::~HttpRelay()
-{
-}
-//-----------------------------------------------------------------------
-HttpRequest* HttpRelay::request()
-{
-    return dynamic_cast<HttpRequest*>(m_pTask);
-}
-//-----------------------------------------------------------------------
-HttpResponse* HttpRelay::response()
-{
-    return dynamic_cast<HttpResponse*>(m_pReply);
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
@@ -372,9 +367,7 @@ void HttpTaskLoop::postTask(Task* task)
 //-----------------------------------------------------------------------
 void HttpTaskLoop::postTaskAndReply(Task* task, Task* reply)
 {
-    PostTaskAndReplyRelay* pRelay = U2_NEW PostTaskAndReplyRelay(task, reply);
-    Task* pTask = TaskManager::getSingleton().createObject([=] { pRelay->Run(); });
-    _addToIncomingQueue(task);
+    assert(0);
 }
 //-----------------------------------------------------------------------
 void HttpTaskLoop::run()
@@ -417,6 +410,79 @@ void HttpTaskLoop::_runInternal()
 void HttpTaskLoop::quit()
 {
     m_bKeepRunning = false;
+}
+//-----------------------------------------------------------------------
+void HttpTaskLoop::processTask(HttpRequest* request, char* responseMessage)
+{
+    HttpResponse* response =
+        (HttpResponse*)TaskManager::getSingleton().createObject(GET_OBJECT_TYPE(HttpResponse), BLANK);
+    if (request == nullptr || response == nullptr)
+    {
+        return;
+    }
+
+    long responseCode = -1;
+    int retValue = 0;
+
+    // Process the request -> get response packet
+    switch (request->getHttpType())
+    {
+    case HttpRequest::Type::HTTP_GET: // HTTP GET
+        retValue = processGetTask(this, request,
+            writeData,
+            response->getData(),
+            &responseCode,
+            writeHeaderData,
+            response->getHttpHeader(),
+            responseMessage);
+        break;
+
+    case HttpRequest::Type::HTTP_POST: // HTTP POST
+        retValue = processPostTask(this, request,
+            writeData,
+            response->getData(),
+            &responseCode,
+            writeHeaderData,
+            response->getHttpHeader(),
+            responseMessage);
+        break;
+
+    case HttpRequest::Type::HTTP_PUT:
+        retValue = processPutTask(this, request,
+            writeData,
+            response->getData(),
+            &responseCode,
+            writeHeaderData,
+            response->getHttpHeader(),
+            responseMessage);
+        break;
+
+    case HttpRequest::Type::HTTP_DELETE:
+        retValue = processDeleteTask(this, request,
+            writeData,
+            response->getData(),
+            &responseCode,
+            writeHeaderData,
+            response->getHttpHeader(),
+            responseMessage);
+        break;
+
+    default:
+        U2Assert(true, "unknown http request type.");
+        break;
+    }
+
+    // write data to HttpResponse
+    response->setResultCode(responseCode);
+    if (retValue != 0)
+    {
+        response->setSucceed(false);
+        response->setErrorBuffer(responseMessage);
+    }
+    else
+    {
+        response->setSucceed(true);
+    }
 }
 //---------------------------------------------------------------------
 void HttpTaskLoop::_addToIncomingQueue(Task* task)
@@ -472,7 +538,7 @@ void HttpTaskLoop::enableCookies(const String& cookieFile)
     }
     else
     {
-        m_szCookieFilename = (FileUtils::getInstance()->getWritablePath() + "cookieFile.txt");
+        m_szCookieFilename = (cocos2d::FileUtils::getInstance()->getWritablePath() + "cookieFile.txt");
     }
 }
 //-----------------------------------------------------------------------

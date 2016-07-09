@@ -28,7 +28,7 @@ void CocosViewComponent::loadUi()
 {
     _changeViewCompState(ViewComponent::ViewCompState::VCS_Loading);
 
-    const u2::String& szCsbName = getUiName();
+    u2::String szCsbName = getUiName();
     m_pRootNode = cocos2d::CSLoader::createNode(szCsbName);
     m_pRootNode->retain();
     if (nullptr == m_pRootNode)

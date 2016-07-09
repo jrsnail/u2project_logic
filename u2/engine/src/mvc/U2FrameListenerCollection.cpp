@@ -62,9 +62,18 @@ void FrameListenerCollection::removeFrameListener(void* address)
 //-----------------------------------------------------------------------
 void FrameListenerCollection::_onUpdate(float dt)
 {
-    while (m_funcMap.size() > 0)
+    // copy, avaid to interrupt iterator
+    std::vector<Func> vec;
+    for (FuncMap::const_iterator it = m_funcMap.begin();
+    it != m_funcMap.end(); it++)
     {
-        FuncMap::const_iterator it = m_funcMap.begin();
-        (it->second)(dt);
+        vec.push_back(it->second);
+    }
+
+    // execute callback function
+    for (std::vector<Func>::const_iterator it = vec.begin();
+    it != vec.end(); it++)
+    {
+        (*it)(dt);
     }
 }

@@ -32,7 +32,7 @@ public:
     */
     virtual ~CocosViewComponent(void);
 
-    //virtual const String& getUiName() const = 0;
+    //virtual String getUiName() const = 0;
     virtual void loadUi() override;
     virtual void onUiLoaded() override;
     virtual void unloadUi() override;

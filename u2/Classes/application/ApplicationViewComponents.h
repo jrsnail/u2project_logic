@@ -23,7 +23,7 @@ public:
 
     virtual ~ShadeViewComponent(void);
 
-    virtual const u2::String& getUiName() const override;
+    virtual u2::String getUiName() const override;
 
     virtual void loadUi() override;
 
@@ -40,7 +40,7 @@ public:
 
 	virtual ~LogoViewComponent(void);
 
-    virtual const u2::String& getUiName() const override;
+    virtual u2::String getUiName() const override;
 
     virtual void loadUi() override;
 

@@ -25,7 +25,7 @@ public:
 
     virtual ~TabInfoViewComponent(void);
 
-    virtual const String& getUiName() const override;
+    virtual u2::String getUiName() const override;
 
 };
 

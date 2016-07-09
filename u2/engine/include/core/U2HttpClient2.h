@@ -142,23 +142,28 @@ public:
         return m_szErrorBuffer;
     }
 
+    /** Get the request data pointer of HttpRequest object.
+    @return char* the request data pointer.
+    */
+    inline u2char* getData();
+
+    /** Get the size of request data
+    @return ssize_t the size of request data
+    */
+    inline size_t getDataSize();
+
+    inline void setSucceed(bool succeed) { m_bSucceed = succeed; };
+
+    inline bool isSucceed() const { return m_bSucceed; };
+
     virtual void run() override;
 
 protected:
     vector<u2char>::type	m_Headers;
+    vector<u2char>::type	m_Data;
     u2int64                 m_lResultCode;   //< the status code returned from libcurl, e.g. 200, 404
     String					m_szErrorBuffer;   //< if _responseCode != 200, please read _errorBuffer to find the reason
-};
-
-
-class HttpRelay : public PostTaskAndReplyRelay
-{
-public:
-    HttpRelay(const String& type, const String& name);
-    virtual ~HttpRelay();
-
-    inline HttpRequest* request();
-    inline HttpResponse* response();
+    bool                    m_bSucceed;
 };
 
 
@@ -169,8 +174,6 @@ public:
     virtual ~HttpTaskLoop();
 
     virtual void postTask(Task* task) override;
-
-    virtual void postTaskAndReply(Task* task, Task* reply) override;
 
     virtual void run() override;
 
@@ -232,7 +235,11 @@ public:
     */
     const String& getCookieFilename();
 
+    void processTask(HttpRequest* request, char* responseMessage);
+
 protected:
+    virtual void postTaskAndReply(Task* task, Task* reply) override;
+
     void _runInternal();
 
     void _addToIncomingQueue(Task* task);

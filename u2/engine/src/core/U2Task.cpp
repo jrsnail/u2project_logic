@@ -8,7 +8,7 @@ U2EG_NAMESPACE_USING
 
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
-PostTaskAndReplyRelay::PostTaskAndReplyRelay(const String& type, const String& name)
+PostTaskAndReplyRelay::PostTaskAndReplyRelay(const std::string& type, const std::string& name)
     : Task(GET_OBJECT_TYPE(PostTaskAndReplyRelay), name)
     , m_spOriginLoop(TaskLoop::current())
 {
@@ -29,7 +29,7 @@ void PostTaskAndReplyRelay::run()
 {
     m_pTask->run();
     m_spOriginLoop->postTask(
-        TaskManager::getSingleton().createObject([=] { this->runReplyAndSelfDestruct(); })
+        TaskManager::getSingletonPtr()->createObject([=] { this->runReplyAndSelfDestruct(); })
         );
 }
 //---------------------------------------------------------------------
@@ -37,9 +37,9 @@ void PostTaskAndReplyRelay::runReplyAndSelfDestruct()
 {
     m_pReply->run();
 
-    TaskManager::getSingleton().destoryObject(m_pTask);
-    TaskManager::getSingleton().destoryObject(m_pReply);
-    TaskManager::getSingleton().destoryObject(this);
+    TaskManager::getSingletonPtr()->destoryObject(m_pTask);
+    TaskManager::getSingletonPtr()->destoryObject(m_pReply);
+    TaskManager::getSingletonPtr()->destoryObject(this);
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
@@ -67,17 +67,12 @@ TaskManager::~TaskManager()
 //-----------------------------------------------------------------------
 Task* TaskManager::createObject(const String& type, const String& name)
 {
-    Task* pObj = createObject(type, name);
+    Task* pObj = SimpleObjectManager<Task>::createObject(type, name);
     if (pObj != nullptr)
     {
         // do some init
     }
     return pObj;
-}
-//-----------------------------------------------------------------------
-Task* TaskManager::createObject(const String& type, const String& name)
-{
-    return SimpleObjectManager<Task>::createObject(type, name);
 }
 //-----------------------------------------------------------------------
 PostTaskAndReplyRelay* TaskManager::createObject(

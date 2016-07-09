@@ -24,7 +24,7 @@ CgViewComponent::~CgViewComponent(void)
 
 }
 //-----------------------------------------------------------------------
-const u2::String& CgViewComponent::getUiName() const
+u2::String CgViewComponent::getUiName() const
 {
     static u2::String name = "Layer_littlestar_movie.csb";
     return name;
@@ -50,7 +50,7 @@ StartPageViewComponent::~StartPageViewComponent(void)
 
 }
 //-----------------------------------------------------------------------
-const u2::String& StartPageViewComponent::getUiName() const
+u2::String StartPageViewComponent::getUiName() const
 {
     static u2::String name = "Layer_littlestar_movieclick.csb";
     return name;

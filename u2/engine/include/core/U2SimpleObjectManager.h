@@ -73,7 +73,7 @@ T* SimpleObjectManager<T>::createObject(const String& type, const String& name)
     T* pObj = dynamic_cast<T*>(ObjectCollection::getSingleton().createObject(type, name));
     if (pObj != nullptr)
     {
-        m_NamedMap[name] = pObj;
+        m_NamedMap[pObj->getName()] = pObj;
     }
     return pObj;
 }
@@ -83,7 +83,7 @@ void SimpleObjectManager<T>::destoryObject(T* obj)
 {
     assert(obj);
     // manager can only destroy objects which managed by itself
-    assert(SimpleObjectManager<T>::retrieveObjectByName(obj->getName()) == nullptr);
+    assert(SimpleObjectManager<T>::retrieveObjectByName(obj->getName()) != nullptr);
     
     ObjectCollection::getSingleton().destoryObject(obj);
 }

@@ -53,7 +53,7 @@ public:
     */
     virtual ~ViewComponent(void);
 
-    virtual const String& getUiName() const = 0;
+    virtual String getUiName() const = 0;
     virtual void loadUi() = 0;
     virtual void onUiLoaded() = 0;
     virtual void unloadUi() = 0;

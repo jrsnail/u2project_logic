@@ -5,6 +5,7 @@
 #include "U2STLRedefined.h"
 #include "U2Object.h"
 #include "U2SimpleObjectManager.h"
+#include "U2TaskLoop.h"
 #include "U2HeaderPrefix.h"
 
 
@@ -35,17 +36,18 @@ template<class Function>
 class WrappedFunction : public Task
 {
 protected:
-    typedef typename std::remove_reference<Function>::type function_type;
-    Function f;
+    //typedef typename std::remove_reference<Function>::type function_type;
+    Function&& f;
 
 public:
-    WrappedFunction(const String& name)
-        : Task("WrappedFunction", name)
-    { }
-
-    void initialize(function_type&& f)
+    WrappedFunction(const std::string& type, const std::string& name)
+        : Task(type, name)
     {
-        f = std::move(f);
+    }
+
+    void initialize(Function&& fun)
+    {
+        f = std::move(fun);
     }
 
     virtual void run() override
@@ -65,11 +67,11 @@ public:
 // available, the the |task| and |reply| Closures are leaked.  Leaking is
 // considered preferable to having a thread-safetey violations caused by
 // invoking the Closure destructor on the wrong thread.
-class PostTaskAndReplyRelay : public Task 
+class PostTaskAndReplyRelay : public Task
 {
 public:
-    PostTaskAndReplyRelay(const String& type, const String& name);
-    
+    PostTaskAndReplyRelay(const std::string& type, const std::string& name);
+
     virtual ~PostTaskAndReplyRelay();
 
     void initialize(Task* task, Task* reply);
@@ -98,7 +100,7 @@ public:
     */
     virtual ~TaskManager();
 
-    Task* createObject(const String& type, const String& name);
+    virtual Task* createObject(const String& type, const String& name);
 
     template<class Function>
     Task* createObject(Function&& f)
@@ -116,12 +118,9 @@ public:
         return pObj;
     }
 
-    PostTaskAndReplyRelay* createObject(const String& type, const String& name, Task* task, Task* reply);
+    PostTaskAndReplyRelay* createObject(const std::string& type, const std::string& name, Task* task, Task* reply);
 
     virtual void destoryObject(Task* obj);
-
-protected:
-    virtual Task* createObject(const String& type, const String& name = BLANK);
 
 public:
     /** Override standard Singleton retrieval.

@@ -23,7 +23,7 @@ public:
 
 	virtual ~CgViewComponent(void);
 
-    virtual const u2::String& getUiName() const override;
+    virtual u2::String getUiName() const override;
 
     void runCgAction();
 
@@ -39,7 +39,7 @@ public:
 
     virtual ~StartPageViewComponent(void);
 
-    virtual const u2::String& getUiName() const override;
+    virtual u2::String getUiName() const override;
 
     void runStartAction();
 
