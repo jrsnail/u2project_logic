@@ -12,6 +12,7 @@ U2EG_NAMESPACE_USING
 TaskLoop::TaskLoop(const String& type, const String& name)
     : Object(type, name)
 {
+    run();
 }
 //---------------------------------------------------------------------
 TaskLoop::~TaskLoop()
@@ -45,17 +46,6 @@ TaskLoop::~TaskLoop()
 
 }
 //---------------------------------------------------------------------
-TaskLoop* TaskLoop::current()
-{
-    std::thread::id tid = std::this_thread::get_id();
-    StringStream stream;
-    stream << tid;
-    String&& szTid = stream.str();
-    map<String, std::shared_ptr<TaskLoop> >::iterator it = ms_MsgLoops.find(szTid);
-    assert(it != ms_MsgLoops.end());
-    return it->second.get();
-}
-//---------------------------------------------------------------------
 void TaskLoop::addDestructionListener(DestructionListener* destruction_observer) 
 {
     DestructionListenerList::iterator it 
@@ -78,7 +68,7 @@ void TaskLoop::removeDestructionListener(DestructionListener* destruction_observ
 //---------------------------------------------------------------------
 void TaskLoop::addTaskListener(TaskListener* listener)
 {
-    assert(this == current());
+    assert(this == MsgLoopManager::current());
     TaskListenerList::iterator it
         = std::find(m_TaskListeners.begin(), m_TaskListeners.end(), listener);
     if (it != m_TaskListeners.end())
@@ -89,7 +79,7 @@ void TaskLoop::addTaskListener(TaskListener* listener)
 //---------------------------------------------------------------------
 void TaskLoop::removeTaskListener(TaskListener* listener)
 {
-    assert(this == current());
+    assert(this == MsgLoopManager::current());
     TaskListenerList::iterator it
         = std::find(m_TaskListeners.begin(), m_TaskListeners.end(), listener);
     if (it != m_TaskListeners.end())
@@ -115,6 +105,8 @@ void TaskLoop::_runTask(Task* task)
     }
 }
 //-----------------------------------------------------------------------
+//-----------------------------------------------------------------------
+map<String, std::shared_ptr<TaskLoop> >::type MsgLoopManager::ms_MsgLoops;
 //-----------------------------------------------------------------------
 template<> MsgLoopManager* Singleton<MsgLoopManager>::msSingleton = 0;
 MsgLoopManager* MsgLoopManager::getSingletonPtr(void)
@@ -154,4 +146,15 @@ void MsgLoopManager::postTaskAndReply(const String& loopName, Task* task, Task* 
     {
         pMsgLoop->postTaskAndReply(task, reply);
     }
+}
+//---------------------------------------------------------------------
+TaskLoop* MsgLoopManager::current()
+{
+    std::thread::id tid = std::this_thread::get_id();
+    StringStream stream;
+    stream << tid;
+    String&& szTid = stream.str();
+    map<String, std::shared_ptr<TaskLoop> >::iterator it = ms_MsgLoops.find(szTid);
+    assert(it != ms_MsgLoops.end());
+    return it->second.get();
 }

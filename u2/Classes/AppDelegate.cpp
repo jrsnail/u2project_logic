@@ -30,6 +30,8 @@
 #if U2_PLATFORM == U2_PLATFORM_APPLE
 #	include "macUtils.h"
 #endif
+#include "U2HttpClient2.h"
+
 
 
 
@@ -317,13 +319,13 @@ bool AppDelegate::applicationDidFinishLaunching() {
 		// Run a function in the thread pool
 		for (int i = 0; i < 1; ++i)
 		{
-			group.run([i] {
+			group.run([=] {
 				//cocos2d::log("Hello world! run = %d, %d", i, std::this_thread::get_id());
 				//CCLOG("Hello world! run = %d, %d", i, std::this_thread::get_id());
 				u2::LogManager::getSingleton().stream(u2::LML_NORMAL) 
 					<< "Hello world! run = " << i << ", " << std::this_thread::get_id() 
 					<< "\n";
-				});
+ 				});
 			//pool.run([i] { std::cout << "Hello world! = " << i << std::endl; });
 		}
 
@@ -414,8 +416,11 @@ bool AppDelegate::applicationDidFinishLaunching() {
 		*/
 	}
 
+    {
+        //------------------------------- Test Net ----------------------------------------
+    }
+
     
-	
     return true;
 }
 

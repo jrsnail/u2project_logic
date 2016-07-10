@@ -15,7 +15,7 @@ U2EG_NAMESPACE_BEGIN
 class Task;
 
 
-class _U2Export TaskLoop : public Object
+class TaskLoop : public Object
 {
 public:
     // A DestructionObserver is notified when the current MessageLoop is being
@@ -26,7 +26,7 @@ public:
     // NOTE: Any tasks posted to the MessageLoop during this notification will
     // not be run.  Instead, they will be deleted.
     //
-    class _U2Export DestructionListener 
+    class DestructionListener 
     {
     public:
         virtual void WillDestroyCurrentMessageLoop() = 0;
@@ -39,7 +39,7 @@ public:
     // MessageLoop.
     //
     // NOTE: A TaskObserver implementation should be extremely fast!
-    class _U2Export TaskListener
+    class TaskListener
     {
     public:
         TaskListener() {};
@@ -57,9 +57,6 @@ public:
 public:
     explicit TaskLoop(const String& type, const String& name);
     virtual ~TaskLoop();
-
-    // Returns the MessageLoop object for the current thread, or null if none.
-    static TaskLoop* current();
 
     // Add a DestructionObserver, which will start receiving notifications
     // immediately.
@@ -136,7 +133,7 @@ public:
     virtual void postTaskAndReply(Task* task, Task* reply) = 0;
 
     // Run the message loop.
-    virtual void run() = 0;
+    virtual void run() {};
 
     // Signals the Run method to return after it is done processing all pending
     // messages.  This method may only be called on the same thread that called
@@ -154,8 +151,6 @@ protected:
 
 
 protected:
-    static map<String, std::shared_ptr<TaskLoop> >::type      ms_MsgLoops;
-
     typedef vector<DestructionListener*>::type DestructionListenerList;
     DestructionListenerList m_DestructionListeners;
 
@@ -174,6 +169,9 @@ public:
 
     void postTask(const String& loopName, Task* task);
     void postTaskAndReply(const String& loopName, Task* task, Task* reply);
+
+    // Returns the MessageLoop object for the current thread, or null if none.
+    static TaskLoop* current();
 
 public:
     /** Override standard Singleton retrieval.
@@ -209,6 +207,9 @@ public:
     preventing link errors.
     */
     static MsgLoopManager* getSingletonPtr(void);
+
+protected:
+    static map<String, std::shared_ptr<TaskLoop> >::type      ms_MsgLoops;
 };
 
 

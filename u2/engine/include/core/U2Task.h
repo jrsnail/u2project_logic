@@ -31,33 +31,6 @@ public:
 };
 
 
-
-template<class Function>
-class WrappedFunction : public Task
-{
-protected:
-    //typedef typename std::remove_reference<Function>::type function_type;
-    Function&& f;
-
-public:
-    WrappedFunction(const std::string& type, const std::string& name)
-        : Task(type, name)
-    {
-    }
-
-    void initialize(Function&& fun)
-    {
-        f = std::move(fun);
-    }
-
-    virtual void run() override
-    {
-        f();
-        //delete this;
-    }
-};
-
-
 // This relay class remembers the MessageLoop that it was created on, and
 // ensures that both the |task| and |reply| Closures are deleted on this same
 // thread. Also, |task| is guaranteed to be deleted before |reply| is run or
@@ -105,17 +78,36 @@ public:
     template<class Function>
     Task* createObject(Function&& f)
     {
-        CREATE_FACTORY(WrappedFunction<Function>);
-        Task* pObj = createObject(GET_OBJECT_TYPE(WrappedFunction<Function>), BLANK);
-        if (pObj != nullptr)
+        typedef typename std::remove_reference<Function>::type function_type;
+
+        class WrappedFunction : public Task
         {
-            WrappedFunction<Function>* pWrappedFunc = dynamic_cast<WrappedFunction<Function>*>(pObj);
-            if (pWrappedFunc != nullptr)
+        protected:
+            Function f;
+
+        public:
+            WrappedFunction(const std::string& type, const std::string& name)
+                : Task(type, name)
+                , f(std::move(f))
             {
-                pWrappedFunc->initialize(f);
             }
-        }
-        return pObj;
+
+            virtual void run() override
+            {
+                f();
+                //delete this;
+            }
+        };
+
+//         u2::String szType = typeid(WrappedFunction).name();
+//         if (!u2::FactoryManager::getSingleton().hasObjectFactory(szType))
+//         {
+//             u2::ObjectFactory* pObjectFactory = new u2::TemplateObjectFactory < WrappedFunction >;
+//             u2::FactoryManager::getSingleton().addObjectFactory(pObjectFactory);
+//         }
+
+        CREATE_FACTORY(WrappedFunction);
+        return createObject(GET_OBJECT_TYPE(WrappedFunction), BLANK);
     }
 
     PostTaskAndReplyRelay* createObject(const std::string& type, const std::string& name, Task* task, Task* reply);

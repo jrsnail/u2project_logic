@@ -10,7 +10,7 @@ U2EG_NAMESPACE_USING
 //---------------------------------------------------------------------
 PostTaskAndReplyRelay::PostTaskAndReplyRelay(const std::string& type, const std::string& name)
     : Task(GET_OBJECT_TYPE(PostTaskAndReplyRelay), name)
-    , m_spOriginLoop(TaskLoop::current())
+    , m_spOriginLoop(MsgLoopManager::current())
 {
 
 }
