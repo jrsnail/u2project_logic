@@ -26,13 +26,15 @@ public:
     // NOTE: Any tasks posted to the MessageLoop during this notification will
     // not be run.  Instead, they will be deleted.
     //
-    class DestructionListener 
+    class TaskLoopListener 
     {
     public:
-        virtual void WillDestroyCurrentMessageLoop() = 0;
+        virtual void postRunCurrentTaskLoop(TaskLoop* loop) = 0;
+        virtual void postQuitCurrentTaskLoop(TaskLoop* loop) = 0;
+        virtual void preDestroyCurrentTaskLoop(TaskLoop* loop) = 0;
 
     protected:
-        virtual ~DestructionListener();
+        virtual ~TaskLoopListener() {};
     };
 
     // A TaskObserver is an object that receives task notifications from the
@@ -60,11 +62,11 @@ public:
 
     // Add a DestructionObserver, which will start receiving notifications
     // immediately.
-    void addDestructionListener(DestructionListener* destruction_observer);
+    void addTaskLoopListener(TaskLoopListener* listener);
 
     // Remove a DestructionObserver.  It is safe to call this method while a
     // DestructionObserver is receiving a notification callback.
-    void removeDestructionListener(DestructionListener* destruction_observer);
+    void removeTaskLoopListener(TaskLoopListener* listener);
 
     // These functions can only be called on the same thread that |this| is
     // running on.
@@ -133,7 +135,7 @@ public:
     virtual void postTaskAndReply(Task* task, Task* reply) = 0;
 
     // Run the message loop.
-    virtual void run() {};
+    virtual void run();
 
     // Signals the Run method to return after it is done processing all pending
     // messages.  This method may only be called on the same thread that called
@@ -143,7 +145,9 @@ public:
     // that doing so is fairly dangerous if the target thread makes nested calls
     // to MessageLoop::Run.  The problem being that you won't know which nested
     // run loop you are quitting, so be careful!
-    virtual void quit() = 0;
+    virtual void quit();
+
+    virtual String getThreadId() = 0;
 
 protected:
     // Runs the specified Task.
@@ -151,8 +155,8 @@ protected:
 
 
 protected:
-    typedef vector<DestructionListener*>::type DestructionListenerList;
-    DestructionListenerList m_DestructionListeners;
+    typedef vector<TaskLoopListener*>::type TaskLoopListenerList;
+    TaskLoopListenerList m_TaskLoopListeners;
 
     typedef vector<TaskListener*>::type TaskListenerList;
     TaskListenerList m_TaskListeners;
@@ -162,6 +166,7 @@ protected:
 
 
 class MsgLoopManager : public Singleton < MsgLoopManager >, public SimpleObjectManager<TaskLoop>
+    , public TaskLoop::TaskLoopListener
 {
 public:
     MsgLoopManager();
@@ -170,8 +175,12 @@ public:
     void postTask(const String& loopName, Task* task);
     void postTaskAndReply(const String& loopName, Task* task, Task* reply);
 
-    // Returns the MessageLoop object for the current thread, or null if none.
+    // Returns the TaskLoop object for the current thread, or null if none.
     static TaskLoop* current();
+
+    virtual void postRunCurrentTaskLoop(TaskLoop* loop) override;
+    virtual void postQuitCurrentTaskLoop(TaskLoop* loop) override;
+    virtual void preDestroyCurrentTaskLoop(TaskLoop* loop) override;
 
 public:
     /** Override standard Singleton retrieval.
@@ -209,7 +218,8 @@ public:
     static MsgLoopManager* getSingletonPtr(void);
 
 protected:
-    static map<String, std::shared_ptr<TaskLoop> >::type      ms_MsgLoops;
+    typedef map<String, std::shared_ptr<TaskLoop> >::type   TaskLoopMap;
+    static TaskLoopMap      ms_TaskLoops;
 };
 
 

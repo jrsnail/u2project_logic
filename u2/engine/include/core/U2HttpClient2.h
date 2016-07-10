@@ -179,6 +179,8 @@ public:
 
     virtual void quit() override;
 
+    virtual String getThreadId() override;
+
     /**
     * Set the timeout value for connecting.
     *

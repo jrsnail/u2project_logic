@@ -374,6 +374,8 @@ void HttpTaskLoop::run()
 {
     m_thread = std::move(std::thread(std::bind(&HttpTaskLoop::_runInternal, this)));
     m_thread.detach();
+
+    TaskLoop::run();
 }
 //-----------------------------------------------------------------------
 void HttpTaskLoop::_runInternal()
@@ -410,6 +412,15 @@ void HttpTaskLoop::_runInternal()
 void HttpTaskLoop::quit()
 {
     m_bKeepRunning = false;
+
+    TaskLoop::quit();
+}
+//-----------------------------------------------------------------------
+String HttpTaskLoop::getThreadId()
+{
+    StringStream stream;
+    stream << m_thread.get_id();
+    return stream.str();
 }
 //-----------------------------------------------------------------------
 void HttpTaskLoop::processTask(HttpRequest* request, char* responseMessage)

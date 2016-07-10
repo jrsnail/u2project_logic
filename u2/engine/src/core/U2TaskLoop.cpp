@@ -12,17 +12,17 @@ U2EG_NAMESPACE_USING
 TaskLoop::TaskLoop(const String& type, const String& name)
     : Object(type, name)
 {
-    run();
 }
 //---------------------------------------------------------------------
 TaskLoop::~TaskLoop()
 {
-    DestructionListenerList::iterator it = m_DestructionListeners.begin();
-    while (it != m_DestructionListeners.end())
+    TaskLoopListenerList::iterator it = m_TaskLoopListeners.begin();
+    while (it != m_TaskLoopListeners.end())
     {
-        (*it)->WillDestroyCurrentMessageLoop();
+        (*it)->preDestroyCurrentTaskLoop(this);
+        it = m_TaskLoopListeners.begin();
     }
-    m_DestructionListeners.clear();
+    m_TaskLoopListeners.clear();
 
     m_TaskListeners.clear();
 
@@ -46,23 +46,23 @@ TaskLoop::~TaskLoop()
 
 }
 //---------------------------------------------------------------------
-void TaskLoop::addDestructionListener(DestructionListener* destruction_observer) 
+void TaskLoop::addTaskLoopListener(TaskLoopListener* listener)
 {
-    DestructionListenerList::iterator it 
-        = std::find(m_DestructionListeners.begin(), m_DestructionListeners.end(), destruction_observer);
-    if (it != m_DestructionListeners.end())
+    TaskLoopListenerList::iterator it 
+        = std::find(m_TaskLoopListeners.begin(), m_TaskLoopListeners.end(), listener);
+    if (it != m_TaskLoopListeners.end())
     {
-        m_DestructionListeners.push_back(destruction_observer);
+        m_TaskLoopListeners.push_back(listener);
     }
 }
 //---------------------------------------------------------------------
-void TaskLoop::removeDestructionListener(DestructionListener* destruction_observer) 
+void TaskLoop::removeTaskLoopListener(TaskLoopListener* listener)
 {
-    DestructionListenerList::iterator it 
-        = std::find(m_DestructionListeners.begin(), m_DestructionListeners.end(), destruction_observer);
-    if (it != m_DestructionListeners.end())
+    TaskLoopListenerList::iterator it 
+        = std::find(m_TaskLoopListeners.begin(), m_TaskLoopListeners.end(), listener);
+    if (it != m_TaskLoopListeners.end())
     {
-        m_DestructionListeners.erase(it);
+        m_TaskLoopListeners.erase(it);
     }
 }
 //---------------------------------------------------------------------
@@ -87,6 +87,26 @@ void TaskLoop::removeTaskListener(TaskListener* listener)
         m_TaskListeners.erase(it);
     }
 }
+//-----------------------------------------------------------------------
+void TaskLoop::run()
+{
+    TaskLoopListenerList::iterator it = m_TaskLoopListeners.begin();
+    while (it != m_TaskLoopListeners.end())
+    {
+        (*it)->postRunCurrentTaskLoop(this);
+        it = m_TaskLoopListeners.begin();
+    }
+}
+//-----------------------------------------------------------------------
+void TaskLoop::quit()
+{
+    TaskLoopListenerList::iterator it = m_TaskLoopListeners.begin();
+    while (it != m_TaskLoopListeners.end())
+    {
+        (*it)->postQuitCurrentTaskLoop(this);
+        it = m_TaskLoopListeners.begin();
+    }
+}
 //---------------------------------------------------------------------
 void TaskLoop::_runTask(Task* task)
 {
@@ -106,7 +126,7 @@ void TaskLoop::_runTask(Task* task)
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-map<String, std::shared_ptr<TaskLoop> >::type MsgLoopManager::ms_MsgLoops;
+map<String, std::shared_ptr<TaskLoop> >::type MsgLoopManager::ms_TaskLoops;
 //-----------------------------------------------------------------------
 template<> MsgLoopManager* Singleton<MsgLoopManager>::msSingleton = 0;
 MsgLoopManager* MsgLoopManager::getSingletonPtr(void)
@@ -154,7 +174,40 @@ TaskLoop* MsgLoopManager::current()
     StringStream stream;
     stream << tid;
     String&& szTid = stream.str();
-    map<String, std::shared_ptr<TaskLoop> >::iterator it = ms_MsgLoops.find(szTid);
-    assert(it != ms_MsgLoops.end());
+    TaskLoopMap::iterator it = ms_TaskLoops.find(szTid);
+    assert(it != ms_TaskLoops.end());
     return it->second.get();
+}
+//---------------------------------------------------------------------
+void MsgLoopManager::postRunCurrentTaskLoop(TaskLoop* loop)
+{
+    String szId = loop->getThreadId();
+    TaskLoopMap::iterator it = ms_TaskLoops.find(szId);
+    if (it == ms_TaskLoops.end())
+    {
+        ms_TaskLoops[szId] = std::shared_ptr<TaskLoop>(loop);
+    }
+    else
+    {
+        assert(0);
+    }
+}
+//---------------------------------------------------------------------
+void MsgLoopManager::postQuitCurrentTaskLoop(TaskLoop* loop)
+{
+    String szId = loop->getThreadId();
+    TaskLoopMap::iterator it = ms_TaskLoops.find(szId);
+    if (it == ms_TaskLoops.end())
+    {
+        assert(0);
+    }
+    else
+    {
+        ms_TaskLoops.erase(it);
+    }
+}
+//---------------------------------------------------------------------
+void MsgLoopManager::preDestroyCurrentTaskLoop(TaskLoop* loop)
+{
+
 }
