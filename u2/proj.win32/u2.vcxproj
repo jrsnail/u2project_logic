@@ -184,10 +184,15 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\engine\src\core\U2AtomicScalar.cpp" />
     <ClCompile Include="..\engine\src\core\U2Common.cpp" />
     <ClCompile Include="..\engine\src\core\U2ConfigFile.cpp" />
+    <ClCompile Include="..\engine\src\core\U2DataPool.cpp" />
     <ClCompile Include="..\engine\src\core\U2Exception.cpp" />
     <ClCompile Include="..\engine\src\core\U2FactoryManager.cpp" />
     <ClCompile Include="..\engine\src\core\U2FileSystemArchive.cpp" />
     <ClCompile Include="..\engine\src\core\U2HttpClient2.cpp" />
+    <ClCompile Include="..\engine\src\core\U2HttpClientImpl.cpp" />
+    <ClCompile Include="..\engine\src\core\U2HttpDownloadClient.cpp" />
+    <ClCompile Include="..\engine\src\core\U2HttpDownloadClient2.cpp" />
+    <ClCompile Include="..\engine\src\core\U2HttpDownloadClient3.cpp" />
     <ClCompile Include="..\engine\src\core\U2Log.cpp" />
     <ClCompile Include="..\engine\src\core\U2LogManager.cpp" />
     <ClCompile Include="..\engine\src\core\U2MemoryAllocatedObject.cpp" />
@@ -285,6 +290,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\engine\include\core\U2Config.h" />
     <ClInclude Include="..\engine\include\core\U2ConfigFile.h" />
     <ClInclude Include="..\engine\include\core\U2Core.h" />
+    <ClInclude Include="..\engine\include\core\U2DataPool.h" />
     <ClInclude Include="..\engine\include\core\U2Exception.h" />
     <ClInclude Include="..\engine\include\core\U2FactoryManager.h" />
     <ClInclude Include="..\engine\include\core\U2FactoryObj.h" />
@@ -293,6 +299,10 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\engine\include\core\U2HeaderPrefix.h" />
     <ClInclude Include="..\engine\include\core\U2HeaderSuffix.h" />
     <ClInclude Include="..\engine\include\core\U2HttpClient2.h" />
+    <ClInclude Include="..\engine\include\core\U2HttpClientImpl.h" />
+    <ClInclude Include="..\engine\include\core\U2HttpDownloadClient.h" />
+    <ClInclude Include="..\engine\include\core\U2HttpDownloadClient2.h" />
+    <ClInclude Include="..\engine\include\core\U2HttpDownloadClient3.h" />
     <ClInclude Include="..\engine\include\core\U2IteratorWrapper.h" />
     <ClInclude Include="..\engine\include\core\U2Log.h" />
     <ClInclude Include="..\engine\include\core\U2LogManager.h" />

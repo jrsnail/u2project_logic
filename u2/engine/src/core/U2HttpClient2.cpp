@@ -378,37 +378,6 @@ void HttpTaskLoop::run()
     TaskLoop::run();
 }
 //-----------------------------------------------------------------------
-void HttpTaskLoop::_runInternal()
-{
-    m_bKeepRunning = true;
-
-    for (;;)
-    {
-        Task* pTask = nullptr;
-        {
-            U2_LOCK_MUTEX(m_mtxIncomingQueue);
-            pTask = m_IncomingQueue.front();
-            if (pTask == nullptr)
-            {
-                U2_THREAD_WAIT(m_IncomingQueueSync, lck);
-                continue;
-            }
-            else
-            {
-                m_IncomingQueue.pop();
-            }
-        }
-
-        if (pTask != nullptr)
-        {
-            _runTask(pTask);
-        }
-
-        if (!m_bKeepRunning)
-            break;
-    }
-}
-//-----------------------------------------------------------------------
 void HttpTaskLoop::quit()
 {
     m_bKeepRunning = false;
@@ -494,14 +463,6 @@ void HttpTaskLoop::processTask(HttpRequest* request, char* responseMessage)
     {
         response->setSucceed(true);
     }
-}
-//---------------------------------------------------------------------
-void HttpTaskLoop::_addToIncomingQueue(Task* task)
-{
-    U2_LOCK_MUTEX(m_mtxIncomingQueue);
-    bool bWasEmpty = m_IncomingQueue.empty();
-    m_IncomingQueue.push(task);
-    m_IncomingQueueSync.notify_all();
 }
 //-----------------------------------------------------------------------
 void HttpTaskLoop::setTimeoutForConnect(size_t value)

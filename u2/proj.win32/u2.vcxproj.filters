@@ -336,6 +336,21 @@
     <ClCompile Include="..\engine\src\core\U2TNedObjectManager.cpp">
       <Filter>engine\src\core</Filter>
     </ClCompile>
+    <ClCompile Include="..\engine\src\core\U2DataPool.cpp">
+      <Filter>engine\src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\U2HttpClientImpl.cpp">
+      <Filter>engine\src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\U2HttpDownloadClient.cpp">
+      <Filter>engine\src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\U2HttpDownloadClient2.cpp">
+      <Filter>engine\src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\U2HttpDownloadClient3.cpp">
+      <Filter>engine\src\core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -678,6 +693,21 @@
       <Filter>engine\include\core</Filter>
     </ClInclude>
     <ClInclude Include="..\engine\include\core\U2TNedObjectManager.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2DataPool.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2HttpClientImpl.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2HttpDownloadClient.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2HttpDownloadClient2.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2HttpDownloadClient3.h">
       <Filter>engine\include\core</Filter>
     </ClInclude>
   </ItemGroup>

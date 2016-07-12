@@ -31,6 +31,7 @@ public:
 public:
     HttpRequest(const String& type, const String& name)
 		: Task(type, name)
+        , m_nRetry(3)
 	{}
 	virtual ~HttpRequest() {};
 
@@ -44,6 +45,9 @@ public:
 
 	void setHttpType(const HttpRequest::Type& type) { m_eType = type; };
 	const HttpRequest::Type getHttpType() const { return m_eType; };
+
+    void setRetry(size_t retry) { m_nRetry = retry; };
+    size_t getRetry() const { return m_nRetry; };
 
 	/** Set custom-defined headers.
 	@param pHeaders the string vector of custom-defined headers.
@@ -77,6 +81,7 @@ public:
 protected:
 	String		m_szUrl;
 	Type		m_eType;
+    size_t      m_nRetry;
 	vector<String>::type	m_Headers;
     vector<u2char>::type	m_Data;
 };
@@ -242,21 +247,12 @@ public:
 protected:
     virtual void postTaskAndReply(Task* task, Task* reply) override;
 
-    void _runInternal();
+    virtual void _runInternal() = 0;
 
-    void _addToIncomingQueue(Task* task);
+    virtual void _addToIncomingQueue(Task* task) = 0;
 
 protected:
     std::thread     m_thread;
-
-    // Protect access to m_IncomingQueue.
-    U2_MUTEX(m_mtxIncomingQueue);
-    U2_THREAD_SYNCHRONISER(m_IncomingQueueSync);
-    // A null terminated list which creates an incoming_queue of tasks that are
-    // acquired under a mutex for processing on this instance's thread. These
-    // tasks have not yet been sorted out into items for our work_queue_ vs items
-    // that will be handled by the TimerManager.
-    std::queue<Task*> m_IncomingQueue;
 
     // This flag is set to false when Run should return.
     bool m_bKeepRunning;

@@ -34,6 +34,7 @@
 // Thread objects and related functions
 #define U2_THREAD_TYPE              std::thread
 #define U2_THREAD_CURRENT_ID        std::this_thread::get_id()
+#define U2_THREAD_SLEEP(n)          std::this_thread::sleep_for(std::chrono::milliseconds(n))
 
 // Utility
 #define U2_THREAD_ID_TYPE           std::thread::id
