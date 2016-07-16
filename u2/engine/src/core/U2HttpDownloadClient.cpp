@@ -31,6 +31,17 @@ void HttpDownloadRequest::run()
 
 }
 //-----------------------------------------------------------------------
+void HttpDownloadRequest::setErrorBuffer(const char* value)
+{
+    m_szErrorBuffer.clear();
+    m_szErrorBuffer.assign(value);
+}
+//-----------------------------------------------------------------------
+const String& HttpDownloadRequest::getErrorBuffer() const
+{
+    return m_szErrorBuffer;
+}
+//-----------------------------------------------------------------------
 Chunk* HttpDownloadRequest::createChunk(u2uint64 start, u2uint64 end)
 {
     Chunk* pObj = dynamic_cast<Chunk*>(ObjectCollection::getSingleton().createObject(GET_OBJECT_TYPE(Chunk), BLANK));
@@ -115,11 +126,11 @@ void HttpDownloadRequest::_createStream()
 size_t HttpDownloadRequest::_writeStream(size_t start, size_t size, const u2byte* data)
 {
     U2_LOCK_MUTEX(m_OutMtx);
-    m_out->seek(start);
+    fseek(m_pFileHandle, static_cast<long>(start), SEEK_SET);
     size_t uWriteCount = 0;
     while (uWriteCount < size)
     {
-        uWriteCount += m_out->write(data + uWriteCount, size - uWriteCount);
+        uWriteCount += fwrite(data + uWriteCount, 1, size - uWriteCount, m_pFileHandle);
     }
     return uWriteCount;
 }
@@ -178,7 +189,7 @@ const String& Chunk::getUrl() const
     {
         assert(0);
     }
-    m_pRequest->getUrl();
+    return m_pRequest->getUrl();
 }
 //-----------------------------------------------------------------------
 size_t Chunk::getRetry() const
@@ -187,7 +198,7 @@ size_t Chunk::getRetry() const
     {
         assert(0);
     }
-    m_pRequest->getRetry();
+    return m_pRequest->getRetry();
 }
 //-----------------------------------------------------------------------
 void Chunk::setResultCode(long value)
@@ -592,12 +603,12 @@ u2uint64 HttpDownloadTaskLoop::_getFileLength(HttpDownloadRequest* request, Stri
             else
             {
                 const char* err_string = curl_easy_strerror(curl_code);
-                request.setErrorBuffer(err_string);
+                request->setErrorBuffer(err_string);
             }
 
             curl_easy_cleanup(handle);
         }
-        return 0L;
+        return dFileLength;
     }
 }
 //-----------------------------------------------------------------------

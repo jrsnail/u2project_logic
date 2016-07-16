@@ -13,7 +13,6 @@ U2EG_NAMESPACE_BEGIN
 
 
 class Chunk;
-class OutStream;
 
 class _U2Export HttpDownloadRequest : public Task
 {
@@ -54,6 +53,9 @@ public:
     void setTotalFileLength(u2uint64 len) { m_ulTotalFileLen = len; };
     u2uint64 getTotalFileLength() { return m_ulTotalFileLen; };
 
+    inline void setErrorBuffer(const char* value);
+    inline const String& getErrorBuffer() const;
+
     void setChunked(bool chunked);
     bool isChunked() const;
 
@@ -75,6 +77,7 @@ protected:
     size_t      m_nExpectedChunkCount;
     vector<String>::type	m_Headers;
     u2uint64    m_ulTotalFileLen;
+    String      m_szErrorBuffer;
 
     U2_MUTEX(m_ChunksMtx);
     typedef map<String, Chunk*>::type ChunkMap;
@@ -82,7 +85,7 @@ protected:
     bool        m_bChunked;
 
     U2_MUTEX(m_OutMtx);
-    OutStream*  m_out;
+    FILE*       m_pFileHandle;
 };
 
 
