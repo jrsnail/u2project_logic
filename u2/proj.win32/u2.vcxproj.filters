@@ -324,9 +324,6 @@
     <ClCompile Include="..\engine\src\core\U2Task.cpp">
       <Filter>engine\src\core</Filter>
     </ClCompile>
-    <ClCompile Include="..\engine\src\core\U2HttpClient2.cpp">
-      <Filter>engine\src\core</Filter>
-    </ClCompile>
     <ClCompile Include="..\engine\src\core\U2TaskLoop.cpp">
       <Filter>engine\src\core</Filter>
     </ClCompile>
@@ -342,7 +339,10 @@
     <ClCompile Include="..\engine\src\core\U2HttpClientImpl.cpp">
       <Filter>engine\src\core</Filter>
     </ClCompile>
-    <ClCompile Include="..\engine\src\core\U2HttpDownloadClient3.cpp">
+    <ClCompile Include="..\engine\src\core\U2HttpClient.cpp">
+      <Filter>engine\src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\U2HttpDownloadClient.cpp">
       <Filter>engine\src\core</Filter>
     </ClCompile>
   </ItemGroup>
@@ -680,9 +680,6 @@
     <ClInclude Include="..\engine\include\core\U2Task.h">
       <Filter>engine\include\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\engine\include\core\U2HttpClient2.h">
-      <Filter>engine\include\core</Filter>
-    </ClInclude>
     <ClInclude Include="..\engine\include\core\U2TaskLoop.h">
       <Filter>engine\include\core</Filter>
     </ClInclude>
@@ -695,7 +692,10 @@
     <ClInclude Include="..\engine\include\core\U2HttpClientImpl.h">
       <Filter>engine\include\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\engine\include\core\U2HttpDownloadClient3.h">
+    <ClInclude Include="..\engine\include\core\U2HttpClient.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2HttpDownloadClient.h">
       <Filter>engine\include\core</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,4 +1,4 @@
-﻿#include "U2HttpClient2.h"
+﻿#include "U2HttpClient.h"
 
 #include <curl/curl.h>
 #include "U2LogManager.h"

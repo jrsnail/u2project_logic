@@ -1,5 +1,5 @@
-﻿#ifndef __U2HttpClient2_H__
-#define __U2HttpClient2_H__
+﻿#ifndef __U2HttpClient_H__
+#define __U2HttpClient_H__
 
 #include "U2Prerequisites.h"
 #include "U2STLRedefined.h"

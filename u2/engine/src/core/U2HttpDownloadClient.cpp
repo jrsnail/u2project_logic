@@ -1,4 +1,4 @@
-﻿#include "U2HttpDownloadClient3.h"
+﻿#include "U2HttpDownloadClient.h"
 
 #include <curl/curl.h>
 #include <regex>

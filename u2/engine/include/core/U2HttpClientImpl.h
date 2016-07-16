@@ -4,7 +4,7 @@
 #include "U2Prerequisites.h"
 #include "U2STLRedefined.h"
 #include "threading/U2ThreadHeaders.h"
-#include "U2HttpClient2.h"
+#include "U2HttpClient.h"
 #include "U2HeaderPrefix.h"
 
 

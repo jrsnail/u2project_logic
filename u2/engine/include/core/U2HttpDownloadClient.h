@@ -1,5 +1,5 @@
-﻿#ifndef __U2HttpDownloadClient3_H__
-#define __U2HttpDownloadClient3_H__
+﻿#ifndef __U2HttpDownloadClient_H__
+#define __U2HttpDownloadClient_H__
 
 #include "U2Prerequisites.h"
 #include "U2STLRedefined.h"

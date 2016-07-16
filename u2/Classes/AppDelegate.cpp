@@ -30,7 +30,6 @@
 #if U2_PLATFORM == U2_PLATFORM_APPLE
 #	include "macUtils.h"
 #endif
-#include "U2HttpClient2.h"
 
 
 
