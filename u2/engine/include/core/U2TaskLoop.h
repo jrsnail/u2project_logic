@@ -30,7 +30,9 @@ public:
     {
     public:
         virtual void postRunCurrentTaskLoop(TaskLoop* loop) = 0;
-        virtual void postQuitCurrentTaskLoop(TaskLoop* loop) = 0;
+        virtual void preQuitCurrentTaskLoop(TaskLoop* loop) = 0;
+        virtual void prePauseCurrentTaskLoop(TaskLoop* loop) = 0;
+        virtual void postResumeCurrentTaskLoop(TaskLoop* loop) = 0;
         virtual void preDestroyCurrentTaskLoop(TaskLoop* loop) = 0;
 
     protected:
@@ -147,6 +149,10 @@ public:
     // run loop you are quitting, so be careful!
     virtual void quit();
 
+    virtual void pause();
+
+    virtual void resume();
+
     virtual String getThreadId() = 0;
 
 protected:
@@ -179,7 +185,9 @@ public:
     static TaskLoop* current();
 
     virtual void postRunCurrentTaskLoop(TaskLoop* loop) override;
-    virtual void postQuitCurrentTaskLoop(TaskLoop* loop) override;
+    virtual void preQuitCurrentTaskLoop(TaskLoop* loop) override;
+    virtual void prePauseCurrentTaskLoop(TaskLoop* loop) override;
+    virtual void postResumeCurrentTaskLoop(TaskLoop* loop) override;
     virtual void preDestroyCurrentTaskLoop(TaskLoop* loop) override;
 
 public:

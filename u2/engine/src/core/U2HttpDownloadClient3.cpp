@@ -41,6 +41,7 @@ Chunk* HttpDownloadRequest::createChunk(u2uint64 start, u2uint64 end)
     else
     {
         pObj->initialize(this, start, end);
+        U2_LOCK_MUTEX(m_ChunksMtx);
         m_ChunkMap[pObj->getGuid()] = pObj;
     }
     return pObj;
@@ -48,6 +49,7 @@ Chunk* HttpDownloadRequest::createChunk(u2uint64 start, u2uint64 end)
 //-----------------------------------------------------------------------
 Chunk* HttpDownloadRequest::retrieveChunk(const String& guid)
 {
+    U2_LOCK_MUTEX(m_ChunksMtx);
     ChunkMap::iterator it = m_ChunkMap.find(guid);
     if (it == m_ChunkMap.end())
     {
@@ -62,6 +64,7 @@ Chunk* HttpDownloadRequest::retrieveChunk(const String& guid)
 //-----------------------------------------------------------------------
 void HttpDownloadRequest::destroyChunk(const String& guid)
 {
+    U2_LOCK_MUTEX(m_ChunksMtx);
     ChunkMap::iterator it = m_ChunkMap.find(guid);
     if (it == m_ChunkMap.end())
     {
@@ -76,6 +79,7 @@ void HttpDownloadRequest::destroyChunk(const String& guid)
 //-----------------------------------------------------------------------
 Chunk* HttpDownloadRequest::retrieveNextWaitingChunk()
 {
+    U2_LOCK_MUTEX(m_ChunksMtx);
     for (ChunkMap::iterator it = m_ChunkMap.begin(); 
         it != m_ChunkMap.end(); it++)
     {
@@ -97,13 +101,39 @@ bool HttpDownloadRequest::isChunked() const
     return m_bChunked;
 }
 //-----------------------------------------------------------------------
+void HttpDownloadRequest::_createStream()
+{
+    U2_LOCK_MUTEX(m_OutMtx);
+
+    // check file existed
+
+    // if not, then create it and fill with 0
+
+    // if existed, 
+}
+//-----------------------------------------------------------------------
+size_t HttpDownloadRequest::_writeStream(size_t start, size_t size, const u2byte* data)
+{
+    U2_LOCK_MUTEX(m_OutMtx);
+    m_out->seek(start);
+    size_t uWriteCount = 0;
+    while (uWriteCount < size)
+    {
+        uWriteCount += m_out->write(data + uWriteCount, size - uWriteCount);
+    }
+    return uWriteCount;
+}
+//-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
 Chunk::Chunk(const String& type, const String& name)
     : Object(type, name)
     , m_ulStart(0L)
     , m_ulEnd(0L)
+    , m_ulTotal(0L)
+    , m_ulDownloaded(0L)
     , m_pRequest(nullptr)
     , m_eDownloadState(HDPS_Unkown)
+    , m_lResultCode(0)
 {
 
 }
@@ -118,6 +148,92 @@ void Chunk::initialize(HttpDownloadRequest* request, u2uint64 start, u2uint64 en
     m_pRequest = request;
     m_ulStart = start;
     m_ulEnd = end;
+    m_ulTotal = m_ulEnd - m_ulStart;
+    m_ulDownloaded = 0;
+}
+//-----------------------------------------------------------------------
+u2uint64 Chunk::getStart() const
+{
+    return m_ulStart;
+}
+//-----------------------------------------------------------------------
+u2uint64 Chunk::getEnd() const
+{
+    return m_ulEnd;
+}
+//-----------------------------------------------------------------------
+u2uint64 Chunk::getTotal() const
+{
+    return m_ulTotal;
+}
+//-----------------------------------------------------------------------
+u2uint64 Chunk::getDownloaded() const
+{
+    return m_ulDownloaded;
+}
+//-----------------------------------------------------------------------
+const String& Chunk::getUrl() const
+{
+    if (m_pRequest == nullptr)
+    {
+        assert(0);
+    }
+    m_pRequest->getUrl();
+}
+//-----------------------------------------------------------------------
+size_t Chunk::getRetry() const
+{
+    if (m_pRequest == nullptr)
+    {
+        assert(0);
+    }
+    m_pRequest->getRetry();
+}
+//-----------------------------------------------------------------------
+void Chunk::setResultCode(long value)
+{
+    m_lResultCode = value;
+}
+//-----------------------------------------------------------------------
+long Chunk::getResultCode() const
+{
+    return m_lResultCode;
+}
+//-----------------------------------------------------------------------
+void Chunk::setErrorBuffer(const char* value)
+{
+    m_szErrorBuffer.clear();
+    m_szErrorBuffer.assign(value);
+}
+//-----------------------------------------------------------------------
+const String& Chunk::getErrorBuffer() const
+{
+    return m_szErrorBuffer;
+}
+//-----------------------------------------------------------------------
+void Chunk::_createStream()
+{
+    if (m_pRequest == nullptr)
+    {
+        assert(0);
+    }
+    m_pRequest->_createStream();
+}
+//-----------------------------------------------------------------------
+size_t Chunk::_writeStream(const u2byte* data, size_t size)
+{
+    if (m_pRequest == nullptr)
+    {
+        assert(0);
+    }
+    if (m_ulStart + size > m_ulEnd)
+    {
+        assert(0);
+    }
+    size_t uWritten = m_pRequest->_writeStream(m_ulStart, size, data);
+    m_ulStart += uWritten;
+    m_ulDownloaded += uWritten;
+    return uWritten;
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
@@ -145,62 +261,22 @@ static size_t receiveBodyFunction(char *ptr, size_t size, size_t nmemb, void *st
 //-----------------------------------------------------------------------
 static size_t downloadCallback(char *ptr, size_t size, size_t nmemb, void *userdata)
 {
-    HttpDownloadRequest::HttpDownloadResponse::Chunk* chunk = reinterpret_cast<HttpDownloadRequest::HttpDownloadResponse::Chunk*>(userdata);
-    HttpDownloadRequest::HttpDownloadResponse& response = chunk->request->response();
-
-    if (response.isCanceled())
-    {
-        return 0;
-    }
-
-    U2_LOCK_MUTEX(response.m_DownloadMutex);
-
-    size_t written = 0;
-    size_t real_size = size * nmemb;
-    if (chunk->end > 0)
-    {
-        if (chunk->start <= chunk->end)
-        {
-            if (chunk->start + real_size > chunk->end)
-            {
-                real_size = chunk->end - chunk->start + 1;
-            }
-        }
-    }
-
-    int seek_error = fseek(response.fp, chunk->start, SEEK_SET);
-    if (seek_error != 0)
-    {
-        perror("fseek");
-    }
-    else
-    {
-        written = fwrite(ptr, 1, real_size, response.fp);
-    }
-    response.appendDownloadLength(written);
-    chunk->start += written;
-
-    return written;
+    Chunk* chunk = reinterpret_cast<Chunk*>(userdata);
+    return chunk->_writeStream((const u2byte*)ptr, size * nmemb);
 }
 //-----------------------------------------------------------------------
 static int progressCallback(void *clientp, curl_off_t dltotal, curl_off_t dlnow, curl_off_t ultotal, curl_off_t ulnow)
 {
-    HttpDownloader::DownloadHelper::ThreadChunk* thread_chunk = reinterpret_cast<HttpDownloader::DownloadHelper::ThreadChunk*>(clientp);
+    Chunk* thread_chunk = reinterpret_cast<Chunk*>(clientp);
 
-    DoHttpLock http_lock(thread_chunk->_download->m_httplock);
-
-    double total_size = thread_chunk->_download->m_total_size;
-    double downloaded_size = thread_chunk->_download->m_downloaded_size;
-    void* userdata = thread_chunk->_download->m_userdata;
-    int callback_result = thread_chunk->_download->m_download_callback(total_size, downloaded_size, userdata);
-
-    return callback_result;
+    return 0;
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
 HttpDownloadTaskLoop::HttpDownloadTaskLoop(const String& type, const String& name)
     : TaskLoop(type, name)
     , m_bKeepRunning(true)
+    , m_bPausing(false)
     , m_uTimeoutForConnect(30)
     , m_uTimeoutForRead(60)
     , m_uTotalThreadCount(1)
@@ -224,6 +300,9 @@ void HttpDownloadTaskLoop::postTaskAndReply(Task* task, Task* reply)
 //-----------------------------------------------------------------------
 void HttpDownloadTaskLoop::run()
 {
+    U2_LOCK_MUTEX(m_KeepRunningMutex);
+    m_bKeepRunning = true;
+
     for (size_t i = 0; i < m_uTotalThreadCount; i++)
     {
         std::thread t = std::move(std::thread(std::bind(&HttpDownloadTaskLoop::_runInternal, this)));
@@ -236,9 +315,24 @@ void HttpDownloadTaskLoop::run()
 //-----------------------------------------------------------------------
 void HttpDownloadTaskLoop::quit()
 {
+    U2_LOCK_MUTEX(m_KeepRunningMutex);
     m_bKeepRunning = false;
 
     TaskLoop::quit();
+}
+//-----------------------------------------------------------------------
+void HttpDownloadTaskLoop::pause()
+{
+    U2_LOCK_MUTEX(m_PausingMutex);
+    m_bPausing = true;
+    TaskLoop::pause();
+}
+//-----------------------------------------------------------------------
+void HttpDownloadTaskLoop::resume()
+{
+    U2_LOCK_MUTEX(m_PausingMutex);
+    m_bPausing = false;
+    TaskLoop::resume();
 }
 //-----------------------------------------------------------------------
 String HttpDownloadTaskLoop::getThreadId()
@@ -331,29 +425,37 @@ void HttpDownloadTaskLoop::_addToIncomingQueue(Task* task)
 {
     U2_LOCK_MUTEX(m_mtxIncomingQueue);
     m_IncomingQueue.push_back(task);
-    m_ChunksSync.notify_all();
 }
 //-----------------------------------------------------------------------
 void HttpDownloadTaskLoop::_runInternal()
 {
-    m_bKeepRunning = true;
-
     for (;;)
     {
-        U2_LOCK_MUTEX(m_ChunksMutex);
+        {
+            U2_LOCK_MUTEX(m_KeepRunningMutex);
+            if (!m_bKeepRunning)
+                break;
+        }
+
+        {
+            U2_LOCK_MUTEX(m_PausingMutex);
+            if (m_bPausing)
+            {
+                U2_THREAD_SLEEP(1000);
+                continue;
+            }
+        }
+
         Chunk* pChunk = _getNextWaitingChunk();
         if (pChunk == nullptr)
         {
-            U2_THREAD_WAIT(m_ChunksSync, lck);
+            U2_THREAD_SLEEP(1000);
             continue;
         }
         else
         {
-            
+            _doDownloadChunk(pChunk);
         }
-
-        if (!m_bKeepRunning)
-            break;
     }
 }
 //-----------------------------------------------------------------------
@@ -362,33 +464,35 @@ Chunk* HttpDownloadTaskLoop::_getNextWaitingChunk()
     HttpDownloadRequest* request = nullptr;
 
     // find first waiting chunk/request
-    U2_LOCK_MUTEX(m_mtxIncomingQueue);
-    for (list<Task*>::iterator it = m_IncomingQueue.begin(); it != m_IncomingQueue.end(); it++)
     {
-        HttpDownloadRequest* req = dynamic_cast<HttpDownloadRequest*>(*it);
-        if (req != nullptr)
+        U2_LOCK_MUTEX(m_mtxIncomingQueue);
+        for (list<Task*>::iterator it = m_IncomingQueue.begin(); it != m_IncomingQueue.end(); it++)
         {
-            if (req->isChunked())
+            HttpDownloadRequest* req = dynamic_cast<HttpDownloadRequest*>(*it);
+            if (req != nullptr)
             {
-                Chunk* pChunk = req->retrieveNextWaitingChunk();
-                if (pChunk == nullptr)
+                if (req->isChunked())
                 {
-                    continue;
+                    Chunk* pChunk = req->retrieveNextWaitingChunk();
+                    if (pChunk == nullptr)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        return pChunk;
+                    }
                 }
                 else
                 {
-                    return pChunk;
+                    request = req;
+                    break;
                 }
             }
             else
             {
-                request = req;
-                break;
+                assert(0);
             }
-        }
-        else
-        {
-            assert(0);
         }
     }
 
@@ -397,6 +501,12 @@ Chunk* HttpDownloadTaskLoop::_getNextWaitingChunk()
         // get file total length
         String szRespHeader;
         u2uint64 ulTotalLen = _getFileLength(request, szRespHeader);
+        if (ulTotalLen < 0)
+        {
+            assert(0);
+            return nullptr;
+        }
+        request->setTotalFileLength(ulTotalLen);
 
         // if match "Content-Range: bytes 2-1449/26620", means server support multi thread download
         std::regex pattern("CONTENT-RANGE\\s*:\\s*\\w+\\s*(\\d+)-(\\d*)/(\\d+)", std::regex::icase);
@@ -435,143 +545,14 @@ Chunk* HttpDownloadTaskLoop::_getNextWaitingChunk()
 //-----------------------------------------------------------------------
 u2uint64 HttpDownloadTaskLoop::_getFileLength(HttpDownloadRequest* request, String& header)
 {
-    return 0L;
-}
-//-----------------------------------------------------------------------
-void HttpDownloadTaskLoop::processTask(HttpDownloadRequest* request, char* responseMessage)
-{
-    HttpDownloadRequest::HttpDownloadResponse& response = request->response();
-
-    double dTotalSize = _getDownloadFileSize(request);
-    if (dTotalSize < 0.0)
-    {
-        assert(0);
-        return;
-    }
-
-    std::string out_file_name = m_file_path;
-    std::string src_file_name = out_file_name;
-    out_file_name += ".dl";
-
-    FILE *fp = nullptr;
-#ifdef _WIN32
-    DeleteFileA(out_file_name.c_str());
-    fopen_s(&fp, out_file_name.c_str(), "wb");
-#else
-    unlink(out_file_name.c_str());
-    fp = fopen(out_file_name.c_str(), "wb");
-#endif
-    if (!fp)
-    {
-        return HttpRequest::REQUEST_OPENFILE_ERROR;
-    }
-
-    int down_code = HttpRequest::REQUEST_PERFORM_ERROR;
-
-    size_t uCaledCount = _splitDownloadChunks(dTotalSize);
-    size_t uExpectedCount = request->getExpectedChunkCount();
-    size_t uActualChunkCount = uCaledCount > uExpectedCount ? uExpectedCount : uCaledCount;
-    
-    // if multi thread download
-    if (response.isSupportMultiChunk() && uActualChunkCount > 1)
-    {
-        long gap = static_cast<long>(dTotalSize) / uActualChunkCount;
-#ifdef _WIN32
-        std::vector<HANDLE> threads;
-#else
-        std::vector<pthread_t> threads;
-#endif
-
-        for (size_t i = 0; i < uActualChunkCount; i++)
-        {
-            ThreadChunk* thread_chunk = new ThreadChunk;
-            thread_chunk->_fp = fp;
-            thread_chunk->_download = this;
-
-            if (i < uActualChunkCount - 1)
-            {
-                thread_chunk->_startidx = i * gap;
-                thread_chunk->_endidx = thread_chunk->_startidx + gap - 1;
-            }
-            else
-            {
-                thread_chunk->_startidx = i * gap;
-                thread_chunk->_endidx = -1;
-            }
-
-#ifdef _WIN32
-            DWORD thread_id;
-            HANDLE hThread = CreateThread(NULL, 0, HttpHelper::DownloadWork, thread_chunk, 0, &(thread_id));
-#else
-            pthread_t hThread;
-            pthread_create(&hThread, NULL, HttpHelper::DownloadWork, thread_chunk);
-#endif
-            threads.push_back(hThread);
-        }
-
-#ifdef _WIN32
-        WaitForMultipleObjects(threads.size(), &threads[0], TRUE, INFINITE);
-        for (HANDLE handle : threads)
-        {
-            CloseHandle(handle);
-        }
-#else
-        for (pthread_t thread : threads)
-        {
-            pthread_join(thread, NULL);
-        }
-#endif
-    }
-    else
-    {
-        ThreadChunk* thread_chunk = new ThreadChunk;
-        thread_chunk->_fp = fp;
-        thread_chunk->_download = this;
-        thread_chunk->_startidx = 0;
-        thread_chunk->_endidx = 0;
-        down_code = DoDownload(thread_chunk);
-    }
-
-    fclose(fp);
-
-    if (m_download_fail == false)
-    {
-#ifdef _WIN32
-        MoveFileExA(out_file_name.c_str(), src_file_name.c_str(), MOVEFILE_REPLACE_EXISTING);
-#else
-        unlink(src_file_name.c_str());
-        rename(out_file_name.c_str(), src_file_name.c_str());
-#endif
-    }
-    else
-    {
-#ifdef _WIN32
-        DeleteFileA(out_file_name.c_str());
-#else
-        unlink(out_file_name.c_str());
-#endif
-    }
-
-    m_result_callback(m_id, m_download_fail ? false : true, m_error_string);
-
-    m_is_running = false;
-
-    return down_code;
-}
-//-----------------------------------------------------------------------
-double HttpDownloadTaskLoop::_getDownloadFileSize(HttpDownloadRequest* request)
-{
-    HttpDownloadRequest::HttpDownloadResponse& response = request->response();
     if (request->getUrl().empty())
     {
-        return -1.0;
+        return -1.0L;
     }
     else
     {
         double dFileLength = -1.0;
         CURL *handle = curl_easy_init();
-        HttpHelper::set_share_handle(handle);
-
         if (handle)
         {
             std::string     szReceiveHeader;
@@ -607,36 +588,24 @@ double HttpDownloadTaskLoop::_getDownloadFileSize(HttpDownloadRequest* request)
             if (curl_code == CURLE_OK)
             {
                 curl_easy_getinfo(handle, CURLINFO_CONTENT_LENGTH_DOWNLOAD, &dFileLength);
-                response.setFileLength(dFileLength);
-
-                // if match "Content-Range: bytes 2-1449/26620", means server support multi thread download
-                std::regex pattern("CONTENT-RANGE\\s*:\\s*\\w+\\s*(\\d+)-(\\d*)/(\\d+)", std::regex::icase);
-                bool bSupport = std::regex_search(szReceiveHeader, pattern);
-                response.setSupportMultiChunk(bSupport);
             }
             else
             {
                 const char* err_string = curl_easy_strerror(curl_code);
-                response.setErrorBuffer(err_string);
+                request.setErrorBuffer(err_string);
             }
 
             curl_easy_cleanup(handle);
         }
-
-        return dFileLength;
+        return 0L;
     }
 }
 //-----------------------------------------------------------------------
-int HttpDownloadTaskLoop::_doDownload(HttpDownloadRequest::HttpDownloadResponse::Chunk* chunk)
+int HttpDownloadTaskLoop::_doDownloadChunk(Chunk* chunk)
 {
-    HttpDownloadRequest* request = chunk->request;
-    HttpDownloadRequest::HttpDownloadResponse& response = request->response();
-
     CURL* curl_handle = curl_easy_init();
-    HttpHelper::set_share_handle(curl_handle);
 
-    
-    if (request->getUrl().substr(0, 5) == "https")
+    if (chunk->getUrl().substr(0, 5) == "https")
     {
         std::string sslCaFilename = getSSLVerification();
         if (sslCaFilename.empty())
@@ -652,10 +621,10 @@ int HttpDownloadTaskLoop::_doDownload(HttpDownloadRequest::HttpDownloadResponse:
         }
     }
 
-    curl_easy_setopt(curl_handle, CURLOPT_URL, request->getUrl().c_str());
+    curl_easy_setopt(curl_handle, CURLOPT_URL, chunk->getUrl().c_str());
 
-//     const char* user_agent = ("Mozilla/5.0 (Windows NT 5.1; rv:5.0) Gecko/20100101 Firefox/5.0");
-//     curl_easy_setopt(curl_handle, CURLOPT_USERAGENT, user_agent);
+    //     const char* user_agent = ("Mozilla/5.0 (Windows NT 5.1; rv:5.0) Gecko/20100101 Firefox/5.0");
+    //     curl_easy_setopt(curl_handle, CURLOPT_USERAGENT, user_agent);
 
     curl_easy_setopt(curl_handle, CURLOPT_MAXREDIRS, 5L);
     curl_easy_setopt(curl_handle, CURLOPT_FOLLOWLOCATION, 1L);
@@ -678,16 +647,16 @@ int HttpDownloadTaskLoop::_doDownload(HttpDownloadRequest::HttpDownloadResponse:
     curl_easy_setopt(curl_handle, CURLOPT_LOW_SPEED_LIMIT, 1L);
     curl_easy_setopt(curl_handle, CURLOPT_LOW_SPEED_TIME, 5L);
 
-    if (chunk->end != 0)
+    if (chunk->getEnd() != 0)
     {
         StringStream ss;
-        if (chunk->end > 0)
+        if (chunk->getEnd() > 0)
         {
-            ss << chunk->start << "-" << chunk->end;
+            ss << chunk->getStart() << "-" << chunk->getEnd();
         }
         else
         {
-            ss << chunk->start << "-";
+            ss << chunk->getStart() << "-";
         }
 
         curl_easy_setopt(curl_handle, CURLOPT_RANGE, ss.str().c_str());
@@ -696,7 +665,7 @@ int HttpDownloadTaskLoop::_doDownload(HttpDownloadRequest::HttpDownloadResponse:
     CURLcode curl_code = curl_easy_perform(curl_handle);
     if (curl_code == CURLE_OPERATION_TIMEDOUT)
     {
-        size_t uRetryCount = request->getRetry();
+        size_t uRetryCount = chunk->getRetry();
         while (uRetryCount > 0)
         {
             curl_code = curl_easy_perform(curl_handle);
@@ -709,27 +678,18 @@ int HttpDownloadTaskLoop::_doDownload(HttpDownloadRequest::HttpDownloadResponse:
     curl_easy_getinfo(curl_handle, CURLINFO_RESPONSE_CODE, &lResultCode);
     if (curl_code == CURLE_OK && (lResultCode >= 200 && lResultCode <= 300))
     {
-        if (response.getResultCode() == 0)
-        {
-            response.setResultCode(lResultCode);
-        }
-        thread_chunk->_download->m_download_fail = false;
+        chunk->setResultCode(lResultCode);
+        chunk->setDownloadState(Chunk::HDPS_Download_Succeed);
     }
     else
     {
         const char* err_string = curl_easy_strerror(curl_code);
-        response.setErrorBuffer(err_string);
-        thread_chunk->_download->m_download_fail = true;
-        if (response.getResultCode() == 0 
-            || (response.getResultCode() >= 200 && response.getResultCode() <= 300))
-        {
-            response.setResultCode(lResultCode);
-        }
+        chunk->setErrorBuffer(err_string);
+        chunk->setDownloadState(Chunk::HDPS_Download_Fail);
+        chunk->setResultCode(lResultCode);
     }
 
     curl_easy_cleanup(curl_handle);
-
-    delete thread_chunk;
 
     return curl_code;
 }
@@ -760,3 +720,13 @@ size_t HttpDownloadTaskLoop::_splitDownloadChunks(u2uint64 totalSize)
 
     return 1;
 }
+
+
+/*
+#ifdef _WIN32
+MoveFileExA(out_file_name.c_str(), src_file_name.c_str(), MOVEFILE_REPLACE_EXISTING);
+#else
+unlink(src_file_name.c_str());
+rename(out_file_name.c_str(), src_file_name.c_str());
+#endif
+*/

@@ -7,54 +7,6 @@ U2EG_NAMESPACE_USING
 
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-PassiveHttpTaskLoop::PassiveHttpTaskLoop(const String& type, const String& name)
-    : HttpTaskLoop(type, name)
-{
-}
-//-----------------------------------------------------------------------
-PassiveHttpTaskLoop::~PassiveHttpTaskLoop()
-{
-}
-//-----------------------------------------------------------------------
-void PassiveHttpTaskLoop::_runInternal()
-{
-    m_bKeepRunning = true;
-
-    for (;;)
-    {
-        Task* pTask = nullptr;
-        {
-            U2_LOCK_MUTEX(m_mtxIncomingQueue);
-            pTask = m_IncomingQueue.front();
-            if (pTask == nullptr)
-            {
-                U2_THREAD_WAIT(m_IncomingQueueSync, lck);
-                continue;
-            }
-            else
-            {
-                m_IncomingQueue.pop();
-            }
-        }
-
-        if (pTask != nullptr)
-        {
-            _runTask(pTask);
-        }
-
-        if (!m_bKeepRunning)
-            break;
-    }
-}
-//---------------------------------------------------------------------
-void PassiveHttpTaskLoop::_addToIncomingQueue(Task* task)
-{
-    U2_LOCK_MUTEX(m_mtxIncomingQueue);
-    m_IncomingQueue.push(task);
-    m_IncomingQueueSync.notify_all();
-}
-//-----------------------------------------------------------------------
-//-----------------------------------------------------------------------
 ActiveHttpTaskLoop::ActiveHttpTaskLoop(const String& type, const String& name)
     : HttpTaskLoop(type, name)
 {
@@ -66,15 +18,30 @@ ActiveHttpTaskLoop::~ActiveHttpTaskLoop()
 //-----------------------------------------------------------------------
 void ActiveHttpTaskLoop::_runInternal()
 {
-    m_bKeepRunning = true;
-
-    
     for (;;)
     {
+        {
+            U2_LOCK_MUTEX(m_KeepRunningMutex);
+            if (!m_bKeepRunning)
+                break;
+        }
+
+        {
+            U2_LOCK_MUTEX(m_PausingMutex);
+            if (m_bPausing)
+            {
+                U2_THREAD_SLEEP(1000);
+                continue;
+            }
+        }
+
         if (m_WorkingQueue.empty())
         {
-            U2_LOCK_MUTEX(m_mtxIncomingQueue);
-            bool bEmpty = m_IncomingQueue.empty();
+            bool bEmpty = true;
+            {
+                U2_LOCK_MUTEX(m_mtxIncomingQueue);
+                bEmpty = m_IncomingQueue.empty();
+            }
             if (bEmpty)
             {
                 U2_THREAD_SLEEP(1000);
@@ -83,14 +50,29 @@ void ActiveHttpTaskLoop::_runInternal()
             {
                 while (!m_IncomingQueue.empty())
                 {
-                    m_WorkingQueue.push(m_IncomingQueue.front());
-                    m_IncomingQueue.pop();
+                    m_WorkingQueue.push_back(m_IncomingQueue.front());
+                    m_IncomingQueue.pop_front();
                 }
             }
         }
 
         while (!m_WorkingQueue.empty())
         {
+            {
+                U2_LOCK_MUTEX(m_KeepRunningMutex);
+                if (!m_bKeepRunning)
+                    break;
+            }
+
+            {
+                U2_LOCK_MUTEX(m_PausingMutex);
+                if (m_bPausing)
+                {
+                    U2_THREAD_SLEEP(1000);
+                    continue;
+                }
+            }
+
             Task* pTask = m_WorkingQueue.front();
             if (pTask == nullptr)
             {
@@ -100,19 +82,13 @@ void ActiveHttpTaskLoop::_runInternal()
             {
                 _runTask(pTask);
             }
-            m_WorkingQueue.pop();
-
-            if (!m_bKeepRunning)
-                break;
+            m_WorkingQueue.pop_front();
         }
-        
-        if (!m_bKeepRunning)
-            break;
     }
 }
 //---------------------------------------------------------------------
 void ActiveHttpTaskLoop::_addToIncomingQueue(Task* task)
 {
     U2_LOCK_MUTEX(m_mtxIncomingQueue);
-    m_IncomingQueue.push(task);
+    m_IncomingQueue.push_back(task);
 }

@@ -351,6 +351,7 @@ static int processDeleteTask(HttpTaskLoop* client, HttpRequest* request, write_c
 HttpTaskLoop::HttpTaskLoop(const String& type, const String& name)
     : TaskLoop(type, name)
     , m_bKeepRunning(true)
+    , m_bPausing(false)
     , m_uTimeoutForConnect(30)
     , m_uTimeoutForRead(60)
 {
@@ -372,6 +373,9 @@ void HttpTaskLoop::postTaskAndReply(Task* task, Task* reply)
 //-----------------------------------------------------------------------
 void HttpTaskLoop::run()
 {
+    U2_LOCK_MUTEX(m_KeepRunningMutex);
+    m_bKeepRunning = true;
+
     m_thread = std::move(std::thread(std::bind(&HttpTaskLoop::_runInternal, this)));
     m_thread.detach();
 
@@ -380,9 +384,24 @@ void HttpTaskLoop::run()
 //-----------------------------------------------------------------------
 void HttpTaskLoop::quit()
 {
+    U2_LOCK_MUTEX(m_KeepRunningMutex);
     m_bKeepRunning = false;
 
     TaskLoop::quit();
+}
+//-----------------------------------------------------------------------
+void HttpTaskLoop::pause()
+{
+    U2_LOCK_MUTEX(m_PausingMutex);
+    m_bPausing = true;
+    TaskLoop::pause();
+}
+//-----------------------------------------------------------------------
+void HttpTaskLoop::resume()
+{
+    U2_LOCK_MUTEX(m_PausingMutex);
+    m_bPausing = false;
+    TaskLoop::resume();
 }
 //-----------------------------------------------------------------------
 String HttpTaskLoop::getThreadId()

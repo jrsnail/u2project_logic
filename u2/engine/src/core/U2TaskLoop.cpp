@@ -103,7 +103,27 @@ void TaskLoop::quit()
     TaskLoopListenerList::iterator it = m_TaskLoopListeners.begin();
     while (it != m_TaskLoopListeners.end())
     {
-        (*it)->postQuitCurrentTaskLoop(this);
+        (*it)->preQuitCurrentTaskLoop(this);
+        it = m_TaskLoopListeners.begin();
+    }
+}
+//---------------------------------------------------------------------
+void TaskLoop::pause()
+{
+    TaskLoopListenerList::iterator it = m_TaskLoopListeners.begin();
+    while (it != m_TaskLoopListeners.end())
+    {
+        (*it)->prePauseCurrentTaskLoop(this);
+        it = m_TaskLoopListeners.begin();
+    }
+}
+//---------------------------------------------------------------------
+void TaskLoop::resume()
+{
+    TaskLoopListenerList::iterator it = m_TaskLoopListeners.begin();
+    while (it != m_TaskLoopListeners.end())
+    {
+        (*it)->postResumeCurrentTaskLoop(this);
         it = m_TaskLoopListeners.begin();
     }
 }
@@ -193,7 +213,7 @@ void MsgLoopManager::postRunCurrentTaskLoop(TaskLoop* loop)
     }
 }
 //---------------------------------------------------------------------
-void MsgLoopManager::postQuitCurrentTaskLoop(TaskLoop* loop)
+void MsgLoopManager::preQuitCurrentTaskLoop(TaskLoop* loop)
 {
     String szId = loop->getThreadId();
     TaskLoopMap::iterator it = ms_TaskLoops.find(szId);
@@ -205,6 +225,16 @@ void MsgLoopManager::postQuitCurrentTaskLoop(TaskLoop* loop)
     {
         ms_TaskLoops.erase(it);
     }
+}
+//---------------------------------------------------------------------
+void MsgLoopManager::prePauseCurrentTaskLoop(TaskLoop* loop)
+{
+
+}
+//---------------------------------------------------------------------
+void MsgLoopManager::postResumeCurrentTaskLoop(TaskLoop* loop)
+{
+
 }
 //---------------------------------------------------------------------
 void MsgLoopManager::preDestroyCurrentTaskLoop(TaskLoop* loop)
