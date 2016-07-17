@@ -25,6 +25,41 @@ public:
     DataPool(const String& type, const String& name = BLANK);
     virtual ~DataPool();
 
+    bool saveFloatData(const String& key, float value);
+    bool saveDoubleData(const String& key, double value);
+    bool saveRealData(const String& key, u2real value);
+    bool saveLongData(const String& key, long value);
+    bool saveStringData(const String& key, const String& value);
+    bool saveBoolData(const String& key, bool value);
+    bool saveInt8Data(const String& key, u2int8 value);
+    bool saveUint8Data(const String& key, u2uint8 value);
+    bool saveInt16Data(const String& key, u2int16 value);
+    bool saveUint16Data(const String& key, u2uint16 value);
+    bool saveInt32Data(const String& key, u2int32 value);
+    bool saveUint32Data(const String& key, u2uint32 value);
+    bool saveInt64Data(const String& key, u2int64 value);
+    bool saveUint64Data(const String& key, u2uint64 value);
+    
+    
+
+    bool loadFloatData(const String& key, float& value);
+    bool loadDoubleData(const String& key, double& value);
+    bool loadRealData(const String& key, u2real& value);
+    bool loadLongData(const String& key, long& value);
+    bool loadStringData(const String& key, String& value);
+    bool loadBoolData(const String& key, bool& value);
+    bool loadInt8Data(const String& key, u2int8& value);
+    bool loadUint8Data(const String& key, u2uint8& value);
+    bool loadInt16Data(const String& key, u2int16& value);
+    bool loadUint16Data(const String& key, u2uint16& value);
+    bool loadInt32Data(const String& key, u2int32& value);
+    bool loadUint32Data(const String& key, u2uint32& value);
+    bool loadInt64Data(const String& key, u2int64& value);
+    bool loadUint64Data(const String& key, u2uint64& value);
+    
+    void removeData(const String& key);
+    
+
 protected:
 };
 

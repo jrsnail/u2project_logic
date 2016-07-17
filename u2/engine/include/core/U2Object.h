@@ -34,6 +34,9 @@ public:
 	*/
 	void renameForPooling(const String& name) { m_szName = name; };
 
+    virtual String serialize() { return BLANK; };
+    virtual void deserialize(const String& str) {};
+
 protected:
     String                  m_szType;       //< 子类类型
     String                  m_szName;       //< 对象名称

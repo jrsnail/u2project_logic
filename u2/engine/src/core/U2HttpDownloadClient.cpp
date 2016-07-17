@@ -4,12 +4,17 @@
 #include <regex>
 #include "U2Exception.h"
 #include "U2LogManager.h"
+#include "U2FileSystemLayer.h"
+#include "U2DataPool.h"
 #include "cocos2d.h"
 
 
 U2EG_NAMESPACE_USING
 
 
+//-----------------------------------------------------------------------
+//-----------------------------------------------------------------------
+String HttpDownloadRequest::ExtName = ".udl";
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
 HttpDownloadRequest::HttpDownloadRequest(const String& type, const String& name)
@@ -29,6 +34,16 @@ HttpDownloadRequest::~HttpDownloadRequest()
 void HttpDownloadRequest::run()
 {
 
+}
+//-----------------------------------------------------------------------
+void HttpDownloadRequest::setFile(const String& file)
+{
+    if (m_szFile != BLANK)
+    {
+        assert(0);
+    }
+    m_szFile = file;
+    m_szTempFile = file + ExtName;
 }
 //-----------------------------------------------------------------------
 void HttpDownloadRequest::setErrorBuffer(const char* value)
@@ -102,6 +117,22 @@ Chunk* HttpDownloadRequest::retrieveNextWaitingChunk()
     return nullptr;
 }
 //-----------------------------------------------------------------------
+bool HttpDownloadRequest::isAllChunksSucceed()
+{
+    U2_LOCK_MUTEX(m_ChunksMtx);
+    bool bAllSucceed = true;
+    for (ChunkMap::iterator it = m_ChunkMap.begin();
+    it != m_ChunkMap.end(); it++)
+    {
+        if (it->second->getDownloadState() != Chunk::eDownloadState::HDPS_Download_Succeed)
+        {
+            bAllSucceed = false;
+            break;
+        }
+    }
+    return bAllSucceed;
+}
+//-----------------------------------------------------------------------
 void HttpDownloadRequest::setChunked(bool chunked)
 {
     m_bChunked = chunked;
@@ -114,17 +145,51 @@ bool HttpDownloadRequest::isChunked() const
 //-----------------------------------------------------------------------
 void HttpDownloadRequest::_createStream()
 {
+    assert(isChunked());
+
+    if (m_pFileHandle != nullptr)
+    {
+        return;
+    }
+
     U2_LOCK_MUTEX(m_OutMtx);
 
     // check file existed
-
+    bool bExisted = FileSystemLayer::fileExists(getTempFile());
+    // if existed
+    if (bExisted)
+    {
+        m_pFileHandle = fopen(getTempFile().c_str(), "ab");
+    }
     // if not, then create it and fill with 0
+    else
+    {
+        m_pFileHandle = fopen(getTempFile().c_str(), "ab");
 
-    // if existed, 
+        const size_t DataSize = 1024;
+        u2ubyte data[DataSize];
+        memset(data, 0, DataSize);
+
+        size_t uWriteCount = 0;
+        while (uWriteCount < m_ulTotalFileLen)
+        {
+            size_t uDelta = m_ulTotalFileLen - uWriteCount;
+            uWriteCount += fwrite(data, 1, uDelta > DataSize ? DataSize : uDelta, m_pFileHandle);
+        }
+    }
+
+    if (m_pFileHandle == nullptr)
+    {
+        assert(0);
+    }
 }
 //-----------------------------------------------------------------------
 size_t HttpDownloadRequest::_writeStream(size_t start, size_t size, const u2byte* data)
 {
+    if (m_pFileHandle == nullptr)
+    {
+        assert(0);
+    }
     U2_LOCK_MUTEX(m_OutMtx);
     fseek(m_pFileHandle, static_cast<long>(start), SEEK_SET);
     size_t uWriteCount = 0;
@@ -133,6 +198,17 @@ size_t HttpDownloadRequest::_writeStream(size_t start, size_t size, const u2byte
         uWriteCount += fwrite(data + uWriteCount, 1, size - uWriteCount, m_pFileHandle);
     }
     return uWriteCount;
+}
+//-----------------------------------------------------------------------
+String HttpDownloadRequest::serialize()
+{
+    U2_LOCK_MUTEX(m_ChunksMtx);
+    return BLANK;
+}
+//-----------------------------------------------------------------------
+void HttpDownloadRequest::deserialize(const String& str)
+{
+
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
@@ -201,6 +277,24 @@ size_t Chunk::getRetry() const
     return m_pRequest->getRetry();
 }
 //-----------------------------------------------------------------------
+const String& Chunk::getFile() const
+{
+    if (m_pRequest == nullptr)
+    {
+        assert(0);
+    }
+    return m_pRequest->getFile();
+}
+//-----------------------------------------------------------------------
+const String& Chunk::getTempFile() const
+{
+    if (m_pRequest == nullptr)
+    {
+        assert(0);
+    }
+    return m_pRequest->getTempFile();
+}
+//-----------------------------------------------------------------------
 void Chunk::setResultCode(long value)
 {
     m_lResultCode = value;
@@ -220,6 +314,15 @@ void Chunk::setErrorBuffer(const char* value)
 const String& Chunk::getErrorBuffer() const
 {
     return m_szErrorBuffer;
+}
+//-----------------------------------------------------------------------
+bool Chunk::isAllChunksSucceed()
+{
+    if (m_pRequest == nullptr)
+    {
+        assert(0);
+    }
+    return m_pRequest->isAllChunksSucceed();
 }
 //-----------------------------------------------------------------------
 void Chunk::_createStream()
@@ -334,6 +437,8 @@ void HttpDownloadTaskLoop::quit()
 //-----------------------------------------------------------------------
 void HttpDownloadTaskLoop::pause()
 {
+    _saveAllRequests();
+
     U2_LOCK_MUTEX(m_PausingMutex);
     m_bPausing = true;
     TaskLoop::pause();
@@ -465,7 +570,16 @@ void HttpDownloadTaskLoop::_runInternal()
         }
         else
         {
+            pChunk->_createStream();
             _doDownloadChunk(pChunk);
+            if (pChunk->isAllChunksSucceed())
+            {
+                _onRequestDownloadSucceed(pChunk->request());
+            }
+            else
+            {
+                _saveRequest(pChunk->request());
+            }
         }
     }
 }
@@ -546,7 +660,6 @@ Chunk* HttpDownloadTaskLoop::_getNextWaitingChunk()
             request->createChunk(0, 0);
         }
         request->setChunked(true);
-
         
         return request->retrieveNextWaitingChunk();
     }
@@ -730,6 +843,54 @@ size_t HttpDownloadTaskLoop::_splitDownloadChunks(u2uint64 totalSize)
     }
 
     return 1;
+}
+//-----------------------------------------------------------------------
+void HttpDownloadTaskLoop::_onRequestDownloadSucceed(HttpDownloadRequest* request)
+{
+    // rename
+    FileSystemLayer::renameFile(request->getTempFile(), request->getFile());
+
+    // decompress
+
+    // delete db record
+    DataPool* pPool = DataPoolManager::getSingleton().retrieveObjectByName(getName());
+    if (pPool)
+    {
+        pPool->removeData(request->getFile());
+    }
+
+    // remove form incoming queue
+    {
+        U2_LOCK_MUTEX(m_mtxIncomingQueue);
+        for (list<Task*>::iterator it = m_IncomingQueue.begin(); it != m_IncomingQueue.end(); it++)
+        {
+            if (*it == request)
+            {
+                m_IncomingQueue.erase(it);
+                break;
+            }
+        }
+    }
+}
+//-----------------------------------------------------------------------
+void HttpDownloadTaskLoop::_saveRequest(HttpDownloadRequest* request)
+{
+    assert(request);
+    DataPool* pPool = DataPoolManager::getSingleton().retrieveObjectByName(getName());
+    if (pPool)
+    {
+        pPool->saveStringData(request->getFile(), request->serialize());
+    }
+}
+//-----------------------------------------------------------------------
+void HttpDownloadTaskLoop::_saveAllRequests()
+{
+    U2_LOCK_MUTEX(m_mtxIncomingQueue);
+    for (list<Task*>::iterator it = m_IncomingQueue.begin(); it != m_IncomingQueue.end(); it++)
+    {
+        HttpDownloadRequest* req = dynamic_cast<HttpDownloadRequest*>(*it);
+        _saveRequest(req);
+    }
 }
 
 

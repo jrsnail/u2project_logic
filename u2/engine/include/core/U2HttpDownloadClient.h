@@ -26,8 +26,9 @@ public:
     void setRetry(size_t retry) { m_nRetry = retry; };
     size_t getRetry() const { return m_nRetry; };
 
-    void setFile(const String& file) { m_szFile = file; };
+    void setFile(const String& file);
     const String& getFile() const { return m_szFile; };
+    const String& getTempFile() const { return m_szTempFile; };
 
     /** Set custom-defined headers.
     @param pHeaders the string vector of custom-defined headers.
@@ -63,16 +64,22 @@ public:
     Chunk* retrieveChunk(const String& guid);
     void destroyChunk(const String& guid);
     Chunk* retrieveNextWaitingChunk();
+    bool isAllChunksSucceed();
 
     void _createStream();
     size_t _writeStream(size_t start, size_t size, const u2byte* data);
+
+    virtual String serialize() override;
+    virtual void deserialize(const String& str) override;
 
 public:
     static const size_t DefaultChunkCount = 5;
 
 protected:
+    static String ExtName;
     String		m_szUrl;
     String		m_szFile;
+    String		m_szTempFile;
     size_t      m_nRetry;
     size_t      m_nExpectedChunkCount;
     vector<String>::type	m_Headers;
@@ -107,6 +114,8 @@ public:
 
     void initialize(HttpDownloadRequest* request, u2uint64 start, u2uint64 end);
 
+    HttpDownloadRequest* request() const { return m_pRequest; };
+
     void setDownloadState(eDownloadState state) { m_eDownloadState = state; };
     eDownloadState getDownloadState() const { return m_eDownloadState; };
 
@@ -117,6 +126,8 @@ public:
 
     const String& getUrl() const;
     size_t getRetry() const;
+    const String& getFile() const;
+    const String& getTempFile() const;
 
     /** Set the http response code.
     @param value the http response code that represent whether the request is successful or not.
@@ -136,6 +147,8 @@ public:
     @return const char* the pointer that point to _errorBuffer.
     */
     inline const String& getErrorBuffer() const;
+
+    bool isAllChunksSucceed();
 
     void _createStream();
     size_t _writeStream(const u2byte* data, size_t size);
@@ -247,6 +260,11 @@ protected:
     int _doDownloadChunk(Chunk* chunk);
 
     size_t _splitDownloadChunks(u2uint64 totalSize);
+
+    void _onRequestDownloadSucceed(HttpDownloadRequest* request);
+
+    void _saveRequest(HttpDownloadRequest* request);
+    void _saveAllRequests();
 
 protected:
     std::thread     m_thread;
