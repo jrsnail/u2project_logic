@@ -39,20 +39,20 @@ void Controller::executeCommand(const Notification& notification)
     CommandMap::iterator result = m_CommandMap.end();
     do
     {
-        U2_LOCK_AUTO_MUTEX;
         result = m_CommandMap.find(notification.getName());
         if (result == m_CommandMap.end())
         {
             return;
         }
     } while (false);
-    result->second->go(notification);
+    Command* pCmd = CommandManager::getSingletonPtr()->createObject(result->second, BLANK);
+    pCmd->initializeNotifier(m_szName);
+    pCmd->go(notification);
+    CommandManager::getSingletonPtr()->destoryObject(pCmd);
 }
 
-void Controller::registerCommand(const String& notification_name, Command* command)
+void Controller::registerCommand(const String& notification_name, const String& cmdType)
 {
-    U2_LOCK_AUTO_MUTEX;
-
     if (m_CommandMap.find(notification_name) == m_CommandMap.end())
     {
         if (m_pView == nullptr)
@@ -61,27 +61,25 @@ void Controller::registerCommand(const String& notification_name, Command* comma
             //throwException<std::runtime_error>("Cannot register command [%s]. View is null.", notification_name.c_str());
         }
 
-        Observer *observer = ObserverManager::getSingleton().createOrReuseObserver(OT_Observer
-            , std::bind(&Controller::executeCommand, this, std::placeholders::_1));
+        Observer *observer = ObserverManager::getSingletonPtr()->createOrReuseObserver(OT_Observer
+            , std::bind(&Controller::executeCommand, this, std::placeholders::_1)
+            , this);
         m_pView->registerObserver(notification_name, observer);
     }
-    command->initializeNotifier(m_szName);
-    m_CommandMap[notification_name] = command;
+    m_CommandMap[notification_name] = cmdType;
 }
 
 inline bool Controller::hasCommand(const String& notification_name)
 {
-    U2_LOCK_AUTO_MUTEX;
     return m_CommandMap.find(notification_name) != m_CommandMap.end();
 }
 
-Command* Controller::removeCommand(const String& notification_name)
+String Controller::removeCommand(const String& notification_name)
 {
     CommandMap::value_type::second_type command = nullptr;
 
     do
     {
-        U2_LOCK_AUTO_MUTEX;
         // Retrieve the named mediator
         CommandMap::iterator result = m_CommandMap.find(notification_name);
 
@@ -94,7 +92,7 @@ Command* Controller::removeCommand(const String& notification_name)
         m_CommandMap.erase(result);
     } while (false);
 
-    if (command != nullptr)
+    if (command != BLANK)
     {
         if (m_pView == nullptr)
         {
@@ -108,15 +106,8 @@ Command* Controller::removeCommand(const String& notification_name)
     return command;
 }
 
-const Command& Controller::retrieveCommand(const String& notification_name) const
+inline String Controller::retrieveCommand(const String& notification)
 {
-    return const_cast<Command const&>(static_cast<Controller const&>(*this).retrieveCommand(notification_name));
-}
-
-inline Command& Controller::retrieveCommand(const String& notification)
-{
-    U2_LOCK_AUTO_MUTEX;
-
     CommandMap::const_iterator result = m_CommandMap.find(notification);
     if (result == m_CommandMap.end())
     {
@@ -124,30 +115,28 @@ inline Command& Controller::retrieveCommand(const String& notification)
         //throwException<std::runtime_error>("Cannot find any command with notification name: [%s].", notification_name.c_str());
     }
 
-    return *result->second;
+    return result->second;
 }
 
 void Controller::removeController(const String& name)
 {
-    Controller* pObj = ControllerManager::getSingleton().retrieveObjectByName(name);
+    Controller* pObj = ControllerManager::getSingletonPtr()->retrieveObjectByName(name);
     if (pObj == nullptr)
     {
         return;
     }
-    ControllerManager::getSingleton().destoryObject(pObj);
+    ControllerManager::getSingletonPtr()->destoryObject(pObj);
 }
 
-Controller::NotificationNames Controller::listNotificationNames(void) const
+std::list<String> Controller::listNotificationNames(void) const
 {
-    NotificationNames names;
-
+    std::list<String> names;
     for (CommandMap::const_iterator it = m_CommandMap.begin();
         it != m_CommandMap.end();
         it++)
     {
         names.push_back(it->first);
     }
-
     return names;
 }
 
@@ -167,10 +156,6 @@ ControllerManager* ControllerManager::getSingletonPtr(void)
 	}
 	return msSingleton;
 }
-ControllerManager& ControllerManager::getSingleton(void)
-{
-	return (*getSingletonPtr());
-}
 //-----------------------------------------------------------------------
 ControllerManager::ControllerManager()
 {
@@ -178,4 +163,14 @@ ControllerManager::ControllerManager()
 //-----------------------------------------------------------------------
 ControllerManager::~ControllerManager()
 {
+}
+//-----------------------------------------------------------------------
+Controller* ControllerManager::createObject(const String& type, const String& name)
+{
+    return SimpleObjectManager<Controller>::createObject(type, name);
+}
+//-----------------------------------------------------------------------
+Controller* ControllerManager::retrieveObjectByName(const String& name)
+{
+    return SimpleObjectManager<Controller>::retrieveObjectByName(name);
 }

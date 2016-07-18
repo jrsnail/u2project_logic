@@ -45,7 +45,6 @@ extern const char* OT_TransMediator;
 extern const char* OT_SingleContextQueue;
 extern const char* OT_InfiniteContextQueue;
 
-
 // notification
 static const char* NTF_Predefined_DestroyContext = "NTF_Predefined_DestroyContext";
 static const char* NTF_Predefined_BackKey = "NTF_Predefined_BackKey";

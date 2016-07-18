@@ -37,7 +37,6 @@ public:
     void pop(const String& name, ContextQueue::eTransType transType = ContextQueue::eTransType::TT_None);
     void replace(const String& name, u2::Context* from, u2::Context* to, ContextQueue::eTransType transType = ContextQueue::eTransType::TT_None);
 
-    void erase(const u2::String& name);
     void erase(const u2::Context* context);
 
     typedef VectorIterator<PriorityQueueList>       ContextQueueVectorIterator;

@@ -10,14 +10,11 @@
 
 
 #include "U2Core.h"
-#include "U2Mvc.h"
 #include "cocos2d.h"
 
 
-U2EG_NAMESPACE_BEGIN
 
-
-class CocosFrameListenerCollection : public cocos2d::Ref, public FrameListenerCollection
+class CocosFrameListenerCollection : public cocos2d::Ref, public u2::FrameListenerCollection
 {
 public:
     CocosFrameListenerCollection();
@@ -35,6 +32,5 @@ protected:
 };
 
 
-U2EG_NAMESPACE_END
 
 #endif /* defined(__U2CocosFrameListenerCollection__) */

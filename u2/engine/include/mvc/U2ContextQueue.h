@@ -66,7 +66,10 @@ public:
         TT_None,
         TT_Overlay,
         TT_OneByOne,
-        TT_Cross
+        TT_Cross,
+        TT_Overlay_Child,
+        TT_OneByOne_Child,
+        TT_Cross_Child
     };
 
 public:
@@ -82,9 +85,9 @@ public:
     virtual void pop(eTransType transType = eTransType::TT_None) = 0;
     virtual void replace(u2::Context* from, u2::Context* to, eTransType transType = eTransType::TT_None) = 0;
 
-    bool hasContext(const u2::String& name);
+    bool hasContext(const String& name);
     bool hasContext(const u2::Context* context);
-    void erase(const u2::String& name);
+    void erase(const String& name);
     void erase(const u2::Context* context);
 
 protected:

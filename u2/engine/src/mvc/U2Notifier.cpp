@@ -38,12 +38,12 @@ Facade& Notifier::getFacade(void)
 {
     if (m_szFacadeKey == BLANK)
         throw std::runtime_error("Multiton key for this Notifier not yet initialized!");
-	return *FacadeManager::getSingleton().retrieveObjectByName(m_szFacadeKey);
+	return *FacadeManager::getSingletonPtr()->retrieveObjectByName(m_szFacadeKey);
 }
 //-----------------------------------------------------------------------
 Facade& Notifier::getFacade(const String& facadeKey)
 {
-    Facade* pFacade = FacadeManager::getSingleton().retrieveObjectByName(facadeKey);
+    Facade* pFacade = FacadeManager::getSingletonPtr()->retrieveObjectByName(facadeKey);
     if (pFacade == nullptr)
     {
         assert(0);

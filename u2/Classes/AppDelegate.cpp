@@ -2,9 +2,8 @@
 
 #include "U2Core.h"
 #include "U2Mvc.h"
-#include "application/ApplicationFacade.h"
-#include "application/ApplicationPrerequisites.h"
-#include "cg/CgFacade.h"
+#include "application/AppFacade.h"
+#include "application/AppPrerequisites.h"
 #include "U2TaskGroup.h"
 #include "U2FilterStream.h"
 #include "U2FileStream.h"
@@ -216,14 +215,11 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	cocos2d::FileUtils::getInstance()->addSearchPath("res/ui/cg");
 
 	m_pFrameListenerCollection = new CocosFrameListenerCollection;
+    u2::ScriptManager* pScriptManager = new u2::LuaScriptManager;
 
-// 	PredefinedFacade::getSingleton();
-// 	CgFacade::getSingleton();
-// 	ApplicationFacade::getSingleton().startup();
 
 	Facade::createFacade<PredefinedFacade>(ON_Facade_Predefined);
-	Facade::createFacade<CgFacade>(ON_Facade_Cg);
-	ApplicationFacade* pAppFacade = Facade::createFacade<ApplicationFacade>(ON_Facade_Application);
+    AppFacade* pAppFacade = Facade::createFacade<AppFacade>(ON_Facade_App);
 	if (pAppFacade != nullptr)
 	{
 		pAppFacade->startup();

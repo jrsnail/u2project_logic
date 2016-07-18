@@ -76,23 +76,6 @@ ContextQueue* ContextProxy::_retrieveContextQueue(const String& name)
     return pQueue;
 }
 //-----------------------------------------------------------------------
-void ContextProxy::erase(const u2::String& name)
-{
-    for (NamedObjectMap::iterator it = m_NamedMap.begin(); it != m_NamedMap.end(); it++)
-    {
-        ContextQueue* pQueue = it->second;
-        if (pQueue == nullptr)
-        {
-            continue;
-        }
-        if (pQueue->hasContext(name))
-        {
-            pQueue->erase(name);
-            break;
-        }
-    }
-}
-//-----------------------------------------------------------------------
 void ContextProxy::erase(const u2::Context* context)
 {
     if (context == nullptr)
@@ -116,9 +99,9 @@ void ContextProxy::erase(const u2::Context* context)
 //-----------------------------------------------------------------------
 void ContextProxy::_switch(u2::Context* from, ContextQueue::eTransType transType, u2::Context* to)
 {
-	std::tuple<u2::Context*, u2::ContextQueue::eTransType, u2::Context*> data
-		= std::make_tuple(from, transType, to);
-    getFacade().sendNotification(NTF_Predefined_Trans , &data);
+    std::tuple<u2::Context*, u2::ContextQueue::eTransType, u2::Context*> data
+        = std::make_tuple(from, transType, to);
+    getFacade().sendNotification(NTF_Predefined_Trans, &data);
 }
 //-----------------------------------------------------------------------
 ContextQueue* ContextProxy::createContextQueue(const String& type, const String& name

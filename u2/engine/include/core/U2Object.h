@@ -62,24 +62,40 @@ template <class T>
 class TemplateObjectFactory : public ObjectFactory
 {
 public:
+    TemplateObjectFactory(const std::string& type = BLANK);
     virtual ~TemplateObjectFactory() {}
 
-    virtual const String& getType() const override;
+    virtual const std::string& getType() const override;
 
-    virtual Object* createInstance(const String& name) override;
+    virtual Object* createInstance(const std::string& name) override;
 
     virtual void destroyInstance(Object* ptr) override;
 
+protected:
+    std::string     m_szType;
 };
 
 
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
 template <class T>
-const String& TemplateObjectFactory<T>::getType(void) const
+const std::string& TemplateObjectFactory<T>::getType(void) const
 {
-    static String name = GET_OBJECT_TYPE(T);
-    return name;
+    //static std::string name = GET_OBJECT_TYPE(T);
+    return m_szType;
+}
+//-----------------------------------------------------------------------
+template <class T>
+TemplateObjectFactory<T>::TemplateObjectFactory(const std::string& type)
+{
+    if (type == BLANK)
+    {
+        m_szType = GET_OBJECT_TYPE(T);
+    }
+    else
+    {
+        m_szType = type;
+    }
 }
 //-----------------------------------------------------------------------
 template <class T>
@@ -92,9 +108,10 @@ void TemplateObjectFactory<T>::destroyInstance(Object* obj)
 }
 //-----------------------------------------------------------------------
 template <class T>
-Object* TemplateObjectFactory<T>::createInstance(const String& name)
+Object* TemplateObjectFactory<T>::createInstance(const std::string& name)
 {
-    return new T(getType(), name);
+    T* pObj = new T(getType(), name);
+    return pObj;
 }
 
 

@@ -19,6 +19,7 @@
 #include "U2PredefinedMediators.h"
 #include "U2PredefinedProxies.h"
 #include "U2ContextQueue.h"
+#include "U2PredefinedLuaTasks.h"
 
 
 U2EG_NAMESPACE_USING
@@ -50,4 +51,3 @@ const char* OT_TransMediator = GET_OBJECT_TYPE(TransMediator);
 // context queue
 const char* OT_SingleContextQueue = GET_OBJECT_TYPE(SingleContextQueue);
 const char* OT_InfiniteContextQueue = GET_OBJECT_TYPE(InfiniteContextQueue);
-

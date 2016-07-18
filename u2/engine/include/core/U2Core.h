@@ -21,6 +21,10 @@
 #include "U2Log.h"
 #include "U2LogManager.h"
 #include "U2Exception.h"
+#include "U2FrameListenerCollection.h"
+#include "U2StringUtil.h"
+#include "U2Version.h"
+#include "U2DataPool.h"
 
 
 #endif

@@ -77,9 +77,10 @@ public:
         ReusableObject::postReuseFromPool();
     }
 
-    void setCallback(NotifyCallbackFun callback)
+    void setCallback(NotifyCallbackFun callback, void* target)
     {
         mFun = callback;
+        m_pTarget = target;
     }
 
     /**
@@ -87,7 +88,7 @@ public:
     *
     * @param notification the <code>INotification</code> to pass to the interested object's notification method.
     */
-    virtual void notifyObserver(const Notification& notification)
+    virtual void notifyObserver(Notification const& notification)
     {
         if (mFun == nullptr)
             throw std::runtime_error("Notify context is null.");
@@ -100,15 +101,15 @@ public:
     * @param object the object to compare.
     * @return boolean indicating if the object and the notification context are the same.
     */
-    virtual bool compareNotifyTarget(const Object* const target) const
+    virtual bool compareNotifyTarget(const void* const target) const
     {
-        const Object* pTarget = mFun.target<const Object>();
-        return pTarget == target;
+        return m_pTarget == target;
     }
 
 
 private:
 	NotifyCallbackFun mFun;
+    void* m_pTarget;
 };
 
 
@@ -125,29 +126,13 @@ public:
 	virtual ~ObserverManager();
 
 public:
-    Observer* createOrReuseObserver(const String& type, Observer::NotifyCallbackFun callback);
+    Observer* createOrReuseObserver(const String& type
+        , Observer::NotifyCallbackFun callback, void* target);
 
 protected:
     virtual Observer* createOrReuseObject(const String& type);
 
 public:
-	/** Override standard Singleton retrieval.
-	@remarks
-	Why do we do this? Well, it's because the Singleton
-	implementation is in a .h file, which means it gets compiled
-	into anybody who includes it. This is needed for the
-	Singleton template to work, but we actually only want it
-	compiled into the implementation of the class based on the
-	Singleton, not all of them. If we don't change this, we get
-	link errors when trying to use the Singleton-based class from
-	an outside dll.
-	@par
-	This method just delegates to the template version anyway,
-	but the implementation stays in this single compilation unit,
-	preventing link errors.
-	*/
-	static ObserverManager& getSingleton(void);
-
 	/** Override standard Singleton retrieval.
 	@remarks
 	Why do we do this? Well, it's because the Singleton

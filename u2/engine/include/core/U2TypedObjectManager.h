@@ -68,7 +68,7 @@ TypedObjectManager<T>::~TypedObjectManager()
 template <class T>
 T* TypedObjectManager<T>::createObject(const String& type, const String& name)
 {
-    T* pObj = dynamic_cast<T*>(ObjectCollection::getSingleton().createObject(type, name));
+    T* pObj = dynamic_cast<T*>(ObjectCollection::getSingletonPtr()->createObject(type, name));
     if (pObj != nullptr)
     {
         m_TypedMap.insert(std::make_pair(type, pObj));
@@ -88,7 +88,7 @@ void TypedObjectManager<T>::destoryObject(T* obj)
         T* pObj = it.getNext();
         if (pObj == obj)
         {
-            ObjectCollection::getSingleton().destoryObject(obj);
+            ObjectCollection::getSingletonPtr()->destoryObject(obj);
         }
     }
 }

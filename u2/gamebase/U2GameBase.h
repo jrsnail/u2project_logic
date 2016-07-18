@@ -5,9 +5,10 @@
 #include "U2Core.h"
 #include "U2Mvc.h"
 #include "cocos2d.h"
-#include "U2CocosMediator.h"
 #include "U2CocosViewComponent.h"
 #include "U2CocosFrameListenerCollection.h"
+#include "U2CocosPrerequisites.h"
+#include "U2CocosLuaScript.h"
 
 
 #endif

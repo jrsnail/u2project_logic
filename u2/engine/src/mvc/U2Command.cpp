@@ -9,10 +9,13 @@ U2EG_NAMESPACE_USING
 Command::Command(const String& type, const String& name)
     : Object(type, name)
 {
-
 }
 //-----------------------------------------------------------------------
 Command::~Command()
+{
+}
+//-----------------------------------------------------------------------
+void Command::go(const Notification& notification)
 {
 }
 //-----------------------------------------------------------------------
@@ -26,10 +29,6 @@ CommandManager* CommandManager::getSingletonPtr(void)
 	}
 	return msSingleton;
 }
-CommandManager& CommandManager::getSingleton(void)
-{
-	return (*getSingletonPtr());
-}
 //-----------------------------------------------------------------------
 CommandManager::CommandManager()
 {
@@ -37,4 +36,14 @@ CommandManager::CommandManager()
 //-----------------------------------------------------------------------
 CommandManager::~CommandManager()
 {
+}
+//-----------------------------------------------------------------------
+Command* CommandManager::createObject(const String& type, const String& name)
+{
+    if (!u2::FactoryManager::getSingletonPtr()->hasObjectFactory(type))
+    {
+        u2::ObjectFactory* pObjectFactory = new u2::TemplateObjectFactory<u2::Command>(type);
+        u2::FactoryManager::getSingletonPtr()->addObjectFactory(pObjectFactory);
+    }
+    return TypedObjectManager<Command>::createObject(type, name);
 }

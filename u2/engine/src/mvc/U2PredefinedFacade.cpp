@@ -51,16 +51,16 @@ void PredefinedFacade::initializeController(void)
 {
     Facade::initializeController();
 
-    registerCommand(NTF_Predefined_DestroyContext, CommandManager::getSingleton().createObject(OT_DestoryContextCommand, BLANK));
-    registerCommand(NTF_Predefined_BackKey, CommandManager::getSingleton().createObject(OT_BackKeyCommand, BLANK));
-    registerCommand(NTF_Predefined_Trans, CommandManager::getSingleton().createObject(OT_TransCommand, BLANK));
+    registerCommand(NTF_Predefined_DestroyContext, OT_DestoryContextCommand);
+    registerCommand(NTF_Predefined_BackKey, OT_BackKeyCommand);
+    registerCommand(NTF_Predefined_Trans, OT_TransCommand);
 }
 //-----------------------------------------------------------------------
 void PredefinedFacade::initializeModel(void)
 {
 	Facade::initializeModel();
 
-    registerProxy(ProxyManager::getSingleton().createObject(OT_ContextProxy, ON_Proxy_Context));
+    registerProxy(ProxyManager::getSingletonPtr()->createObject(OT_ContextProxy, ON_Proxy_Context));
 }
 //-----------------------------------------------------------------------
 void PredefinedFacade::initializeView(void)

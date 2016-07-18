@@ -23,10 +23,6 @@ public:
     virtual ~SimpleCommand();
 
     virtual void go(const Notification& notification) override;
-    virtual void back() override;
-    virtual bool canBack() override;
-    virtual String serialize() override;
-    virtual void deserialize(const String& str) override;
 };
 
 

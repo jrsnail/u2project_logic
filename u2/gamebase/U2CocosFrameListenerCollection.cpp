@@ -9,7 +9,6 @@
 #include "U2CocosFrameListenerCollection.h"
 
 
-U2EG_NAMESPACE_USING
 
 
 //-----------------------------------------------------------------------

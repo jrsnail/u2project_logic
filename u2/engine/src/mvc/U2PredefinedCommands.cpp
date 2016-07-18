@@ -9,7 +9,6 @@
 #include "U2PredefinedCommands.h"
 
 #include "U2Context.h"
-#include "U2Mediator.h"
 #include "U2Facade.h"
 #include "U2PredefinedProxies.h"
 #include "U2PredefinedPrerequisites.h"
@@ -48,17 +47,18 @@ void DestoryContextCommand::_destroyContext(u2::Context* context)
         _destroyContext(it.getNext());
     }
 
-    // destroy mediator
-    Mediator* pMediator = MediatorManager::getSingleton().retrieveObjectByName(context->getMediatorName());
-    if (pMediator != nullptr)
+
+    // destroy view component
+    ViewComponent* pViewComp = ViewComponentManager::getSingletonPtr()->retrieveObjectByName(context->getViewCompName());
+    if (pViewComp != nullptr)
     {
-        pMediator->end();
-        Facade* pFacade = FacadeManager::getSingleton().retrieveObjectByName(context->getFacadeName());
+        //pViewComp->end();
+        Facade* pFacade = FacadeManager::getSingletonPtr()->retrieveObjectByName(context->getFacadeName());
         if (pFacade != nullptr)
         {
-            pFacade->removeMediator(context->getMediatorName());
+            pFacade->removeViewComp(context->getViewCompName());
         }
-        MediatorManager::getSingleton().destoryObject(pMediator);
+        ViewComponentManager::getSingletonPtr()->destoryObject(pViewComp);
     }
 
     // destroy context
@@ -67,9 +67,9 @@ void DestoryContextCommand::_destroyContext(u2::Context* context)
     {
         pParent->removeChild(context);
     }
-    ContextProxy& contextProxy = getFacade().retrieveProxy<ContextProxy>(ON_Proxy_Context);
-    contextProxy.erase(context);
-    ContextManager::getSingleton().destoryObject(context);
+    ContextProxy* pContextProxy = getFacade().retrieveProxy<ContextProxy>(ON_Proxy_Context);
+    pContextProxy->erase(context);
+    ContextManager::getSingletonPtr()->destoryObject(context);
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
@@ -90,39 +90,54 @@ void TransCommand::go(const Notification& notification)
     }
     typedef std::tuple<u2::Context*, ContextQueue::eTransType, u2::Context*>   TransCommandData;
     const TransCommandData* pData = static_cast<const TransCommandData*>(notification.getData());
-    u2::Context* pFrom              = std::get<0>(*pData);
-    ContextQueue::eTransType eType  = std::get<1>(*pData);
-    u2::Context* pTo                = std::get<2>(*pData);
-    _createMediator(pFrom, eType, pTo);
+    if (pData == nullptr)
+    {
+        assert(0);
+    }
+    else
+    {
+        u2::Context* pFrom = std::get<0>(*pData);
+        ContextQueue::eTransType eType = std::get<1>(*pData);
+        u2::Context* pTo = std::get<2>(*pData);
+        _createMediator(pFrom, nullptr, eType, pTo);
+    }
 }
 //-----------------------------------------------------------------------
-void TransCommand::_createMediator(const u2::Context* from, ContextQueue::eTransType type, const u2::Context* to)
+void TransCommand::_createMediator(const u2::Context* from, const u2::Context* parent
+    , ContextQueue::eTransType type, const u2::Context* cur)
 {
-    // to mediator
-    Mediator* pMediator = MediatorManager::getSingleton().createObject(to->getMediatorClass(), to->getMediatorName());
-    if (pMediator)
-    {
-        getFacade().registerMediator(pMediator);
-    }
-    
     // trans mediator name
-    NameGeneratorManager::getSingleton().registerNameGenerator("TransMediator");
-    u2::String szTransName = NameGeneratorManager::getSingleton().generator("TransMediator");
+    NameGeneratorManager::getSingletonPtr()->registerNameGenerator("TransMediator");
+    String szTransName = NameGeneratorManager::getSingletonPtr()->generator("TransMediator");
 
     // trans mediator
     TransMediator* pTransMediator = dynamic_cast<TransMediator*>(
-        MediatorManager::getSingleton().createObject(OT_TransMediator, szTransName));
+        TransMediatorManager::getSingletonPtr()->createObject(OT_TransMediator, szTransName));
     if (pTransMediator)
     {
-        getFacade().registerMediator(pTransMediator);
-        pTransMediator->startup(from, type, to);
+        pTransMediator->startup(from, parent, type, cur);
     }
     
     // children
-    u2::Context::ConstContextMapIterator it = to->getChildIterator();
+    u2::Context::ConstContextMapIterator it = cur->getChildIterator();
     while (it.hasMoreElements())
     {
-        _createMediator(to, ContextQueue::eTransType::TT_Overlay, it.getNext());
+        //_createMediator(to, ContextQueue::eTransType::TT_Overlay, it.getNext());
+        //_createMediator(to, ContextQueue::eTransType::TT_Child, it.getNext());
+        ContextQueue::eTransType childType = type;
+        switch (type)
+        {
+        case ContextQueue::eTransType::TT_Overlay:
+            childType = ContextQueue::eTransType::TT_Overlay_Child;
+            break;
+        case ContextQueue::eTransType::TT_OneByOne:
+            childType = ContextQueue::eTransType::TT_OneByOne_Child;
+            break;
+        case ContextQueue::eTransType::TT_Cross:
+            childType = ContextQueue::eTransType::TT_Cross_Child;
+            break;
+        }
+        _createMediator(from, cur, childType, it.getNext());
     }
 }
 //-----------------------------------------------------------------------
@@ -138,7 +153,7 @@ BackKeyCommand::~BackKeyCommand()
 //-----------------------------------------------------------------------
 void BackKeyCommand::go(const Notification& notification)
 {
-    ContextProxy* pProxy = dynamic_cast<ContextProxy*>(ProxyManager::getSingleton().retrieveObjectByName(ON_Proxy_Context));
+    ContextProxy* pProxy = dynamic_cast<ContextProxy*>(ProxyManager::getSingletonPtr()->retrieveObjectByName(ON_Proxy_Context));
     if (pProxy == nullptr)
     {
         return;
@@ -160,6 +175,8 @@ void BackKeyCommand::go(const Notification& notification)
 
         if (_dispatchBack(pContext))
         {
+            cocos2d::Value data(pContext->getName());
+            getFacade().sendNotification(NTF_Predefined_DestroyContext, &data);
             break;
         }
     }
@@ -172,23 +189,25 @@ bool BackKeyCommand::_dispatchBack(u2::Context* context)
         return false;
     }
 
-    Mediator* pMediator = MediatorManager::getSingleton().retrieveObjectByName(context->getMediatorName());
-    if (pMediator == nullptr)
+    ViewComponent* pViewComp = ViewComponentManager::getSingletonPtr()->retrieveObjectByName(context->getViewCompName());
+    if (pViewComp == nullptr)
     {
         return false;
     }
 
-    bool bCanEnd = pMediator->preEnd(true);
+    bool bCanEnd = pViewComp->preEnd(true);
     if (bCanEnd)
     {
-        getFacade().sendNotification(NTF_Predefined_DestroyContext, context);
-    }
-    else
-    {
+        // recursively checked children
         u2::Context::ContextMapIterator it = context->getChildIterator();
         while (it.hasMoreElements())
         {
-            return _dispatchBack(it.getNext());
+            bCanEnd = _dispatchBack(it.getNext());
+            // if anyone child could not be end
+            if (!bCanEnd)
+            {
+                break;
+            }
         }
     }
     return bCanEnd;

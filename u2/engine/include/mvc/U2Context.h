@@ -15,29 +15,28 @@
 U2EG_NAMESPACE_BEGIN
 
 
-class Context : public Object
+class Context : public u2::Object
 {
 protected:
-    typedef std::map<u2::String, Context*>      ContextMap;
+    typedef std::map<String, Context*>      ContextMap;
 
 public:
     Context(const String& type, const String& name);
     virtual ~Context();
 
-    void initialize(const u2::String& facadeName
-        , const u2::String& mediatorClass, const u2::String& mediatorName
-        , const u2::String& viewCompClass, const u2::String& viewCompName);
+    void initialize(const String& facadeName
+        , const String& viewCompClass, const String& viewCompName
+        , const String& scriptName);
 
-    inline u2::String getFacadeName() const { return m_szFacadeName; };
-    inline u2::String getMediatorClass() const { return m_szMediatorClass; };
-    inline u2::String getMediatorName() const { return m_szMediatorName; };
-    inline u2::String getViewCompClass() const { return m_szViewCompClass; };
-    inline u2::String getViewCompName() const { return m_szViewCompName; };
+    inline String getFacadeName() const { return m_szFacadeName; };
+    inline String getViewCompClass() const { return m_szViewCompClass; };
+    inline String getViewCompName() const { return m_szViewCompName; };
+    inline String getScriptName() const { return m_szScriptName; };
 
     Context* createChild(const String& type, const String& name
-        , const u2::String& facadeName
-        , const u2::String& mediatorClass, const u2::String& mediatorName
-        , const u2::String& viewCompClass, const u2::String& viewCompName);
+        , const String& facadeName
+        , const String& viewCompClass, const String& viewCompName 
+        , const String& uiName);
 
     void destroyChild(Context* child);
 
@@ -60,14 +59,13 @@ public:
 
 
 protected:
-    u2::String          m_szFacadeName;
-    u2::String          m_szMediatorClass;
-    u2::String          m_szMediatorName;
-    u2::String          m_szViewCompClass;
-    u2::String          m_szViewCompName;
+    String          m_szFacadeName;
+    String          m_szViewCompClass;
+    String          m_szViewCompName;
+    String          m_szScriptName;
 
-    ContextMap          m_children;
-    Context*            m_pParent;
+    ContextMap           m_children;
+    Context*             m_pParent;
 };
 
 
@@ -85,31 +83,14 @@ public:
     virtual ~ContextManager();
 
     Context* createObject(const String& type, const String& name
-        , const u2::String& facadeName
-        , const u2::String& mediatorClass, const u2::String& mediatorName
-        , const u2::String& viewCompClass, const u2::String& viewCompName);
+        , const String& facadeName
+        , const String& viewCompClass, const String& viewCompName
+        , const String& scriptName);
 
 protected:
     virtual Context* createObject(const String& type, const String& name);
 
 public:
-    /** Override standard Singleton retrieval.
-    @remarks
-    Why do we do this? Well, it's because the Singleton
-    implementation is in a .h file, which means it gets compiled
-    into anybody who includes it. This is needed for the
-    Singleton template to work, but we actually only want it
-    compiled into the implementation of the class based on the
-    Singleton, not all of them. If we don't change this, we get
-    link errors when trying to use the Singleton-based class from
-    an outside dll.
-    @par
-    This method just delegates to the template version anyway,
-    but the implementation stays in this single compilation unit,
-    preventing link errors.
-    */
-    static ContextManager& getSingleton(void);
-
     /** Override standard Singleton retrieval.
     @remarks
     Why do we do this? Well, it's because the Singleton

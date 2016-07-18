@@ -7,7 +7,6 @@
 #include "U2ContextQueue.h"
 #include "U2Controller.h"
 #include "U2Facade.h"
-#include "U2Mediator.h"
 #include "U2Model.h"
 #include "U2Notification.h"
 #include "U2Notifier.h"
@@ -22,7 +21,9 @@
 #include "U2TransStep.h"
 #include "U2View.h"
 #include "U2ViewComponent.h"
-#include "U2FrameListenerCollection.h"
+#include "U2Herald.h"
+#include "U2Script.h"
+#include "U2LuaScript.h"
 
 
 #endif

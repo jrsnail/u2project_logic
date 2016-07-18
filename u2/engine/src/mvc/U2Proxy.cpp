@@ -48,10 +48,6 @@ ProxyManager* ProxyManager::getSingletonPtr(void)
     }
     return msSingleton;
 }
-ProxyManager& ProxyManager::getSingleton(void)
-{
-    return (*getSingletonPtr());
-}
 //-----------------------------------------------------------------------
 ProxyManager::ProxyManager()
 {

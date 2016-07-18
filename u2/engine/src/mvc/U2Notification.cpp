@@ -1,12 +1,4 @@
-﻿//
-//  CRemoteMsgManager.cpp
-//  myGame
-//
-//  Created by jiang on 13-7-23.
-//
-//
-
-#include "U2Notification.h"
+﻿#include "U2Notification.h"
 
 
 U2EG_NAMESPACE_USING
@@ -14,9 +6,9 @@ U2EG_NAMESPACE_USING
 
 //-----------------------------------------------------------------------
 Notification::Notification(const String& name, const void* data)
-    : m_szName(name)
-    , m_pData(data)
-{ 
+: m_szName(name)
+, m_pData(data)
+{
 }
 //-----------------------------------------------------------------------
 Notification::~Notification(void)

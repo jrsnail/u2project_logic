@@ -11,6 +11,7 @@
 #include "U2Controller.h"
 #include "U2Model.h"
 #include "U2View.h"
+#include "U2Herald.h"
 
 
 U2EG_NAMESPACE_USING
@@ -21,12 +22,14 @@ Facade::Facade(const String& type, const String& name)
     , _controller(nullptr)
 	, _model(nullptr)
 	, _view(nullptr)
+    , _herald(nullptr)
 {
 	initializeNotifier(name);
 	
     CREATE_FACTORY(Controller);
     CREATE_FACTORY(Model);
     CREATE_FACTORY(View);
+    CREATE_FACTORY(Herald);
 }
 
 void Facade::initializeFacade(void)
@@ -34,6 +37,7 @@ void Facade::initializeFacade(void)
 	initializeModel();
 	initializeView();
 	initializeController();
+    initializeHerald();
 }
 
 inline void Facade::initializeController(void)
@@ -66,7 +70,17 @@ void Facade::initializeView(void)
 	initializeView<View>(m_szName);
 }
 
-inline void Facade::registerCommand(const String& notification_name, Command* command)
+void Facade::initializeHerald(void)
+{
+    if (_herald != nullptr)
+    {
+        return;
+    }
+    
+    initializeHerald<Herald>(m_szName);
+}
+
+inline void Facade::registerCommand(const String& notification_name, const String& cmdType)
 {
 	if (_controller == nullptr)
 	{
@@ -74,10 +88,10 @@ inline void Facade::registerCommand(const String& notification_name, Command* co
 		//throwException<std::runtime_error>("Cannot register command [%s]. Controller is null.", notification_name.c_str());
 	}
 	
-	_controller->registerCommand(notification_name, command);
+    _controller->registerCommand(notification_name, cmdType);
 }
 
-inline Command const& Facade::retrieveCommand(const String& notification_name) const
+inline String Facade::retrieveCommand(const String& notification_name)
 {
 	if (_controller == nullptr)
 	{
@@ -88,18 +102,7 @@ inline Command const& Facade::retrieveCommand(const String& notification_name) c
 	return _controller->retrieveCommand(notification_name);
 }
 
-inline Command& Facade::retrieveCommand(const String& notification_name)
-{
-	if (_controller == nullptr)
-	{
-		assert(0);
-		//throwException<std::runtime_error>("Cannot retrieve command [%s]. Controller is null.", notification_name.c_str());
-	}
-	
-	return _controller->retrieveCommand(notification_name);
-}
-
-inline Command* Facade::removeCommand(const String& notification_name)
+inline String Facade::removeCommand(const String& notification_name)
 {
 	if (_controller == nullptr)
 	{
@@ -132,18 +135,7 @@ inline void Facade::registerProxy(Proxy* proxy)
 	_model->registerProxy(proxy);
 }
 
-inline Proxy const& Facade::retrieveProxy(const String& proxy_name) const
-{
-	if (_model == nullptr)
-	{
-		assert(0);
-		//throwException<std::runtime_error>("Cannot retrieve proxy [%s]. Model is null.", proxy_name.c_str());
-	}
-	
-	return _model->retrieveProxy(proxy_name);
-}
-
-inline Proxy& Facade::retrieveProxy(const String& proxy_name)
+inline Proxy* Facade::retrieveProxy(const String& proxy_name)
 {
 	if (_model == nullptr)
 	{
@@ -176,7 +168,7 @@ inline bool Facade::hasProxy(const String& proxy_name) const
 	return _model->hasProxy(proxy_name);
 }
 
-inline void Facade::registerMediator(Mediator* mediator)
+inline void Facade::registerViewComp(ViewComponent* viewComp)
 {
 	if (_view == nullptr)
 	{
@@ -185,10 +177,10 @@ inline void Facade::registerMediator(Mediator* mediator)
 		//mediator == nullptr ? "nullptr" : mediator->getMediatorName().c_str());
 	}
 	
-	_view->registerMediator(mediator);
+    _view->registerViewComp(viewComp);
 }
 
-inline Mediator const& Facade::retrieveMediator(const String& mediator_name) const
+inline ViewComponent* Facade::retrieveViewComp(const String& viewCompName)
 {
 	if (_view == nullptr)
 	{
@@ -196,21 +188,10 @@ inline Mediator const& Facade::retrieveMediator(const String& mediator_name) con
 		//throwException<std::runtime_error>("Cannot retrieve mediator [%s]. View is null.", mediator_name.c_str());
 	}
 	
-	return _view->retrieveMediator(mediator_name);
+    return _view->retrieveViewComp(viewCompName);
 }
 
-inline Mediator& Facade::retrieveMediator(const String& mediator_name)
-{
-	if (_view == nullptr)
-	{
-		assert(0);
-		//throwException<std::runtime_error>("Cannot retrieve mediator [%s]. View is null.", mediator_name.c_str());
-	}
-	
-	return _view->retrieveMediator(mediator_name);
-}
-
-inline Mediator* Facade::removeMediator(const String& mediator_name)
+inline ViewComponent* Facade::removeViewComp(const String& viewCompName)
 {
 	if (_view == nullptr)
 	{
@@ -218,10 +199,10 @@ inline Mediator* Facade::removeMediator(const String& mediator_name)
 		//throwException<std::runtime_error>("Cannot remove mediator [%s]. View is null.", mediator_name.c_str());
 	}
 
-	return _view->removeMediator(mediator_name);
+    return _view->removeViewComp(viewCompName);
 }
 
-inline bool Facade::hasMediator(const String& mediator_name) const
+inline bool Facade::hasViewComp(const String& viewCompName) const
 {
 	if (_view == nullptr)
 	{
@@ -229,29 +210,77 @@ inline bool Facade::hasMediator(const String& mediator_name) const
 		//throwException<std::runtime_error>("Cannot find mediator [%s]. View is null.", mediator_name.c_str());
 	}
 	
-	return _view->hasMediator(mediator_name);
+    return _view->hasViewComp(viewCompName);
+}
+
+inline void Facade::registerScript(Script* script)
+{
+    if (_herald == nullptr)
+    {
+        assert(0);
+        //throwException<std::runtime_error>("Cannot register mediator [%s]. View is null.",
+        //mediator == nullptr ? "nullptr" : mediator->getMediatorName().c_str());
+    }
+    
+    _herald->registerScript(script);
+}
+
+inline Script* Facade::retrieveScript(const String& scriptName)
+{
+    if (_herald == nullptr)
+    {
+        assert(0);
+        //throwException<std::runtime_error>("Cannot retrieve mediator [%s]. View is null.", mediator_name.c_str());
+    }
+    
+    return _herald->retrieveScript(scriptName);
+}
+
+inline Script* Facade::removeScript(const String& scriptName)
+{
+    if (_herald == nullptr)
+    {
+        assert(0);
+        //throwException<std::runtime_error>("Cannot remove mediator [%s]. View is null.", mediator_name.c_str());
+    }
+    
+    return _herald->removeScript(scriptName);
+}
+
+inline bool Facade::hasScript(const String& scriptName) const
+{
+    if (_herald == nullptr)
+    {
+        assert(0);
+        //throwException<std::runtime_error>("Cannot find mediator [%s]. View is null.", mediator_name.c_str());
+    }
+    
+    return _herald->hasScript(scriptName);
 }
 
 inline void Facade::sendNotification(const String& notification_name, const void* data)
 {
-	Notification notification(notification_name, data);
-	notifyObservers(notification);
+    Notification notification(notification_name, data);
+    notifyObservers(notification);
 }
 
 inline void Facade::notifyObservers(const Notification& notification)
 {
 	if (_view != nullptr)
 		_view->notifyObservers(notification);
+    
+    if (_herald != nullptr)
+        _herald->notifyObservers(notification);
 }
 
 bool Facade::hasCore(const String& name)
 {
-    return FacadeManager::getSingleton().retrieveObjectByName(name) != nullptr;
+    return FacadeManager::getSingletonPtr()->retrieveObjectByName(name) != nullptr;
 }
 
 void Facade::removeCore(const String& name)
 {
-    Facade* pObj = FacadeManager::getSingleton().retrieveObjectByName(name);
+    Facade* pObj = FacadeManager::getSingletonPtr()->retrieveObjectByName(name);
     if (pObj == nullptr)
     {
         return;
@@ -259,12 +288,12 @@ void Facade::removeCore(const String& name)
     Model::removeModel(name);
     Controller::removeController(name);
     View::removeView(name);
-    FacadeManager::getSingleton().destoryObject(pObj);
+    FacadeManager::getSingletonPtr()->destoryObject(pObj);
 }
 
 void Facade::broadcastNotification(const Notification& notification)
 {
-    FacadeManager::ObjectMapIterator mapIterator = FacadeManager::getSingleton().retrieveAllObjects();
+    FacadeManager::ObjectMapIterator mapIterator = FacadeManager::getSingletonPtr()->retrieveAllObjects();
     while (mapIterator.hasMoreElements())
     {
         Facade* pFacade = dynamic_cast<Facade*>(mapIterator.getNext());
@@ -283,10 +312,12 @@ Facade::~Facade(void)
     Model::removeModel(m_szName);
     Controller::removeController(m_szName);
     View::removeView(m_szName);
+    Herald::removeHerald(m_szName);
 
 	_view = nullptr;
 	_model = nullptr;
 	_controller = nullptr;
+    _herald = nullptr;
 	//puremvc_facade_instance_map.remove(_multiton_key);
 }
 //-----------------------------------------------------------------------
@@ -300,15 +331,23 @@ FacadeManager* FacadeManager::getSingletonPtr(void)
 	}
 	return msSingleton;
 }
-FacadeManager& FacadeManager::getSingleton(void)
-{
-	return (*getSingletonPtr());
-}
 //-----------------------------------------------------------------------
 FacadeManager::FacadeManager()
 {
+
 }
 //-----------------------------------------------------------------------
 FacadeManager::~FacadeManager()
 {
+}
+//-----------------------------------------------------------------------
+Facade* FacadeManager::createObject(const String& type, const String& name)
+{
+    if (!u2::FactoryManager::getSingletonPtr()->hasObjectFactory(type))
+    {
+        u2::ObjectFactory* pObjectFactory = new u2::TemplateObjectFactory<u2::Facade>(type);
+        u2::FactoryManager::getSingletonPtr()->addObjectFactory(pObjectFactory);
+    }
+
+    return SimpleObjectManager<Facade>::createObject(type, name);
 }

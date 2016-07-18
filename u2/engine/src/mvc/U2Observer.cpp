@@ -23,10 +23,6 @@ ObserverManager* ObserverManager::getSingletonPtr(void)
 	}
 	return msSingleton;
 }
-ObserverManager& ObserverManager::getSingleton(void)
-{
-	return (*getSingletonPtr());
-}
 //-----------------------------------------------------------------------
 ObserverManager::ObserverManager()
 {
@@ -37,10 +33,11 @@ ObserverManager::~ObserverManager()
 {
 }
 //-----------------------------------------------------------------------
-Observer* ObserverManager::createOrReuseObserver(const String& type, Observer::NotifyCallbackFun callback)
+Observer* ObserverManager::createOrReuseObserver(const String& type
+    , Observer::NotifyCallbackFun callback, void* target)
 {
     Observer* pObserver = createOrReuseObject(type);
-    pObserver->setCallback(callback);
+    pObserver->setCallback(callback, target);
     return pObserver;
 }
 //-----------------------------------------------------------------------

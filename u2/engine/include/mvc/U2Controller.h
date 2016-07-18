@@ -23,16 +23,14 @@ class View;
 class Controller : public Object
 {
 public:
-    typedef std::list<String>                   NotificationNames;
+    //typedef std::list<String>                   NotificationNames;
 
 protected:
     // Local reference to View
     View*                       m_pView;
     // Mapping of Notification names to Command Class references
-    typedef std::map<String, Command*>          CommandMap;
+    typedef std::map<String, String>          CommandMap;
     CommandMap                  m_CommandMap;
-    // Synchronous access
-    U2_AUTO_MUTEX;
 
 private:
     Controller(Controller const&);
@@ -103,7 +101,7 @@ public:
     * @param notification_name the name of the <code>INotification</code>
     * @param command the command of the <code>Command</code>
     */
-    virtual void registerCommand(const String& notification_name, Command* command);
+    virtual void registerCommand(const String& notification_name, const String& cmdType);
 
     /**
     * Check if a Command is registered for a given Notification
@@ -116,18 +114,10 @@ public:
     /**
     * Retrieve an <code>Command</code> instance from the Controller.
     *
-    * @param notification_name the notification of the <code>INotification</code>
-    * @return the <code>Command</code> instance previously registered with the given <code>notification</code>.
-    */
-    virtual const Command& retrieveCommand(const String& notification_name) const;
-
-    /**
-    * Retrieve an <code>Command</code> instance from the Controller.
-    *
     * @param notification_name the name of the <code>INotification</code>
     * @return the <code>Command</code> instance previously registered with the given <code>notification</code>.
     */
-    virtual Command& retrieveCommand(const String& notification_name);
+    virtual String retrieveCommand(const String& notification_name);
 
     /**
     * Remove a previously registered <code>Command</code> to <code>INotification</code> mapping.
@@ -135,14 +125,14 @@ public:
     * @param notification_name the name of the <code>INotification</code> to remove the <code>Command</code> mapping for
     * @return the <code>Command</code> that was removed from the <code>Controller</code>
     */
-    virtual Command* removeCommand(const String& notification_name);
+    virtual String removeCommand(const String& notification_name);
 
     /**
     * List all notification name
     *
     * @return the aggregate container of <code>notification_name</code>.
     */
-    virtual NotificationNames listNotificationNames(void) const;
+    virtual std::list<String> listNotificationNames(void) const;
 
     /**
     * Remove an Controller instance
@@ -164,10 +154,10 @@ template <typename T>
 void Controller::initializeView(const String& name)
 {
     CREATE_FACTORY(T);
-	m_pView = ViewManager::getSingleton().retrieveObjectByName(name);
+	m_pView = ViewManager::getSingletonPtr()->retrieveObjectByName(name);
 	if (m_pView == nullptr)
 	{
-		m_pView = ViewManager::getSingleton().createObject(GET_OBJECT_TYPE(T), name);
+		m_pView = ViewManager::getSingletonPtr()->createObject(GET_OBJECT_TYPE(T), name);
 		m_pView->initializeView();
 	}
 }
@@ -185,24 +175,11 @@ public:
     */
     virtual ~ControllerManager();
 
-public:
-    /** Override standard Singleton retrieval.
-    @remarks
-    Why do we do this? Well, it's because the Singleton
-    implementation is in a .h file, which means it gets compiled
-    into anybody who includes it. This is needed for the
-    Singleton template to work, but we actually only want it
-    compiled into the implementation of the class based on the
-    Singleton, not all of them. If we don't change this, we get
-    link errors when trying to use the Singleton-based class from
-    an outside dll.
-    @par
-    This method just delegates to the template version anyway,
-    but the implementation stays in this single compilation unit,
-    preventing link errors.
-    */
-    static ControllerManager& getSingleton(void);
+    Controller* createObject(const String& type, const String& name);
 
+    Controller* retrieveObjectByName(const String& name);
+
+public:
     /** Override standard Singleton retrieval.
     @remarks
     Why do we do this? Well, it's because the Singleton

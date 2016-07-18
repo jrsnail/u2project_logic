@@ -16,7 +16,7 @@
 U2EG_NAMESPACE_BEGIN
 
 
-class Mediator;
+class ViewComponent;
 class Observer;
 
 
@@ -42,17 +42,15 @@ class Observer;
 class View : public Object
 {
 protected:
-    typedef std::map<String, Mediator*>            MediatorMap;
+    typedef std::map<String, ViewComponent*>       ViewCompMap;
     typedef std::multimap<String, Observer*>       ObserverMap;
-    typedef std::list<String>                      MediatorNames;
+    typedef std::list<String>                      ViewCompNames;
 
 protected:
     // Mapping of Mediator names to Mediator instances
-    MediatorMap                 m_MediatorMap;
+    ViewCompMap                 m_ViewCompMap;
     // Mapping of Notification names to Observer lists
     ObserverMap                 m_ObserverMap;
-    // Synchronous access
-    U2_AUTO_MUTEX;
 
 private:
     View(View const&);
@@ -132,7 +130,7 @@ public:
     *
     * @param mediator a reference to the <code>Mediator</code> instance
     */
-    virtual void registerMediator(Mediator* mediator);
+    virtual void registerViewComp(ViewComponent* mediator);
 
     /**
     * Retrieve an <code>Mediator</code> from the <code>View</code>.
@@ -140,15 +138,7 @@ public:
     * @param mediator_name the name of the <code>Mediator</code> instance to retrieve.
     * @return the <code>Mediator</code> instance previously registered with the given <code>mediator_name</code>.
     */
-    virtual Mediator const& retrieveMediator(const String& mediator_name) const;
-
-    /**
-    * Retrieve an <code>Mediator</code> from the <code>View</code>.
-    *
-    * @param mediator_name the name of the <code>Mediator</code> instance to retrieve.
-    * @return the <code>Mediator</code> instance previously registered with the given <code>mediator_name</code>.
-    */
-    virtual Mediator& retrieveMediator(const String& mediator_name);
+    virtual ViewComponent* retrieveViewComp(const String& viewCompName);
 
     /**
     * Remove an <code>Mediator</code> from the <code>View</code>.
@@ -156,7 +146,7 @@ public:
     * @param mediator_name name of the <code>Mediator</code> instance to be removed.
     * @return the <code>Mediator</code> that was removed from the <code>View</code>
     */
-    virtual Mediator* removeMediator(const String& mediator_name);
+    virtual ViewComponent* removeViewComp(const String& viewCompName);
 
     /**
     * Check if a Mediator is registered or not
@@ -164,14 +154,14 @@ public:
     * @param mediator_name
     * @return whether a Mediator is registered with the given <code>mediator_name</code>.
     */
-    virtual bool hasMediator(const String& mediator_name);
+    virtual bool hasViewComp(const String& viewCompName);
 
     /**
     * List all names of mediator
     *
     * @return the aggregate container of <code>mediator_name</code>.
     */
-    virtual MediatorNames listMediatorNames(void) const;
+    virtual ViewCompNames listViewCompNames(void) const;
 
     /**
     * Remove an View instance
@@ -200,23 +190,6 @@ public:
 	virtual ~ViewManager();
 
 public:
-	/** Override standard Singleton retrieval.
-	@remarks
-	Why do we do this? Well, it's because the Singleton
-	implementation is in a .h file, which means it gets compiled
-	into anybody who includes it. This is needed for the
-	Singleton template to work, but we actually only want it
-	compiled into the implementation of the class based on the
-	Singleton, not all of them. If we don't change this, we get
-	link errors when trying to use the Singleton-based class from
-	an outside dll.
-	@par
-	This method just delegates to the template version anyway,
-	but the implementation stays in this single compilation unit,
-	preventing link errors.
-	*/
-	static ViewManager& getSingleton(void);
-
 	/** Override standard Singleton retrieval.
 	@remarks
 	Why do we do this? Well, it's because the Singleton

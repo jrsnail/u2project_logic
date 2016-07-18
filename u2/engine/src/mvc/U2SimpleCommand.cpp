@@ -25,23 +25,3 @@ void SimpleCommand::go(const Notification& notification)
 {
     (void)notification;
 }
-
-void SimpleCommand::back()
-{
-
-}
-
-bool SimpleCommand::canBack()
-{
-    return false;
-}
-
-String SimpleCommand::serialize()
-{
-    return "";
-}
-
-void SimpleCommand::deserialize(const String& str)
-{
-
-}

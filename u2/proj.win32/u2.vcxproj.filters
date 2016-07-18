@@ -49,12 +49,6 @@
     <Filter Include="src\application">
       <UniqueIdentifier>{f600f433-7df4-427d-befe-127a1fac9586}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\tabinfo">
-      <UniqueIdentifier>{b22a019a-13f4-49b0-8834-7e702ef74876}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\cg">
-      <UniqueIdentifier>{09e430f6-82f2-444b-b23a-9545fbb174c2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="engine\src\core\Win">
       <UniqueIdentifier>{28b14ed7-c72b-4cae-bc82-c6ff5e275b5b}</UniqueIdentifier>
     </Filter>
@@ -63,6 +57,15 @@
     </Filter>
     <Filter Include="engine\src\core\sserver">
       <UniqueIdentifier>{7a346ec8-3491-4bbd-954d-b6e097c8c1a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\include\lua">
+      <UniqueIdentifier>{ca28540d-6930-46f9-afbd-f5c516a487df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\src\lua">
+      <UniqueIdentifier>{19dc160c-5ca6-4ff4-ada5-94a03c6457f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="luabridge">
+      <UniqueIdentifier>{087cd15e-1ec4-41cb-9a89-1a5e5e9daa27}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -132,12 +135,6 @@
     <ClCompile Include="..\engine\src\mvc\U2Facade.cpp">
       <Filter>engine\src\mvc</Filter>
     </ClCompile>
-    <ClCompile Include="..\engine\src\mvc\U2FrameListenerCollection.cpp">
-      <Filter>engine\src\mvc</Filter>
-    </ClCompile>
-    <ClCompile Include="..\engine\src\mvc\U2Mediator.cpp">
-      <Filter>engine\src\mvc</Filter>
-    </ClCompile>
     <ClCompile Include="..\engine\src\mvc\U2Model.cpp">
       <Filter>engine\src\mvc</Filter>
     </ClCompile>
@@ -183,65 +180,8 @@
     <ClCompile Include="..\gamebase\U2CocosFrameListenerCollection.cpp">
       <Filter>gamebase</Filter>
     </ClCompile>
-    <ClCompile Include="..\gamebase\U2CocosMediator.cpp">
-      <Filter>gamebase</Filter>
-    </ClCompile>
     <ClCompile Include="..\gamebase\U2CocosViewComponent.cpp">
       <Filter>gamebase</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\application\ApplicationCommands.cpp">
-      <Filter>src\application</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\application\ApplicationFacade.cpp">
-      <Filter>src\application</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\application\ApplicationMediators.cpp">
-      <Filter>src\application</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\application\ApplicationPrerequisites.cpp">
-      <Filter>src\application</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\application\ApplicationViewComponents.cpp">
-      <Filter>src\application</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\tabinfo\InfoMediator.cpp">
-      <Filter>src\tabinfo</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\tabinfo\TabInfoCommands.cpp">
-      <Filter>src\tabinfo</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\tabinfo\TabInfoFacade.cpp">
-      <Filter>src\tabinfo</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\tabinfo\TabInfoMediator.cpp">
-      <Filter>src\tabinfo</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\tabinfo\TabInfoPrerequisites.cpp">
-      <Filter>src\tabinfo</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\tabinfo\TabInfoViewComponent.cpp">
-      <Filter>src\tabinfo</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\tabinfo\TabMediator.cpp">
-      <Filter>src\tabinfo</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\cg\CgCommands.cpp">
-      <Filter>src\cg</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\cg\CgFacade.cpp">
-      <Filter>src\cg</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\cg\CgMediators.cpp">
-      <Filter>src\cg</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\cg\CgPrerequisites.cpp">
-      <Filter>src\cg</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\cg\CgViewComponents.cpp">
-      <Filter>src\cg</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\GameContexts.cpp">
-      <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\engine\src\core\threading\U2TaskGroup.cpp">
       <Filter>engine\src\core\threading</Filter>
@@ -345,6 +285,153 @@
     <ClCompile Include="..\engine\src\core\U2HttpDownloadClient.cpp">
       <Filter>engine\src\core</Filter>
     </ClCompile>
+    <ClCompile Include="..\engine\src\core\U2FrameListenerCollection.cpp">
+      <Filter>engine\src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\mvc\U2Herald.cpp">
+      <Filter>engine\src\mvc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\mvc\U2LuaScript.cpp">
+      <Filter>engine\src\mvc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\mvc\U2PredefinedLuaTasks.cpp">
+      <Filter>engine\src\mvc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\mvc\U2Script.cpp">
+      <Filter>engine\src\mvc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\lua\lapi.c">
+      <Filter>engine\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\lua\lauxlib.c">
+      <Filter>engine\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\lua\lbaselib.c">
+      <Filter>engine\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\lua\lcode.c">
+      <Filter>engine\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\lua\ldblib.c">
+      <Filter>engine\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\lua\ldebug.c">
+      <Filter>engine\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\lua\ldo.c">
+      <Filter>engine\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\lua\ldump.c">
+      <Filter>engine\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\lua\lfunc.c">
+      <Filter>engine\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\lua\lgc.c">
+      <Filter>engine\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\lua\linit.c">
+      <Filter>engine\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\lua\liolib.c">
+      <Filter>engine\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\lua\llex.c">
+      <Filter>engine\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\lua\lmathlib.c">
+      <Filter>engine\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\lua\lmem.c">
+      <Filter>engine\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\lua\loadlib.c">
+      <Filter>engine\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\lua\lobject.c">
+      <Filter>engine\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\lua\lopcodes.c">
+      <Filter>engine\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\lua\loslib.c">
+      <Filter>engine\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\lua\lparser.c">
+      <Filter>engine\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\lua\lstate.c">
+      <Filter>engine\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\lua\lstring.c">
+      <Filter>engine\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\lua\lstrlib.c">
+      <Filter>engine\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\lua\ltable.c">
+      <Filter>engine\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\lua\ltablib.c">
+      <Filter>engine\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\lua\ltm.c">
+      <Filter>engine\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\lua\lua.c">
+      <Filter>engine\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\lua\lundump.c">
+      <Filter>engine\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\lua\lvm.c">
+      <Filter>engine\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\lua\lzio.c">
+      <Filter>engine\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\lua\print.c">
+      <Filter>engine\src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gamebase\U2CocosLuaScript.cpp">
+      <Filter>gamebase</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gamebase\U2CocosPrerequisites.cpp">
+      <Filter>gamebase</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\application\AppCommands.cpp">
+      <Filter>src\application</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\application\AppFacade.cpp">
+      <Filter>src\application</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\application\AppLuaTasks.cpp">
+      <Filter>src\application</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\application\AppPrerequisites.cpp">
+      <Filter>src\application</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\application\AppViewComponents.cpp">
+      <Filter>src\application</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\U2Version.cpp">
+      <Filter>engine\src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\luabridge\U2ConstantBridge.cpp">
+      <Filter>luabridge</Filter>
+    </ClCompile>
+    <ClCompile Include="..\luabridge\U2DataModelBridge.cpp">
+      <Filter>luabridge</Filter>
+    </ClCompile>
+    <ClCompile Include="..\luabridge\U2GameBridge.cpp">
+      <Filter>luabridge</Filter>
+    </ClCompile>
+    <ClCompile Include="..\luabridge\U2LuaScriptBridge.cpp">
+      <Filter>luabridge</Filter>
+    </ClCompile>
+    <ClCompile Include="..\luabridge\U2MvcBridge.cpp">
+      <Filter>luabridge</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -366,12 +453,6 @@
       <Filter>engine\include\mvc</Filter>
     </ClInclude>
     <ClInclude Include="..\engine\include\mvc\U2Facade.h">
-      <Filter>engine\include\mvc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\engine\include\mvc\U2FrameListenerCollection.h">
-      <Filter>engine\include\mvc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\engine\include\mvc\U2Mediator.h">
       <Filter>engine\include\mvc</Filter>
     </ClInclude>
     <ClInclude Include="..\engine\include\mvc\U2Model.h">
@@ -509,68 +590,11 @@
     <ClInclude Include="..\gamebase\U2CocosFrameListenerCollection.h">
       <Filter>gamebase</Filter>
     </ClInclude>
-    <ClInclude Include="..\gamebase\U2CocosMediator.h">
-      <Filter>gamebase</Filter>
-    </ClInclude>
     <ClInclude Include="..\gamebase\U2CocosViewComponent.h">
       <Filter>gamebase</Filter>
     </ClInclude>
     <ClInclude Include="..\gamebase\U2GameBase.h">
       <Filter>gamebase</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\application\ApplicationCommands.h">
-      <Filter>src\application</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\application\ApplicationFacade.h">
-      <Filter>src\application</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\application\ApplicationMediators.h">
-      <Filter>src\application</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\application\ApplicationPrerequisites.h">
-      <Filter>src\application</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\application\ApplicationViewComponents.h">
-      <Filter>src\application</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\tabinfo\InfoMediator.h">
-      <Filter>src\tabinfo</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\tabinfo\TabInfoCommands.h">
-      <Filter>src\tabinfo</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\tabinfo\TabInfoFacade.h">
-      <Filter>src\tabinfo</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\tabinfo\TabInfoMediator.h">
-      <Filter>src\tabinfo</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\tabinfo\TabInfoPrerequisites.h">
-      <Filter>src\tabinfo</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\tabinfo\TabInfoViewComponent.h">
-      <Filter>src\tabinfo</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\tabinfo\TabMediator.h">
-      <Filter>src\tabinfo</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\cg\CgCommands.h">
-      <Filter>src\cg</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\cg\CgFacade.h">
-      <Filter>src\cg</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\cg\CgMediators.h">
-      <Filter>src\cg</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\cg\CgPrerequisites.h">
-      <Filter>src\cg</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\cg\CgViewComponents.h">
-      <Filter>src\cg</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\GameContexts.h">
-      <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\engine\include\core\threading\U2TaskGroup.h">
       <Filter>engine\include\core\threading</Filter>
@@ -697,6 +721,132 @@
     </ClInclude>
     <ClInclude Include="..\engine\include\core\U2HttpDownloadClient.h">
       <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2FrameListenerCollection.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\mvc\U2Herald.h">
+      <Filter>engine\include\mvc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\mvc\U2LuaScript.h">
+      <Filter>engine\include\mvc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\mvc\U2PredefinedLuaTasks.h">
+      <Filter>engine\include\mvc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\mvc\U2Script.h">
+      <Filter>engine\include\mvc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\lua\lapi.h">
+      <Filter>engine\include\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\lua\lauxlib.h">
+      <Filter>engine\include\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\lua\lcode.h">
+      <Filter>engine\include\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\lua\ldebug.h">
+      <Filter>engine\include\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\lua\ldo.h">
+      <Filter>engine\include\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\lua\lfunc.h">
+      <Filter>engine\include\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\lua\lgc.h">
+      <Filter>engine\include\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\lua\llex.h">
+      <Filter>engine\include\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\lua\llimits.h">
+      <Filter>engine\include\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\lua\lmem.h">
+      <Filter>engine\include\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\lua\lobject.h">
+      <Filter>engine\include\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\lua\lopcodes.h">
+      <Filter>engine\include\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\lua\lparser.h">
+      <Filter>engine\include\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\lua\lstate.h">
+      <Filter>engine\include\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\lua\lstring.h">
+      <Filter>engine\include\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\lua\ltable.h">
+      <Filter>engine\include\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\lua\ltm.h">
+      <Filter>engine\include\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\lua\lua.h">
+      <Filter>engine\include\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\lua\luaconf.h">
+      <Filter>engine\include\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\lua\lualib.h">
+      <Filter>engine\include\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\lua\lundump.h">
+      <Filter>engine\include\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\lua\lvm.h">
+      <Filter>engine\include\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\lua\lzio.h">
+      <Filter>engine\include\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gamebase\U2CocosLuaScript.h">
+      <Filter>gamebase</Filter>
+    </ClInclude>
+    <ClInclude Include="..\gamebase\U2CocosPrerequisites.h">
+      <Filter>gamebase</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\application\AppCommands.h">
+      <Filter>src\application</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\application\AppFacade.h">
+      <Filter>src\application</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\application\AppLuaTasks.h">
+      <Filter>src\application</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\application\AppPrerequisites.h">
+      <Filter>src\application</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\application\AppViewComponents.h">
+      <Filter>src\application</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2Version.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\luabridge\U2AllLuaBridge.h">
+      <Filter>luabridge</Filter>
+    </ClInclude>
+    <ClInclude Include="..\luabridge\U2ConstantBridge.h">
+      <Filter>luabridge</Filter>
+    </ClInclude>
+    <ClInclude Include="..\luabridge\U2DataModelBridge.h">
+      <Filter>luabridge</Filter>
+    </ClInclude>
+    <ClInclude Include="..\luabridge\U2GameBridge.h">
+      <Filter>luabridge</Filter>
+    </ClInclude>
+    <ClInclude Include="..\luabridge\U2LuaScriptBridge.h">
+      <Filter>luabridge</Filter>
+    </ClInclude>
+    <ClInclude Include="..\luabridge\U2MvcBridge.h">
+      <Filter>luabridge</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

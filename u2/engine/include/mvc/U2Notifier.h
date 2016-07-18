@@ -10,6 +10,7 @@
 
 
 #include "U2Core.h"
+#include "cocos2d.h"
 
 
 U2EG_NAMESPACE_BEGIN

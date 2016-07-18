@@ -37,9 +37,9 @@ u2::Context* ContextQueue::top()
     return (it == m_queue.end()) ? nullptr : *it;
 }
 //-----------------------------------------------------------------------
-bool ContextQueue::hasContext(const u2::String& name)
+bool ContextQueue::hasContext(const String& name)
 {
-    Context* pContext = ContextManager::getSingleton().retrieveObjectByName(name);
+    Context* pContext = ContextManager::getSingletonPtr()->retrieveObjectByName(name);
     return hasContext(pContext);
 }
 //-----------------------------------------------------------------------
@@ -60,9 +60,9 @@ bool ContextQueue::hasContext(const u2::Context* context)
     return false;
 }
 //-----------------------------------------------------------------------
-void ContextQueue::erase(const u2::String& name)
+void ContextQueue::erase(const String& name)
 {
-    Context* pContext = ContextManager::getSingleton().retrieveObjectByName(name);
+    Context* pContext = ContextManager::getSingletonPtr()->retrieveObjectByName(name);
     erase(pContext);
 }
 //-----------------------------------------------------------------------

@@ -15,37 +15,35 @@ U2EG_NAMESPACE_USING
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
 Context::Context(const String& type, const String& name)
-    : Object(type, name)
+    : u2::Object(type, name)
     , m_pParent(nullptr)
 {
-
 }
 //-----------------------------------------------------------------------
 Context::~Context()
 {
 }
 //-----------------------------------------------------------------------
-void Context::initialize(const u2::String& facadeName
-    , const u2::String& mediatorClass, const u2::String& mediatorName
-    , const u2::String& viewCompClass, const u2::String& viewCompName)
+void Context::initialize(const String& facadeName
+    , const String& viewCompClass, const String& viewCompName
+    , const String& scriptName)
 {
     m_szFacadeName = facadeName;
-    m_szMediatorClass = mediatorClass;
-    m_szMediatorName = mediatorName;
     m_szViewCompClass = viewCompClass;
     m_szViewCompName = viewCompName;
+    m_szScriptName = scriptName;
 }
 //-----------------------------------------------------------------------
 Context* Context::createChild(const String& type, const String& name
-    , const u2::String& facadeName
-    , const u2::String& mediatorClass, const u2::String& mediatorName
-    , const u2::String& viewCompClass, const u2::String& viewCompName)
+    , const String& facadeName
+    , const String& viewCompClass, const String& viewCompName
+    , const String& uiName)
 {
-    u2::Context* pChild = ContextManager::getSingleton().createObject(
+    u2::Context* pChild = ContextManager::getSingletonPtr()->createObject(
         type, name
         , facadeName
-        , mediatorClass, mediatorName
         , viewCompClass, viewCompName
+        , uiName
         );
     this->addChild(pChild);
     pChild->setParent(this);
@@ -91,7 +89,7 @@ void Context::destroyChild(Context* child)
     if (it != m_children.end())
     {
         m_children.erase(it);
-        ContextManager::getSingleton().destoryObject(child);
+        ContextManager::getSingletonPtr()->destoryObject(child);
     }
 }
 //-----------------------------------------------------------------------
@@ -120,10 +118,6 @@ ContextManager* ContextManager::getSingletonPtr(void)
 	}
 	return msSingleton;
 }
-ContextManager& ContextManager::getSingleton(void)
-{
-	return (*getSingletonPtr());
-}
 //-----------------------------------------------------------------------
 ContextManager::ContextManager()
 {
@@ -135,13 +129,12 @@ ContextManager::~ContextManager()
 }
 //-----------------------------------------------------------------------
 Context* ContextManager::createObject(const String& type, const String& name
-    , const u2::String& facadeName
-    , const u2::String& mediatorClass, const u2::String& mediatorName
-    , const u2::String& viewCompClass, const u2::String& viewCompName)
+    , const String& facadeName
+    , const String& viewCompClass, const String& viewCompName
+    , const String& scriptName)
 {
     Context* pContext = createObject(type, name);
-    pContext->initialize(facadeName
-        , mediatorClass, mediatorName, viewCompClass, viewCompName);
+    pContext->initialize(facadeName, viewCompClass, viewCompName, scriptName);
     return pContext;
 }
 //-----------------------------------------------------------------------

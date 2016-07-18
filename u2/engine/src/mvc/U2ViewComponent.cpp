@@ -10,13 +10,14 @@
 #include "U2ViewComponent.h"
 
 
+
 U2EG_NAMESPACE_USING
 
 
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
 ViewComponent::ViewComponent(const String& type, const String& name)
-    : Object(type, name)
+    : u2::Object(type, name)
     , m_ViewCompState(ViewCompState::VCS_Unloaded)
 {
 }
@@ -25,6 +26,18 @@ ViewComponent::~ViewComponent(void)
 {
     m_listeners.clear();
 }
+/*
+//-----------------------------------------------------------------------
+void ViewComponent::initializeUiName(const String& uiName)
+{
+    m_szUiName = uiName;
+}
+//-----------------------------------------------------------------------
+const String& ViewComponent::getUiName() const
+{
+    return m_szUiName;
+}
+*/
 //-----------------------------------------------------------------------
 void ViewComponent::_changeViewCompState(ViewCompState newState)
 {
@@ -35,16 +48,6 @@ void ViewComponent::_changeViewCompState(ViewCompState newState)
         ++it)
     {
         (*it)->onViewCompStateChanged(this, newState);
-    }
-}
-//-----------------------------------------------------------------------
-void ViewComponent::_emitCommonStateChange(const String& objName, const String& msg)
-{
-    for (ListenerList::iterator it = m_listeners.begin();
-        it != m_listeners.end();
-        ++it)
-    {
-        (*it)->onCommonStateChanged(this, objName, msg);
     }
 }
 //-----------------------------------------------------------------------
@@ -66,6 +69,22 @@ void ViewComponent::removeListener(Listener* listener)
     }
 }
 //-----------------------------------------------------------------------
+inline ViewComponent::NotificationNames ViewComponent::listNotificationInterests(void) const
+{
+    return std::list<String>();
+}
+//-----------------------------------------------------------------------
+inline void ViewComponent::handleNotification(const Notification& notification)
+{
+    (void)notification;
+}
+//-----------------------------------------------------------------------
+inline void ViewComponent::onRegister(void)
+{ }
+//-----------------------------------------------------------------------
+inline void ViewComponent::onRemove(void)
+{ }
+//-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
 template<> ViewComponentManager* Singleton<ViewComponentManager>::msSingleton = 0;
 ViewComponentManager* ViewComponentManager::getSingletonPtr(void)
@@ -75,10 +94,6 @@ ViewComponentManager* ViewComponentManager::getSingletonPtr(void)
 		msSingleton = new ViewComponentManager;
 	}
 	return msSingleton;
-}
-ViewComponentManager& ViewComponentManager::getSingleton(void)
-{
-	return (*getSingletonPtr());
 }
 //-----------------------------------------------------------------------
 ViewComponentManager::ViewComponentManager()

@@ -70,7 +70,7 @@ T* SimpleObjectManager<T>::createObject(const String& type, const String& name)
     // As simple object manager, we index object with name which should be an unique key
     assert(SimpleObjectManager<T>::retrieveObjectByName(name) == nullptr);
     
-    T* pObj = dynamic_cast<T*>(ObjectCollection::getSingleton().createObject(type, name));
+    T* pObj = dynamic_cast<T*>(ObjectCollection::getSingletonPtr()->createObject(type, name));
     if (pObj != nullptr)
     {
         m_NamedMap[pObj->getName()] = pObj;
@@ -85,7 +85,15 @@ void SimpleObjectManager<T>::destoryObject(T* obj)
     // manager can only destroy objects which managed by itself
     assert(SimpleObjectManager<T>::retrieveObjectByName(obj->getName()) != nullptr);
     
-    ObjectCollection::getSingleton().destoryObject(obj);
+    // destory in SimpleObjectManager
+    typename NamedObjectMap::iterator it = m_NamedMap.find(obj->getName());
+    if (it != m_NamedMap.end())
+    {
+        m_NamedMap.erase(it);
+    }
+
+    // destory in ObjectCollection
+    ObjectCollection::getSingletonPtr()->destoryObject(obj);
 }
 //-----------------------------------------------------------------------
 template <class T>

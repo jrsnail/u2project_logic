@@ -11,12 +11,13 @@
 
 #include "U2Core.h"
 #include "U2Notifier.h"
-#include "U2Mediator.h"
+#include "U2ViewComponent.h"
 #include "U2Command.h"
 #include "U2Proxy.h"
 #include "U2Model.h"
 #include "U2Controller.h"
 #include "U2View.h"
+#include "U2Herald.h"
 
 
 U2EG_NAMESPACE_BEGIN
@@ -25,6 +26,7 @@ U2EG_NAMESPACE_BEGIN
 class Model;
 class View;
 class Controller;
+class Herald;
 
 
 /**
@@ -145,7 +147,12 @@ protected:
 
 	template <typename T>
 	void initializeView(const String& name);
-
+    
+    virtual void initializeHerald(void);
+    
+    template <typename T>
+    void initializeHerald(const String& name);
+    
 	
 
 public:
@@ -155,7 +162,7 @@ public:
 	* @param notification_name the name of the <code>INotification</code> to associate the <code>Command</code> with
 	* @param command a reference to the instance of the <code>Command</code>
 	*/
-	virtual void registerCommand(const String& notification_name, Command* command);
+    virtual void registerCommand(const String& notification_name, const String& cmdType);
 
 	/**
 	* Remove a previously registered <code>Command</code> to <code>INotification</code> mapping from the Controller.
@@ -163,15 +170,7 @@ public:
 	* @param notification_name the name of the <code>INotification</code> to remove the <code>Command</code> mapping for
 	* @return the <code>Command</code> that was removed from the <code>Controller</code>
 	*/
-	virtual Command* removeCommand(const String& notification_name);
-
-	/**
-	* Retrieve an <code>Command</code> instance from the Controller.
-	*
-	* @param notification_name the notification of the <code>INotification</code>
-	* @return the <code>Command</code> instance previously registered with the given <code>notification</code>.
-	*/
-	virtual Command const& retrieveCommand(const String& notification_name) const;
+	virtual String removeCommand(const String& notification_name);
 
 	/**
 	* Retrieve an <code>Command</code> instance from the Controller.
@@ -179,7 +178,7 @@ public:
 	* @param notification_name the name of the <code>INotification</code>
 	* @return the <code>Command</code> instance previously registered with the given <code>notification</code>.
 	*/
-	virtual Command& retrieveCommand(const String& notification_name);
+    virtual String retrieveCommand(const String& notification_name);
 
 	/**
 	* Check if a Command is registered for a given Notification
@@ -203,21 +202,10 @@ public:
 	* @param proxy_name the name of the proxy to be retrieved.
 	* @return the <code>Proxy</code> instance previously registered with the given <code>proxyName</code>.
 	*/
-	virtual Proxy const& retrieveProxy(const String& proxy_name) const;
-
-	/**
-	* Retrieve an <code>Proxy</code> from the <code>Model</code> by name.
-	*
-	* @param proxy_name the name of the proxy to be retrieved.
-	* @return the <code>Proxy</code> instance previously registered with the given <code>proxyName</code>.
-	*/
-	virtual Proxy& retrieveProxy(const String& proxy_name);
+	virtual Proxy* retrieveProxy(const String& proxy_name);
 
     template <typename T>
-    const T& retrieveProxy(const String& proxy_name) const;
-
-    template <typename T>
-    T& retrieveProxy(const String& proxy_name);
+    T* retrieveProxy(const String& proxy_name);
 
 	/**
 	* Remove an <code>Proxy</code> from the <code>Model</code> by name.
@@ -240,7 +228,7 @@ public:
 	*
 	* @param mediator a reference to the <code>Mediator</code>
 	*/
-	virtual void registerMediator(Mediator* mediator);
+	virtual void registerViewComp(ViewComponent* viewComp);
 
 	/**
 	* Retrieve an <code>Mediator</code> from the <code>View</code>.
@@ -248,15 +236,7 @@ public:
 	* @param mediator_name
 	* @return the <code>Mediator</code> previously registered with the given <code>mediatorName</code>.
 	*/
-	virtual Mediator const& retrieveMediator(const String& mediator_name) const;
-
-	/**
-	* Retrieve an <code>Mediator</code> from the <code>View</code>.
-	*
-	* @param mediator_name
-	* @return the <code>Mediator</code> previously registered with the given <code>mediatorName</code>.
-	*/
-	virtual Mediator& retrieveMediator(const String& mediator_name);
+    virtual ViewComponent* retrieveViewComp(const String& viewCompName);
 
 	/**
 	* Remove an <code>Mediator</code> from the <code>View</code>.
@@ -264,7 +244,7 @@ public:
 	* @param mediator_name name of the <code>Mediator</code> to be removed.
 	* @return the <code>Mediator</code> that was removed from the <code>View</code>
 	*/
-	virtual Mediator* removeMediator(const String& mediator_name);
+    virtual ViewComponent* removeViewComp(const String& viewCompName);
 
 	/**
 	* Check if a Mediator is registered or not
@@ -272,10 +252,41 @@ public:
 	* @param mediator_name
 	* @return whether a Mediator is registered with the given <code>mediatorName</code>.
 	*/
-	virtual bool hasMediator(const String& mediator_name) const;
-
-	/**
-	* Create and send an <code>INotification</code>.
+    virtual bool hasViewComp(const String& viewCompName) const;
+    
+    /**
+     * Register a <code>Script</code> with the <code>Herald</code>.
+     *
+     * @param mediator a reference to the <code>Script</code>
+     */
+    virtual void registerScript(Script* script);
+    
+    /**
+     * Retrieve an <code>Script</code> from the <code>Herald</code>.
+     *
+     * @param mediator_name
+     * @return the <code>Script</code> previously registered with the given <code>scriptName</code>.
+     */
+    virtual Script* retrieveScript(const String& scriptName);
+    
+    /**
+     * Remove an <code>Script</code> from the <code>Herald</code>.
+     *
+     * @param scriptName name of the <code>Script</code> to be removed.
+     * @return the <code>Script</code> that was removed from the <code>Herald</code>
+     */
+    virtual Script* removeScript(const String& scriptName);
+    
+    /**
+     * Check if a Script is registered or not
+     *
+     * @param scriptName
+     * @return whether a Script is registered with the given <code>scriptName</code>.
+     */
+    virtual bool hasScript(const String& scriptName) const;
+    
+    /**
+     * Create and send an <code>INotification</code>.
 	*
 	* <P>
 	* Keeps us from having to construct new notification
@@ -345,6 +356,7 @@ protected:
 	Controller* _controller;
 	Model* _model;
 	View* _view;
+    Herald* _herald;
 };
 
 
@@ -363,24 +375,9 @@ public:
     */
     virtual ~FacadeManager();
 
-public:
-    /** Override standard Singleton retrieval.
-    @remarks
-    Why do we do this? Well, it's because the Singleton
-    implementation is in a .h file, which means it gets compiled
-    into anybody who includes it. This is needed for the
-    Singleton template to work, but we actually only want it
-    compiled into the implementation of the class based on the
-    Singleton, not all of them. If we don't change this, we get
-    link errors when trying to use the Singleton-based class from
-    an outside dll.
-    @par
-    This method just delegates to the template version anyway,
-    but the implementation stays in this single compilation unit,
-    preventing link errors.
-    */
-    static FacadeManager& getSingleton(void);
+    virtual Facade* createObject(const String& type, const String& name = BLANK);
 
+public:
     /** Override standard Singleton retrieval.
     @remarks
     Why do we do this? Well, it's because the Singleton
@@ -406,10 +403,10 @@ public:
 template <typename T>
 void Facade::initializeController(const String& name)
 {
-	_controller = ControllerManager::getSingleton().retrieveObjectByName(name);
+	_controller = ControllerManager::getSingletonPtr()->retrieveObjectByName(name);
 	if (_controller == nullptr)
 	{
-		_controller = ControllerManager::getSingleton().createObject(GET_OBJECT_TYPE(T), name);
+		_controller = ControllerManager::getSingletonPtr()->createObject(GET_OBJECT_TYPE(T), name);
 		_controller->initializeController();
 	}
 }
@@ -417,10 +414,10 @@ void Facade::initializeController(const String& name)
 template <typename T>
 void Facade::initializeModel(const String& name)
 {
-	_model = ModelManager::getSingleton().retrieveObjectByName(name);
+	_model = ModelManager::getSingletonPtr()->retrieveObjectByName(name);
 	if (_model == nullptr)
 	{
-		_model = ModelManager::getSingleton().createObject(GET_OBJECT_TYPE(T), name);
+		_model = ModelManager::getSingletonPtr()->createObject(GET_OBJECT_TYPE(T), name);
 		_model->initializeModel();
 	}
 }
@@ -428,33 +425,38 @@ void Facade::initializeModel(const String& name)
 template <typename T>
 void Facade::initializeView(const String& name)
 {
-	_view = ViewManager::getSingleton().retrieveObjectByName(name);
+	_view = ViewManager::getSingletonPtr()->retrieveObjectByName(name);
 	if (_view == nullptr)
 	{
-		_view = ViewManager::getSingleton().createObject(GET_OBJECT_TYPE(T), name);
+		_view = ViewManager::getSingletonPtr()->createObject(GET_OBJECT_TYPE(T), name);
 		_view->initializeView();
 	}
+}
+//-----------------------------------------------------------------------
+template <typename T>
+void Facade::initializeHerald(const String& name)
+{
+    _herald = HeraldManager::getSingletonPtr()->retrieveObjectByName(name);
+    if (_herald == nullptr)
+    {
+        _herald = HeraldManager::getSingletonPtr()->createObject(GET_OBJECT_TYPE(T), name);
+        _herald->initializeHerald();
+    }
 }
 //-----------------------------------------------------------------------
 template <typename T>
 T* Facade::createFacade(const String& name)
 {
 	CREATE_FACTORY(T);
-	T* pFacade = dynamic_cast<T*>(FacadeManager::getSingleton().createObject(GET_OBJECT_TYPE(T), name));
+	T* pFacade = dynamic_cast<T*>(FacadeManager::getSingletonPtr()->createObject(GET_OBJECT_TYPE(T), name));
 	pFacade->initializeFacade();
 	return pFacade;
 }
 //-----------------------------------------------------------------------
 template <typename T>
-const T& Facade::retrieveProxy(const String& proxy_name) const
+T* Facade::retrieveProxy(const String& proxy_name)
 {
-	return dynamic_cast<const T&>(retrieveProxy(proxy_name));
-}
-//-----------------------------------------------------------------------
-template <typename T>
-T& Facade::retrieveProxy(const String& proxy_name)
-{
-	return dynamic_cast<T&>(retrieveProxy(proxy_name));
+	return dynamic_cast<T*>(retrieveProxy(proxy_name));
 }
 
 

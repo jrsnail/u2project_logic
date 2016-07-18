@@ -46,7 +46,8 @@ public:
     virtual void go(const Notification& notification) override;
 
 protected:
-    void _createMediator(const u2::Context* context, ContextQueue::eTransType type, const u2::Context* to);
+    void _createMediator(const u2::Context* from, const u2::Context* parent
+        , ContextQueue::eTransType type, const u2::Context* cur);
 };
 
 

@@ -8,9 +8,9 @@
 
 #include "U2View.h"
 
-#include "U2Mediator.h"
 #include "U2Observer.h"
 #include "U2PredefinedPrerequisites.h"
+#include "U2ViewComponent.h"
 
 
 U2EG_NAMESPACE_USING
@@ -27,8 +27,6 @@ inline void View::initializeView(void)
 
 inline void View::registerObserver(const String& notification_name, Observer* observer)
 {
-    U2_LOCK_AUTO_MUTEX;
-
     ObserverMap::value_type item(notification_name, observer);
 
     m_ObserverMap.insert(item);
@@ -44,9 +42,6 @@ void View::notifyObservers(Notification const& notification)
 
     do
     {
-        // Scope lock for safety
-        U2_LOCK_AUTO_MUTEX;
-
         // Find observer by name
         ObserverMap::iterator result = m_ObserverMap.find(name);
 
@@ -63,23 +58,18 @@ void View::notifyObservers(Notification const& notification)
 
 void View::removeObserver(const String& notification_name, const Object* const target)
 {
-    U2_LOCK_AUTO_MUTEX;
-
-    ObserverMap::iterator result = m_ObserverMap.find(notification_name);
-
-    for (; result != m_ObserverMap.end(); ++result)
+    typedef std::pair<ObserverMap::iterator, ObserverMap::iterator>   Pair;
+    Pair pair = m_ObserverMap.equal_range(notification_name);
+    for (ObserverMap::iterator it = pair.first; it != pair.second; it++)
     {
-        if (result->first != notification_name)
-            continue;
-
-        ObserverMap::value_type::second_type observer = result->second;
-        if (observer->compareNotifyTarget(target))
+        Observer* pObserver = it->second;
+        if (pObserver->compareNotifyTarget(target))
         {
-            m_ObserverMap.erase(result);
-            bool bExist = (ObserverManager::getSingleton().retrieveObjectByGuid(observer->getGuid()) != nullptr);
+            m_ObserverMap.erase(it);
+            bool bExist = (ObserverManager::getSingletonPtr()->retrieveObjectByGuid(pObserver->getGuid()) != nullptr);
             if (bExist)
             {
-                ObserverManager::getSingleton().recycleObject(observer);
+                ObserverManager::getSingletonPtr()->recycleObject(pObserver);
             }
             else
             {
@@ -90,112 +80,103 @@ void View::removeObserver(const String& notification_name, const Object* const t
     }
 }
 
-void View::registerMediator(Mediator* mediator)
+void View::registerViewComp(ViewComponent* viewComp)
 {
     do
     {
-        U2_LOCK_AUTO_MUTEX;
-
         // donot allow re-registration (you must to removeMediator fist)
-        if (m_MediatorMap.find(mediator->getName()) != m_MediatorMap.end())
+        if (m_ViewCompMap.find(viewComp->getName()) != m_ViewCompMap.end())
             return;
 
-        mediator->initializeNotifier(m_szName);
+        viewComp->initializeNotifier(m_szName);
 
         // Register the Mediator for retrieval by name
-        m_MediatorMap.insert(std::make_pair(mediator->getName(), mediator));
+        m_ViewCompMap.insert(std::make_pair(viewComp->getName(), viewComp));
     } while (false);
 
-    Mediator::NotificationNames result(mediator->listNotificationInterests());
-    for (Mediator::NotificationNames::iterator itr = result.begin();
-		itr != result.end();
-		++itr)
+    ViewComponent::NotificationNames result(viewComp->listNotificationInterests());
+    for (ViewComponent::NotificationNames::iterator itr = result.begin();
+        itr != result.end();
+        ++itr)
     {
         // Register Mediator as Observer for its list of Notification interests
         // Create Observer referencing this mediator's handlNotification method
-        Observer *observer = ObserverManager::getSingleton().createOrReuseObserver(OT_Observer
-            , std::bind(&Mediator::handleNotification, mediator, std::placeholders::_1));
-		registerObserver(*itr, observer);
+        Observer *observer = ObserverManager::getSingletonPtr()->createOrReuseObserver(OT_Observer
+            , std::bind(&ViewComponent::handleNotification, viewComp, std::placeholders::_1)
+            , viewComp);
+        registerObserver(*itr, observer);
     }
+    
     // alert the mediator that it has been registered
-    mediator->onRegister();
+    viewComp->onRegister();
 }
 
-inline Mediator const& View::retrieveMediator(const String& mediator_name) const
+inline ViewComponent* View::retrieveViewComp(const String& viewCompName)
 {
-    return const_cast<Mediator const&>(static_cast<View const&>(*this).retrieveMediator(mediator_name));
-}
-
-inline Mediator& View::retrieveMediator(const String& mediator_name)
-{
-    U2_LOCK_AUTO_MUTEX;
-
-    MediatorMap::const_iterator result = m_MediatorMap.find(mediator_name);
-    if (result == m_MediatorMap.end())
+    ViewCompMap::const_iterator result = m_ViewCompMap.find(viewCompName);
+    if (result == m_ViewCompMap.end())
     {
         assert(0);
         //throwException<std::runtime_error>("Cannot find any mediator with name: [%s].", mediator_name.c_str());
     }
 
-    return *result->second;
+    return result->second;
 }
 
-Mediator* View::removeMediator(const String& mediator_name)
+ViewComponent* View::removeViewComp(const String& viewCompName)
 {
-    MediatorMap::value_type::second_type mediator = NULL;
+    ViewCompMap::value_type::second_type viewComp = NULL;
 
     do
     {
-        U2_LOCK_AUTO_MUTEX;
         // Retrieve the named mediator
-        MediatorMap::iterator result = m_MediatorMap.find(mediator_name);
-        if (result == m_MediatorMap.end())
+        ViewCompMap::iterator result = m_ViewCompMap.find(viewCompName);
+        if (result == m_ViewCompMap.end())
             break;
         // Get mediator object
-        mediator = result->second;
+        viewComp = result->second;
         // remove the mediator from the map
-        m_MediatorMap.erase(result);
+        m_ViewCompMap.erase(result);
     } while (false);
 
-    if (mediator != NULL)
+    if (viewComp != NULL)
     {
         // for every notification this mediator is interested in...
-        Mediator::NotificationNames result(mediator->listNotificationInterests());
-        for (Mediator::NotificationNames::iterator iter = result.begin();
+        ViewComponent::NotificationNames result(viewComp->listNotificationInterests());
+        for (ViewComponent::NotificationNames::iterator iter = result.begin();
             iter != result.end();
             ++iter)
         {
             // remove the observer linking the mediator to the notification interest
-            removeObserver(*iter, (Observer*)mediator);
+            removeObserver(*iter, (Observer*)viewComp);
         }
         // Notify that it was removed
-        mediator->onRemove();
+        viewComp->onRemove();
     }
-    return mediator;
+    return viewComp;
 }
 
-inline bool View::hasMediator(const String& mediator_name)
+inline bool View::hasViewComp(const String& viewCompName)
 {
-    U2_LOCK_AUTO_MUTEX;
-    return m_MediatorMap.find(mediator_name) != m_MediatorMap.end();
+    return m_ViewCompMap.find(viewCompName) != m_ViewCompMap.end();
 }
 
 void View::removeView(const String& name)
 {
-    View* pObj = ViewManager::getSingleton().retrieveObjectByName(name);
+    View* pObj = ViewManager::getSingletonPtr()->retrieveObjectByName(name);
     if (pObj == nullptr)
     {
         return;
     }
-    ViewManager::getSingleton().destoryObject(pObj);
+    ViewManager::getSingletonPtr()->destoryObject(pObj);
 }
 
-View::MediatorNames View::listMediatorNames(void) const
+View::ViewCompNames View::listViewCompNames(void) const
 {
-    MediatorNames names;
+    ViewCompNames names;
 
-    for (MediatorMap::const_iterator it = m_MediatorMap.begin();
-        it != m_MediatorMap.end(); 
+    for (ViewCompMap::const_iterator it = m_ViewCompMap.begin();
+        it != m_ViewCompMap.end(); 
         it++)
     {
         names.push_back(it->first);
@@ -211,10 +192,10 @@ View::~View(void)
     for (; iter != m_ObserverMap.end(); ++iter)
     {
         ObserverMap::value_type::second_type observer = iter->second;
-        bool bExist = (ObserverManager::getSingleton().retrieveObjectByGuid(observer->getGuid()) != nullptr);
+        bool bExist = (ObserverManager::getSingletonPtr()->retrieveObjectByGuid(observer->getGuid()) != nullptr);
         if (bExist)
         {
-            ObserverManager::getSingleton().recycleObject(observer);
+            ObserverManager::getSingletonPtr()->recycleObject(observer);
         }
         else
         {
@@ -222,7 +203,7 @@ View::~View(void)
         }
     }
     m_ObserverMap.clear();
-    m_MediatorMap.clear();
+    m_ViewCompMap.clear();
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
@@ -234,10 +215,6 @@ ViewManager* ViewManager::getSingletonPtr(void)
 		msSingleton = new ViewManager;
 	}
 	return msSingleton;
-}
-ViewManager& ViewManager::getSingleton(void)
-{
-	return (*getSingletonPtr());
 }
 //-----------------------------------------------------------------------
 ViewManager::ViewManager()
