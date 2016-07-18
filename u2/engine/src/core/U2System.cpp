@@ -79,3 +79,27 @@ void SystemManager::exit()
         }
     }
 }
+//-----------------------------------------------------------------------
+void SystemManager::pause()
+{
+    for (PriorityMap::iterator it = m_ActiveMap.begin(); it != m_ActiveMap.end(); it++)
+    {
+        System* pSystem = it->second;
+        if (pSystem == nullptr)
+        {
+            pSystem->pause();
+        }
+    }
+}
+//-----------------------------------------------------------------------
+void SystemManager::resume()
+{
+    for (PriorityMap::iterator it = m_ActiveMap.begin(); it != m_ActiveMap.end(); it++)
+    {
+        System* pSystem = it->second;
+        if (pSystem == nullptr)
+        {
+            pSystem->resume();
+        }
+    }
+}

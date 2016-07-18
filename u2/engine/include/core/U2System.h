@@ -24,6 +24,8 @@ public:
     virtual void enter() = 0;
     virtual void execute(u2real dt) = 0;
     virtual void exit() = 0;
+    virtual void pause() = 0;
+    virtual void resume() = 0;
 
 protected:
     size_t m_uPriority;
@@ -44,6 +46,8 @@ public:
     void enter();
     void execute(u2real dt);
     void exit();
+    void pause();
+    void resume();
 
 public:
     /** Override standard Singleton retrieval.
