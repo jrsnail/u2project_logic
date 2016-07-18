@@ -170,8 +170,10 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\engine\src\core\U2Archive.cpp" />
     <ClCompile Include="..\engine\src\core\U2AtomicScalar.cpp" />
     <ClCompile Include="..\engine\src\core\U2Common.cpp" />
+    <ClCompile Include="..\engine\src\core\U2Component.cpp" />
     <ClCompile Include="..\engine\src\core\U2ConfigFile.cpp" />
     <ClCompile Include="..\engine\src\core\U2DataPool.cpp" />
+    <ClCompile Include="..\engine\src\core\U2Entity.cpp" />
     <ClCompile Include="..\engine\src\core\U2Exception.cpp" />
     <ClCompile Include="..\engine\src\core\U2FactoryManager.cpp" />
     <ClCompile Include="..\engine\src\core\U2FileSystemArchive.cpp" />
@@ -195,6 +197,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\engine\src\core\U2SimpleObjectManager.cpp" />
     <ClCompile Include="..\engine\src\core\U2StringInterface.cpp" />
     <ClCompile Include="..\engine\src\core\U2StringUtil.cpp" />
+    <ClCompile Include="..\engine\src\core\U2System.cpp" />
     <ClCompile Include="..\engine\src\core\U2Task.cpp" />
     <ClCompile Include="..\engine\src\core\U2TaskLoop.cpp" />
     <ClCompile Include="..\engine\src\core\U2TNedObjectManager.cpp" />
@@ -300,10 +303,12 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\engine\include\core\U2Archive.h" />
     <ClInclude Include="..\engine\include\core\U2AtomicScalar.h" />
     <ClInclude Include="..\engine\include\core\U2Common.h" />
+    <ClInclude Include="..\engine\include\core\U2Component.h" />
     <ClInclude Include="..\engine\include\core\U2Config.h" />
     <ClInclude Include="..\engine\include\core\U2ConfigFile.h" />
     <ClInclude Include="..\engine\include\core\U2Core.h" />
     <ClInclude Include="..\engine\include\core\U2DataPool.h" />
+    <ClInclude Include="..\engine\include\core\U2Entity.h" />
     <ClInclude Include="..\engine\include\core\U2Exception.h" />
     <ClInclude Include="..\engine\include\core\U2FactoryManager.h" />
     <ClInclude Include="..\engine\include\core\U2FactoryObj.h" />
@@ -340,6 +345,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\engine\include\core\U2STLRedefined.h" />
     <ClInclude Include="..\engine\include\core\U2StringInterface.h" />
     <ClInclude Include="..\engine\include\core\U2StringUtil.h" />
+    <ClInclude Include="..\engine\include\core\U2System.h" />
     <ClInclude Include="..\engine\include\core\U2Task.h" />
     <ClInclude Include="..\engine\include\core\U2TaskLoop.h" />
     <ClInclude Include="..\engine\include\core\U2TNedObjectManager.h" />

@@ -432,6 +432,15 @@
     <ClCompile Include="..\luabridge\U2MvcBridge.cpp">
       <Filter>luabridge</Filter>
     </ClCompile>
+    <ClCompile Include="..\engine\src\core\U2Entity.cpp">
+      <Filter>engine\src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\U2Component.cpp">
+      <Filter>engine\src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\U2System.cpp">
+      <Filter>engine\src\core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -847,6 +856,15 @@
     </ClInclude>
     <ClInclude Include="..\luabridge\U2MvcBridge.h">
       <Filter>luabridge</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2Entity.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2Component.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2System.h">
+      <Filter>engine\include\core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
