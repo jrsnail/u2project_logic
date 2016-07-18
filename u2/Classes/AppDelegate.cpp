@@ -213,6 +213,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	cocos2d::FileUtils::getInstance()->addSearchPath("res/ui/plist");
 	cocos2d::FileUtils::getInstance()->addSearchPath("res/ui/application");
 	cocos2d::FileUtils::getInstance()->addSearchPath("res/ui/cg");
+    cocos2d::FileUtils::getInstance()->addSearchPath("res/ui/UIHome");
 
 	m_pFrameListenerCollection = new CocosFrameListenerCollection;
     u2::ScriptManager* pScriptManager = new u2::LuaScriptManager;
