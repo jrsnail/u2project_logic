@@ -21,14 +21,14 @@ public:
     Component(const String& type, const String& name);
     virtual ~Component();
 
-    inline void bornOn(GameObject* gameObj);
-    inline GameObject* getBornGameObject() const;
+    void bornOn(GameObject* gameObj);
+    GameObject* getBornGameObject() const;
 
-    inline void attachedOn(GameObject* gameObj);
-    inline GameObject* getAttachedGameObject() const;
+    void attachedOn(GameObject* gameObj);
+    GameObject* getAttachedGameObject() const;
 
-    inline void setState(size_t state);
-    inline size_t getState() const;
+    void setState(size_t state);
+    size_t getState() const;
 
 public:
     static const size_t CS_None = 0;
