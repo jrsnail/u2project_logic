@@ -173,11 +173,11 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\engine\src\core\U2Component.cpp" />
     <ClCompile Include="..\engine\src\core\U2ConfigFile.cpp" />
     <ClCompile Include="..\engine\src\core\U2DataPool.cpp" />
-    <ClCompile Include="..\engine\src\core\U2Entity.cpp" />
     <ClCompile Include="..\engine\src\core\U2Exception.cpp" />
     <ClCompile Include="..\engine\src\core\U2FactoryManager.cpp" />
     <ClCompile Include="..\engine\src\core\U2FileSystemArchive.cpp" />
     <ClCompile Include="..\engine\src\core\U2FrameListenerCollection.cpp" />
+    <ClCompile Include="..\engine\src\core\U2GameObject.cpp" />
     <ClCompile Include="..\engine\src\core\U2HttpClient.cpp" />
     <ClCompile Include="..\engine\src\core\U2HttpClientImpl.cpp" />
     <ClCompile Include="..\engine\src\core\U2HttpDownloadClient.cpp" />
@@ -190,6 +190,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\engine\src\core\U2ObjectCollection.cpp" />
     <ClCompile Include="..\engine\src\core\U2PoolingObjectManager.cpp" />
     <ClCompile Include="..\engine\src\core\U2Prerequisites.cpp" />
+    <ClCompile Include="..\engine\src\core\U2Prototype.cpp" />
     <ClCompile Include="..\engine\src\core\U2Resource.cpp" />
     <ClCompile Include="..\engine\src\core\U2ResourceGroupManager.cpp" />
     <ClCompile Include="..\engine\src\core\U2ResourceManager.cpp" />
@@ -308,13 +309,13 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\engine\include\core\U2ConfigFile.h" />
     <ClInclude Include="..\engine\include\core\U2Core.h" />
     <ClInclude Include="..\engine\include\core\U2DataPool.h" />
-    <ClInclude Include="..\engine\include\core\U2Entity.h" />
     <ClInclude Include="..\engine\include\core\U2Exception.h" />
     <ClInclude Include="..\engine\include\core\U2FactoryManager.h" />
     <ClInclude Include="..\engine\include\core\U2FactoryObj.h" />
     <ClInclude Include="..\engine\include\core\U2FileSystemArchive.h" />
     <ClInclude Include="..\engine\include\core\U2FileSystemLayer.h" />
     <ClInclude Include="..\engine\include\core\U2FrameListenerCollection.h" />
+    <ClInclude Include="..\engine\include\core\U2GameObject.h" />
     <ClInclude Include="..\engine\include\core\U2HeaderPrefix.h" />
     <ClInclude Include="..\engine\include\core\U2HeaderSuffix.h" />
     <ClInclude Include="..\engine\include\core\U2HttpClient.h" />
@@ -334,6 +335,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\engine\include\core\U2Platform.h" />
     <ClInclude Include="..\engine\include\core\U2PoolingObjectManager.h" />
     <ClInclude Include="..\engine\include\core\U2Prerequisites.h" />
+    <ClInclude Include="..\engine\include\core\U2Prototype.h" />
     <ClInclude Include="..\engine\include\core\U2Resource.h" />
     <ClInclude Include="..\engine\include\core\U2ResourceGroupManager.h" />
     <ClInclude Include="..\engine\include\core\U2ResourceManager.h" />

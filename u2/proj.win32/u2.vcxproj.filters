@@ -432,13 +432,16 @@
     <ClCompile Include="..\luabridge\U2MvcBridge.cpp">
       <Filter>luabridge</Filter>
     </ClCompile>
-    <ClCompile Include="..\engine\src\core\U2Entity.cpp">
-      <Filter>engine\src\core</Filter>
-    </ClCompile>
     <ClCompile Include="..\engine\src\core\U2Component.cpp">
       <Filter>engine\src\core</Filter>
     </ClCompile>
     <ClCompile Include="..\engine\src\core\U2System.cpp">
+      <Filter>engine\src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\U2GameObject.cpp">
+      <Filter>engine\src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\U2Prototype.cpp">
       <Filter>engine\src\core</Filter>
     </ClCompile>
   </ItemGroup>
@@ -857,13 +860,16 @@
     <ClInclude Include="..\luabridge\U2MvcBridge.h">
       <Filter>luabridge</Filter>
     </ClInclude>
-    <ClInclude Include="..\engine\include\core\U2Entity.h">
-      <Filter>engine\include\core</Filter>
-    </ClInclude>
     <ClInclude Include="..\engine\include\core\U2Component.h">
       <Filter>engine\include\core</Filter>
     </ClInclude>
     <ClInclude Include="..\engine\include\core\U2System.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2GameObject.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2Prototype.h">
       <Filter>engine\include\core</Filter>
     </ClInclude>
   </ItemGroup>

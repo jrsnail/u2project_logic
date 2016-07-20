@@ -12,6 +12,8 @@
 U2EG_NAMESPACE_BEGIN
 
 
+class GameObject;
+
 
 class Component : public Object
 {
@@ -19,11 +21,30 @@ public:
     Component(const String& type, const String& name);
     virtual ~Component();
 
+    inline void bornOn(GameObject* gameObj);
+    inline GameObject* getBornGameObject() const;
+
+    inline void attachedOn(GameObject* gameObj);
+    inline GameObject* getAttachedGameObject() const;
+
+    inline void setState(size_t state);
+    inline size_t getState() const;
+
+public:
+    static const size_t CS_None = 0;
+    static const size_t CS_Attaching = 1;
+    static const size_t CS_Active = 2;
+    static const size_t CS_Deactive = 3;
+    static const size_t CS_Detaching = 4;
+
 protected:
+    GameObject*     m_pBornGameObj;
+    GameObject*     m_pAttachedGameObj;
+    size_t          m_uState;
 };
 
 
-class ComponentManager : public SimpleObjectManager<Component>, public Singleton < ComponentManager >
+class ComponentManager : public SimpleObjectManager<u2::Component>, public Singleton < ComponentManager >
 {
 public:
     /** Default constructor - should never get called by a client app.
