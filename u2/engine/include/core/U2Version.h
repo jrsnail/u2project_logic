@@ -13,31 +13,31 @@ U2EG_NAMESPACE_BEGIN
 class Version
 {
 public:
-    Version(unsigned int version
-        , const std::string& versionName = U2_VERSION_NAME, const std::string& suffix = U2_VERSION_SUFFIX);
-    Version(unsigned int magor, unsigned int minor, unsigned int patch
-        , const std::string& versionName = U2_VERSION_NAME, const std::string& suffix = U2_VERSION_SUFFIX);
-    Version(const std::string& version
-        , const std::string& versionName = U2_VERSION_NAME, const std::string& suffix = U2_VERSION_SUFFIX);
+    Version(u2uint32 version
+        , const String& versionName = U2_VERSION_NAME, const String& suffix = U2_VERSION_SUFFIX);
+    Version(u2uint32 magor, u2uint32 minor, u2uint32 patch
+        , const String& versionName = U2_VERSION_NAME, const String& suffix = U2_VERSION_SUFFIX);
+    Version(const String& version
+        , const String& versionName = U2_VERSION_NAME, const String& suffix = U2_VERSION_SUFFIX);
 
     virtual ~Version();
  
     bool operator< (const Version& other);
 
-    inline unsigned int getMajor();
-    inline unsigned int getMinor();
-    inline unsigned int getPatch();
-    inline std::string getVersionNumAsStr();
-    inline const std::string& getVersionName();
-    inline const std::string& getVersionSuffix();
+    u2uint32 getMajor() const;
+    u2uint32 getMinor() const;
+    u2uint32 getPatch() const;
+    String getVersionNumAsStr() const;
+    const String& getVersionName() const;
+    const String& getVersionSuffix() const;
 
 private:
-    inline unsigned int _combine(unsigned int magor, unsigned int minor, unsigned int patch);
+    u2uint32 _combine(u2uint32 magor, u2uint32 minor, u2uint32 patch);
 
 private:
-    unsigned int    m_uVersion;
-    std::string     m_szSuffix;
-    std::string     m_szVersionName;
+    u2uint32    m_uVersion;
+    String     m_szSuffix;
+    String     m_szVersionName;
 };
 
 

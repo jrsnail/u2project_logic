@@ -72,7 +72,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(EngineRoot)cocos\audio\include;$(EngineRoot)external;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;..\..\Dependenices\include;..\..\Dependenices\include\boost;..\engine;..\engine\include;..\engine\include\core;..\engine\include\core\streams;..\engine\include\core\threading;..\engine\include\core\threading\threadpool;..\engine\include\core\sserver;..\engine\include\mvc;..\engine\include\lua;..\gamebase;..\Classes;..\luabridge;..;%(AdditionalIncludeDirectories);$(_COCOS_HEADER_WIN32_BEGIN);$(_COCOS_HEADER_WIN32_END)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot)cocos\audio\include;$(EngineRoot)external;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;..\..\Dependenices\include;..\engine;..\engine\include;..\engine\include\core;..\engine\include\core\streams;..\engine\include\core\threading;..\engine\include\core\threading\threadpool;..\engine\include\core\sserver;..\engine\include\mvc;..\engine\include\lua;..\gamebase;..\Classes;..\luabridge;..;%(AdditionalIncludeDirectories);$(_COCOS_HEADER_WIN32_BEGIN);$(_COCOS_HEADER_WIN32_END)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_CHIPMUNK_INTEGRATION=1;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;U2_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -85,9 +85,9 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>%(AdditionalDependencies);$(_COCOS_LIB_WIN32_BEGIN);$(_COCOS_LIB_WIN32_END);zlib.lib;zziplib.lib;libcurl_imp.lib</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies);$(_COCOS_LIB_WIN32_BEGIN);$(_COCOS_LIB_WIN32_END);zlib.lib;zziplib.lib;libcurl_imp.lib;websockets.lib</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
-      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories);$(_COCOS_LIB_PATH_WIN32_BEGIN);$(_COCOS_LIB_PATH_WIN32_END);..\..\Dependenices\libs\zlib\Win\$(PlatformShortName);..\..\Dependenices\libs\zzip\Win\$(PlatformShortName);..\..\Dependenices\libs\curl\Win\$(PlatformShortName)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories);$(_COCOS_LIB_PATH_WIN32_BEGIN);$(_COCOS_LIB_PATH_WIN32_END);..\..\Dependenices\libs\zlib\Win\$(PlatformShortName);..\..\Dependenices\libs\zzip\Win\$(PlatformShortName);..\..\Dependenices\libs\curl\Win\$(PlatformShortName);..\..\Dependenices\libs\websocket\Win\$(PlatformShortName)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
@@ -178,6 +178,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\engine\src\core\U2FileSystemArchive.cpp" />
     <ClCompile Include="..\engine\src\core\U2FrameListenerCollection.cpp" />
     <ClCompile Include="..\engine\src\core\U2GameObject.cpp" />
+    <ClCompile Include="..\engine\src\core\U2GameObjectSerialize.cpp" />
     <ClCompile Include="..\engine\src\core\U2HttpClient.cpp" />
     <ClCompile Include="..\engine\src\core\U2HttpClientImpl.cpp" />
     <ClCompile Include="..\engine\src\core\U2HttpDownloadClient.cpp" />
@@ -195,7 +196,9 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\engine\src\core\U2ResourceGroupManager.cpp" />
     <ClCompile Include="..\engine\src\core\U2ResourceManager.cpp" />
     <ClCompile Include="..\engine\src\core\U2SearchOps.cpp" />
+    <ClCompile Include="..\engine\src\core\U2Serialize.cpp" />
     <ClCompile Include="..\engine\src\core\U2SimpleObjectManager.cpp" />
+    <ClCompile Include="..\engine\src\core\U2SocketTask.cpp" />
     <ClCompile Include="..\engine\src\core\U2StringInterface.cpp" />
     <ClCompile Include="..\engine\src\core\U2StringUtil.cpp" />
     <ClCompile Include="..\engine\src\core\U2System.cpp" />
@@ -204,6 +207,9 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\engine\src\core\U2TNedObjectManager.cpp" />
     <ClCompile Include="..\engine\src\core\U2TypedObjectManager.cpp" />
     <ClCompile Include="..\engine\src\core\U2Version.cpp" />
+    <ClCompile Include="..\engine\src\core\U2WebSocketClient.cpp" />
+    <ClCompile Include="..\engine\src\core\U2WebSocketClientImpl.cpp" />
+    <ClCompile Include="..\engine\src\core\U2XmlSerialize.cpp" />
     <ClCompile Include="..\engine\src\core\U2ZipArchive.cpp" />
     <ClCompile Include="..\engine\src\core\Win\U2FileSystemLayer.cpp" />
     <ClCompile Include="..\engine\src\lua\lapi.c" />
@@ -316,6 +322,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\engine\include\core\U2FileSystemLayer.h" />
     <ClInclude Include="..\engine\include\core\U2FrameListenerCollection.h" />
     <ClInclude Include="..\engine\include\core\U2GameObject.h" />
+    <ClInclude Include="..\engine\include\core\U2GameObjectSerialize.h" />
     <ClInclude Include="..\engine\include\core\U2HeaderPrefix.h" />
     <ClInclude Include="..\engine\include\core\U2HeaderSuffix.h" />
     <ClInclude Include="..\engine\include\core\U2HttpClient.h" />
@@ -341,8 +348,10 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\engine\include\core\U2ResourceManager.h" />
     <ClInclude Include="..\engine\include\core\U2ScriptLoader.h" />
     <ClInclude Include="..\engine\include\core\U2SearchOps.h" />
+    <ClInclude Include="..\engine\include\core\U2Serialize.h" />
     <ClInclude Include="..\engine\include\core\U2SimpleObjectManager.h" />
     <ClInclude Include="..\engine\include\core\U2Singleton.h" />
+    <ClInclude Include="..\engine\include\core\U2SocketTask.h" />
     <ClInclude Include="..\engine\include\core\U2StdHeader.h" />
     <ClInclude Include="..\engine\include\core\U2STLRedefined.h" />
     <ClInclude Include="..\engine\include\core\U2StringInterface.h" />
@@ -354,6 +363,9 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\engine\include\core\U2TypedObjectManager.h" />
     <ClInclude Include="..\engine\include\core\U2ValueList.h" />
     <ClInclude Include="..\engine\include\core\U2Version.h" />
+    <ClInclude Include="..\engine\include\core\U2WebSocketClient.h" />
+    <ClInclude Include="..\engine\include\core\U2WebSocketClientImpl.h" />
+    <ClInclude Include="..\engine\include\core\U2XmlSerialize.h" />
     <ClInclude Include="..\engine\include\core\U2ZipArchive.h" />
     <ClInclude Include="..\engine\include\lua\lapi.h" />
     <ClInclude Include="..\engine\include\lua\lauxlib.h" />

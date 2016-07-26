@@ -19,12 +19,20 @@ class Component;
 class GameObject : public Resource, public Prototype<GameObject>
 {
 public:
+    class Listener
+    {
+    public:
+        virtual void onAttachComponent(GameObject* gameObj, Component* comp) = 0;
+        virtual void onDetachComponent(GameObject* gameObj, Component* comp) = 0;
+    };
+
+public:
     // <type, u2::Component*>
     typedef std::multimap<String, u2::Component*>               TypedComponentMap;
     typedef std::pair<TypedComponentMap::iterator, TypedComponentMap::iterator>   ComponentPair;
 
     // <type, GameObject*>
-    typedef std::multimap<String, GameObject*>              TypedGameObjectMap;
+    typedef std::multimap<String, GameObject*>                  TypedGameObjectMap;
     typedef std::pair<TypedGameObjectMap::iterator, TypedGameObjectMap::iterator> GameObjectPair;
 
 public:
@@ -58,22 +66,25 @@ public:
 
     u2::Component* retrieveComponentByGuid(const String& guid);
 
-    GameObject* createGameObject(const String& type, const String& name);
+    GameObject* createChildGameObject(const String& type, const String& name);
 
-    void destroyGameObject(GameObject* gameObj);
+    void destroyChildGameObject(GameObject* gameObj);
 
-    void addGameObject(GameObject* gameObj);
+    void addChildGameObject(GameObject* gameObj);
 
-    void removeGameObject(GameObject* gameObj);
+    void removeChildGameObject(GameObject* gameObj);
 
     typedef MapIterator<TypedGameObjectMap>          GameObjectMapIterator;
     typedef ConstMapIterator<TypedGameObjectMap>     ConstGameObjectMapIterator;
-    GameObjectMapIterator retrieveGameObjects()
+    GameObjectMapIterator retrieveChildGameObjects()
     {
         return GameObjectMapIterator(m_GameObjMap.begin(), m_GameObjMap.end());
     }
 
-    GameObject* retrieveGameObjectByGuid(const String& guid);
+    GameObject* retrieveChildGameObjectByGuid(const String& guid);
+
+    void addListener(Listener* listener);
+    void removeListener(Listener* listener);
 
 protected:
     /// @copydoc Resource::loadImpl
@@ -85,10 +96,13 @@ protected:
 protected:
     TypedComponentMap           m_ComponentMap;
     TypedGameObjectMap          m_GameObjMap;
+
+    typedef vector<Listener*>::type ListenerList;
+    ListenerList m_Listeners;
 };
 
 
-class GameObjectManager : public ResourceManager, public Singleton < GameObjectManager >
+class GameObjectManager : public ResourceManager, public GameObject::Listener, public Singleton < GameObjectManager >
 {
 public:
     GameObjectManager();
@@ -112,6 +126,9 @@ public:
     GameObject* retrieveObjectByGuid(const String& guid);
 
     GameObject* retrieveObjectByType(const String& type);
+
+    virtual void onAttachComponent(GameObject* gameObj, Component* comp) override;
+    virtual void onDetachComponent(GameObject* gameObj, Component* comp) override;
 
 
 public:
@@ -151,6 +168,23 @@ public:
 
 protected:
     TypedObjectManager<GameObject> m_InstanceCollection;
+
+    struct StGameObjRef
+    {
+        GameObject* pGameObj;
+        size_t uRefCount;
+
+        StGameObjRef(GameObject* gameObj, size_t refCount)
+            : pGameObj(gameObj)
+            , uRefCount(refCount)
+        {
+
+        }
+    };
+    // <Component type, StGameObjRef>
+    typedef std::multimap<String, StGameObjRef>      CompRefMap;
+    typedef std::pair<CompRefMap::iterator, CompRefMap::iterator> CompRefPair;
+    CompRefMap m_CompRefMap;
 };
 
 

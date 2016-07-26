@@ -57,5 +57,9 @@ static const char* ON_Facade_Predefined = "ON_Facade_Predefined";
 static const char* ON_Proxy_Context = "ON_Proxy_Context";
 
 
+// data pool
+static const char* ON_DataPool_Task = "ON_DataPool_Task";
+
+
 
 #endif /* defined(__PredefinedPrerequisites__) */

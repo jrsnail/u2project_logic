@@ -9,37 +9,37 @@ U2EG_NAMESPACE_USING
 
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-Version::Version(unsigned int version
-    , const std::string& versionName, const std::string& suffix)
+Version::Version(u2uint32 version
+    , const String& versionName, const String& suffix)
 : m_uVersion(version)
 , m_szVersionName(versionName)
 , m_szSuffix(suffix)
 {
 }
 //-----------------------------------------------------------------------
-Version::Version(unsigned int magor, unsigned int minor, unsigned int patch
-    , const std::string& versionName, const std::string& suffix)
+Version::Version(u2uint32 magor, u2uint32 minor, u2uint32 patch
+    , const String& versionName, const String& suffix)
     : Version(_combine(magor, minor, patch), versionName, suffix)
 {
 
 }
 //-----------------------------------------------------------------------
-Version::Version(const std::string& version
-    , const std::string& versionName, const std::string& suffix)
+Version::Version(const String& version
+    , const String& versionName, const String& suffix)
     : m_uVersion(0)
     , m_szVersionName(versionName)
     , m_szSuffix(suffix)
 {
-    std::vector<std::string> v = StringUtil::split(version, ".");
+    std::vector<String> v = StringUtil::split(version, ".");
     if (v.size() != 3)
     {
         assert(0);
     }
     else
     {
-        unsigned int uMajor = StringUtil::parseUnsignedInt(v[0]);
-        unsigned int uMinor = StringUtil::parseUnsignedInt(v[1]);
-        unsigned int uPatch = StringUtil::parseUnsignedInt(v[2]);
+        u2uint32 uMajor = StringUtil::parseUnsignedInt(v[0]);
+        u2uint32 uMinor = StringUtil::parseUnsignedInt(v[1]);
+        u2uint32 uPatch = StringUtil::parseUnsignedInt(v[2]);
         m_uVersion = _combine(uMajor, uMinor, uPatch);
     }
 }
@@ -53,27 +53,27 @@ bool Version::operator< (const Version& other)
     return m_uVersion < other.m_uVersion;
 }
 //-----------------------------------------------------------------------
-unsigned int Version::_combine(unsigned int magor, unsigned int minor, unsigned int patch)
+u2uint32 Version::_combine(u2uint32 magor, u2uint32 minor, u2uint32 patch)
 {
     return (magor << 16) | (minor << 8) | patch;
 }
 //-----------------------------------------------------------------------
-unsigned int Version::getMajor()
+u2uint32 Version::getMajor() const
 {
     return m_uVersion >> 16;
 }
 //-----------------------------------------------------------------------
-unsigned int Version::getMinor()
+u2uint32 Version::getMinor() const
 {
     return (m_uVersion >> 8) & 0xFF;
 }
 //-----------------------------------------------------------------------
-unsigned int Version::getPatch()
+u2uint32 Version::getPatch() const
 {
     return m_uVersion & 0xFF;
 }
 //-----------------------------------------------------------------------
-std::string Version::getVersionNumAsStr()
+String Version::getVersionNumAsStr() const
 {
     StringStream ss;
     ss << getMajor();
@@ -84,12 +84,12 @@ std::string Version::getVersionNumAsStr()
     return ss.str();
 }
 //-----------------------------------------------------------------------
-const std::string& Version::getVersionName()
+const String& Version::getVersionName() const
 {
     return m_szVersionName;
 }
 //-----------------------------------------------------------------------
-const std::string& Version::getVersionSuffix()
+const String& Version::getVersionSuffix() const
 {
     return m_szSuffix;
 }

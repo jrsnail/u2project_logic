@@ -29,6 +29,9 @@
 #if U2_PLATFORM == U2_PLATFORM_APPLE
 #	include "macUtils.h"
 #endif
+#include "U2WebSocketClientImpl.h"
+#include "cocos2d.h"
+#include "network/WebSocket.h" 
 
 
 
@@ -414,6 +417,13 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     {
         //------------------------------- Test Net ----------------------------------------
+        WsTaskLoop* pWsTaskLoop = dynamic_cast<WsTaskLoop*>(
+            MsgLoopManager::getSingleton().createObject(GET_OBJECT_TYPE(JsonWsTaskLoop), "websocket")
+            );
+        pWsTaskLoop->setUrl("ws://echo.websocket.org");
+        pWsTaskLoop->run();
+//         cocos2d::network::WebSocket* _wsiSendText = new network::WebSocket();
+//         _wsiSendText->init(*this, "ws://echo.websocket.org");
     }
 
     
@@ -434,4 +444,23 @@ void AppDelegate::applicationWillEnterForeground() {
 
     // if you use SimpleAudioEngine, it must resume here
     // SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
+}
+
+
+
+void AppDelegate::onOpen(cocos2d::network::WebSocket* ws)
+{
+    int a = 0;
+}
+void AppDelegate::onMessage(cocos2d::network::WebSocket* ws, const cocos2d::network::WebSocket::Data& data)
+{
+    int a = 0;
+}
+void AppDelegate::onClose(cocos2d::network::WebSocket* ws)
+{
+    int a = 0;
+}
+void AppDelegate::onError(cocos2d::network::WebSocket* ws, const cocos2d::network::WebSocket::ErrorCode& error)
+{
+    int a = 0;
 }

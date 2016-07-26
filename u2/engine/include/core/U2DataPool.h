@@ -19,6 +19,9 @@
 U2EG_NAMESPACE_BEGIN
 
 
+class Task;
+
+
 class DataPool : public Object
 {
 public:
@@ -60,7 +63,15 @@ public:
     void removeData(const String& key);
     
 
+    void pushTask(const String& taskLoopName, Task* task);
+    Task* frontTask(const String& taskLoopName);
+    void popTask(const String& taskLoopName);
+
 protected:
+    U2_MUTEX(m_TaskQueueMapMutex);
+    typedef list<Task*>::type       TaskQueue;
+    typedef map<String, TaskQueue>::type  TaskQueueMap;
+    TaskQueueMap        m_TaskQueueMap;
 };
 
 

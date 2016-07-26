@@ -92,6 +92,14 @@ void GameObject::addComponent(u2::Component* comp)
     assert(comp);
 
     m_ComponentMap.insert(std::make_pair(comp->getType(), comp));
+    comp->attachedOn(this);
+
+    // listeners
+    for (ListenerList::iterator it = m_Listeners.begin();
+    it != m_Listeners.end(); it++)
+    {
+        (*it)->onAttachComponent(this, comp);
+    }
 }
 //-----------------------------------------------------------------------
 void GameObject::removeComponent(u2::Component* comp)
@@ -103,6 +111,14 @@ void GameObject::removeComponent(u2::Component* comp)
         if (comp == it->second)
         {
             m_ComponentMap.erase(it);
+
+            // listeners
+            for (ListenerList::iterator it = m_Listeners.begin();
+            it != m_Listeners.end(); it++)
+            {
+                (*it)->onDetachComponent(this, comp);
+            }
+
             return;
         }
     }
@@ -121,20 +137,12 @@ u2::Component* GameObject::retrieveComponentByGuid(const String& guid)
     return nullptr;
 }
 //-----------------------------------------------------------------------
-GameObject* GameObject::createGameObject(const String& type, const String& name)
+GameObject* GameObject::createChildGameObject(const String& type, const String& name)
 {
-    ResourcePtr resPtr = GameObjectManager::getSingleton().getResourceByName(type);
-    if (resPtr)
+    GameObject* pObj = GameObjectManager::getSingleton().createObject(type, name);
+    if (pObj)
     {
-        GameObject* pGameObj = dynamic_cast<GameObject*>(resPtr.get());
-        if (pGameObj)
-        {
-            return pGameObj->cloneFromPrototype(name);
-        }
-        else
-        {
-            assert(0);
-        }
+        addChildGameObject(pObj);
     }
     else
     {
@@ -143,7 +151,7 @@ GameObject* GameObject::createGameObject(const String& type, const String& name)
     return nullptr;
 }
 //-----------------------------------------------------------------------
-void GameObject::destroyGameObject(GameObject* gameObj)
+void GameObject::destroyChildGameObject(GameObject* gameObj)
 {
     assert(gameObj);
     if (gameObj->isPrototype())
@@ -154,19 +162,19 @@ void GameObject::destroyGameObject(GameObject* gameObj)
     }
     else
     {
-        removeGameObject(gameObj);
+        removeChildGameObject(gameObj);
         GameObjectManager::getSingleton().destoryObject(gameObj);
     }
 }
 //-----------------------------------------------------------------------
-void GameObject::addGameObject(GameObject* gameObj)
+void GameObject::addChildGameObject(GameObject* gameObj)
 {
     assert(gameObj);
 
     m_GameObjMap.insert(std::make_pair(gameObj->getType(), gameObj));
 }
 //-----------------------------------------------------------------------
-void GameObject::removeGameObject(GameObject* gameObj)
+void GameObject::removeChildGameObject(GameObject* gameObj)
 {
     assert(gameObj);
     GameObjectPair p = m_GameObjMap.equal_range(gameObj->getType());
@@ -181,7 +189,7 @@ void GameObject::removeGameObject(GameObject* gameObj)
     assert(0);
 }
 //-----------------------------------------------------------------------
-GameObject* GameObject::retrieveGameObjectByGuid(const String& guid)
+GameObject* GameObject::retrieveChildGameObjectByGuid(const String& guid)
 {
     for (TypedGameObjectMap::iterator it = m_GameObjMap.begin(); it != m_GameObjMap.end(); it++)
     {
@@ -192,6 +200,26 @@ GameObject* GameObject::retrieveGameObjectByGuid(const String& guid)
         }
     }
     return nullptr;
+}
+//---------------------------------------------------------------------
+void GameObject::addListener(Listener* listener)
+{
+    ListenerList::iterator it
+        = std::find(m_Listeners.begin(), m_Listeners.end(), listener);
+    if (it != m_Listeners.end())
+    {
+        m_Listeners.push_back(listener);
+    }
+}
+//---------------------------------------------------------------------
+void GameObject::removeListener(Listener* listener)
+{
+    ListenerList::iterator it
+        = std::find(m_Listeners.begin(), m_Listeners.end(), listener);
+    if (it != m_Listeners.end())
+    {
+        m_Listeners.erase(it);
+    }
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
@@ -234,12 +262,43 @@ Resource* GameObjectManager::createImpl(const String& name, ResourceHandle handl
 //-----------------------------------------------------------------------
 GameObject* GameObjectManager::createObject(const String& type, const String& name)
 {
-    return m_InstanceCollection.createObject(type, name);
+    ResourcePtr resPtr = this->getResourceByName(type);
+    if (resPtr)
+    {
+        GameObject* pPrototype = dynamic_cast<GameObject*>(resPtr.get());
+        if (pPrototype)
+        {
+            GameObject* pObj = pPrototype->cloneFromPrototype(name);
+            m_InstanceCollection.addObject(pObj);
+            return pObj;
+        }
+        else
+        {
+            assert(0);
+        }
+    }
+    else
+    {
+        assert(0);
+    }
+    return nullptr;
 }
 //-----------------------------------------------------------------------
 void GameObjectManager::destoryObject(GameObject* obj)
 {
-    m_InstanceCollection.destoryObject(obj);
+    assert(obj);
+    if (obj->isPrototype())
+    {
+        // In editor, we should delete prototype GameObject actually, 
+        // but now in game, we just assert it.
+        assert(0);
+    }
+    else
+    {
+        GameObject* pPrototype = obj->retrievePrototype();
+        pPrototype->removeChildGameObject(obj);
+        m_InstanceCollection.destoryObject(obj);
+    }
 }
 //-----------------------------------------------------------------------
 GameObject* GameObjectManager::retrieveObjectByTN(const String& type, const String& name)
@@ -260,4 +319,42 @@ GameObject* GameObjectManager::retrieveObjectByGuid(const String& guid)
 GameObject* GameObjectManager::retrieveObjectByType(const String& type)
 {
     return m_InstanceCollection.retrieveObjectByType(type);
+}
+//-----------------------------------------------------------------------
+void GameObjectManager::onAttachComponent(GameObject* gameObj, Component* comp)
+{
+    assert(gameObj != nullptr);
+    assert(comp != nullptr);
+    const String& szCompType = comp->getType();
+    CompRefPair p = m_CompRefMap.equal_range(szCompType);
+    for (CompRefMap::iterator it = p.first; it != p.second; it++)
+    {
+        if (it->second.pGameObj == gameObj)
+        {
+            it->second.uRefCount++;
+            return;
+        }
+    }
+    m_CompRefMap.insert(make_pair(szCompType, StGameObjRef(gameObj, 1)));
+}
+//-----------------------------------------------------------------------
+void GameObjectManager::onDetachComponent(GameObject* gameObj, Component* comp)
+{
+    assert(gameObj != nullptr);
+    assert(comp != nullptr);
+    const String& szCompType = comp->getType();
+    CompRefPair p = m_CompRefMap.equal_range(szCompType);
+    for (CompRefMap::iterator it = p.first; it != p.second; it++)
+    {
+        if (it->second.pGameObj == gameObj)
+        {
+            it->second.uRefCount--;
+            if (it->second.uRefCount == 0)
+            {
+                m_CompRefMap.erase(it);
+            }
+            return;
+        }
+    }
+    assert(0);
 }

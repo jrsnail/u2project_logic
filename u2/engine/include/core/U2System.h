@@ -22,8 +22,8 @@ public:
     void initialize(size_t priority);
 
     virtual void enter() = 0;
-    virtual void execute(u2real dt) = 0;
     virtual void exit() = 0;
+    virtual void execute(u2real dt) = 0;
     virtual void pause() = 0;
     virtual void resume() = 0;
 

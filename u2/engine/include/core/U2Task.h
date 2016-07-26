@@ -43,7 +43,7 @@ public:
 class PostTaskAndReplyRelay : public Task
 {
 public:
-    PostTaskAndReplyRelay(const std::string& type, const std::string& name);
+    PostTaskAndReplyRelay(const String& type, const String& name);
 
     virtual ~PostTaskAndReplyRelay();
 
@@ -73,10 +73,10 @@ public:
     */
     virtual ~TaskManager();
 
-    virtual Task* createObject(const String& type, const String& name);
+    virtual Task* createObject(const String& type, const String& name = BLANK);
 
     template<class Function>
-    Task* createObject(Function&& f)
+    Task* createObjectWithFunction(Function&& f)
     {
         typedef typename std::remove_reference<Function>::type function_type;
 
@@ -86,7 +86,7 @@ public:
             Function f;
 
         public:
-            WrappedFunction(const std::string& type, const std::string& name)
+            WrappedFunction(const String& type, const String& name)
                 : Task(type, name)
                 , f(std::move(f))
             {
@@ -110,7 +110,7 @@ public:
         return createObject(GET_OBJECT_TYPE(WrappedFunction), BLANK);
     }
 
-    PostTaskAndReplyRelay* createObject(const std::string& type, const std::string& name, Task* task, Task* reply);
+    PostTaskAndReplyRelay* createObject(const String& type, const String& name, Task* task, Task* reply);
 
     virtual void destoryObject(Task* obj);
 

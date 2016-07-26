@@ -160,6 +160,42 @@ void DataPool::removeData(const String& key)
 
 }
 //-----------------------------------------------------------------------
+void DataPool::pushTask(const String& taskLoopName, Task* task)
+{
+    U2_LOCK_MUTEX(m_TaskQueueMapMutex);
+    TaskQueue& queue = m_TaskQueueMap[taskLoopName];
+    queue.push_back(task);
+}
+//-----------------------------------------------------------------------
+Task* DataPool::frontTask(const String& taskLoopName)
+{
+    U2_LOCK_MUTEX(m_TaskQueueMapMutex);
+    TaskQueueMap::iterator it = m_TaskQueueMap.find(taskLoopName);
+    if (it == m_TaskQueueMap.end())
+    {
+        return nullptr;
+    }
+    else
+    {
+        TaskQueue& queue = m_TaskQueueMap[taskLoopName];
+        return queue.front();
+    }
+}
+//-----------------------------------------------------------------------
+void DataPool::popTask(const String& taskLoopName)
+{
+    U2_LOCK_MUTEX(m_TaskQueueMapMutex);
+    TaskQueueMap::iterator it = m_TaskQueueMap.find(taskLoopName);
+    if (it == m_TaskQueueMap.end())
+    {
+    }
+    else
+    {
+        TaskQueue& queue = m_TaskQueueMap[taskLoopName];
+        queue.pop_front();
+    }
+}
+//-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
 template<> DataPoolManager* Singleton<DataPoolManager>::msSingleton = 0;
 DataPoolManager* DataPoolManager::getSingletonPtr(void)

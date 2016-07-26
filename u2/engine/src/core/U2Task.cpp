@@ -29,7 +29,7 @@ void PostTaskAndReplyRelay::run()
 {
     m_pTask->run();
     m_spOriginLoop->postTask(
-        TaskManager::getSingletonPtr()->createObject([=] { this->runReplyAndSelfDestruct(); })
+        TaskManager::getSingletonPtr()->createObjectWithFunction([=] { this->runReplyAndSelfDestruct(); })
         );
 }
 //---------------------------------------------------------------------

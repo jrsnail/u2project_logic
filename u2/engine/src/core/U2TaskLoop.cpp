@@ -2,6 +2,7 @@
 
 #include "U2Exception.h"
 #include "U2Task.h"
+#include "U2WebSocketClientImpl.h"
 
 
 U2EG_NAMESPACE_USING
@@ -12,6 +13,7 @@ U2EG_NAMESPACE_USING
 TaskLoop::TaskLoop(const String& type, const String& name)
     : Object(type, name)
 {
+    
 }
 //---------------------------------------------------------------------
 TaskLoop::~TaskLoop()
@@ -164,6 +166,7 @@ MsgLoopManager& MsgLoopManager::getSingleton(void)
 //-----------------------------------------------------------------------
 MsgLoopManager::MsgLoopManager()
 {
+    CREATE_FACTORY(JsonWsTaskLoop);
 }
 //-----------------------------------------------------------------------
 MsgLoopManager::~MsgLoopManager()

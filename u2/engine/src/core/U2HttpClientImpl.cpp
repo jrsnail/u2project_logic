@@ -48,6 +48,7 @@ void ActiveHttpTaskLoop::_runInternal()
             }
             else
             {
+                U2_LOCK_MUTEX(m_mtxIncomingQueue);
                 while (!m_IncomingQueue.empty())
                 {
                     m_WorkingQueue.push_back(m_IncomingQueue.front());
