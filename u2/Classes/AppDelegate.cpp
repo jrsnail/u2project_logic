@@ -29,7 +29,7 @@
 #if U2_PLATFORM == U2_PLATFORM_APPLE
 #	include "macUtils.h"
 #endif
-#include "U2PredefinedWebSocketClientImpl.h"
+#include "U2WebSocketClientImpl.h"
 #include "cocos2d.h"
 #include "network/WebSocket.h" 
 

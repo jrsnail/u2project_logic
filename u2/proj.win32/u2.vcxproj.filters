@@ -474,7 +474,7 @@
     <ClCompile Include="..\engine\src\json\json_writer.cpp">
       <Filter>engine\src\json</Filter>
     </ClCompile>
-    <ClCompile Include="..\engine\src\core\U2PredefinedWebSocketClientImpl.cpp">
+    <ClCompile Include="..\engine\src\core\U2WebSocketClientImpl.cpp">
       <Filter>engine\src\core</Filter>
     </ClCompile>
   </ItemGroup>
@@ -956,7 +956,7 @@
     <ClInclude Include="..\engine\include\json\json_tool.h">
       <Filter>engine\include\json</Filter>
     </ClInclude>
-    <ClInclude Include="..\engine\include\core\U2PredefinedWebSocketClientImpl.h">
+    <ClInclude Include="..\engine\include\core\U2WebSocketClientImpl.h">
       <Filter>engine\include\core</Filter>
     </ClInclude>
   </ItemGroup>

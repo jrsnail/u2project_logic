@@ -1,4 +1,4 @@
-﻿#include "U2PredefinedWebSocketClientImpl.h"
+﻿#include "U2WebSocketClientImpl.h"
 
 #include <json/json.h>
 #include "U2LogManager.h"
