@@ -162,9 +162,15 @@ void WsTaskLoop::_runInternal()
         {
             U2_LOCK_MUTEX(m_KeepRunningMutex);
             if (!m_bKeepRunning)
-                break;
+            {
+                if (m_eState != State::CLOSED && m_eState != State::CLOSING)
+                {
+                    m_eState = State::CLOSING;
+                }
+            }
         }
 
+        /* how to ?
         {
             U2_LOCK_MUTEX(m_PausingMutex);
             if (m_bPausing)
@@ -173,10 +179,27 @@ void WsTaskLoop::_runInternal()
                 continue;
             }
         }
+        */
 
         if (m_eState == State::CLOSED || m_eState == State::CLOSING)
         {
             libwebsocket_context_destroy(m_pWsContext);
+
+            size_t protocolCount = 0;
+            if (m_Protocols.size() > 0)
+            {
+                protocolCount = m_Protocols.size();
+            }
+            else
+            {
+                protocolCount = 1;
+            }
+            for (size_t i = 0; i < protocolCount; i++)
+            {
+                U2_FREE((m_aWsProtocols + i)->name, MEMCATEGORY_GENERAL);
+            }
+            U2_DELETE_ARRAY_T(m_aWsProtocols, libwebsocket_protocols, protocolCount + 1, MEMCATEGORY_GENERAL);
+
             // exit the loop.
             break;
         }
@@ -404,145 +427,12 @@ int WsTaskLoop::onSocketCallback(struct libwebsocket_context *ctx,
         }
         case LWS_CALLBACK_CLIENT_RECEIVE:
         {
-            if (in && len > 0)
-            {
-                m_RecvBuffer.insert(m_RecvBuffer.end(), (char*)in, (char*)in + len);
-                size_t uPendingFrameDataLen = libwebsockets_remaining_packet_payload(wsi);
-
-                if (uPendingFrameDataLen > 0)
-                {
-                }
-
-                // If no more data pending, send it to the client thread
-                if (uPendingFrameDataLen == 0)
-                {
-                    RecvSocketTask* pTask = _dispatchRecvTask(m_RecvBuffer, lws_frame_is_binary(wsi));
-                    m_RecvBuffer.clear();
-
-                    DataPool* pDataPool = DataPoolManager::getSingleton().retrieveObjectByName(ON_DataPool_Task);
-                    if (pDataPool)
-                    {
-                        pDataPool->pushTask("MainTaskLoop", pTask);
-                    }
-                }
-            }
+            _onRecv(ctx, wsi, reason, user, in, len);
             break;
         }
         case LWS_CALLBACK_CLIENT_WRITEABLE:
         {
-            if (m_WorkingQueue.empty())
-            {
-                bool bEmpty = true;
-                {
-                    U2_LOCK_MUTEX(m_mtxIncomingQueue);
-                    bEmpty = m_IncomingQueue.empty();
-                }
-                if (bEmpty)
-                {
-                    U2_THREAD_SLEEP(1000);
-                }
-                else
-                {
-                    U2_LOCK_MUTEX(m_mtxIncomingQueue);
-                    while (!m_IncomingQueue.empty())
-                    {
-                        m_WorkingQueue.push_back(m_IncomingQueue.front());
-                        m_IncomingQueue.pop_front();
-                    }
-                }
-            }
-
-            while (!m_WorkingQueue.empty())
-            {
-                {
-                    U2_LOCK_MUTEX(m_KeepRunningMutex);
-                    if (!m_bKeepRunning)
-                        break;
-                }
-
-                {
-                    U2_LOCK_MUTEX(m_PausingMutex);
-                    if (m_bPausing)
-                    {
-                        U2_THREAD_SLEEP(1000);
-                        continue;
-                    }
-                }
-
-                Task* pTask = m_WorkingQueue.front();
-                if (pTask == nullptr)
-                {
-                    assert(0);
-                }
-                else
-                {
-                    SendSocketTask* pSendTask = dynamic_cast<SendSocketTask*>(pTask);
-                    if (pSendTask == nullptr)
-                    {
-                        assert(0);
-                    }
-                    else
-                    {
-                        const size_t BUFFER_SIZE = 2048;
-                        size_t uRemaining = pSendTask->getDataSize() - pSendTask->getIssued();
-                        size_t n = std::min(uRemaining, BUFFER_SIZE);
-                        unsigned char* buf = static_cast<unsigned char*>(
-                            U2_MALLOC(sizeof(unsigned char) * (LWS_SEND_BUFFER_PRE_PADDING + n + LWS_SEND_BUFFER_POST_PADDING)
-                                , MEMCATEGORY_GENERAL)
-                            );
-                        memcpy((char*)&buf[LWS_SEND_BUFFER_PRE_PADDING], pSendTask->getData()->data() + pSendTask->getIssued(), n);
-
-                        int writeProtocol;
-                        if (pSendTask->getIssued() == 0)
-                        {
-                            writeProtocol = pSendTask->isBinary() ? LWS_WRITE_BINARY : LWS_WRITE_TEXT;
-
-                            // If we have more than 1 fragment
-                            if (pSendTask->getDataSize() > BUFFER_SIZE)
-                            {
-                                writeProtocol |= LWS_WRITE_NO_FIN;
-                            }
-                        }
-                        else
-                        {
-                            // we are in the middle of fragments
-                            writeProtocol = LWS_WRITE_CONTINUATION;
-                            // and if not in the last fragment
-                            if (uRemaining != n)
-                            {
-                                writeProtocol |= LWS_WRITE_NO_FIN;
-                            }
-                        }
-
-                        int bytesWrite = libwebsocket_write(wsi, &buf[LWS_SEND_BUFFER_PRE_PADDING], n
-                            , (libwebsocket_write_protocol)writeProtocol);
-
-                        U2_FREE(buf, MEMCATEGORY_GENERAL);
-
-                        // Buffer overrun?
-                        if (bytesWrite < 0)
-                        {
-                            break;
-                        }
-                        // Do we have another fragments to send?
-                        else if (uRemaining != n)
-                        {
-                            pSendTask->addIssued(n);
-                            break;
-                        }
-                        // Safely done!
-                        else
-                        {
-                            TaskManager::getSingleton().destoryObject(pSendTask);
-                        }
-                    }
-                    
-                }
-                m_WorkingQueue.pop_front();
-            }
-
-            // get notified as soon as we can write again
-            libwebsocket_callback_on_writable(ctx, wsi);
+            _onSend(ctx, wsi, reason, user, in, len);
             break;
         }
         case LWS_CALLBACK_CLOSED:
@@ -566,4 +456,164 @@ int WsTaskLoop::onSocketCallback(struct libwebsocket_context *ctx,
     }
 
     return 0;
+}
+//---------------------------------------------------------------------
+void WsTaskLoop::_onRecv(struct libwebsocket_context *ctx, struct libwebsocket *wsi,
+    int reason, void *user, void *in, size_t len)
+{
+    if (in && len > 0)
+    {
+        m_RecvBuffer.insert(m_RecvBuffer.end(), (char*)in, (char*)in + len);
+        size_t uPendingFrameDataLen = libwebsockets_remaining_packet_payload(wsi);
+
+        if (uPendingFrameDataLen > 0)
+        {
+        }
+
+        // If no more data pending, send it to the client thread
+        if (uPendingFrameDataLen == 0)
+        {
+            RecvSocketTask* pTask = _dispatchRecvTask(m_RecvBuffer, lws_frame_is_binary(wsi));
+            m_RecvBuffer.clear();
+
+            if (pTask != nullptr)
+            {
+                DataPool* pDataPool = DataPoolManager::getSingleton().retrieveObjectByName(ON_DataPool_Task);
+                if (pDataPool)
+                {
+                    pDataPool->pushTask("MainTaskLoop", pTask);
+                }
+            }
+        }
+    }
+}
+//---------------------------------------------------------------------
+void WsTaskLoop::_onSend(struct libwebsocket_context *ctx, struct libwebsocket *wsi,
+    int reason, void *user, void *in, size_t len)
+{
+    if (m_WorkingQueue.empty())
+    {
+        bool bEmpty = true;
+        {
+            U2_LOCK_MUTEX(m_mtxIncomingQueue);
+            bEmpty = m_IncomingQueue.empty();
+            if (!bEmpty)
+            {
+                while (!m_IncomingQueue.empty())
+                {
+                    m_WorkingQueue.push_back(m_IncomingQueue.front());
+                    m_IncomingQueue.pop_front();
+                }
+            }
+        }
+        if (bEmpty)
+        {
+            //U2_THREAD_SLEEP(1000);
+
+            // get notified as soon as we can write again
+            libwebsocket_callback_on_writable(ctx, wsi);
+            return;
+        }
+    }
+
+    while (!m_WorkingQueue.empty())
+    {
+        // here may cause a fragmentary writing task, is it ok?
+        {
+            U2_LOCK_MUTEX(m_KeepRunningMutex);
+            if (!m_bKeepRunning)
+            {
+                m_eState = State::CLOSING;
+                break;
+            }
+        }
+
+        /* how to ?
+        {
+            U2_LOCK_MUTEX(m_PausingMutex);
+            if (m_bPausing)
+            {
+                U2_THREAD_SLEEP(1000);
+                continue;
+            }
+        }
+        */
+
+        Task* pTask = m_WorkingQueue.front();
+        if (pTask == nullptr)
+        {
+            assert(0);
+        }
+        else
+        {
+            SendSocketTask* pSendTask = dynamic_cast<SendSocketTask*>(pTask);
+            if (pSendTask == nullptr)
+            {
+                assert(0);
+            }
+            else
+            {
+                // serialize here
+                pSendTask->serialize();
+
+                const size_t BUFFER_SIZE = 2048;
+                size_t uRemaining = pSendTask->getDataSize() - pSendTask->getIssued();
+                size_t n = std::min(uRemaining, BUFFER_SIZE);
+                unsigned char* buf = static_cast<unsigned char*>(
+                    U2_MALLOC(sizeof(unsigned char) * (LWS_SEND_BUFFER_PRE_PADDING + n + LWS_SEND_BUFFER_POST_PADDING)
+                        , MEMCATEGORY_GENERAL)
+                    );
+                memcpy((char*)&buf[LWS_SEND_BUFFER_PRE_PADDING], pSendTask->getData().data() + pSendTask->getIssued(), n);
+
+                int nWriteProtocol;
+                if (pSendTask->getIssued() == 0)
+                {
+                    nWriteProtocol = pSendTask->isBinary() ? LWS_WRITE_BINARY : LWS_WRITE_TEXT;
+
+                    // If we have more than 1 fragment
+                    if (pSendTask->getDataSize() > BUFFER_SIZE)
+                    {
+                        nWriteProtocol |= LWS_WRITE_NO_FIN;
+                    }
+                }
+                else
+                {
+                    // we are in the middle of fragments
+                    nWriteProtocol = LWS_WRITE_CONTINUATION;
+                    // and if not in the last fragment
+                    if (uRemaining != n)
+                    {
+                        nWriteProtocol |= LWS_WRITE_NO_FIN;
+                    }
+                }
+
+                int nBytesWrite = libwebsocket_write(wsi, &buf[LWS_SEND_BUFFER_PRE_PADDING], n
+                    , (libwebsocket_write_protocol)nWriteProtocol);
+
+                U2_FREE(buf, MEMCATEGORY_GENERAL);
+
+                // Buffer overrun?
+                if (nBytesWrite < 0)
+                {
+                    break;
+                }
+                // Do we have another fragments to send?
+                else if (uRemaining != n)
+                {
+                    pSendTask->addIssued(n);
+                    break;
+                }
+                // Safely done!
+                else
+                {
+                    TaskManager::getSingleton().destoryObject(pSendTask);
+                    m_WorkingQueue.pop_front();
+                }
+            }
+        }
+        
+    }
+
+    // get notified as soon as we can write again
+    libwebsocket_callback_on_writable(ctx, wsi);
 }

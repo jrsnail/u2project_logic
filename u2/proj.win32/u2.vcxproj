@@ -72,7 +72,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(EngineRoot)cocos\audio\include;$(EngineRoot)external;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;..\..\Dependenices\include;..\engine;..\engine\include;..\engine\include\core;..\engine\include\core\streams;..\engine\include\core\threading;..\engine\include\core\threading\threadpool;..\engine\include\core\sserver;..\engine\include\mvc;..\engine\include\lua;..\gamebase;..\Classes;..\luabridge;..;%(AdditionalIncludeDirectories);$(_COCOS_HEADER_WIN32_BEGIN);$(_COCOS_HEADER_WIN32_END)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot)cocos\audio\include;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;..\..\Dependenices\include;..\engine;..\engine\include;..\engine\include\core;..\engine\include\core\streams;..\engine\include\core\threading;..\engine\include\core\threading\threadpool;..\engine\include\core\sserver;..\engine\include\mvc;..\engine\include\lua;..\gamebase;..\Classes;..\luabridge;..;$(EngineRoot)external;%(AdditionalIncludeDirectories);$(_COCOS_HEADER_WIN32_BEGIN);$(_COCOS_HEADER_WIN32_END)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_CHIPMUNK_INTEGRATION=1;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;U2_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -190,6 +190,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\engine\src\core\U2Object.cpp" />
     <ClCompile Include="..\engine\src\core\U2ObjectCollection.cpp" />
     <ClCompile Include="..\engine\src\core\U2PoolingObjectManager.cpp" />
+    <ClCompile Include="..\engine\src\core\U2PredefinedWebSocketClientImpl.cpp" />
     <ClCompile Include="..\engine\src\core\U2Prerequisites.cpp" />
     <ClCompile Include="..\engine\src\core\U2Prototype.cpp" />
     <ClCompile Include="..\engine\src\core\U2Resource.cpp" />
@@ -208,10 +209,12 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\engine\src\core\U2TypedObjectManager.cpp" />
     <ClCompile Include="..\engine\src\core\U2Version.cpp" />
     <ClCompile Include="..\engine\src\core\U2WebSocketClient.cpp" />
-    <ClCompile Include="..\engine\src\core\U2WebSocketClientImpl.cpp" />
     <ClCompile Include="..\engine\src\core\U2XmlSerialize.cpp" />
     <ClCompile Include="..\engine\src\core\U2ZipArchive.cpp" />
     <ClCompile Include="..\engine\src\core\Win\U2FileSystemLayer.cpp" />
+    <ClCompile Include="..\engine\src\json\json_reader.cpp" />
+    <ClCompile Include="..\engine\src\json\json_value.cpp" />
+    <ClCompile Include="..\engine\src\json\json_writer.cpp" />
     <ClCompile Include="..\engine\src\lua\lapi.c" />
     <ClCompile Include="..\engine\src\lua\lauxlib.c" />
     <ClCompile Include="..\engine\src\lua\lbaselib.c" />
@@ -341,6 +344,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\engine\include\core\U2ObjectCollection.h" />
     <ClInclude Include="..\engine\include\core\U2Platform.h" />
     <ClInclude Include="..\engine\include\core\U2PoolingObjectManager.h" />
+    <ClInclude Include="..\engine\include\core\U2PredefinedWebSocketClientImpl.h" />
     <ClInclude Include="..\engine\include\core\U2Prerequisites.h" />
     <ClInclude Include="..\engine\include\core\U2Prototype.h" />
     <ClInclude Include="..\engine\include\core\U2Resource.h" />
@@ -364,9 +368,20 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\engine\include\core\U2ValueList.h" />
     <ClInclude Include="..\engine\include\core\U2Version.h" />
     <ClInclude Include="..\engine\include\core\U2WebSocketClient.h" />
-    <ClInclude Include="..\engine\include\core\U2WebSocketClientImpl.h" />
     <ClInclude Include="..\engine\include\core\U2XmlSerialize.h" />
     <ClInclude Include="..\engine\include\core\U2ZipArchive.h" />
+    <ClInclude Include="..\engine\include\json\allocator.h" />
+    <ClInclude Include="..\engine\include\json\assertions.h" />
+    <ClInclude Include="..\engine\include\json\autolink.h" />
+    <ClInclude Include="..\engine\include\json\config.h" />
+    <ClInclude Include="..\engine\include\json\features.h" />
+    <ClInclude Include="..\engine\include\json\forwards.h" />
+    <ClInclude Include="..\engine\include\json\json.h" />
+    <ClInclude Include="..\engine\include\json\json_tool.h" />
+    <ClInclude Include="..\engine\include\json\reader.h" />
+    <ClInclude Include="..\engine\include\json\value.h" />
+    <ClInclude Include="..\engine\include\json\version.h" />
+    <ClInclude Include="..\engine\include\json\writer.h" />
     <ClInclude Include="..\engine\include\lua\lapi.h" />
     <ClInclude Include="..\engine\include\lua\lauxlib.h" />
     <ClInclude Include="..\engine\include\lua\lcode.h" />

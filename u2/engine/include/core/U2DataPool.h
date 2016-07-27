@@ -42,6 +42,7 @@ public:
     bool saveUint32Data(const String& key, u2uint32 value);
     bool saveInt64Data(const String& key, u2int64 value);
     bool saveUint64Data(const String& key, u2uint64 value);
+    bool saveCharVectorData(const String& key, const vector<u2char>::type& value);
     
     
 
@@ -59,6 +60,7 @@ public:
     bool loadUint32Data(const String& key, u2uint32& value);
     bool loadInt64Data(const String& key, u2int64& value);
     bool loadUint64Data(const String& key, u2uint64& value);
+    bool loadCharVectorData(const String& key, const vector<u2char>::type& value);
     
     void removeData(const String& key);
     

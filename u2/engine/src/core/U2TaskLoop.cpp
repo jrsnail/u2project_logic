@@ -2,7 +2,7 @@
 
 #include "U2Exception.h"
 #include "U2Task.h"
-#include "U2WebSocketClientImpl.h"
+#include "U2PredefinedWebSocketClientImpl.h"
 
 
 U2EG_NAMESPACE_USING

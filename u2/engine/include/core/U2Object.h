@@ -34,13 +34,16 @@ public:
 	*/
 	void renameForPooling(const String& name) { m_szName = name; };
 
-    virtual String serialize() { return BLANK; };
-    virtual void deserialize(const String& str) {};
+    virtual void serialize() {};
+    virtual void deserialize() {};
+    void setData(const vector<u2char>::type& data) { m_Data = data; }
+    const vector<u2char>::type& getData() { return m_Data; };
 
 protected:
     String                  m_szType;       //< 子类类型
     String                  m_szName;       //< 对象名称
     String                  m_szGuid;       //< 唯一标识对象，每个对象递增
+    vector<u2char>::type    m_Data;
 };
 
 

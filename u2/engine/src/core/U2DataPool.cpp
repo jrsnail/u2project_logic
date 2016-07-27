@@ -85,6 +85,11 @@ bool DataPool::saveUint64Data(const String& key, u2uint64 value)
     return false;
 }
 //-----------------------------------------------------------------------
+bool DataPool::saveCharVectorData(const String& key, const vector<u2char>::type& value)
+{
+    return false;
+}
+//-----------------------------------------------------------------------
 bool DataPool::loadFloatData(const String& key, float& value)
 {
     return false;
@@ -151,6 +156,11 @@ bool DataPool::loadInt64Data(const String& key, u2int64& value)
 }
 //-----------------------------------------------------------------------
 bool DataPool::loadUint64Data(const String& key, u2uint64& value)
+{
+    return false;
+}
+//-----------------------------------------------------------------------
+bool DataPool::loadCharVectorData(const String& key, const vector<u2char>::type& value)
 {
     return false;
 }

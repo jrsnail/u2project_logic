@@ -28,6 +28,7 @@ public:
 
 	// Tasks are automatically deleted after Run is called.  
 	virtual void run() = 0;
+
 };
 
 

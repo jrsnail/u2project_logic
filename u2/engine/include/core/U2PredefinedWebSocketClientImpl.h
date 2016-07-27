@@ -1,5 +1,5 @@
-﻿#ifndef __U2WebSocketClientImpl_H__
-#define __U2WebSocketClientImpl_H__
+﻿#ifndef __U2PredefinedWebSocketClientImpl_H__
+#define __U2PredefinedWebSocketClientImpl_H__
 
 #include "U2Prerequisites.h"
 #include "U2STLRedefined.h"
@@ -27,4 +27,4 @@ protected:
 U2EG_NAMESPACE_END
 
 
-#endif // __U2WebSocketClientImpl_H__
+#endif // __U2PredefinedWebSocketClientImpl_H__

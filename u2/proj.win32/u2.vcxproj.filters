@@ -67,6 +67,12 @@
     <Filter Include="luabridge">
       <UniqueIdentifier>{087cd15e-1ec4-41cb-9a89-1a5e5e9daa27}</UniqueIdentifier>
     </Filter>
+    <Filter Include="engine\include\json">
+      <UniqueIdentifier>{0ee15e72-d944-4654-8c18-40510819e67c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\src\json">
+      <UniqueIdentifier>{20c982b5-11eb-4b0b-b066-2326ad60a8dd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -459,7 +465,16 @@
     <ClCompile Include="..\engine\src\core\U2SocketTask.cpp">
       <Filter>engine\src\core</Filter>
     </ClCompile>
-    <ClCompile Include="..\engine\src\core\U2WebSocketClientImpl.cpp">
+    <ClCompile Include="..\engine\src\json\json_reader.cpp">
+      <Filter>engine\src\json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\json\json_value.cpp">
+      <Filter>engine\src\json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\json\json_writer.cpp">
+      <Filter>engine\src\json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\U2PredefinedWebSocketClientImpl.cpp">
       <Filter>engine\src\core</Filter>
     </ClCompile>
   </ItemGroup>
@@ -905,7 +920,43 @@
     <ClInclude Include="..\engine\include\core\U2SocketTask.h">
       <Filter>engine\include\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\engine\include\core\U2WebSocketClientImpl.h">
+    <ClInclude Include="..\engine\include\json\reader.h">
+      <Filter>engine\include\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\json\value.h">
+      <Filter>engine\include\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\json\writer.h">
+      <Filter>engine\include\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\json\json.h">
+      <Filter>engine\include\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\json\allocator.h">
+      <Filter>engine\include\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\json\assertions.h">
+      <Filter>engine\include\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\json\autolink.h">
+      <Filter>engine\include\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\json\config.h">
+      <Filter>engine\include\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\json\features.h">
+      <Filter>engine\include\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\json\forwards.h">
+      <Filter>engine\include\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\json\version.h">
+      <Filter>engine\include\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\json\json_tool.h">
+      <Filter>engine\include\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2PredefinedWebSocketClientImpl.h">
       <Filter>engine\include\core</Filter>
     </ClInclude>
   </ItemGroup>

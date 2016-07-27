@@ -54,3 +54,8 @@ bool RecvSocketTask::isBinary() const
 {
     return m_bIsBinary;
 }
+//-----------------------------------------------------------------------
+void RecvSocketTask::setData(const vector<u2char>::type& data)
+{
+    m_Data = data;
+}

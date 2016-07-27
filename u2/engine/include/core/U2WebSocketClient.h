@@ -99,6 +99,12 @@ protected:
 
     void _connect();
 
+    void _onRecv(struct libwebsocket_context *ctx, struct libwebsocket *wsi,
+        int reason, void *user, void *in, size_t len);
+
+    void _onSend(struct libwebsocket_context *ctx, struct libwebsocket *wsi,
+        int reason, void *user, void *in, size_t len);
+
     virtual RecvSocketTask* _dispatchRecvTask(vector<u2char>::type& buffer, bool binary) = 0;
 
 protected:

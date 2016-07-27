@@ -69,8 +69,8 @@ public:
     void _createStream();
     size_t _writeStream(size_t start, size_t size, const u2byte* data);
 
-    virtual String serialize() override;
-    virtual void deserialize(const String& str) override;
+    virtual void serialize() override;
+    virtual void deserialize() override;
 
 public:
     static const size_t DefaultChunkCount = 5;

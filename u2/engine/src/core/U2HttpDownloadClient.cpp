@@ -200,13 +200,12 @@ size_t HttpDownloadRequest::_writeStream(size_t start, size_t size, const u2byte
     return uWriteCount;
 }
 //-----------------------------------------------------------------------
-String HttpDownloadRequest::serialize()
+void HttpDownloadRequest::serialize()
 {
     U2_LOCK_MUTEX(m_ChunksMtx);
-    return BLANK;
 }
 //-----------------------------------------------------------------------
-void HttpDownloadRequest::deserialize(const String& str)
+void HttpDownloadRequest::deserialize()
 {
 
 }
@@ -879,7 +878,8 @@ void HttpDownloadTaskLoop::_saveRequest(HttpDownloadRequest* request)
     DataPool* pPool = DataPoolManager::getSingleton().retrieveObjectByName(getName());
     if (pPool)
     {
-        pPool->saveStringData(request->getFile(), request->serialize());
+        request->serialize();
+        pPool->saveCharVectorData(request->getFile(), request->getData());
     }
 }
 //-----------------------------------------------------------------------
