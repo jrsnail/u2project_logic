@@ -73,6 +73,9 @@
     <Filter Include="engine\src\json">
       <UniqueIdentifier>{20c982b5-11eb-4b0b-b066-2326ad60a8dd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="engine\include\core\Win">
+      <UniqueIdentifier>{171d850d-8cb7-41fb-9d49-49cf0f19882d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -476,6 +479,15 @@
     </ClCompile>
     <ClCompile Include="..\engine\src\core\U2WebSocketClientImpl.cpp">
       <Filter>engine\src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\U2LogicClient.cpp">
+      <Filter>engine\src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\U2Scheduler.cpp">
+      <Filter>engine\src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\Win\U2Timer.cpp">
+      <Filter>engine\src\core\Win</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -957,6 +969,21 @@
       <Filter>engine\include\json</Filter>
     </ClInclude>
     <ClInclude Include="..\engine\include\core\U2WebSocketClientImpl.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2LogicClient.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2Scheduler.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\Win\U2TimerImp.h">
+      <Filter>engine\include\core\Win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2Timer.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2Bitwise.h">
       <Filter>engine\include\core</Filter>
     </ClInclude>
   </ItemGroup>

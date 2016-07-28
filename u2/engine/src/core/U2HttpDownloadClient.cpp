@@ -422,7 +422,7 @@ void HttpDownloadTaskLoop::run()
         m_ThreadMap[t.get_id()] = std::move(t);
         m_ThreadMap[t.get_id()].detach();
     }
-    
+
     TaskLoop::run();
 }
 //-----------------------------------------------------------------------
@@ -453,7 +453,7 @@ void HttpDownloadTaskLoop::resume()
 String HttpDownloadTaskLoop::getThreadId()
 {
     StringStream stream;
-    stream << m_thread.get_id();
+    stream << std::this_thread::get_id();
     return stream.str();
 }
 //-----------------------------------------------------------------------

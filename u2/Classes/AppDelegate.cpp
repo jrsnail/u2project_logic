@@ -29,6 +29,7 @@
 #if U2_PLATFORM == U2_PLATFORM_APPLE
 #	include "macUtils.h"
 #endif
+#include "U2LogicClient.h"
 #include "U2WebSocketClientImpl.h"
 #include "cocos2d.h"
 #include "network/WebSocket.h" 
@@ -218,30 +219,46 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	cocos2d::FileUtils::getInstance()->addSearchPath("res/ui/cg");
     cocos2d::FileUtils::getInstance()->addSearchPath("res/ui/ui_info");
 
-	m_pFrameListenerCollection = new CocosFrameListenerCollection;
-    u2::ScriptManager* pScriptManager = new u2::LuaScriptManager;
+    {
+        //------------------------------- init u2 ----------------------------------------
+        // frame listener
+        m_pFrameListenerCollection = new CocosFrameListenerCollection;
+        // script manager
+        u2::ScriptManager* pScriptManager = new u2::LuaScriptManager;
 
+        // Create log manager and default log file if there is no log manager yet
+        if (u2::LogManager::getSingletonPtr() == nullptr)
+        {
+            m_pLogManager = U2_NEW u2::LogManager();
+            m_pLogManager->createLog("u2.log", true, true);
+#if U2_DEBUG_MODE == 1
+            m_pLogManager->setLogDetail(LoggingLevel::LL_BOREME);
+#endif
+        }
 
-	Facade::createFacade<PredefinedFacade>(ON_Facade_Predefined);
-    AppFacade* pAppFacade = Facade::createFacade<AppFacade>(ON_Facade_App);
-	if (pAppFacade != nullptr)
-	{
-		pAppFacade->startup();
-	}
+#if U2_PLATFORM == U2_PLATFORM_ANDROID
+        AndroidLogListener* mAndroidLogger = U2_NEW AndroidLogListener();
+        m_pLogManager->getDefaultLog()->addListener(mAndroidLogger);
+#endif
+
+        // Logic task loop
+        LogicTaskLoop* pLogicTaskLoop = dynamic_cast<LogicTaskLoop*>(
+            TaskLoopManager::getSingleton().createObject(GET_OBJECT_TYPE(LogicTaskLoop), ON_Logic_TaskLoop)
+            );
+        pLogicTaskLoop->run();
+
+        // facade
+        Facade::createFacade<PredefinedFacade>(ON_Facade_Predefined);
+        AppFacade* pAppFacade = Facade::createFacade<AppFacade>(ON_Facade_App);
+        if (pAppFacade != nullptr)
+        {
+            pAppFacade->startup();
+        }
+    }
 	
 
 
-	// Create log manager and default log file if there is no log manager yet
-	if (u2::LogManager::getSingletonPtr() == nullptr)
-	{
-		m_pLogManager = U2_NEW u2::LogManager();
-		m_pLogManager->createLog("u2.log", true, true);
-	}
-
-#if U2_PLATFORM == U2_PLATFORM_ANDROID
-	AndroidLogListener* mAndroidLogger = U2_NEW AndroidLogListener();
-	m_pLogManager->getDefaultLog()->addListener(mAndroidLogger);
-#endif
+	
 
 	{
 		//------------------------------- Test Resource ----------------------------------------
@@ -418,7 +435,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     {
         //------------------------------- Test Net ----------------------------------------
         WsTaskLoop* pWsTaskLoop = dynamic_cast<WsTaskLoop*>(
-            MsgLoopManager::getSingleton().createObject(GET_OBJECT_TYPE(JsonWsTaskLoop), "websocket")
+            TaskLoopManager::getSingleton().createObject(GET_OBJECT_TYPE(JsonWsTaskLoop), "websocket")
             );
         pWsTaskLoop->setUrl("ws://echo.websocket.org");
         pWsTaskLoop->run();

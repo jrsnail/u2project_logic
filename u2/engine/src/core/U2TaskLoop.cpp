@@ -1,7 +1,10 @@
 #include "U2TaskLoop.h"
 
+#include "U2LogManager.h"
 #include "U2Exception.h"
 #include "U2Task.h"
+#include "U2Scheduler.h"
+#include "U2LogicClient.h"
 #include "U2WebSocketClientImpl.h"
 
 
@@ -12,47 +15,36 @@ U2EG_NAMESPACE_USING
 //---------------------------------------------------------------------
 TaskLoop::TaskLoop(const String& type, const String& name)
     : Object(type, name)
+    , m_pScheduler(nullptr)
 {
     
 }
 //---------------------------------------------------------------------
 TaskLoop::~TaskLoop()
 {
-    TaskLoopListenerList::iterator it = m_TaskLoopListeners.begin();
-    while (it != m_TaskLoopListeners.end())
+    // destroy scheduler
+    if (m_pScheduler != nullptr)
+    {
+        SchedulerManager::getSingleton().destoryObject(m_pScheduler);
+        m_pScheduler = nullptr;
+    }
+
+    // copy, avaid to interrupt iterator
+    TaskLoopListenerList v = m_TaskLoopListeners;
+    for (TaskLoopListenerList::iterator it = v.begin(); it != v.end(); it++)
     {
         (*it)->preDestroyCurrentTaskLoop(this);
-        it = m_TaskLoopListeners.begin();
     }
     m_TaskLoopListeners.clear();
 
     m_TaskListeners.clear();
-
-    /*
-    // Clean up any unprocessed tasks, but take care: deleting a task could
-    // result in the addition of more tasks (e.g., via DeleteSoon).  We set a
-    // limit on the number of times we will allow a deleted task to generate more
-    // tasks.  Normally, we should only pass through this loop once or twice.  If
-    // we end up hitting the loop limit, then it is probably due to one task that
-    // is being stubborn.  Inspect the queues to see who is left.
-    bool did_work;
-    for (int i = 0; i < 100; ++i) {
-        DeletePendingTasks();
-        ReloadWorkQueue();
-        // If we end up with empty queues, then break out of the loop.
-        did_work = DeletePendingTasks();
-        if (!did_work)
-            break;
-    }
-    */
-
 }
 //---------------------------------------------------------------------
 void TaskLoop::addTaskLoopListener(TaskLoopListener* listener)
 {
     TaskLoopListenerList::iterator it 
         = std::find(m_TaskLoopListeners.begin(), m_TaskLoopListeners.end(), listener);
-    if (it != m_TaskLoopListeners.end())
+    if (it == m_TaskLoopListeners.end())
     {
         m_TaskLoopListeners.push_back(listener);
     }
@@ -70,10 +62,10 @@ void TaskLoop::removeTaskLoopListener(TaskLoopListener* listener)
 //---------------------------------------------------------------------
 void TaskLoop::addTaskListener(TaskListener* listener)
 {
-    assert(this == MsgLoopManager::current());
+    assert(this == TaskLoopManager::current());
     TaskListenerList::iterator it
         = std::find(m_TaskListeners.begin(), m_TaskListeners.end(), listener);
-    if (it != m_TaskListeners.end())
+    if (it == m_TaskListeners.end())
     {
         m_TaskListeners.push_back(listener);
     }
@@ -81,7 +73,7 @@ void TaskLoop::addTaskListener(TaskListener* listener)
 //---------------------------------------------------------------------
 void TaskLoop::removeTaskListener(TaskListener* listener)
 {
-    assert(this == MsgLoopManager::current());
+    assert(this == TaskLoopManager::current());
     TaskListenerList::iterator it
         = std::find(m_TaskListeners.begin(), m_TaskListeners.end(), listener);
     if (it != m_TaskListeners.end())
@@ -92,42 +84,58 @@ void TaskLoop::removeTaskListener(TaskListener* listener)
 //-----------------------------------------------------------------------
 void TaskLoop::run()
 {
-    TaskLoopListenerList::iterator it = m_TaskLoopListeners.begin();
-    while (it != m_TaskLoopListeners.end())
+    // copy, avaid to interrupt iterator
+    TaskLoopListenerList v = m_TaskLoopListeners;
+    for (TaskLoopListenerList::iterator it = v.begin(); it != v.end(); it++)
     {
         (*it)->postRunCurrentTaskLoop(this);
-        it = m_TaskLoopListeners.begin();
     }
 }
 //-----------------------------------------------------------------------
 void TaskLoop::quit()
 {
-    TaskLoopListenerList::iterator it = m_TaskLoopListeners.begin();
-    while (it != m_TaskLoopListeners.end())
+    // copy, avaid to interrupt iterator
+    TaskLoopListenerList v = m_TaskLoopListeners;
+    for (TaskLoopListenerList::iterator it = v.begin(); it != v.end(); it++)
     {
         (*it)->preQuitCurrentTaskLoop(this);
-        it = m_TaskLoopListeners.begin();
     }
 }
 //---------------------------------------------------------------------
 void TaskLoop::pause()
 {
-    TaskLoopListenerList::iterator it = m_TaskLoopListeners.begin();
-    while (it != m_TaskLoopListeners.end())
+    // copy, avaid to interrupt iterator
+    TaskLoopListenerList v = m_TaskLoopListeners;
+    for (TaskLoopListenerList::iterator it = v.begin(); it != v.end(); it++)
     {
         (*it)->prePauseCurrentTaskLoop(this);
-        it = m_TaskLoopListeners.begin();
     }
 }
 //---------------------------------------------------------------------
 void TaskLoop::resume()
 {
-    TaskLoopListenerList::iterator it = m_TaskLoopListeners.begin();
-    while (it != m_TaskLoopListeners.end())
+    // copy, avaid to interrupt iterator
+    TaskLoopListenerList v = m_TaskLoopListeners;
+    for (TaskLoopListenerList::iterator it = v.begin(); it != v.end(); it++)
     {
         (*it)->postResumeCurrentTaskLoop(this);
-        it = m_TaskLoopListeners.begin();
     }
+}
+//---------------------------------------------------------------------
+void TaskLoop::postSchedulerTask(const String& schedulerTaskName
+    , const String& taskType, const String& taskName
+    , u2uint64 period, bool repeat, bool catchUp)
+{
+    if (m_pScheduler == nullptr)
+    {
+        m_pScheduler = SchedulerManager::getSingleton().createObject(GET_OBJECT_TYPE(Scheduler), BLANK, true);
+    }
+    m_pScheduler->createObjectWithFunction([=] {
+        LogManager::getSingleton().stream(LML_TRIVIAL) << "scheduler callback";
+        Task* pTask = TaskManager::getSingleton().createObject(taskType, taskName);
+        TaskLoopManager::getSingleton().postTask(getName(), pTask);
+        //this->postTask(pTask);
+    }, schedulerTaskName, period, repeat, catchUp);
 }
 //---------------------------------------------------------------------
 void TaskLoop::_runTask(Task* task)
@@ -148,32 +156,43 @@ void TaskLoop::_runTask(Task* task)
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-map<String, std::shared_ptr<TaskLoop> >::type MsgLoopManager::ms_TaskLoops;
+map<String, std::shared_ptr<TaskLoop> >::type TaskLoopManager::ms_TaskLoops;
 //-----------------------------------------------------------------------
-template<> MsgLoopManager* Singleton<MsgLoopManager>::msSingleton = 0;
-MsgLoopManager* MsgLoopManager::getSingletonPtr(void)
+template<> TaskLoopManager* Singleton<TaskLoopManager>::msSingleton = 0;
+TaskLoopManager* TaskLoopManager::getSingletonPtr(void)
 {
     if (msSingleton == nullptr)
     {
-        msSingleton = new MsgLoopManager;
+        msSingleton = new TaskLoopManager;
     }
     return msSingleton;
 }
-MsgLoopManager& MsgLoopManager::getSingleton(void)
+TaskLoopManager& TaskLoopManager::getSingleton(void)
 {
     return (*getSingletonPtr());
 }
 //-----------------------------------------------------------------------
-MsgLoopManager::MsgLoopManager()
+TaskLoopManager::TaskLoopManager()
 {
+    CREATE_FACTORY(LogicTaskLoop);
     CREATE_FACTORY(JsonWsTaskLoop);
 }
 //-----------------------------------------------------------------------
-MsgLoopManager::~MsgLoopManager()
+TaskLoopManager::~TaskLoopManager()
 {
 }
 //-----------------------------------------------------------------------
-void MsgLoopManager::postTask(const String& loopName, Task* task)
+TaskLoop* TaskLoopManager::createObject(const String& type, const String& name)
+{
+    TaskLoop* pTaskLoop = SimpleObjectManager<TaskLoop>::createObject(type, name);
+    if (pTaskLoop != nullptr)
+    {
+        pTaskLoop->addTaskLoopListener(this);
+    }
+    return pTaskLoop;
+}
+//-----------------------------------------------------------------------
+void TaskLoopManager::postTask(const String& loopName, Task* task)
 {
     TaskLoop* pMsgLoop = retrieveObjectByName(loopName);
     if (pMsgLoop)
@@ -182,7 +201,7 @@ void MsgLoopManager::postTask(const String& loopName, Task* task)
     }
 }
 //-----------------------------------------------------------------------
-void MsgLoopManager::postTaskAndReply(const String& loopName, Task* task, Task* reply)
+void TaskLoopManager::postTaskAndReply(const String& loopName, Task* task, Task* reply)
 {
     TaskLoop* pMsgLoop = retrieveObjectByName(loopName);
     if (pMsgLoop)
@@ -191,7 +210,7 @@ void MsgLoopManager::postTaskAndReply(const String& loopName, Task* task, Task* 
     }
 }
 //---------------------------------------------------------------------
-TaskLoop* MsgLoopManager::current()
+TaskLoop* TaskLoopManager::current()
 {
     std::thread::id tid = std::this_thread::get_id();
     StringStream stream;
@@ -202,7 +221,7 @@ TaskLoop* MsgLoopManager::current()
     return it->second.get();
 }
 //---------------------------------------------------------------------
-void MsgLoopManager::postRunCurrentTaskLoop(TaskLoop* loop)
+void TaskLoopManager::postRunCurrentTaskLoop(TaskLoop* loop)
 {
     String szId = loop->getThreadId();
     TaskLoopMap::iterator it = ms_TaskLoops.find(szId);
@@ -216,7 +235,7 @@ void MsgLoopManager::postRunCurrentTaskLoop(TaskLoop* loop)
     }
 }
 //---------------------------------------------------------------------
-void MsgLoopManager::preQuitCurrentTaskLoop(TaskLoop* loop)
+void TaskLoopManager::preQuitCurrentTaskLoop(TaskLoop* loop)
 {
     String szId = loop->getThreadId();
     TaskLoopMap::iterator it = ms_TaskLoops.find(szId);
@@ -230,17 +249,17 @@ void MsgLoopManager::preQuitCurrentTaskLoop(TaskLoop* loop)
     }
 }
 //---------------------------------------------------------------------
-void MsgLoopManager::prePauseCurrentTaskLoop(TaskLoop* loop)
+void TaskLoopManager::prePauseCurrentTaskLoop(TaskLoop* loop)
 {
 
 }
 //---------------------------------------------------------------------
-void MsgLoopManager::postResumeCurrentTaskLoop(TaskLoop* loop)
+void TaskLoopManager::postResumeCurrentTaskLoop(TaskLoop* loop)
 {
 
 }
 //---------------------------------------------------------------------
-void MsgLoopManager::preDestroyCurrentTaskLoop(TaskLoop* loop)
+void TaskLoopManager::preDestroyCurrentTaskLoop(TaskLoop* loop)
 {
 
 }

@@ -5,6 +5,7 @@
 #include "U2Exception.h"
 #include "U2DataPool.h"
 #include "U2PredefinedPrerequisites.h"
+#include "U2Scheduler.h"
 
 
 U2EG_NAMESPACE_USING
@@ -63,6 +64,23 @@ void WsOpenRST::run()
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
+WsHeartBeatSST::WsHeartBeatSST(const String& type, const String& name)
+    : SendSocketTask(type, name)
+{
+
+}
+//-----------------------------------------------------------------------
+WsHeartBeatSST::~WsHeartBeatSST()
+{
+
+}
+//-----------------------------------------------------------------------
+void WsHeartBeatSST::run()
+{
+
+}
+//-----------------------------------------------------------------------
+//-----------------------------------------------------------------------
 // Wrapper for converting websocket callback from static function to member function of WebSocket class.
 class WebSocketCallbackWrapper
 {
@@ -91,11 +109,18 @@ WsTaskLoop::WsTaskLoop(const String& type, const String& name)
     , m_aWsProtocols(nullptr)
     , m_pWsContext(nullptr)
     , m_pWebSocket(nullptr)
+    , m_ulHeartBeatPeriod(1000L)
 {
+    CREATE_FACTORY(WsCloseRST);
+    CREATE_FACTORY(WsErrorRST);
+    CREATE_FACTORY(WsOpenRST);
+    CREATE_FACTORY(WsHeartBeatSST);
 }
 //-----------------------------------------------------------------------
 WsTaskLoop::~WsTaskLoop()
 {
+    _destroyHearBeat();
+
     for (size_t i = 0; m_aWsProtocols[i].callback != nullptr; ++i)
     {
         U2_FREE(m_aWsProtocols[i].name, MEMCATEGORY_GENERAL);
@@ -121,6 +146,8 @@ void WsTaskLoop::run()
     m_thread = std::move(std::thread(std::bind(&WsTaskLoop::_runInternal, this)));
     m_thread.detach();
 
+    // need sub thread sleep a few milliseconds to call 
+    // TaskLoopListener::postRunCurrentTaskLoop firstly.
     TaskLoop::run();
 }
 //-----------------------------------------------------------------------
@@ -149,12 +176,17 @@ void WsTaskLoop::resume()
 String WsTaskLoop::getThreadId()
 {
     StringStream stream;
-    stream << m_thread.get_id();
+    stream << m_threadId;
     return stream.str();
 }
 //-----------------------------------------------------------------------
 void WsTaskLoop::_runInternal()
 {
+    m_threadId = std::this_thread::get_id();
+    // sleep a few milliseconds for TaskLoopListener::postRunCurrentTaskLoop
+    // can run first.
+    U2_THREAD_SLEEP(100);
+
     _connect();
 
     for (;;)
@@ -228,6 +260,23 @@ void WsTaskLoop::setUrl(const String& url)
 const String& WsTaskLoop::getUrl() const
 {
     return m_szUrl;
+}
+//---------------------------------------------------------------------
+void WsTaskLoop::setHeartBeatPeriod(u2uint64 period)
+{
+    if (m_pScheduler == nullptr)
+    {
+        m_ulHeartBeatPeriod = period;
+    }
+    else
+    {
+        assert(0);
+    }
+}
+//---------------------------------------------------------------------
+u2uint64 WsTaskLoop::getHeartBeatPeriod() const
+{
+    return m_ulHeartBeatPeriod;
 }
 //---------------------------------------------------------------------
 void WsTaskLoop::addProtocol(const String& protocol)
@@ -412,6 +461,8 @@ int WsTaskLoop::onSocketCallback(struct libwebsocket_context *ctx,
         }
         case LWS_CALLBACK_CLIENT_ESTABLISHED:
         {
+            _createHeartBeat();
+
             m_eState = State::OPEN;
             Task* pTask = TaskManager::getSingleton().createObject(GET_OBJECT_TYPE(WsOpenRST));
             DataPool* pDataPool = DataPoolManager::getSingleton().retrieveObjectByName(ON_DataPool_Task);
@@ -441,6 +492,8 @@ int WsTaskLoop::onSocketCallback(struct libwebsocket_context *ctx,
 
             if (m_eState != State::CLOSED)
             {
+                _destroyHearBeat();
+
                 m_eState = State::CLOSED;
                 Task* pTask = TaskManager::getSingleton().createObject(GET_OBJECT_TYPE(WsCloseRST));
                 DataPool* pDataPool = DataPoolManager::getSingleton().retrieveObjectByName(ON_DataPool_Task);
@@ -590,6 +643,12 @@ void WsTaskLoop::_onSend(struct libwebsocket_context *ctx, struct libwebsocket *
                 int nBytesWrite = libwebsocket_write(wsi, &buf[LWS_SEND_BUFFER_PRE_PADDING], n
                     , (libwebsocket_write_protocol)nWriteProtocol);
 
+                LogManager::getSingleton().stream(LML_TRIVIAL)
+                    << "WebSocketClient send task: "
+                    << pSendTask->getType()
+                    << ", "
+                    << pSendTask->getName();
+
                 U2_FREE(buf, MEMCATEGORY_GENERAL);
 
                 // Buffer overrun?
@@ -616,4 +675,19 @@ void WsTaskLoop::_onSend(struct libwebsocket_context *ctx, struct libwebsocket *
 
     // get notified as soon as we can write again
     libwebsocket_callback_on_writable(ctx, wsi);
+}
+//---------------------------------------------------------------------
+void WsTaskLoop::_createHeartBeat()
+{
+    postSchedulerTask(getName() + "_scheduler"
+        , GET_OBJECT_TYPE(WsHeartBeatSST), BLANK
+        , getHeartBeatPeriod(), true, false);
+}
+//---------------------------------------------------------------------
+void WsTaskLoop::_destroyHearBeat()
+{
+    if (m_pScheduler != nullptr)
+    {
+        m_pScheduler->destoryObjectByName(getName() + "_scheduler");
+    }
 }

@@ -100,13 +100,6 @@ public:
             }
         };
 
-//         u2::String szType = typeid(WrappedFunction).name();
-//         if (!u2::FactoryManager::getSingleton().hasObjectFactory(szType))
-//         {
-//             u2::ObjectFactory* pObjectFactory = new u2::TemplateObjectFactory < WrappedFunction >;
-//             u2::FactoryManager::getSingleton().addObjectFactory(pObjectFactory);
-//         }
-
         CREATE_FACTORY(WrappedFunction);
         return createObject(GET_OBJECT_TYPE(WrappedFunction), BLANK);
     }

@@ -19,6 +19,9 @@ struct libwebsocket;
 U2EG_NAMESPACE_BEGIN
 
 
+class Scheduler;
+
+
 class WsCloseRST : public RecvSocketTask
 {
 public:
@@ -44,6 +47,16 @@ class WsOpenRST : public RecvSocketTask
 public:
     WsOpenRST(const String& type, const String& name);
     virtual ~WsOpenRST();
+
+    virtual void run() override;
+};
+
+
+class WsHeartBeatSST : public SendSocketTask
+{
+public:
+    WsHeartBeatSST(const String& type, const String& name);
+    virtual ~WsHeartBeatSST();
 
     virtual void run() override;
 };
@@ -83,6 +96,9 @@ public:
     void setUrl(const String& url);
     const String& getUrl() const;
 
+    void setHeartBeatPeriod(u2uint64 period);
+    u2uint64 getHeartBeatPeriod() const;
+
     void addProtocol(const String& protocol);
 
     State getState();
@@ -107,8 +123,16 @@ protected:
 
     virtual RecvSocketTask* _dispatchRecvTask(vector<u2char>::type& buffer, bool binary) = 0;
 
+    void _createHeartBeat();
+
+    void _destroyHearBeat();
+
 protected:
     std::thread     m_thread;
+    /** when detach, thread.get_id() will return back 0, 
+        so we should record it here.
+    */
+    std::thread::id m_threadId;
 
     // This flag is set to false when Run should return.
     U2_MUTEX(m_KeepRunningMutex);
@@ -134,6 +158,8 @@ protected:
     struct ::libwebsocket_protocols* m_aWsProtocols;
     struct ::libwebsocket_context* m_pWsContext;
     struct ::libwebsocket*         m_pWebSocket;
+
+    u2uint64                m_ulHeartBeatPeriod;
 };
 
 

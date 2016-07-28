@@ -13,6 +13,7 @@ U2EG_NAMESPACE_BEGIN
 
 
 class Task;
+class Scheduler;
 
 
 class TaskLoop : public Object
@@ -155,6 +156,10 @@ public:
 
     virtual String getThreadId() = 0;
 
+    virtual void postSchedulerTask(const String& schedulerTaskName
+        , const String& taskType, const String& taskName
+        , u2uint64 period, bool repeat = false, bool catchUp = true);
+
 protected:
     // Runs the specified Task.
     void _runTask(Task* task);
@@ -165,18 +170,22 @@ protected:
     TaskLoopListenerList m_TaskLoopListeners;
 
     typedef vector<TaskListener*>::type TaskListenerList;
-    TaskListenerList m_TaskListeners;
+    TaskListenerList     m_TaskListeners;
 
+    Scheduler*           m_pScheduler;
 };
 
 
 
-class MsgLoopManager : public Singleton < MsgLoopManager >, public SimpleObjectManager<TaskLoop>
-    , public TaskLoop::TaskLoopListener
+class TaskLoopManager : public TaskLoop::TaskLoopListener
+    , public Singleton < TaskLoopManager >
+    , public SimpleObjectManager<TaskLoop>
 {
 public:
-    MsgLoopManager();
-    virtual ~MsgLoopManager();
+    TaskLoopManager();
+    virtual ~TaskLoopManager();
+
+    virtual TaskLoop* createObject(const String& type, const String& name = BLANK);
 
     void postTask(const String& loopName, Task* task);
     void postTaskAndReply(const String& loopName, Task* task, Task* reply);
@@ -206,7 +215,7 @@ public:
     but the implementation stays in this single compilation unit,
     preventing link errors.
     */
-    static MsgLoopManager& getSingleton(void);
+    static TaskLoopManager& getSingleton(void);
 
     /** Override standard Singleton retrieval.
     @remarks
@@ -223,7 +232,7 @@ public:
     but the implementation stays in this single compilation unit,
     preventing link errors.
     */
-    static MsgLoopManager* getSingletonPtr(void);
+    static TaskLoopManager* getSingletonPtr(void);
 
 protected:
     typedef map<String, std::shared_ptr<TaskLoop> >::type   TaskLoopMap;

@@ -1,5 +1,7 @@
 #include "U2AlignedAllocator.h"
 
+#include "U2Bitwise.h"
+
 
 /**
 *
@@ -19,16 +21,11 @@
 U2EG_NAMESPACE_USING
 
 
-FORCEINLINE bool isPO2(size_t n)
-{
-    return (n & (n - 1)) == 0;
-}
-
 
 //---------------------------------------------------------------------
 void* AlignedMemory::allocate(size_t size, size_t alignment)
 {
-    assert(0 < alignment && alignment <= 128 && isPO2(alignment));
+    assert(0 < alignment && alignment <= 128 && Bitwise::isPO2(alignment));
 
     unsigned char* p = new unsigned char[size + alignment];
     size_t offset = alignment - (size_t(p) & (alignment-1));

@@ -27,6 +27,8 @@ public:
     T* createObject(const String& type, const String& name = BLANK);
     
     void destoryObject(T* obj);
+
+    void destoryObjectByName(const String& name);
     
     T* retrieveObjectByName(const String& name);
     
@@ -75,6 +77,10 @@ T* SimpleObjectManager<T>::createObject(const String& type, const String& name)
     {
         m_NamedMap[pObj->getName()] = pObj;
     }
+    else
+    {
+        assert(0);
+    }
     return pObj;
 }
 //-----------------------------------------------------------------------
@@ -94,6 +100,20 @@ void SimpleObjectManager<T>::destoryObject(T* obj)
 
     // destory in ObjectCollection
     ObjectCollection::getSingletonPtr()->destoryObject(obj);
+}
+//-----------------------------------------------------------------------
+template <class T>
+void SimpleObjectManager<T>::destoryObjectByName(const String& name)
+{
+    T* pObj = this->retrieveObjectByName(name);
+    if (pObj == nullptr)
+    {
+        assert(0);
+    }
+    else
+    {
+        destoryObject(pObj);
+    }
 }
 //-----------------------------------------------------------------------
 template <class T>

@@ -183,6 +183,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\engine\src\core\U2HttpClientImpl.cpp" />
     <ClCompile Include="..\engine\src\core\U2HttpDownloadClient.cpp" />
     <ClCompile Include="..\engine\src\core\U2Log.cpp" />
+    <ClCompile Include="..\engine\src\core\U2LogicClient.cpp" />
     <ClCompile Include="..\engine\src\core\U2LogManager.cpp" />
     <ClCompile Include="..\engine\src\core\U2MemoryAllocatedObject.cpp" />
     <ClCompile Include="..\engine\src\core\U2MemoryTracker.cpp" />
@@ -195,6 +196,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\engine\src\core\U2Resource.cpp" />
     <ClCompile Include="..\engine\src\core\U2ResourceGroupManager.cpp" />
     <ClCompile Include="..\engine\src\core\U2ResourceManager.cpp" />
+    <ClCompile Include="..\engine\src\core\U2Scheduler.cpp" />
     <ClCompile Include="..\engine\src\core\U2SearchOps.cpp" />
     <ClCompile Include="..\engine\src\core\U2Serialize.cpp" />
     <ClCompile Include="..\engine\src\core\U2SimpleObjectManager.cpp" />
@@ -212,6 +214,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\engine\src\core\U2XmlSerialize.cpp" />
     <ClCompile Include="..\engine\src\core\U2ZipArchive.cpp" />
     <ClCompile Include="..\engine\src\core\Win\U2FileSystemLayer.cpp" />
+    <ClCompile Include="..\engine\src\core\Win\U2Timer.cpp" />
     <ClCompile Include="..\engine\src\json\json_reader.cpp" />
     <ClCompile Include="..\engine\src\json\json_value.cpp" />
     <ClCompile Include="..\engine\src\json\json_writer.cpp" />
@@ -312,6 +315,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\engine\include\core\U2AlignedAllocator.h" />
     <ClInclude Include="..\engine\include\core\U2Archive.h" />
     <ClInclude Include="..\engine\include\core\U2AtomicScalar.h" />
+    <ClInclude Include="..\engine\include\core\U2Bitwise.h" />
     <ClInclude Include="..\engine\include\core\U2Common.h" />
     <ClInclude Include="..\engine\include\core\U2Component.h" />
     <ClInclude Include="..\engine\include\core\U2Config.h" />
@@ -333,6 +337,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\engine\include\core\U2HttpDownloadClient.h" />
     <ClInclude Include="..\engine\include\core\U2IteratorWrapper.h" />
     <ClInclude Include="..\engine\include\core\U2Log.h" />
+    <ClInclude Include="..\engine\include\core\U2LogicClient.h" />
     <ClInclude Include="..\engine\include\core\U2LogManager.h" />
     <ClInclude Include="..\engine\include\core\U2MemoryAllocatedObject.h" />
     <ClInclude Include="..\engine\include\core\U2MemoryAllocatorConfig.h" />
@@ -349,6 +354,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\engine\include\core\U2Resource.h" />
     <ClInclude Include="..\engine\include\core\U2ResourceGroupManager.h" />
     <ClInclude Include="..\engine\include\core\U2ResourceManager.h" />
+    <ClInclude Include="..\engine\include\core\U2Scheduler.h" />
     <ClInclude Include="..\engine\include\core\U2ScriptLoader.h" />
     <ClInclude Include="..\engine\include\core\U2SearchOps.h" />
     <ClInclude Include="..\engine\include\core\U2Serialize.h" />
@@ -362,6 +368,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\engine\include\core\U2System.h" />
     <ClInclude Include="..\engine\include\core\U2Task.h" />
     <ClInclude Include="..\engine\include\core\U2TaskLoop.h" />
+    <ClInclude Include="..\engine\include\core\U2Timer.h" />
     <ClInclude Include="..\engine\include\core\U2TNedObjectManager.h" />
     <ClInclude Include="..\engine\include\core\U2TypedObjectManager.h" />
     <ClInclude Include="..\engine\include\core\U2ValueList.h" />
@@ -370,6 +377,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\engine\include\core\U2WebSocketClientImpl.h" />
     <ClInclude Include="..\engine\include\core\U2XmlSerialize.h" />
     <ClInclude Include="..\engine\include\core\U2ZipArchive.h" />
+    <ClInclude Include="..\engine\include\core\Win\U2TimerImp.h" />
     <ClInclude Include="..\engine\include\json\allocator.h" />
     <ClInclude Include="..\engine\include\json\assertions.h" />
     <ClInclude Include="..\engine\include\json\autolink.h" />

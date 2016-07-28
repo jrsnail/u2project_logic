@@ -379,6 +379,8 @@ void HttpTaskLoop::run()
     m_thread = std::move(std::thread(std::bind(&HttpTaskLoop::_runInternal, this)));
     m_thread.detach();
 
+    // need sub thread sleep a few milliseconds to call 
+    // TaskLoopListener::postRunCurrentTaskLoop firstly.
     TaskLoop::run();
 }
 //-----------------------------------------------------------------------
@@ -407,7 +409,7 @@ void HttpTaskLoop::resume()
 String HttpTaskLoop::getThreadId()
 {
     StringStream stream;
-    stream << m_thread.get_id();
+    stream << m_threadId;
     return stream.str();
 }
 //-----------------------------------------------------------------------
