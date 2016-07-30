@@ -158,7 +158,7 @@ template <class T>
 void SimpleObjectManager<T>::addObject(T* obj)
 {
     assert(obj);
-    NamedObjectMap::iterator it = m_NamedMap.find(obj->getName());
+    typename NamedObjectMap::iterator it = m_NamedMap.find(obj->getName());
     if (it == m_NamedMap.end())
     {
         m_NamedMap[obj->getName()] = obj;
@@ -173,7 +173,7 @@ template <class T>
 void SimpleObjectManager<T>::removeObject(T* obj)
 {
     assert(obj);
-    NamedObjectMap::iterator it = m_NamedMap.find(obj->getName());
+    typename NamedObjectMap::iterator it = m_NamedMap.find(obj->getName());
     if (it == m_NamedMap.end())
     {
         m_NamedMap.erase(it);
