@@ -21,9 +21,8 @@ ActiveHttpTaskLoop::~ActiveHttpTaskLoop()
 void ActiveHttpTaskLoop::_runInternal()
 {
     m_threadId = std::this_thread::get_id();
-    // sleep a few milliseconds for TaskLoopListener::postRunCurrentTaskLoop
-    // can run first.
-    U2_THREAD_SLEEP(100);
+    
+    _postRunCurrentTaskLoop();
 
     for (;;)
     {

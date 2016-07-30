@@ -84,12 +84,7 @@ void TaskLoop::removeTaskListener(TaskListener* listener)
 //-----------------------------------------------------------------------
 void TaskLoop::run()
 {
-    // copy, avaid to interrupt iterator
-    TaskLoopListenerList v = m_TaskLoopListeners;
-    for (TaskLoopListenerList::iterator it = v.begin(); it != v.end(); it++)
-    {
-        (*it)->postRunCurrentTaskLoop(this);
-    }
+    
 }
 //-----------------------------------------------------------------------
 void TaskLoop::quit()
@@ -151,6 +146,16 @@ void TaskLoop::_runTask(Task* task)
         it != m_TaskListeners.end(); it++)
     {
         (*it)->DidProcessTask();
+    }
+}
+//-----------------------------------------------------------------------
+void TaskLoop::_postRunCurrentTaskLoop()
+{
+    // copy, avaid to interrupt iterator
+    TaskLoopListenerList v = m_TaskLoopListeners;
+    for (TaskLoopListenerList::iterator it = v.begin(); it != v.end(); it++)
+    {
+        (*it)->postRunCurrentTaskLoop(this);
     }
 }
 //-----------------------------------------------------------------------

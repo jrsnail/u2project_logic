@@ -163,6 +163,8 @@ public:
 protected:
     // Runs the specified Task.
     void _runTask(Task* task);
+    
+    void _postRunCurrentTaskLoop();
 
 
 protected:

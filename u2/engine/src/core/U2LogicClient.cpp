@@ -31,10 +31,12 @@ void LogicTaskLoop::postTaskAndReply(Task* task, Task* reply)
 //-----------------------------------------------------------------------
 void LogicTaskLoop::run()
 {
+    TaskLoop::run();
+    
     FrameListenerCollection::getSingleton().addFrameListener(this
         , std::bind(&LogicTaskLoop::_onUpdate, this, std::placeholders::_1));
-
-    TaskLoop::run();
+    
+    _postRunCurrentTaskLoop();
 }
 //-----------------------------------------------------------------------
 void LogicTaskLoop::quit()

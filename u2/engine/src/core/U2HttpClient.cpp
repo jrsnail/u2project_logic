@@ -348,15 +348,13 @@ void HttpTaskLoop::postTaskAndReply(Task* task, Task* reply)
 //-----------------------------------------------------------------------
 void HttpTaskLoop::run()
 {
+    TaskLoop::run();
+    
     U2_LOCK_MUTEX(m_KeepRunningMutex);
     m_bKeepRunning = true;
 
     m_thread = std::move(std::thread(std::bind(&HttpTaskLoop::_runInternal, this)));
     m_thread.detach();
-
-    // need sub thread sleep a few milliseconds to call 
-    // TaskLoopListener::postRunCurrentTaskLoop firstly.
-    TaskLoop::run();
 }
 //-----------------------------------------------------------------------
 void HttpTaskLoop::quit()

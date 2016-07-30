@@ -33,7 +33,7 @@ public:
         {
             if (isPrototype())
             {
-                InstanceMap::iterator it = m_InstanceMap.find(instance->getGuid());
+                typename InstanceMap::iterator it = m_InstanceMap.find(instance->getGuid());
                 if (it == m_InstanceMap.end())
                 {
                     m_InstanceMap.insert(make_pair(instance->getGuid(), instance));
@@ -64,7 +64,7 @@ public:
         {
             if (isPrototype())
             {
-                InstanceMap::iterator it = m_InstanceMap.find(instance->getGuid());
+                typename InstanceMap::iterator it = m_InstanceMap.find(instance->getGuid());
                 if (it == m_InstanceMap.end())
                 {
                     assert(0);
@@ -92,7 +92,7 @@ public:
         {
             if (isPrototype())
             {
-                for (InstanceMap::iterator it = m_InstanceMap.begin();
+                for (typename InstanceMap::iterator it = m_InstanceMap.begin();
                 it != m_InstanceMap.end(); it++)
                 {
                     it->second->resetFromPrototype();

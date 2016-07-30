@@ -413,6 +413,8 @@ void HttpDownloadTaskLoop::postTaskAndReply(Task* task, Task* reply)
 //-----------------------------------------------------------------------
 void HttpDownloadTaskLoop::run()
 {
+    TaskLoop::run();
+    
     U2_LOCK_MUTEX(m_KeepRunningMutex);
     m_bKeepRunning = true;
 
@@ -422,8 +424,6 @@ void HttpDownloadTaskLoop::run()
         m_ThreadMap[t.get_id()] = std::move(t);
         m_ThreadMap[t.get_id()].detach();
     }
-
-    TaskLoop::run();
 }
 //-----------------------------------------------------------------------
 void HttpDownloadTaskLoop::quit()
@@ -544,6 +544,10 @@ void HttpDownloadTaskLoop::_addToIncomingQueue(Task* task)
 //-----------------------------------------------------------------------
 void HttpDownloadTaskLoop::_runInternal()
 {
+    m_threadId = std::this_thread::get_id();
+    
+    _postRunCurrentTaskLoop();
+    
     for (;;)
     {
         {

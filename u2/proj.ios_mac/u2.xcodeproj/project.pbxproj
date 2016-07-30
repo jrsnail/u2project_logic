@@ -37,16 +37,6 @@
 		4C1EE4E61CD1DE7700CD21F1 /* resources.cfg in Resources */ = {isa = PBXBuildFile; fileRef = 4C1EE4E41CD1DE7700CD21F1 /* resources.cfg */; };
 		4C1EE4ED1CD2016400CD21F1 /* iosUtils.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4C1EE4EC1CD2016400CD21F1 /* iosUtils.mm */; };
 		4C462E8C1D17B99D001F3CC1 /* U2TNedObjectManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C462E8B1D17B99D001F3CC1 /* U2TNedObjectManager.cpp */; };
-		4C68AC1A1C8930FC007BA5BD /* U2CodeCvt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C68ABE81C8930FC007BA5BD /* U2CodeCvt.cpp */; };
-		4C68AC1B1C8930FC007BA5BD /* U2CodeCvt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C68ABE81C8930FC007BA5BD /* U2CodeCvt.cpp */; };
-		4C68AC1C1C8930FC007BA5BD /* U2DataFilterStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C68ABE91C8930FC007BA5BD /* U2DataFilterStream.cpp */; };
-		4C68AC1D1C8930FC007BA5BD /* U2DataFilterStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C68ABE91C8930FC007BA5BD /* U2DataFilterStream.cpp */; };
-		4C68AC1E1C8930FC007BA5BD /* U2FileStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C68ABEA1C8930FC007BA5BD /* U2FileStream.cpp */; };
-		4C68AC1F1C8930FC007BA5BD /* U2FileStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C68ABEA1C8930FC007BA5BD /* U2FileStream.cpp */; };
-		4C68AC201C8930FC007BA5BD /* U2FilterStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C68ABEB1C8930FC007BA5BD /* U2FilterStream.cpp */; };
-		4C68AC211C8930FC007BA5BD /* U2FilterStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C68ABEB1C8930FC007BA5BD /* U2FilterStream.cpp */; };
-		4C68AC221C8930FC007BA5BD /* U2Stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C68ABEC1C8930FC007BA5BD /* U2Stream.cpp */; };
-		4C68AC231C8930FC007BA5BD /* U2Stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C68ABEC1C8930FC007BA5BD /* U2Stream.cpp */; };
 		4C68AC2A1C8930FC007BA5BD /* U2AlignedAllocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C68ABF21C8930FC007BA5BD /* U2AlignedAllocator.cpp */; };
 		4C68AC2B1C8930FC007BA5BD /* U2AlignedAllocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C68ABF21C8930FC007BA5BD /* U2AlignedAllocator.cpp */; };
 		4C68AC2C1C8930FC007BA5BD /* U2FactoryManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C68ABF31C8930FC007BA5BD /* U2FactoryManager.cpp */; };
@@ -77,10 +67,6 @@
 		4C68AC451C8930FC007BA5BD /* U2Controller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C68AC001C8930FC007BA5BD /* U2Controller.cpp */; };
 		4C68AC461C8930FC007BA5BD /* U2Facade.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C68AC011C8930FC007BA5BD /* U2Facade.cpp */; };
 		4C68AC471C8930FC007BA5BD /* U2Facade.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C68AC011C8930FC007BA5BD /* U2Facade.cpp */; };
-		4C68AC481C8930FC007BA5BD /* U2FrameListenerCollection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C68AC021C8930FC007BA5BD /* U2FrameListenerCollection.cpp */; };
-		4C68AC491C8930FC007BA5BD /* U2FrameListenerCollection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C68AC021C8930FC007BA5BD /* U2FrameListenerCollection.cpp */; };
-		4C68AC4A1C8930FC007BA5BD /* U2Mediator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C68AC031C8930FC007BA5BD /* U2Mediator.cpp */; };
-		4C68AC4B1C8930FC007BA5BD /* U2Mediator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C68AC031C8930FC007BA5BD /* U2Mediator.cpp */; };
 		4C68AC4C1C8930FC007BA5BD /* U2Model.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C68AC041C8930FC007BA5BD /* U2Model.cpp */; };
 		4C68AC4D1C8930FC007BA5BD /* U2Model.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C68AC041C8930FC007BA5BD /* U2Model.cpp */; };
 		4C68AC4E1C8930FC007BA5BD /* U2Notification.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C68AC051C8930FC007BA5BD /* U2Notification.cpp */; };
@@ -130,14 +116,6 @@
 		4CA4AAB21CC0EB20007B5F39 /* U2StringUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CA4AAA31CC0EB20007B5F39 /* U2StringUtil.cpp */; };
 		4CA4AAB31CC0EB20007B5F39 /* U2ZipArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CA4AAA41CC0EB20007B5F39 /* U2ZipArchive.cpp */; };
 		4CA4AAB41CC0EB20007B5F39 /* U2ZipArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CA4AAA41CC0EB20007B5F39 /* U2ZipArchive.cpp */; };
-		4CA4AAB91CC0EB2F007B5F39 /* U2FileHandleStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CA4AAB51CC0EB2F007B5F39 /* U2FileHandleStream.cpp */; };
-		4CA4AABA1CC0EB2F007B5F39 /* U2FileHandleStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CA4AAB51CC0EB2F007B5F39 /* U2FileHandleStream.cpp */; };
-		4CA4AABB1CC0EB2F007B5F39 /* U2MemoryStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CA4AAB61CC0EB2F007B5F39 /* U2MemoryStream.cpp */; };
-		4CA4AABC1CC0EB2F007B5F39 /* U2MemoryStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CA4AAB61CC0EB2F007B5F39 /* U2MemoryStream.cpp */; };
-		4CA4AABD1CC0EB2F007B5F39 /* U2PipedStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CA4AAB71CC0EB2F007B5F39 /* U2PipedStream.cpp */; };
-		4CA4AABE1CC0EB2F007B5F39 /* U2PipedStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CA4AAB71CC0EB2F007B5F39 /* U2PipedStream.cpp */; };
-		4CA4AABF1CC0EB2F007B5F39 /* U2ZipStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CA4AAB81CC0EB2F007B5F39 /* U2ZipStream.cpp */; };
-		4CA4AAC01CC0EB2F007B5F39 /* U2ZipStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CA4AAB81CC0EB2F007B5F39 /* U2ZipStream.cpp */; };
 		4CA4AAC51CC0EB44007B5F39 /* U2GenericThreadPool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CA4AAC11CC0EB44007B5F39 /* U2GenericThreadPool.cpp */; };
 		4CA4AAC61CC0EB44007B5F39 /* U2GenericThreadPool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CA4AAC11CC0EB44007B5F39 /* U2GenericThreadPool.cpp */; };
 		4CA4AAC71CC0EB44007B5F39 /* U2HomogenousQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CA4AAC21CC0EB44007B5F39 /* U2HomogenousQueue.cpp */; };
@@ -168,17 +146,6 @@
 		4CD7EAD61D4C52CB000FA6B0 /* GameSendSocketTasks.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EAC01D4C52CB000FA6B0 /* GameSendSocketTasks.cpp */; };
 		4CD7EAD71D4C52CB000FA6B0 /* GameUrlMaker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EAC21D4C52CB000FA6B0 /* GameUrlMaker.cpp */; };
 		4CD7EAD81D4C52CB000FA6B0 /* GameWsClientImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EAC41D4C52CB000FA6B0 /* GameWsClientImpl.cpp */; };
-		4CD7EB231D4C53AA000FA6B0 /* U2CodeCvt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB021D4C53AA000FA6B0 /* U2CodeCvt.cpp */; };
-		4CD7EB241D4C53AA000FA6B0 /* U2DataFilterStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB031D4C53AA000FA6B0 /* U2DataFilterStream.cpp */; };
-		4CD7EB251D4C53AA000FA6B0 /* U2FileHandleStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB041D4C53AA000FA6B0 /* U2FileHandleStream.cpp */; };
-		4CD7EB261D4C53AA000FA6B0 /* U2FileStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB051D4C53AA000FA6B0 /* U2FileStream.cpp */; };
-		4CD7EB271D4C53AA000FA6B0 /* U2FilterStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB061D4C53AA000FA6B0 /* U2FilterStream.cpp */; };
-		4CD7EB281D4C53AA000FA6B0 /* U2MemoryStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB071D4C53AA000FA6B0 /* U2MemoryStream.cpp */; };
-		4CD7EB291D4C53AA000FA6B0 /* U2PipedStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB081D4C53AA000FA6B0 /* U2PipedStream.cpp */; };
-		4CD7EB2A1D4C53AA000FA6B0 /* U2Stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB091D4C53AA000FA6B0 /* U2Stream.cpp */; };
-		4CD7EB2B1D4C53AA000FA6B0 /* U2StringStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB0A1D4C53AA000FA6B0 /* U2StringStream.cpp */; };
-		4CD7EB2C1D4C53AA000FA6B0 /* U2VariableMemStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB0B1D4C53AA000FA6B0 /* U2VariableMemStream.cpp */; };
-		4CD7EB2D1D4C53AA000FA6B0 /* U2ZipStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB0C1D4C53AA000FA6B0 /* U2ZipStream.cpp */; };
 		4CD7EB2E1D4C53AA000FA6B0 /* U2Component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB0D1D4C53AA000FA6B0 /* U2Component.cpp */; };
 		4CD7EB2F1D4C53AA000FA6B0 /* U2ComponentSerialize.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB0E1D4C53AA000FA6B0 /* U2ComponentSerialize.cpp */; };
 		4CD7EB301D4C53AA000FA6B0 /* U2Core.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB0F1D4C53AA000FA6B0 /* U2Core.cpp */; };
@@ -208,41 +175,190 @@
 		4CD7EB9F1D4C53D8000FA6B0 /* json_valueiterator.inl in Resources */ = {isa = PBXBuildFile; fileRef = 4CD7EB751D4C53D8000FA6B0 /* json_valueiterator.inl */; };
 		4CD7EBA01D4C53D8000FA6B0 /* json_writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB761D4C53D8000FA6B0 /* json_writer.cpp */; };
 		4CD7EBA11D4C53D8000FA6B0 /* version.h.in in Resources */ = {isa = PBXBuildFile; fileRef = 4CD7EB771D4C53D8000FA6B0 /* version.h.in */; };
-		4CD7EBA21D4C53D8000FA6B0 /* lapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB791D4C53D8000FA6B0 /* lapi.c */; };
-		4CD7EBA31D4C53D8000FA6B0 /* lauxlib.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB7A1D4C53D8000FA6B0 /* lauxlib.c */; };
-		4CD7EBA41D4C53D8000FA6B0 /* lbaselib.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB7B1D4C53D8000FA6B0 /* lbaselib.c */; };
-		4CD7EBA51D4C53D8000FA6B0 /* lcode.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB7C1D4C53D8000FA6B0 /* lcode.c */; };
-		4CD7EBA61D4C53D8000FA6B0 /* ldblib.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB7D1D4C53D8000FA6B0 /* ldblib.c */; };
-		4CD7EBA71D4C53D8000FA6B0 /* ldebug.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB7E1D4C53D8000FA6B0 /* ldebug.c */; };
-		4CD7EBA81D4C53D8000FA6B0 /* ldo.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB7F1D4C53D8000FA6B0 /* ldo.c */; };
-		4CD7EBA91D4C53D8000FA6B0 /* ldump.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB801D4C53D8000FA6B0 /* ldump.c */; };
-		4CD7EBAA1D4C53D8000FA6B0 /* lfunc.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB811D4C53D8000FA6B0 /* lfunc.c */; };
-		4CD7EBAB1D4C53D8000FA6B0 /* lgc.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB821D4C53D8000FA6B0 /* lgc.c */; };
-		4CD7EBAC1D4C53D8000FA6B0 /* linit.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB831D4C53D8000FA6B0 /* linit.c */; };
-		4CD7EBAD1D4C53D8000FA6B0 /* liolib.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB841D4C53D8000FA6B0 /* liolib.c */; };
-		4CD7EBAE1D4C53D8000FA6B0 /* llex.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB851D4C53D8000FA6B0 /* llex.c */; };
-		4CD7EBAF1D4C53D8000FA6B0 /* lmathlib.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB861D4C53D8000FA6B0 /* lmathlib.c */; };
-		4CD7EBB01D4C53D8000FA6B0 /* lmem.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB871D4C53D8000FA6B0 /* lmem.c */; };
-		4CD7EBB11D4C53D8000FA6B0 /* loadlib.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB881D4C53D8000FA6B0 /* loadlib.c */; };
-		4CD7EBB21D4C53D8000FA6B0 /* lobject.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB891D4C53D8000FA6B0 /* lobject.c */; };
-		4CD7EBB31D4C53D8000FA6B0 /* lopcodes.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB8A1D4C53D8000FA6B0 /* lopcodes.c */; };
-		4CD7EBB41D4C53D8000FA6B0 /* loslib.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB8B1D4C53D8000FA6B0 /* loslib.c */; };
-		4CD7EBB51D4C53D8000FA6B0 /* lparser.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB8C1D4C53D8000FA6B0 /* lparser.c */; };
-		4CD7EBB61D4C53D8000FA6B0 /* lstate.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB8D1D4C53D8000FA6B0 /* lstate.c */; };
-		4CD7EBB71D4C53D8000FA6B0 /* lstring.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB8E1D4C53D8000FA6B0 /* lstring.c */; };
-		4CD7EBB81D4C53D8000FA6B0 /* lstrlib.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB8F1D4C53D8000FA6B0 /* lstrlib.c */; };
-		4CD7EBB91D4C53D8000FA6B0 /* ltable.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB901D4C53D8000FA6B0 /* ltable.c */; };
-		4CD7EBBA1D4C53D8000FA6B0 /* ltablib.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB911D4C53D8000FA6B0 /* ltablib.c */; };
-		4CD7EBBB1D4C53D8000FA6B0 /* ltm.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB921D4C53D8000FA6B0 /* ltm.c */; };
-		4CD7EBBC1D4C53D8000FA6B0 /* lua.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB931D4C53D8000FA6B0 /* lua.c */; };
-		4CD7EBBD1D4C53D8000FA6B0 /* lundump.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB941D4C53D8000FA6B0 /* lundump.c */; };
-		4CD7EBBE1D4C53D8000FA6B0 /* lvm.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB951D4C53D8000FA6B0 /* lvm.c */; };
-		4CD7EBBF1D4C53D8000FA6B0 /* lzio.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB961D4C53D8000FA6B0 /* lzio.c */; };
-		4CD7EBC01D4C53D8000FA6B0 /* print.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB971D4C53D8000FA6B0 /* print.c */; };
 		4CD7EBC11D4C53D8000FA6B0 /* tinystr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB991D4C53D8000FA6B0 /* tinystr.cpp */; };
 		4CD7EBC21D4C53D8000FA6B0 /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB9A1D4C53D8000FA6B0 /* tinyxml.cpp */; };
 		4CD7EBC31D4C53D8000FA6B0 /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB9B1D4C53D8000FA6B0 /* tinyxmlerror.cpp */; };
 		4CD7EBC41D4C53D8000FA6B0 /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB9C1D4C53D8000FA6B0 /* tinyxmlparser.cpp */; };
+		4CD7EC831D4C5FD2000FA6B0 /* U2Herald.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EC7F1D4C5FD2000FA6B0 /* U2Herald.cpp */; };
+		4CD7EC841D4C5FD2000FA6B0 /* U2LuaScript.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EC801D4C5FD2000FA6B0 /* U2LuaScript.cpp */; };
+		4CD7EC851D4C5FD2000FA6B0 /* U2PredefinedLuaTasks.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EC811D4C5FD2000FA6B0 /* U2PredefinedLuaTasks.cpp */; };
+		4CD7EC861D4C5FD2000FA6B0 /* U2Script.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EC821D4C5FD2000FA6B0 /* U2Script.cpp */; };
+		4CD7EC871D4C60EF000FA6B0 /* GameSystems.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EAB51D4C52CB000FA6B0 /* GameSystems.cpp */; };
+		4CD7EC881D4C611F000FA6B0 /* GameComponentManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EAAF1D4C52CB000FA6B0 /* GameComponentManager.cpp */; };
+		4CD7EC891D4C611F000FA6B0 /* GameComponents.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EAB11D4C52CB000FA6B0 /* GameComponents.cpp */; };
+		4CD7EC8A1D4C611F000FA6B0 /* GameEntityCollection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EAB31D4C52CB000FA6B0 /* GameEntityCollection.cpp */; };
+		4CD7EC8B1D4C612E000FA6B0 /* BattleCommands.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EAA81D4C52CB000FA6B0 /* BattleCommands.cpp */; };
+		4CD7EC8C1D4C612E000FA6B0 /* BattleViewComponents.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EAAA1D4C52CB000FA6B0 /* BattleViewComponents.cpp */; };
+		4CD7EC8D1D4C612E000FA6B0 /* JoystickViewComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EAAC1D4C52CB000FA6B0 /* JoystickViewComponent.cpp */; };
+		4CD7EC901D4C6172000FA6B0 /* U2GameObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB121D4C53AA000FA6B0 /* U2GameObject.cpp */; };
+		4CD7EC911D4C6172000FA6B0 /* U2GameObjectSerialize.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB131D4C53AA000FA6B0 /* U2GameObjectSerialize.cpp */; };
+		4CD7EC921D4C6172000FA6B0 /* GameDataPool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EAB71D4C52CB000FA6B0 /* GameDataPool.cpp */; };
+		4CD7EC931D4C6172000FA6B0 /* GameHttpRequests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EABA1D4C52CB000FA6B0 /* GameHttpRequests.cpp */; };
+		4CD7EC941D4C6172000FA6B0 /* GameHttpResponses.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EABC1D4C52CB000FA6B0 /* GameHttpResponses.cpp */; };
+		4CD7EC951D4C6172000FA6B0 /* GameRecvSocketTasks.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EABE1D4C52CB000FA6B0 /* GameRecvSocketTasks.cpp */; };
+		4CD7EC961D4C6172000FA6B0 /* GameSendSocketTasks.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EAC01D4C52CB000FA6B0 /* GameSendSocketTasks.cpp */; };
+		4CD7EC971D4C6172000FA6B0 /* GameUrlMaker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EAC21D4C52CB000FA6B0 /* GameUrlMaker.cpp */; };
+		4CD7EC981D4C6172000FA6B0 /* GameWsClientImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EAC41D4C52CB000FA6B0 /* GameWsClientImpl.cpp */; };
+		4CD7EC9B1D4C61C1000FA6B0 /* U2Component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB0D1D4C53AA000FA6B0 /* U2Component.cpp */; };
+		4CD7EC9C1D4C61C1000FA6B0 /* U2ComponentSerialize.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB0E1D4C53AA000FA6B0 /* U2ComponentSerialize.cpp */; };
+		4CD7EC9D1D4C61C1000FA6B0 /* U2Core.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB0F1D4C53AA000FA6B0 /* U2Core.cpp */; };
+		4CD7EC9E1D4C61C1000FA6B0 /* U2DataPool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB101D4C53AA000FA6B0 /* U2DataPool.cpp */; };
+		4CD7EC9F1D4C61C1000FA6B0 /* U2FrameListenerCollection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB111D4C53AA000FA6B0 /* U2FrameListenerCollection.cpp */; };
+		4CD7ECA01D4C61C1000FA6B0 /* U2HttpClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB141D4C53AA000FA6B0 /* U2HttpClient.cpp */; };
+		4CD7ECA11D4C61C1000FA6B0 /* U2HttpClientImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB151D4C53AA000FA6B0 /* U2HttpClientImpl.cpp */; };
+		4CD7ECA21D4C61C1000FA6B0 /* U2HttpDownloadClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB161D4C53AA000FA6B0 /* U2HttpDownloadClient.cpp */; };
+		4CD7ECA31D4C61C1000FA6B0 /* U2LogicClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB171D4C53AA000FA6B0 /* U2LogicClient.cpp */; };
+		4CD7ECA41D4C61C1000FA6B0 /* U2Prototype.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB181D4C53AA000FA6B0 /* U2Prototype.cpp */; };
+		4CD7ECA51D4C61C1000FA6B0 /* U2Root.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB191D4C53AA000FA6B0 /* U2Root.cpp */; };
+		4CD7ECA61D4C61C1000FA6B0 /* U2Scheduler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB1A1D4C53AA000FA6B0 /* U2Scheduler.cpp */; };
+		4CD7ECA71D4C61C1000FA6B0 /* U2SnapshotDataPool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB1B1D4C53AA000FA6B0 /* U2SnapshotDataPool.cpp */; };
+		4CD7ECA81D4C61C1000FA6B0 /* U2SocketTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB1C1D4C53AA000FA6B0 /* U2SocketTask.cpp */; };
+		4CD7ECA91D4C61C1000FA6B0 /* U2System.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB1D1D4C53AA000FA6B0 /* U2System.cpp */; };
+		4CD7ECAA1D4C61C1000FA6B0 /* U2UrlUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB1E1D4C53AA000FA6B0 /* U2UrlUtils.cpp */; };
+		4CD7ECAB1D4C61C1000FA6B0 /* U2Version.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB1F1D4C53AA000FA6B0 /* U2Version.cpp */; };
+		4CD7ECAC1D4C61C1000FA6B0 /* U2WebSocketClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB201D4C53AA000FA6B0 /* U2WebSocketClient.cpp */; };
+		4CD7ECAD1D4C61C1000FA6B0 /* U2WebSocketClientImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB211D4C53AA000FA6B0 /* U2WebSocketClientImpl.cpp */; };
+		4CD7ECAE1D4C61C1000FA6B0 /* U2XmlSerialize.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB221D4C53AA000FA6B0 /* U2XmlSerialize.cpp */; };
+		4CD7ECAF1D4C61C1000FA6B0 /* U2TNedObjectManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C462E8B1D17B99D001F3CC1 /* U2TNedObjectManager.cpp */; };
+		4CD7ECB01D4C61C1000FA6B0 /* U2ObjectCollection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C70EBBD1D162EBA003D7B3E /* U2ObjectCollection.cpp */; };
+		4CD7ECB11D4C61C1000FA6B0 /* U2Task.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CBA3BD91D05227B00255CC7 /* U2Task.cpp */; };
+		4CD7ECB21D4C61C1000FA6B0 /* U2TaskLoop.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CBA3BDA1D05227B00255CC7 /* U2TaskLoop.cpp */; };
+		4CD7ECB31D4C61C1000FA6B0 /* U2Timer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EBC61D4C5D42000FA6B0 /* U2Timer.cpp */; };
+		4CD7ECB41D4C61C1000FA6B0 /* U2Herald.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EC7F1D4C5FD2000FA6B0 /* U2Herald.cpp */; };
+		4CD7ECB51D4C61C1000FA6B0 /* U2LuaScript.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EC801D4C5FD2000FA6B0 /* U2LuaScript.cpp */; };
+		4CD7ECB61D4C61C1000FA6B0 /* U2PredefinedLuaTasks.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EC811D4C5FD2000FA6B0 /* U2PredefinedLuaTasks.cpp */; };
+		4CD7ECB71D4C61C1000FA6B0 /* U2Script.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EC821D4C5FD2000FA6B0 /* U2Script.cpp */; };
+		4CD7ECB81D4C61C1000FA6B0 /* U2CocosLuaScript.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB441D4C53BF000FA6B0 /* U2CocosLuaScript.cpp */; };
+		4CD7ECB91D4C61C1000FA6B0 /* U2CocosPrerequisites.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB461D4C53BF000FA6B0 /* U2CocosPrerequisites.cpp */; };
+		4CD7ECBA1D4C61C1000FA6B0 /* AppCommands.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EA9D1D4C52CB000FA6B0 /* AppCommands.cpp */; };
+		4CD7ECBB1D4C61C1000FA6B0 /* AppFacade.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EA9F1D4C52CB000FA6B0 /* AppFacade.cpp */; };
+		4CD7ECBC1D4C61C1000FA6B0 /* AppLuaTasks.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EAA11D4C52CB000FA6B0 /* AppLuaTasks.cpp */; };
+		4CD7ECBD1D4C61C1000FA6B0 /* AppPrerequisites.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EAA31D4C52CB000FA6B0 /* AppPrerequisites.cpp */; };
+		4CD7ECBE1D4C61C1000FA6B0 /* AppViewComponents.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EAA51D4C52CB000FA6B0 /* AppViewComponents.cpp */; };
+		4CD7ECBF1D4C61D0000FA6B0 /* json_reader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB731D4C53D8000FA6B0 /* json_reader.cpp */; };
+		4CD7ECC01D4C61D0000FA6B0 /* json_value.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB741D4C53D8000FA6B0 /* json_value.cpp */; };
+		4CD7ECC11D4C61D0000FA6B0 /* json_writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB761D4C53D8000FA6B0 /* json_writer.cpp */; };
+		4CD7ECC21D4C61D0000FA6B0 /* tinystr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB991D4C53D8000FA6B0 /* tinystr.cpp */; };
+		4CD7ECC31D4C61D0000FA6B0 /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB9A1D4C53D8000FA6B0 /* tinyxml.cpp */; };
+		4CD7ECC41D4C61D0000FA6B0 /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB9B1D4C53D8000FA6B0 /* tinyxmlerror.cpp */; };
+		4CD7ECC51D4C61D0000FA6B0 /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB9C1D4C53D8000FA6B0 /* tinyxmlparser.cpp */; };
+		4CD7ECD91D4C9CF3000FA6B0 /* U2ConstantBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECCF1D4C9CF3000FA6B0 /* U2ConstantBridge.cpp */; };
+		4CD7ECDA1D4C9CF3000FA6B0 /* U2ConstantBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECCF1D4C9CF3000FA6B0 /* U2ConstantBridge.cpp */; };
+		4CD7ECDB1D4C9CF3000FA6B0 /* U2DataModelBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECD11D4C9CF3000FA6B0 /* U2DataModelBridge.cpp */; };
+		4CD7ECDC1D4C9CF3000FA6B0 /* U2DataModelBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECD11D4C9CF3000FA6B0 /* U2DataModelBridge.cpp */; };
+		4CD7ECDD1D4C9CF3000FA6B0 /* U2GameBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECD31D4C9CF3000FA6B0 /* U2GameBridge.cpp */; };
+		4CD7ECDE1D4C9CF3000FA6B0 /* U2GameBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECD31D4C9CF3000FA6B0 /* U2GameBridge.cpp */; };
+		4CD7ECDF1D4C9CF3000FA6B0 /* U2LuaScriptBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECD51D4C9CF3000FA6B0 /* U2LuaScriptBridge.cpp */; };
+		4CD7ECE01D4C9CF3000FA6B0 /* U2LuaScriptBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECD51D4C9CF3000FA6B0 /* U2LuaScriptBridge.cpp */; };
+		4CD7ECE11D4C9CF3000FA6B0 /* U2MvcBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECD71D4C9CF3000FA6B0 /* U2MvcBridge.cpp */; };
+		4CD7ECE21D4C9CF3000FA6B0 /* U2MvcBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECD71D4C9CF3000FA6B0 /* U2MvcBridge.cpp */; };
+		4CD7ED031D4C9D66000FA6B0 /* lapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECE41D4C9D66000FA6B0 /* lapi.c */; };
+		4CD7ED041D4C9D66000FA6B0 /* lapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECE41D4C9D66000FA6B0 /* lapi.c */; };
+		4CD7ED051D4C9D66000FA6B0 /* lauxlib.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECE51D4C9D66000FA6B0 /* lauxlib.c */; };
+		4CD7ED061D4C9D66000FA6B0 /* lauxlib.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECE51D4C9D66000FA6B0 /* lauxlib.c */; };
+		4CD7ED071D4C9D66000FA6B0 /* lbaselib.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECE61D4C9D66000FA6B0 /* lbaselib.c */; };
+		4CD7ED081D4C9D66000FA6B0 /* lbaselib.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECE61D4C9D66000FA6B0 /* lbaselib.c */; };
+		4CD7ED091D4C9D66000FA6B0 /* lcode.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECE71D4C9D66000FA6B0 /* lcode.c */; };
+		4CD7ED0A1D4C9D66000FA6B0 /* lcode.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECE71D4C9D66000FA6B0 /* lcode.c */; };
+		4CD7ED0B1D4C9D66000FA6B0 /* ldblib.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECE81D4C9D66000FA6B0 /* ldblib.c */; };
+		4CD7ED0C1D4C9D66000FA6B0 /* ldblib.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECE81D4C9D66000FA6B0 /* ldblib.c */; };
+		4CD7ED0D1D4C9D66000FA6B0 /* ldebug.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECE91D4C9D66000FA6B0 /* ldebug.c */; };
+		4CD7ED0E1D4C9D66000FA6B0 /* ldebug.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECE91D4C9D66000FA6B0 /* ldebug.c */; };
+		4CD7ED0F1D4C9D66000FA6B0 /* ldo.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECEA1D4C9D66000FA6B0 /* ldo.c */; };
+		4CD7ED101D4C9D66000FA6B0 /* ldo.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECEA1D4C9D66000FA6B0 /* ldo.c */; };
+		4CD7ED111D4C9D66000FA6B0 /* ldump.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECEB1D4C9D66000FA6B0 /* ldump.c */; };
+		4CD7ED121D4C9D66000FA6B0 /* ldump.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECEB1D4C9D66000FA6B0 /* ldump.c */; };
+		4CD7ED131D4C9D66000FA6B0 /* lfunc.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECEC1D4C9D66000FA6B0 /* lfunc.c */; };
+		4CD7ED141D4C9D66000FA6B0 /* lfunc.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECEC1D4C9D66000FA6B0 /* lfunc.c */; };
+		4CD7ED151D4C9D66000FA6B0 /* lgc.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECED1D4C9D66000FA6B0 /* lgc.c */; };
+		4CD7ED161D4C9D66000FA6B0 /* lgc.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECED1D4C9D66000FA6B0 /* lgc.c */; };
+		4CD7ED171D4C9D66000FA6B0 /* linit.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECEE1D4C9D66000FA6B0 /* linit.c */; };
+		4CD7ED181D4C9D66000FA6B0 /* linit.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECEE1D4C9D66000FA6B0 /* linit.c */; };
+		4CD7ED191D4C9D66000FA6B0 /* liolib.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECEF1D4C9D66000FA6B0 /* liolib.c */; };
+		4CD7ED1A1D4C9D66000FA6B0 /* liolib.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECEF1D4C9D66000FA6B0 /* liolib.c */; };
+		4CD7ED1B1D4C9D66000FA6B0 /* llex.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECF01D4C9D66000FA6B0 /* llex.c */; };
+		4CD7ED1C1D4C9D66000FA6B0 /* llex.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECF01D4C9D66000FA6B0 /* llex.c */; };
+		4CD7ED1D1D4C9D66000FA6B0 /* lmathlib.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECF11D4C9D66000FA6B0 /* lmathlib.c */; };
+		4CD7ED1E1D4C9D66000FA6B0 /* lmathlib.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECF11D4C9D66000FA6B0 /* lmathlib.c */; };
+		4CD7ED1F1D4C9D66000FA6B0 /* lmem.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECF21D4C9D66000FA6B0 /* lmem.c */; };
+		4CD7ED201D4C9D66000FA6B0 /* lmem.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECF21D4C9D66000FA6B0 /* lmem.c */; };
+		4CD7ED211D4C9D66000FA6B0 /* loadlib.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECF31D4C9D66000FA6B0 /* loadlib.c */; };
+		4CD7ED221D4C9D66000FA6B0 /* loadlib.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECF31D4C9D66000FA6B0 /* loadlib.c */; };
+		4CD7ED231D4C9D66000FA6B0 /* lobject.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECF41D4C9D66000FA6B0 /* lobject.c */; };
+		4CD7ED241D4C9D66000FA6B0 /* lobject.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECF41D4C9D66000FA6B0 /* lobject.c */; };
+		4CD7ED251D4C9D66000FA6B0 /* lopcodes.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECF51D4C9D66000FA6B0 /* lopcodes.c */; };
+		4CD7ED261D4C9D66000FA6B0 /* lopcodes.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECF51D4C9D66000FA6B0 /* lopcodes.c */; };
+		4CD7ED271D4C9D66000FA6B0 /* loslib.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECF61D4C9D66000FA6B0 /* loslib.c */; };
+		4CD7ED281D4C9D66000FA6B0 /* loslib.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECF61D4C9D66000FA6B0 /* loslib.c */; };
+		4CD7ED291D4C9D66000FA6B0 /* lparser.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECF71D4C9D66000FA6B0 /* lparser.c */; };
+		4CD7ED2A1D4C9D66000FA6B0 /* lparser.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECF71D4C9D66000FA6B0 /* lparser.c */; };
+		4CD7ED2B1D4C9D66000FA6B0 /* lstate.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECF81D4C9D66000FA6B0 /* lstate.c */; };
+		4CD7ED2C1D4C9D66000FA6B0 /* lstate.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECF81D4C9D66000FA6B0 /* lstate.c */; };
+		4CD7ED2D1D4C9D66000FA6B0 /* lstring.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECF91D4C9D66000FA6B0 /* lstring.c */; };
+		4CD7ED2E1D4C9D66000FA6B0 /* lstring.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECF91D4C9D66000FA6B0 /* lstring.c */; };
+		4CD7ED2F1D4C9D66000FA6B0 /* lstrlib.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECFA1D4C9D66000FA6B0 /* lstrlib.c */; };
+		4CD7ED301D4C9D66000FA6B0 /* lstrlib.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECFA1D4C9D66000FA6B0 /* lstrlib.c */; };
+		4CD7ED311D4C9D66000FA6B0 /* ltable.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECFB1D4C9D66000FA6B0 /* ltable.c */; };
+		4CD7ED321D4C9D66000FA6B0 /* ltable.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECFB1D4C9D66000FA6B0 /* ltable.c */; };
+		4CD7ED331D4C9D66000FA6B0 /* ltablib.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECFC1D4C9D66000FA6B0 /* ltablib.c */; };
+		4CD7ED341D4C9D66000FA6B0 /* ltablib.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECFC1D4C9D66000FA6B0 /* ltablib.c */; };
+		4CD7ED351D4C9D66000FA6B0 /* ltm.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECFD1D4C9D66000FA6B0 /* ltm.c */; };
+		4CD7ED361D4C9D66000FA6B0 /* ltm.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECFD1D4C9D66000FA6B0 /* ltm.c */; };
+		4CD7ED391D4C9D66000FA6B0 /* lundump.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECFF1D4C9D66000FA6B0 /* lundump.c */; };
+		4CD7ED3A1D4C9D66000FA6B0 /* lundump.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ECFF1D4C9D66000FA6B0 /* lundump.c */; };
+		4CD7ED3B1D4C9D66000FA6B0 /* lvm.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ED001D4C9D66000FA6B0 /* lvm.c */; };
+		4CD7ED3C1D4C9D66000FA6B0 /* lvm.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ED001D4C9D66000FA6B0 /* lvm.c */; };
+		4CD7ED3D1D4C9D66000FA6B0 /* lzio.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ED011D4C9D66000FA6B0 /* lzio.c */; };
+		4CD7ED3E1D4C9D66000FA6B0 /* lzio.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ED011D4C9D66000FA6B0 /* lzio.c */; };
+		4CD7ED3F1D4C9D66000FA6B0 /* print.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ED021D4C9D66000FA6B0 /* print.c */; };
+		4CD7ED401D4C9D66000FA6B0 /* print.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ED021D4C9D66000FA6B0 /* print.c */; };
+		4CD7ED431D4CA8CA000FA6B0 /* U2Timer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ED421D4CA8CA000FA6B0 /* U2Timer.cpp */; };
+		4CD7ED5D1D4CAF99000FA6B0 /* U2CodeCvt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ED521D4CAF99000FA6B0 /* U2CodeCvt.cpp */; };
+		4CD7ED5E1D4CAF99000FA6B0 /* U2CodeCvt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ED521D4CAF99000FA6B0 /* U2CodeCvt.cpp */; };
+		4CD7ED5F1D4CAF99000FA6B0 /* U2DataFilterStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ED531D4CAF99000FA6B0 /* U2DataFilterStream.cpp */; };
+		4CD7ED601D4CAF99000FA6B0 /* U2DataFilterStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ED531D4CAF99000FA6B0 /* U2DataFilterStream.cpp */; };
+		4CD7ED611D4CAF99000FA6B0 /* U2FileHandleStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ED541D4CAF99000FA6B0 /* U2FileHandleStream.cpp */; };
+		4CD7ED621D4CAF99000FA6B0 /* U2FileHandleStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ED541D4CAF99000FA6B0 /* U2FileHandleStream.cpp */; };
+		4CD7ED631D4CAF99000FA6B0 /* U2FileStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ED551D4CAF99000FA6B0 /* U2FileStream.cpp */; };
+		4CD7ED641D4CAF99000FA6B0 /* U2FileStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ED551D4CAF99000FA6B0 /* U2FileStream.cpp */; };
+		4CD7ED651D4CAF99000FA6B0 /* U2FilterStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ED561D4CAF99000FA6B0 /* U2FilterStream.cpp */; };
+		4CD7ED661D4CAF99000FA6B0 /* U2FilterStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ED561D4CAF99000FA6B0 /* U2FilterStream.cpp */; };
+		4CD7ED671D4CAF99000FA6B0 /* U2MemoryStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ED571D4CAF99000FA6B0 /* U2MemoryStream.cpp */; };
+		4CD7ED681D4CAF99000FA6B0 /* U2MemoryStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ED571D4CAF99000FA6B0 /* U2MemoryStream.cpp */; };
+		4CD7ED691D4CAF99000FA6B0 /* U2PipedStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ED581D4CAF99000FA6B0 /* U2PipedStream.cpp */; };
+		4CD7ED6A1D4CAF99000FA6B0 /* U2PipedStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ED581D4CAF99000FA6B0 /* U2PipedStream.cpp */; };
+		4CD7ED6B1D4CAF99000FA6B0 /* U2Stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ED591D4CAF99000FA6B0 /* U2Stream.cpp */; };
+		4CD7ED6C1D4CAF99000FA6B0 /* U2Stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ED591D4CAF99000FA6B0 /* U2Stream.cpp */; };
+		4CD7ED6D1D4CAF99000FA6B0 /* U2StringStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ED5A1D4CAF99000FA6B0 /* U2StringStream.cpp */; };
+		4CD7ED6E1D4CAF99000FA6B0 /* U2StringStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ED5A1D4CAF99000FA6B0 /* U2StringStream.cpp */; };
+		4CD7ED6F1D4CAF99000FA6B0 /* U2VariableMemStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ED5B1D4CAF99000FA6B0 /* U2VariableMemStream.cpp */; };
+		4CD7ED701D4CAF99000FA6B0 /* U2VariableMemStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ED5B1D4CAF99000FA6B0 /* U2VariableMemStream.cpp */; };
+		4CD7ED711D4CAF99000FA6B0 /* U2ZipStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ED5C1D4CAF99000FA6B0 /* U2ZipStream.cpp */; };
+		4CD7ED721D4CAF99000FA6B0 /* U2ZipStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7ED5C1D4CAF99000FA6B0 /* U2ZipStream.cpp */; };
+		4CD7ED7F1D4CB0AC000FA6B0 /* BattleMasterViewComp.lua in Resources */ = {isa = PBXBuildFile; fileRef = 4CD7ED731D4CB0AC000FA6B0 /* BattleMasterViewComp.lua */; };
+		4CD7ED801D4CB0AC000FA6B0 /* BattleMasterViewComp.lua in Resources */ = {isa = PBXBuildFile; fileRef = 4CD7ED731D4CB0AC000FA6B0 /* BattleMasterViewComp.lua */; };
+		4CD7ED811D4CB0AC000FA6B0 /* BattleRowViewComp.lua in Resources */ = {isa = PBXBuildFile; fileRef = 4CD7ED741D4CB0AC000FA6B0 /* BattleRowViewComp.lua */; };
+		4CD7ED821D4CB0AC000FA6B0 /* BattleRowViewComp.lua in Resources */ = {isa = PBXBuildFile; fileRef = 4CD7ED741D4CB0AC000FA6B0 /* BattleRowViewComp.lua */; };
+		4CD7ED831D4CB0AC000FA6B0 /* BattleViewComp.lua in Resources */ = {isa = PBXBuildFile; fileRef = 4CD7ED751D4CB0AC000FA6B0 /* BattleViewComp.lua */; };
+		4CD7ED841D4CB0AC000FA6B0 /* BattleViewComp.lua in Resources */ = {isa = PBXBuildFile; fileRef = 4CD7ED751D4CB0AC000FA6B0 /* BattleViewComp.lua */; };
+		4CD7ED851D4CB0AC000FA6B0 /* cmlogo1.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CD7ED761D4CB0AC000FA6B0 /* cmlogo1.png */; };
+		4CD7ED861D4CB0AC000FA6B0 /* cmlogo1.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CD7ED761D4CB0AC000FA6B0 /* cmlogo1.png */; };
+		4CD7ED871D4CB0AC000FA6B0 /* InfoViewComp.lua in Resources */ = {isa = PBXBuildFile; fileRef = 4CD7ED771D4CB0AC000FA6B0 /* InfoViewComp.lua */; };
+		4CD7ED881D4CB0AC000FA6B0 /* InfoViewComp.lua in Resources */ = {isa = PBXBuildFile; fileRef = 4CD7ED771D4CB0AC000FA6B0 /* InfoViewComp.lua */; };
+		4CD7ED891D4CB0AC000FA6B0 /* LogoViewComp.lua in Resources */ = {isa = PBXBuildFile; fileRef = 4CD7ED781D4CB0AC000FA6B0 /* LogoViewComp.lua */; };
+		4CD7ED8A1D4CB0AC000FA6B0 /* LogoViewComp.lua in Resources */ = {isa = PBXBuildFile; fileRef = 4CD7ED781D4CB0AC000FA6B0 /* LogoViewComp.lua */; };
+		4CD7ED8B1D4CB0AC000FA6B0 /* main.lua in Resources */ = {isa = PBXBuildFile; fileRef = 4CD7ED791D4CB0AC000FA6B0 /* main.lua */; };
+		4CD7ED8C1D4CB0AC000FA6B0 /* main.lua in Resources */ = {isa = PBXBuildFile; fileRef = 4CD7ED791D4CB0AC000FA6B0 /* main.lua */; };
+		4CD7ED8D1D4CB0AC000FA6B0 /* ShadeViewComp.lua in Resources */ = {isa = PBXBuildFile; fileRef = 4CD7ED7A1D4CB0AC000FA6B0 /* ShadeViewComp.lua */; };
+		4CD7ED8E1D4CB0AC000FA6B0 /* ShadeViewComp.lua in Resources */ = {isa = PBXBuildFile; fileRef = 4CD7ED7A1D4CB0AC000FA6B0 /* ShadeViewComp.lua */; };
+		4CD7ED8F1D4CB0AC000FA6B0 /* TestViewComp.lua in Resources */ = {isa = PBXBuildFile; fileRef = 4CD7ED7B1D4CB0AC000FA6B0 /* TestViewComp.lua */; };
+		4CD7ED901D4CB0AC000FA6B0 /* TestViewComp.lua in Resources */ = {isa = PBXBuildFile; fileRef = 4CD7ED7B1D4CB0AC000FA6B0 /* TestViewComp.lua */; };
+		4CD7ED911D4CB0AC000FA6B0 /* Trans2BattleCmd.lua in Resources */ = {isa = PBXBuildFile; fileRef = 4CD7ED7C1D4CB0AC000FA6B0 /* Trans2BattleCmd.lua */; };
+		4CD7ED921D4CB0AC000FA6B0 /* Trans2BattleCmd.lua in Resources */ = {isa = PBXBuildFile; fileRef = 4CD7ED7C1D4CB0AC000FA6B0 /* Trans2BattleCmd.lua */; };
+		4CD7ED931D4CB0AC000FA6B0 /* Trans2InfoCmd.lua in Resources */ = {isa = PBXBuildFile; fileRef = 4CD7ED7D1D4CB0AC000FA6B0 /* Trans2InfoCmd.lua */; };
+		4CD7ED941D4CB0AC000FA6B0 /* Trans2InfoCmd.lua in Resources */ = {isa = PBXBuildFile; fileRef = 4CD7ED7D1D4CB0AC000FA6B0 /* Trans2InfoCmd.lua */; };
+		4CD7ED951D4CB0AC000FA6B0 /* Trans2LogoCmd.lua in Resources */ = {isa = PBXBuildFile; fileRef = 4CD7ED7E1D4CB0AC000FA6B0 /* Trans2LogoCmd.lua */; };
+		4CD7ED961D4CB0AC000FA6B0 /* Trans2LogoCmd.lua in Resources */ = {isa = PBXBuildFile; fileRef = 4CD7ED7E1D4CB0AC000FA6B0 /* Trans2LogoCmd.lua */; };
 		503AE0F817EB97AB00D1A890 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 503AE0F617EB97AB00D1A890 /* Icon.icns */; };
 		503AE10017EB989F00D1A890 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 503AE0FB17EB989F00D1A890 /* AppController.mm */; };
 		503AE10117EB989F00D1A890 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 503AE0FC17EB989F00D1A890 /* main.m */; };
@@ -357,11 +473,6 @@
 		4C1EE4EC1CD2016400CD21F1 /* iosUtils.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = iosUtils.mm; sourceTree = "<group>"; };
 		4C462E8A1D17B989001F3CC1 /* U2TNedObjectManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2TNedObjectManager.h; sourceTree = "<group>"; };
 		4C462E8B1D17B99D001F3CC1 /* U2TNedObjectManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2TNedObjectManager.cpp; sourceTree = "<group>"; };
-		4C68AB971C8930FC007BA5BD /* U2CodeCvt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2CodeCvt.h; sourceTree = "<group>"; };
-		4C68AB981C8930FC007BA5BD /* U2DataFilterStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2DataFilterStream.h; sourceTree = "<group>"; };
-		4C68AB991C8930FC007BA5BD /* U2FileStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2FileStream.h; sourceTree = "<group>"; };
-		4C68AB9A1C8930FC007BA5BD /* U2FilterStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2FilterStream.h; sourceTree = "<group>"; };
-		4C68AB9B1C8930FC007BA5BD /* U2Stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2Stream.h; sourceTree = "<group>"; };
 		4C68ABB71C8930FC007BA5BD /* U2AlignedAllocator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2AlignedAllocator.h; sourceTree = "<group>"; };
 		4C68ABB81C8930FC007BA5BD /* U2Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2Config.h; sourceTree = "<group>"; };
 		4C68ABB91C8930FC007BA5BD /* U2Core.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2Core.h; sourceTree = "<group>"; };
@@ -405,11 +516,6 @@
 		4C68ABE21C8930FC007BA5BD /* U2TransStep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2TransStep.h; sourceTree = "<group>"; };
 		4C68ABE31C8930FC007BA5BD /* U2View.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2View.h; sourceTree = "<group>"; };
 		4C68ABE41C8930FC007BA5BD /* U2ViewComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2ViewComponent.h; sourceTree = "<group>"; };
-		4C68ABE81C8930FC007BA5BD /* U2CodeCvt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2CodeCvt.cpp; sourceTree = "<group>"; };
-		4C68ABE91C8930FC007BA5BD /* U2DataFilterStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2DataFilterStream.cpp; sourceTree = "<group>"; };
-		4C68ABEA1C8930FC007BA5BD /* U2FileStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2FileStream.cpp; sourceTree = "<group>"; };
-		4C68ABEB1C8930FC007BA5BD /* U2FilterStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2FilterStream.cpp; sourceTree = "<group>"; };
-		4C68ABEC1C8930FC007BA5BD /* U2Stream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2Stream.cpp; sourceTree = "<group>"; };
 		4C68ABF21C8930FC007BA5BD /* U2AlignedAllocator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2AlignedAllocator.cpp; sourceTree = "<group>"; };
 		4C68ABF31C8930FC007BA5BD /* U2FactoryManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2FactoryManager.cpp; sourceTree = "<group>"; };
 		4C68ABF41C8930FC007BA5BD /* U2MemoryAllocatedObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2MemoryAllocatedObject.cpp; sourceTree = "<group>"; };
@@ -425,8 +531,6 @@
 		4C68ABFF1C8930FC007BA5BD /* U2ContextQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2ContextQueue.cpp; sourceTree = "<group>"; };
 		4C68AC001C8930FC007BA5BD /* U2Controller.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2Controller.cpp; sourceTree = "<group>"; };
 		4C68AC011C8930FC007BA5BD /* U2Facade.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2Facade.cpp; sourceTree = "<group>"; };
-		4C68AC021C8930FC007BA5BD /* U2FrameListenerCollection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2FrameListenerCollection.cpp; sourceTree = "<group>"; };
-		4C68AC031C8930FC007BA5BD /* U2Mediator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2Mediator.cpp; sourceTree = "<group>"; };
 		4C68AC041C8930FC007BA5BD /* U2Model.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2Model.cpp; sourceTree = "<group>"; };
 		4C68AC051C8930FC007BA5BD /* U2Notification.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2Notification.cpp; sourceTree = "<group>"; };
 		4C68AC061C8930FC007BA5BD /* U2Notifier.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2Notifier.cpp; sourceTree = "<group>"; };
@@ -457,11 +561,6 @@
 		4CA4AA8B1CC0EAD0007B5F39 /* U2StringUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2StringUtil.h; sourceTree = "<group>"; };
 		4CA4AA8C1CC0EAD0007B5F39 /* U2ValueList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2ValueList.h; sourceTree = "<group>"; };
 		4CA4AA8D1CC0EAD0007B5F39 /* U2ZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2ZipArchive.h; sourceTree = "<group>"; };
-		4CA4AA8E1CC0EAE8007B5F39 /* U2FileHandleStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2FileHandleStream.h; sourceTree = "<group>"; };
-		4CA4AA8F1CC0EAE8007B5F39 /* U2MemoryStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2MemoryStream.h; sourceTree = "<group>"; };
-		4CA4AA901CC0EAE8007B5F39 /* U2PipedStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2PipedStream.h; sourceTree = "<group>"; };
-		4CA4AA911CC0EAE8007B5F39 /* U2StreamQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2StreamQueue.h; sourceTree = "<group>"; };
-		4CA4AA921CC0EAE8007B5F39 /* U2ZipStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2ZipStream.h; sourceTree = "<group>"; };
 		4CA4AA931CC0EB05007B5F39 /* U2GenericThreadPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2GenericThreadPool.h; sourceTree = "<group>"; };
 		4CA4AA941CC0EB05007B5F39 /* U2HomogenousQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2HomogenousQueue.h; sourceTree = "<group>"; };
 		4CA4AA951CC0EB05007B5F39 /* U2MakeIterator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2MakeIterator.h; sourceTree = "<group>"; };
@@ -480,17 +579,12 @@
 		4CA4AAA21CC0EB20007B5F39 /* U2SearchOps.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2SearchOps.cpp; sourceTree = "<group>"; };
 		4CA4AAA31CC0EB20007B5F39 /* U2StringUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2StringUtil.cpp; sourceTree = "<group>"; };
 		4CA4AAA41CC0EB20007B5F39 /* U2ZipArchive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2ZipArchive.cpp; sourceTree = "<group>"; };
-		4CA4AAB51CC0EB2F007B5F39 /* U2FileHandleStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2FileHandleStream.cpp; sourceTree = "<group>"; };
-		4CA4AAB61CC0EB2F007B5F39 /* U2MemoryStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2MemoryStream.cpp; sourceTree = "<group>"; };
-		4CA4AAB71CC0EB2F007B5F39 /* U2PipedStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2PipedStream.cpp; sourceTree = "<group>"; };
-		4CA4AAB81CC0EB2F007B5F39 /* U2ZipStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2ZipStream.cpp; sourceTree = "<group>"; };
 		4CA4AAC11CC0EB44007B5F39 /* U2GenericThreadPool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2GenericThreadPool.cpp; sourceTree = "<group>"; };
 		4CA4AAC21CC0EB44007B5F39 /* U2HomogenousQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2HomogenousQueue.cpp; sourceTree = "<group>"; };
 		4CA4AAC31CC0EB44007B5F39 /* U2TaskGroup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2TaskGroup.cpp; sourceTree = "<group>"; };
 		4CA4AAC41CC0EB44007B5F39 /* U2Worker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2Worker.cpp; sourceTree = "<group>"; };
 		4CA4AACE1CC0ED88007B5F39 /* libzziplib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libzziplib.a; path = ../../Dependenices/libs/iOS/simulator/libzziplib.a; sourceTree = "<group>"; };
 		4CA4AAD01CC0F053007B5F39 /* libzziplib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libzziplib.a; path = ../../Dependenices/libs/iOS/device_universal/libzziplib.a; sourceTree = "<group>"; };
-		4CBA3BD61D05225D00255CC7 /* U2CancelableTaskTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2CancelableTaskTracker.h; sourceTree = "<group>"; };
 		4CBA3BD71D05225E00255CC7 /* U2Task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2Task.h; sourceTree = "<group>"; };
 		4CBA3BD81D05225E00255CC7 /* U2TaskLoop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2TaskLoop.h; sourceTree = "<group>"; };
 		4CBA3BD91D05227B00255CC7 /* U2Task.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2Task.cpp; sourceTree = "<group>"; };
@@ -533,18 +627,6 @@
 		4CD7EAC31D4C52CB000FA6B0 /* GameUrlMaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameUrlMaker.h; sourceTree = "<group>"; };
 		4CD7EAC41D4C52CB000FA6B0 /* GameWsClientImpl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameWsClientImpl.cpp; sourceTree = "<group>"; };
 		4CD7EAC51D4C52CB000FA6B0 /* GameWsClientImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameWsClientImpl.h; sourceTree = "<group>"; };
-		4CD7EADA1D4C532B000FA6B0 /* U2CodeCvt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2CodeCvt.h; sourceTree = "<group>"; };
-		4CD7EADB1D4C532B000FA6B0 /* U2DataFilterStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2DataFilterStream.h; sourceTree = "<group>"; };
-		4CD7EADC1D4C532B000FA6B0 /* U2FileHandleStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2FileHandleStream.h; sourceTree = "<group>"; };
-		4CD7EADD1D4C532B000FA6B0 /* U2FileStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2FileStream.h; sourceTree = "<group>"; };
-		4CD7EADE1D4C532B000FA6B0 /* U2FilterStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2FilterStream.h; sourceTree = "<group>"; };
-		4CD7EADF1D4C532B000FA6B0 /* U2MemoryStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2MemoryStream.h; sourceTree = "<group>"; };
-		4CD7EAE01D4C532B000FA6B0 /* U2PipedStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2PipedStream.h; sourceTree = "<group>"; };
-		4CD7EAE11D4C532B000FA6B0 /* U2Stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2Stream.h; sourceTree = "<group>"; };
-		4CD7EAE21D4C532B000FA6B0 /* U2StreamQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2StreamQueue.h; sourceTree = "<group>"; };
-		4CD7EAE31D4C532B000FA6B0 /* U2StringStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2StringStream.h; sourceTree = "<group>"; };
-		4CD7EAE41D4C532B000FA6B0 /* U2VariableMemStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2VariableMemStream.h; sourceTree = "<group>"; };
-		4CD7EAE51D4C532B000FA6B0 /* U2ZipStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2ZipStream.h; sourceTree = "<group>"; };
 		4CD7EAE61D4C532B000FA6B0 /* U2Bitwise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2Bitwise.h; sourceTree = "<group>"; };
 		4CD7EAE71D4C532B000FA6B0 /* U2Component.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2Component.h; sourceTree = "<group>"; };
 		4CD7EAE81D4C532B000FA6B0 /* U2ComponentSerialize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2ComponentSerialize.h; sourceTree = "<group>"; };
@@ -572,17 +654,6 @@
 		4CD7EAFE1D4C5373000FA6B0 /* U2LuaScript.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2LuaScript.h; sourceTree = "<group>"; };
 		4CD7EAFF1D4C5373000FA6B0 /* U2PredefinedLuaTasks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2PredefinedLuaTasks.h; sourceTree = "<group>"; };
 		4CD7EB001D4C5373000FA6B0 /* U2Script.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2Script.h; sourceTree = "<group>"; };
-		4CD7EB021D4C53AA000FA6B0 /* U2CodeCvt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2CodeCvt.cpp; sourceTree = "<group>"; };
-		4CD7EB031D4C53AA000FA6B0 /* U2DataFilterStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2DataFilterStream.cpp; sourceTree = "<group>"; };
-		4CD7EB041D4C53AA000FA6B0 /* U2FileHandleStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2FileHandleStream.cpp; sourceTree = "<group>"; };
-		4CD7EB051D4C53AA000FA6B0 /* U2FileStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2FileStream.cpp; sourceTree = "<group>"; };
-		4CD7EB061D4C53AA000FA6B0 /* U2FilterStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2FilterStream.cpp; sourceTree = "<group>"; };
-		4CD7EB071D4C53AA000FA6B0 /* U2MemoryStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2MemoryStream.cpp; sourceTree = "<group>"; };
-		4CD7EB081D4C53AA000FA6B0 /* U2PipedStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2PipedStream.cpp; sourceTree = "<group>"; };
-		4CD7EB091D4C53AA000FA6B0 /* U2Stream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2Stream.cpp; sourceTree = "<group>"; };
-		4CD7EB0A1D4C53AA000FA6B0 /* U2StringStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2StringStream.cpp; sourceTree = "<group>"; };
-		4CD7EB0B1D4C53AA000FA6B0 /* U2VariableMemStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2VariableMemStream.cpp; sourceTree = "<group>"; };
-		4CD7EB0C1D4C53AA000FA6B0 /* U2ZipStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2ZipStream.cpp; sourceTree = "<group>"; };
 		4CD7EB0D1D4C53AA000FA6B0 /* U2Component.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2Component.cpp; sourceTree = "<group>"; };
 		4CD7EB0E1D4C53AA000FA6B0 /* U2ComponentSerialize.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2ComponentSerialize.cpp; sourceTree = "<group>"; };
 		4CD7EB0F1D4C53AA000FA6B0 /* U2Core.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2Core.cpp; sourceTree = "<group>"; };
@@ -651,41 +722,94 @@
 		4CD7EB751D4C53D8000FA6B0 /* json_valueiterator.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = json_valueiterator.inl; sourceTree = "<group>"; };
 		4CD7EB761D4C53D8000FA6B0 /* json_writer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = json_writer.cpp; sourceTree = "<group>"; };
 		4CD7EB771D4C53D8000FA6B0 /* version.h.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = version.h.in; sourceTree = "<group>"; };
-		4CD7EB791D4C53D8000FA6B0 /* lapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lapi.c; sourceTree = "<group>"; };
-		4CD7EB7A1D4C53D8000FA6B0 /* lauxlib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lauxlib.c; sourceTree = "<group>"; };
-		4CD7EB7B1D4C53D8000FA6B0 /* lbaselib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lbaselib.c; sourceTree = "<group>"; };
-		4CD7EB7C1D4C53D8000FA6B0 /* lcode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lcode.c; sourceTree = "<group>"; };
-		4CD7EB7D1D4C53D8000FA6B0 /* ldblib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ldblib.c; sourceTree = "<group>"; };
-		4CD7EB7E1D4C53D8000FA6B0 /* ldebug.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ldebug.c; sourceTree = "<group>"; };
-		4CD7EB7F1D4C53D8000FA6B0 /* ldo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ldo.c; sourceTree = "<group>"; };
-		4CD7EB801D4C53D8000FA6B0 /* ldump.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ldump.c; sourceTree = "<group>"; };
-		4CD7EB811D4C53D8000FA6B0 /* lfunc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lfunc.c; sourceTree = "<group>"; };
-		4CD7EB821D4C53D8000FA6B0 /* lgc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lgc.c; sourceTree = "<group>"; };
-		4CD7EB831D4C53D8000FA6B0 /* linit.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = linit.c; sourceTree = "<group>"; };
-		4CD7EB841D4C53D8000FA6B0 /* liolib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = liolib.c; sourceTree = "<group>"; };
-		4CD7EB851D4C53D8000FA6B0 /* llex.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = llex.c; sourceTree = "<group>"; };
-		4CD7EB861D4C53D8000FA6B0 /* lmathlib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lmathlib.c; sourceTree = "<group>"; };
-		4CD7EB871D4C53D8000FA6B0 /* lmem.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lmem.c; sourceTree = "<group>"; };
-		4CD7EB881D4C53D8000FA6B0 /* loadlib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = loadlib.c; sourceTree = "<group>"; };
-		4CD7EB891D4C53D8000FA6B0 /* lobject.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lobject.c; sourceTree = "<group>"; };
-		4CD7EB8A1D4C53D8000FA6B0 /* lopcodes.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lopcodes.c; sourceTree = "<group>"; };
-		4CD7EB8B1D4C53D8000FA6B0 /* loslib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = loslib.c; sourceTree = "<group>"; };
-		4CD7EB8C1D4C53D8000FA6B0 /* lparser.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lparser.c; sourceTree = "<group>"; };
-		4CD7EB8D1D4C53D8000FA6B0 /* lstate.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lstate.c; sourceTree = "<group>"; };
-		4CD7EB8E1D4C53D8000FA6B0 /* lstring.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lstring.c; sourceTree = "<group>"; };
-		4CD7EB8F1D4C53D8000FA6B0 /* lstrlib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lstrlib.c; sourceTree = "<group>"; };
-		4CD7EB901D4C53D8000FA6B0 /* ltable.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ltable.c; sourceTree = "<group>"; };
-		4CD7EB911D4C53D8000FA6B0 /* ltablib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ltablib.c; sourceTree = "<group>"; };
-		4CD7EB921D4C53D8000FA6B0 /* ltm.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ltm.c; sourceTree = "<group>"; };
-		4CD7EB931D4C53D8000FA6B0 /* lua.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lua.c; sourceTree = "<group>"; };
-		4CD7EB941D4C53D8000FA6B0 /* lundump.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lundump.c; sourceTree = "<group>"; };
-		4CD7EB951D4C53D8000FA6B0 /* lvm.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lvm.c; sourceTree = "<group>"; };
-		4CD7EB961D4C53D8000FA6B0 /* lzio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lzio.c; sourceTree = "<group>"; };
-		4CD7EB971D4C53D8000FA6B0 /* print.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = print.c; sourceTree = "<group>"; };
 		4CD7EB991D4C53D8000FA6B0 /* tinystr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinystr.cpp; sourceTree = "<group>"; };
 		4CD7EB9A1D4C53D8000FA6B0 /* tinyxml.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxml.cpp; sourceTree = "<group>"; };
 		4CD7EB9B1D4C53D8000FA6B0 /* tinyxmlerror.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxmlerror.cpp; sourceTree = "<group>"; };
 		4CD7EB9C1D4C53D8000FA6B0 /* tinyxmlparser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxmlparser.cpp; sourceTree = "<group>"; };
+		4CD7EBC51D4C5C48000FA6B0 /* U2MacTimerImp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2MacTimerImp.h; sourceTree = "<group>"; };
+		4CD7EBC61D4C5D42000FA6B0 /* U2Timer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2Timer.cpp; sourceTree = "<group>"; };
+		4CD7EC7F1D4C5FD2000FA6B0 /* U2Herald.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2Herald.cpp; sourceTree = "<group>"; };
+		4CD7EC801D4C5FD2000FA6B0 /* U2LuaScript.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2LuaScript.cpp; sourceTree = "<group>"; };
+		4CD7EC811D4C5FD2000FA6B0 /* U2PredefinedLuaTasks.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2PredefinedLuaTasks.cpp; sourceTree = "<group>"; };
+		4CD7EC821D4C5FD2000FA6B0 /* U2Script.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2Script.cpp; sourceTree = "<group>"; };
+		4CD7ECCE1D4C9CF3000FA6B0 /* U2AllLuaBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2AllLuaBridge.h; sourceTree = "<group>"; };
+		4CD7ECCF1D4C9CF3000FA6B0 /* U2ConstantBridge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2ConstantBridge.cpp; sourceTree = "<group>"; };
+		4CD7ECD01D4C9CF3000FA6B0 /* U2ConstantBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2ConstantBridge.h; sourceTree = "<group>"; };
+		4CD7ECD11D4C9CF3000FA6B0 /* U2DataModelBridge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2DataModelBridge.cpp; sourceTree = "<group>"; };
+		4CD7ECD21D4C9CF3000FA6B0 /* U2DataModelBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2DataModelBridge.h; sourceTree = "<group>"; };
+		4CD7ECD31D4C9CF3000FA6B0 /* U2GameBridge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2GameBridge.cpp; sourceTree = "<group>"; };
+		4CD7ECD41D4C9CF3000FA6B0 /* U2GameBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2GameBridge.h; sourceTree = "<group>"; };
+		4CD7ECD51D4C9CF3000FA6B0 /* U2LuaScriptBridge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2LuaScriptBridge.cpp; sourceTree = "<group>"; };
+		4CD7ECD61D4C9CF3000FA6B0 /* U2LuaScriptBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2LuaScriptBridge.h; sourceTree = "<group>"; };
+		4CD7ECD71D4C9CF3000FA6B0 /* U2MvcBridge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2MvcBridge.cpp; sourceTree = "<group>"; };
+		4CD7ECD81D4C9CF3000FA6B0 /* U2MvcBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2MvcBridge.h; sourceTree = "<group>"; };
+		4CD7ECE41D4C9D66000FA6B0 /* lapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lapi.c; sourceTree = "<group>"; };
+		4CD7ECE51D4C9D66000FA6B0 /* lauxlib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lauxlib.c; sourceTree = "<group>"; };
+		4CD7ECE61D4C9D66000FA6B0 /* lbaselib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lbaselib.c; sourceTree = "<group>"; };
+		4CD7ECE71D4C9D66000FA6B0 /* lcode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lcode.c; sourceTree = "<group>"; };
+		4CD7ECE81D4C9D66000FA6B0 /* ldblib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ldblib.c; sourceTree = "<group>"; };
+		4CD7ECE91D4C9D66000FA6B0 /* ldebug.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ldebug.c; sourceTree = "<group>"; };
+		4CD7ECEA1D4C9D66000FA6B0 /* ldo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ldo.c; sourceTree = "<group>"; };
+		4CD7ECEB1D4C9D66000FA6B0 /* ldump.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ldump.c; sourceTree = "<group>"; };
+		4CD7ECEC1D4C9D66000FA6B0 /* lfunc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lfunc.c; sourceTree = "<group>"; };
+		4CD7ECED1D4C9D66000FA6B0 /* lgc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lgc.c; sourceTree = "<group>"; };
+		4CD7ECEE1D4C9D66000FA6B0 /* linit.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = linit.c; sourceTree = "<group>"; };
+		4CD7ECEF1D4C9D66000FA6B0 /* liolib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = liolib.c; sourceTree = "<group>"; };
+		4CD7ECF01D4C9D66000FA6B0 /* llex.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = llex.c; sourceTree = "<group>"; };
+		4CD7ECF11D4C9D66000FA6B0 /* lmathlib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lmathlib.c; sourceTree = "<group>"; };
+		4CD7ECF21D4C9D66000FA6B0 /* lmem.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lmem.c; sourceTree = "<group>"; };
+		4CD7ECF31D4C9D66000FA6B0 /* loadlib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = loadlib.c; sourceTree = "<group>"; };
+		4CD7ECF41D4C9D66000FA6B0 /* lobject.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lobject.c; sourceTree = "<group>"; };
+		4CD7ECF51D4C9D66000FA6B0 /* lopcodes.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lopcodes.c; sourceTree = "<group>"; };
+		4CD7ECF61D4C9D66000FA6B0 /* loslib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = loslib.c; sourceTree = "<group>"; };
+		4CD7ECF71D4C9D66000FA6B0 /* lparser.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lparser.c; sourceTree = "<group>"; };
+		4CD7ECF81D4C9D66000FA6B0 /* lstate.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lstate.c; sourceTree = "<group>"; };
+		4CD7ECF91D4C9D66000FA6B0 /* lstring.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lstring.c; sourceTree = "<group>"; };
+		4CD7ECFA1D4C9D66000FA6B0 /* lstrlib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lstrlib.c; sourceTree = "<group>"; };
+		4CD7ECFB1D4C9D66000FA6B0 /* ltable.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ltable.c; sourceTree = "<group>"; };
+		4CD7ECFC1D4C9D66000FA6B0 /* ltablib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ltablib.c; sourceTree = "<group>"; };
+		4CD7ECFD1D4C9D66000FA6B0 /* ltm.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ltm.c; sourceTree = "<group>"; };
+		4CD7ECFF1D4C9D66000FA6B0 /* lundump.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lundump.c; sourceTree = "<group>"; };
+		4CD7ED001D4C9D66000FA6B0 /* lvm.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lvm.c; sourceTree = "<group>"; };
+		4CD7ED011D4C9D66000FA6B0 /* lzio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lzio.c; sourceTree = "<group>"; };
+		4CD7ED021D4C9D66000FA6B0 /* print.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = print.c; sourceTree = "<group>"; };
+		4CD7ED411D4CA8AC000FA6B0 /* U2IosTimerImp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2IosTimerImp.h; sourceTree = "<group>"; };
+		4CD7ED421D4CA8CA000FA6B0 /* U2Timer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2Timer.cpp; sourceTree = "<group>"; };
+		4CD7ED451D4CAF6C000FA6B0 /* U2CodeCvt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2CodeCvt.h; sourceTree = "<group>"; };
+		4CD7ED461D4CAF6C000FA6B0 /* U2DataFilterStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2DataFilterStream.h; sourceTree = "<group>"; };
+		4CD7ED471D4CAF6C000FA6B0 /* U2FileHandleStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2FileHandleStream.h; sourceTree = "<group>"; };
+		4CD7ED481D4CAF6C000FA6B0 /* U2FileStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2FileStream.h; sourceTree = "<group>"; };
+		4CD7ED491D4CAF6C000FA6B0 /* U2FilterStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2FilterStream.h; sourceTree = "<group>"; };
+		4CD7ED4A1D4CAF6C000FA6B0 /* U2MemoryStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2MemoryStream.h; sourceTree = "<group>"; };
+		4CD7ED4B1D4CAF6C000FA6B0 /* U2PipedStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2PipedStream.h; sourceTree = "<group>"; };
+		4CD7ED4C1D4CAF6C000FA6B0 /* U2Stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2Stream.h; sourceTree = "<group>"; };
+		4CD7ED4D1D4CAF6C000FA6B0 /* U2StreamQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2StreamQueue.h; sourceTree = "<group>"; };
+		4CD7ED4E1D4CAF6C000FA6B0 /* U2StringStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2StringStream.h; sourceTree = "<group>"; };
+		4CD7ED4F1D4CAF6C000FA6B0 /* U2VariableMemStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2VariableMemStream.h; sourceTree = "<group>"; };
+		4CD7ED501D4CAF6C000FA6B0 /* U2ZipStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2ZipStream.h; sourceTree = "<group>"; };
+		4CD7ED521D4CAF99000FA6B0 /* U2CodeCvt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2CodeCvt.cpp; sourceTree = "<group>"; };
+		4CD7ED531D4CAF99000FA6B0 /* U2DataFilterStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2DataFilterStream.cpp; sourceTree = "<group>"; };
+		4CD7ED541D4CAF99000FA6B0 /* U2FileHandleStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2FileHandleStream.cpp; sourceTree = "<group>"; };
+		4CD7ED551D4CAF99000FA6B0 /* U2FileStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2FileStream.cpp; sourceTree = "<group>"; };
+		4CD7ED561D4CAF99000FA6B0 /* U2FilterStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2FilterStream.cpp; sourceTree = "<group>"; };
+		4CD7ED571D4CAF99000FA6B0 /* U2MemoryStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2MemoryStream.cpp; sourceTree = "<group>"; };
+		4CD7ED581D4CAF99000FA6B0 /* U2PipedStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2PipedStream.cpp; sourceTree = "<group>"; };
+		4CD7ED591D4CAF99000FA6B0 /* U2Stream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2Stream.cpp; sourceTree = "<group>"; };
+		4CD7ED5A1D4CAF99000FA6B0 /* U2StringStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2StringStream.cpp; sourceTree = "<group>"; };
+		4CD7ED5B1D4CAF99000FA6B0 /* U2VariableMemStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2VariableMemStream.cpp; sourceTree = "<group>"; };
+		4CD7ED5C1D4CAF99000FA6B0 /* U2ZipStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2ZipStream.cpp; sourceTree = "<group>"; };
+		4CD7ED731D4CB0AC000FA6B0 /* BattleMasterViewComp.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = BattleMasterViewComp.lua; sourceTree = "<group>"; };
+		4CD7ED741D4CB0AC000FA6B0 /* BattleRowViewComp.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = BattleRowViewComp.lua; sourceTree = "<group>"; };
+		4CD7ED751D4CB0AC000FA6B0 /* BattleViewComp.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = BattleViewComp.lua; sourceTree = "<group>"; };
+		4CD7ED761D4CB0AC000FA6B0 /* cmlogo1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cmlogo1.png; sourceTree = "<group>"; };
+		4CD7ED771D4CB0AC000FA6B0 /* InfoViewComp.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = InfoViewComp.lua; sourceTree = "<group>"; };
+		4CD7ED781D4CB0AC000FA6B0 /* LogoViewComp.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LogoViewComp.lua; sourceTree = "<group>"; };
+		4CD7ED791D4CB0AC000FA6B0 /* main.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.lua; sourceTree = "<group>"; };
+		4CD7ED7A1D4CB0AC000FA6B0 /* ShadeViewComp.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ShadeViewComp.lua; sourceTree = "<group>"; };
+		4CD7ED7B1D4CB0AC000FA6B0 /* TestViewComp.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TestViewComp.lua; sourceTree = "<group>"; };
+		4CD7ED7C1D4CB0AC000FA6B0 /* Trans2BattleCmd.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Trans2BattleCmd.lua; sourceTree = "<group>"; };
+		4CD7ED7D1D4CB0AC000FA6B0 /* Trans2InfoCmd.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Trans2InfoCmd.lua; sourceTree = "<group>"; };
+		4CD7ED7E1D4CB0AC000FA6B0 /* Trans2LogoCmd.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Trans2LogoCmd.lua; sourceTree = "<group>"; };
 		503AE0F617EB97AB00D1A890 /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
 		503AE0F717EB97AB00D1A890 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		503AE0FA17EB989F00D1A890 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppController.h; path = ios/AppController.h; sourceTree = SOURCE_ROOT; };
@@ -816,6 +940,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				4CD7ECCD1D4C9CF3000FA6B0 /* luabridge */,
 				4C68AB931C8930FC007BA5BD /* engine */,
 				4C68AC121C8930FC007BA5BD /* gamebase */,
 				46880B8319C43A87006E1F66 /* Classes */,
@@ -861,6 +986,18 @@
 		46880B7519C43A67006E1F66 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				4CD7ED731D4CB0AC000FA6B0 /* BattleMasterViewComp.lua */,
+				4CD7ED741D4CB0AC000FA6B0 /* BattleRowViewComp.lua */,
+				4CD7ED751D4CB0AC000FA6B0 /* BattleViewComp.lua */,
+				4CD7ED761D4CB0AC000FA6B0 /* cmlogo1.png */,
+				4CD7ED771D4CB0AC000FA6B0 /* InfoViewComp.lua */,
+				4CD7ED781D4CB0AC000FA6B0 /* LogoViewComp.lua */,
+				4CD7ED791D4CB0AC000FA6B0 /* main.lua */,
+				4CD7ED7A1D4CB0AC000FA6B0 /* ShadeViewComp.lua */,
+				4CD7ED7B1D4CB0AC000FA6B0 /* TestViewComp.lua */,
+				4CD7ED7C1D4CB0AC000FA6B0 /* Trans2BattleCmd.lua */,
+				4CD7ED7D1D4CB0AC000FA6B0 /* Trans2InfoCmd.lua */,
+				4CD7ED7E1D4CB0AC000FA6B0 /* Trans2LogoCmd.lua */,
 				4C1EE4E41CD1DE7700CD21F1 /* resources.cfg */,
 				521A8EA819F11F5000D177D7 /* fonts */,
 				3EACC98E19EE6D4300EB3C5E /* res */,
@@ -889,6 +1026,7 @@
 		4C1EE4B21CD1B74E00CD21F1 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
+				4CD7ED421D4CA8CA000FA6B0 /* U2Timer.cpp */,
 				4C1EE4EC1CD2016400CD21F1 /* iosUtils.mm */,
 				4C1EE4B41CD1B74E00CD21F1 /* U2FileSystemLayer.mm */,
 			);
@@ -898,6 +1036,7 @@
 		4C1EE4B51CD1B74E00CD21F1 /* OSX */ = {
 			isa = PBXGroup;
 			children = (
+				4CD7EBC61D4C5D42000FA6B0 /* U2Timer.cpp */,
 				4C1EE4B61CD1B74E00CD21F1 /* macUtils.mm */,
 				4C1EE4B71CD1B74E00CD21F1 /* U2FileSystemLayer.cpp */,
 			);
@@ -907,6 +1046,7 @@
 		4C1EE4E71CD1E9E800CD21F1 /* OSX */ = {
 			isa = PBXGroup;
 			children = (
+				4CD7EBC51D4C5C48000FA6B0 /* U2MacTimerImp.h */,
 				4C1EE4E81CD1E9E800CD21F1 /* macUtils.h */,
 			);
 			path = OSX;
@@ -915,6 +1055,7 @@
 		4C1EE4E91CD2001C00CD21F1 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
+				4CD7ED411D4CA8AC000FA6B0 /* U2IosTimerImp.h */,
 				4C1EE4EB1CD2014700CD21F1 /* iosUtils.h */,
 			);
 			path = iOS;
@@ -945,7 +1086,7 @@
 		4C68AB951C8930FC007BA5BD /* core */ = {
 			isa = PBXGroup;
 			children = (
-				4CD7EAD91D4C532B000FA6B0 /* streams */,
+				4CD7ED441D4CAF6C000FA6B0 /* streams */,
 				4CD7EAE61D4C532B000FA6B0 /* U2Bitwise.h */,
 				4CD7EAE71D4C532B000FA6B0 /* U2Component.h */,
 				4CD7EAE81D4C532B000FA6B0 /* U2ComponentSerialize.h */,
@@ -970,7 +1111,6 @@
 				4CD7EAFB1D4C532B000FA6B0 /* U2WebSocketClientImpl.h */,
 				4CD7EAFC1D4C532B000FA6B0 /* U2XmlSerialize.h */,
 				4C462E8A1D17B989001F3CC1 /* U2TNedObjectManager.h */,
-				4CBA3BD61D05225D00255CC7 /* U2CancelableTaskTracker.h */,
 				4CBA3BD71D05225E00255CC7 /* U2Task.h */,
 				4CBA3BD81D05225E00255CC7 /* U2TaskLoop.h */,
 				4C1EE4E91CD2001C00CD21F1 /* iOS */,
@@ -994,7 +1134,6 @@
 				4CA4AA8B1CC0EAD0007B5F39 /* U2StringUtil.h */,
 				4CA4AA8C1CC0EAD0007B5F39 /* U2ValueList.h */,
 				4CA4AA8D1CC0EAD0007B5F39 /* U2ZipArchive.h */,
-				4C68AB961C8930FC007BA5BD /* streams */,
 				4C68AB9C1C8930FC007BA5BD /* threading */,
 				4C68ABB71C8930FC007BA5BD /* U2AlignedAllocator.h */,
 				4C68ABB81C8930FC007BA5BD /* U2Config.h */,
@@ -1021,23 +1160,6 @@
 				4C68ABCD1C8930FC007BA5BD /* U2TypedObjectManager.h */,
 			);
 			path = core;
-			sourceTree = "<group>";
-		};
-		4C68AB961C8930FC007BA5BD /* streams */ = {
-			isa = PBXGroup;
-			children = (
-				4CA4AA8E1CC0EAE8007B5F39 /* U2FileHandleStream.h */,
-				4CA4AA8F1CC0EAE8007B5F39 /* U2MemoryStream.h */,
-				4CA4AA901CC0EAE8007B5F39 /* U2PipedStream.h */,
-				4CA4AA911CC0EAE8007B5F39 /* U2StreamQueue.h */,
-				4CA4AA921CC0EAE8007B5F39 /* U2ZipStream.h */,
-				4C68AB971C8930FC007BA5BD /* U2CodeCvt.h */,
-				4C68AB981C8930FC007BA5BD /* U2DataFilterStream.h */,
-				4C68AB991C8930FC007BA5BD /* U2FileStream.h */,
-				4C68AB9A1C8930FC007BA5BD /* U2FilterStream.h */,
-				4C68AB9B1C8930FC007BA5BD /* U2Stream.h */,
-			);
-			path = streams;
 			sourceTree = "<group>";
 		};
 		4C68AB9C1C8930FC007BA5BD /* threading */ = {
@@ -1091,8 +1213,8 @@
 		4C68ABE51C8930FC007BA5BD /* src */ = {
 			isa = PBXGroup;
 			children = (
+				4CD7ECE31D4C9D66000FA6B0 /* lua */,
 				4CD7EB721D4C53D8000FA6B0 /* json */,
-				4CD7EB781D4C53D8000FA6B0 /* lua */,
 				4CD7EB981D4C53D8000FA6B0 /* xml */,
 				4C68ABE61C8930FC007BA5BD /* core */,
 				4C68ABFC1C8930FC007BA5BD /* mvc */,
@@ -1103,7 +1225,7 @@
 		4C68ABE61C8930FC007BA5BD /* core */ = {
 			isa = PBXGroup;
 			children = (
-				4CD7EB011D4C53AA000FA6B0 /* streams */,
+				4CD7ED511D4CAF99000FA6B0 /* streams */,
 				4CD7EB0D1D4C53AA000FA6B0 /* U2Component.cpp */,
 				4CD7EB0E1D4C53AA000FA6B0 /* U2ComponentSerialize.cpp */,
 				4CD7EB0F1D4C53AA000FA6B0 /* U2Core.cpp */,
@@ -1147,7 +1269,6 @@
 				4CA4AAA21CC0EB20007B5F39 /* U2SearchOps.cpp */,
 				4CA4AAA31CC0EB20007B5F39 /* U2StringUtil.cpp */,
 				4CA4AAA41CC0EB20007B5F39 /* U2ZipArchive.cpp */,
-				4C68ABE71C8930FC007BA5BD /* streams */,
 				4C68ABED1C8930FC007BA5BD /* threading */,
 				4C68ABF21C8930FC007BA5BD /* U2AlignedAllocator.cpp */,
 				4C68ABF31C8930FC007BA5BD /* U2FactoryManager.cpp */,
@@ -1161,22 +1282,6 @@
 				4C68ABFB1C8930FC007BA5BD /* U2TypedObjectManager.cpp */,
 			);
 			path = core;
-			sourceTree = "<group>";
-		};
-		4C68ABE71C8930FC007BA5BD /* streams */ = {
-			isa = PBXGroup;
-			children = (
-				4CA4AAB51CC0EB2F007B5F39 /* U2FileHandleStream.cpp */,
-				4CA4AAB61CC0EB2F007B5F39 /* U2MemoryStream.cpp */,
-				4CA4AAB71CC0EB2F007B5F39 /* U2PipedStream.cpp */,
-				4CA4AAB81CC0EB2F007B5F39 /* U2ZipStream.cpp */,
-				4C68ABE81C8930FC007BA5BD /* U2CodeCvt.cpp */,
-				4C68ABE91C8930FC007BA5BD /* U2DataFilterStream.cpp */,
-				4C68ABEA1C8930FC007BA5BD /* U2FileStream.cpp */,
-				4C68ABEB1C8930FC007BA5BD /* U2FilterStream.cpp */,
-				4C68ABEC1C8930FC007BA5BD /* U2Stream.cpp */,
-			);
-			path = streams;
 			sourceTree = "<group>";
 		};
 		4C68ABED1C8930FC007BA5BD /* threading */ = {
@@ -1193,13 +1298,15 @@
 		4C68ABFC1C8930FC007BA5BD /* mvc */ = {
 			isa = PBXGroup;
 			children = (
+				4CD7EC7F1D4C5FD2000FA6B0 /* U2Herald.cpp */,
+				4CD7EC801D4C5FD2000FA6B0 /* U2LuaScript.cpp */,
+				4CD7EC811D4C5FD2000FA6B0 /* U2PredefinedLuaTasks.cpp */,
+				4CD7EC821D4C5FD2000FA6B0 /* U2Script.cpp */,
 				4C68ABFD1C8930FC007BA5BD /* U2Command.cpp */,
 				4C68ABFE1C8930FC007BA5BD /* U2Context.cpp */,
 				4C68ABFF1C8930FC007BA5BD /* U2ContextQueue.cpp */,
 				4C68AC001C8930FC007BA5BD /* U2Controller.cpp */,
 				4C68AC011C8930FC007BA5BD /* U2Facade.cpp */,
-				4C68AC021C8930FC007BA5BD /* U2FrameListenerCollection.cpp */,
-				4C68AC031C8930FC007BA5BD /* U2Mediator.cpp */,
 				4C68AC041C8930FC007BA5BD /* U2Model.cpp */,
 				4C68AC051C8930FC007BA5BD /* U2Notification.cpp */,
 				4C68AC061C8930FC007BA5BD /* U2Notifier.cpp */,
@@ -1306,43 +1413,6 @@
 			path = tasks;
 			sourceTree = "<group>";
 		};
-		4CD7EAD91D4C532B000FA6B0 /* streams */ = {
-			isa = PBXGroup;
-			children = (
-				4CD7EADA1D4C532B000FA6B0 /* U2CodeCvt.h */,
-				4CD7EADB1D4C532B000FA6B0 /* U2DataFilterStream.h */,
-				4CD7EADC1D4C532B000FA6B0 /* U2FileHandleStream.h */,
-				4CD7EADD1D4C532B000FA6B0 /* U2FileStream.h */,
-				4CD7EADE1D4C532B000FA6B0 /* U2FilterStream.h */,
-				4CD7EADF1D4C532B000FA6B0 /* U2MemoryStream.h */,
-				4CD7EAE01D4C532B000FA6B0 /* U2PipedStream.h */,
-				4CD7EAE11D4C532B000FA6B0 /* U2Stream.h */,
-				4CD7EAE21D4C532B000FA6B0 /* U2StreamQueue.h */,
-				4CD7EAE31D4C532B000FA6B0 /* U2StringStream.h */,
-				4CD7EAE41D4C532B000FA6B0 /* U2VariableMemStream.h */,
-				4CD7EAE51D4C532B000FA6B0 /* U2ZipStream.h */,
-			);
-			path = streams;
-			sourceTree = "<group>";
-		};
-		4CD7EB011D4C53AA000FA6B0 /* streams */ = {
-			isa = PBXGroup;
-			children = (
-				4CD7EB021D4C53AA000FA6B0 /* U2CodeCvt.cpp */,
-				4CD7EB031D4C53AA000FA6B0 /* U2DataFilterStream.cpp */,
-				4CD7EB041D4C53AA000FA6B0 /* U2FileHandleStream.cpp */,
-				4CD7EB051D4C53AA000FA6B0 /* U2FileStream.cpp */,
-				4CD7EB061D4C53AA000FA6B0 /* U2FilterStream.cpp */,
-				4CD7EB071D4C53AA000FA6B0 /* U2MemoryStream.cpp */,
-				4CD7EB081D4C53AA000FA6B0 /* U2PipedStream.cpp */,
-				4CD7EB091D4C53AA000FA6B0 /* U2Stream.cpp */,
-				4CD7EB0A1D4C53AA000FA6B0 /* U2StringStream.cpp */,
-				4CD7EB0B1D4C53AA000FA6B0 /* U2VariableMemStream.cpp */,
-				4CD7EB0C1D4C53AA000FA6B0 /* U2ZipStream.cpp */,
-			);
-			path = streams;
-			sourceTree = "<group>";
-		};
 		4CD7EB4A1D4C53CD000FA6B0 /* json */ = {
 			isa = PBXGroup;
 			children = (
@@ -1413,44 +1483,6 @@
 			path = json;
 			sourceTree = "<group>";
 		};
-		4CD7EB781D4C53D8000FA6B0 /* lua */ = {
-			isa = PBXGroup;
-			children = (
-				4CD7EB791D4C53D8000FA6B0 /* lapi.c */,
-				4CD7EB7A1D4C53D8000FA6B0 /* lauxlib.c */,
-				4CD7EB7B1D4C53D8000FA6B0 /* lbaselib.c */,
-				4CD7EB7C1D4C53D8000FA6B0 /* lcode.c */,
-				4CD7EB7D1D4C53D8000FA6B0 /* ldblib.c */,
-				4CD7EB7E1D4C53D8000FA6B0 /* ldebug.c */,
-				4CD7EB7F1D4C53D8000FA6B0 /* ldo.c */,
-				4CD7EB801D4C53D8000FA6B0 /* ldump.c */,
-				4CD7EB811D4C53D8000FA6B0 /* lfunc.c */,
-				4CD7EB821D4C53D8000FA6B0 /* lgc.c */,
-				4CD7EB831D4C53D8000FA6B0 /* linit.c */,
-				4CD7EB841D4C53D8000FA6B0 /* liolib.c */,
-				4CD7EB851D4C53D8000FA6B0 /* llex.c */,
-				4CD7EB861D4C53D8000FA6B0 /* lmathlib.c */,
-				4CD7EB871D4C53D8000FA6B0 /* lmem.c */,
-				4CD7EB881D4C53D8000FA6B0 /* loadlib.c */,
-				4CD7EB891D4C53D8000FA6B0 /* lobject.c */,
-				4CD7EB8A1D4C53D8000FA6B0 /* lopcodes.c */,
-				4CD7EB8B1D4C53D8000FA6B0 /* loslib.c */,
-				4CD7EB8C1D4C53D8000FA6B0 /* lparser.c */,
-				4CD7EB8D1D4C53D8000FA6B0 /* lstate.c */,
-				4CD7EB8E1D4C53D8000FA6B0 /* lstring.c */,
-				4CD7EB8F1D4C53D8000FA6B0 /* lstrlib.c */,
-				4CD7EB901D4C53D8000FA6B0 /* ltable.c */,
-				4CD7EB911D4C53D8000FA6B0 /* ltablib.c */,
-				4CD7EB921D4C53D8000FA6B0 /* ltm.c */,
-				4CD7EB931D4C53D8000FA6B0 /* lua.c */,
-				4CD7EB941D4C53D8000FA6B0 /* lundump.c */,
-				4CD7EB951D4C53D8000FA6B0 /* lvm.c */,
-				4CD7EB961D4C53D8000FA6B0 /* lzio.c */,
-				4CD7EB971D4C53D8000FA6B0 /* print.c */,
-			);
-			path = lua;
-			sourceTree = "<group>";
-		};
 		4CD7EB981D4C53D8000FA6B0 /* xml */ = {
 			isa = PBXGroup;
 			children = (
@@ -1460,6 +1492,99 @@
 				4CD7EB9C1D4C53D8000FA6B0 /* tinyxmlparser.cpp */,
 			);
 			path = xml;
+			sourceTree = "<group>";
+		};
+		4CD7ECCD1D4C9CF3000FA6B0 /* luabridge */ = {
+			isa = PBXGroup;
+			children = (
+				4CD7ECCE1D4C9CF3000FA6B0 /* U2AllLuaBridge.h */,
+				4CD7ECCF1D4C9CF3000FA6B0 /* U2ConstantBridge.cpp */,
+				4CD7ECD01D4C9CF3000FA6B0 /* U2ConstantBridge.h */,
+				4CD7ECD11D4C9CF3000FA6B0 /* U2DataModelBridge.cpp */,
+				4CD7ECD21D4C9CF3000FA6B0 /* U2DataModelBridge.h */,
+				4CD7ECD31D4C9CF3000FA6B0 /* U2GameBridge.cpp */,
+				4CD7ECD41D4C9CF3000FA6B0 /* U2GameBridge.h */,
+				4CD7ECD51D4C9CF3000FA6B0 /* U2LuaScriptBridge.cpp */,
+				4CD7ECD61D4C9CF3000FA6B0 /* U2LuaScriptBridge.h */,
+				4CD7ECD71D4C9CF3000FA6B0 /* U2MvcBridge.cpp */,
+				4CD7ECD81D4C9CF3000FA6B0 /* U2MvcBridge.h */,
+			);
+			name = luabridge;
+			path = ../luabridge;
+			sourceTree = "<group>";
+		};
+		4CD7ECE31D4C9D66000FA6B0 /* lua */ = {
+			isa = PBXGroup;
+			children = (
+				4CD7ECE41D4C9D66000FA6B0 /* lapi.c */,
+				4CD7ECE51D4C9D66000FA6B0 /* lauxlib.c */,
+				4CD7ECE61D4C9D66000FA6B0 /* lbaselib.c */,
+				4CD7ECE71D4C9D66000FA6B0 /* lcode.c */,
+				4CD7ECE81D4C9D66000FA6B0 /* ldblib.c */,
+				4CD7ECE91D4C9D66000FA6B0 /* ldebug.c */,
+				4CD7ECEA1D4C9D66000FA6B0 /* ldo.c */,
+				4CD7ECEB1D4C9D66000FA6B0 /* ldump.c */,
+				4CD7ECEC1D4C9D66000FA6B0 /* lfunc.c */,
+				4CD7ECED1D4C9D66000FA6B0 /* lgc.c */,
+				4CD7ECEE1D4C9D66000FA6B0 /* linit.c */,
+				4CD7ECEF1D4C9D66000FA6B0 /* liolib.c */,
+				4CD7ECF01D4C9D66000FA6B0 /* llex.c */,
+				4CD7ECF11D4C9D66000FA6B0 /* lmathlib.c */,
+				4CD7ECF21D4C9D66000FA6B0 /* lmem.c */,
+				4CD7ECF31D4C9D66000FA6B0 /* loadlib.c */,
+				4CD7ECF41D4C9D66000FA6B0 /* lobject.c */,
+				4CD7ECF51D4C9D66000FA6B0 /* lopcodes.c */,
+				4CD7ECF61D4C9D66000FA6B0 /* loslib.c */,
+				4CD7ECF71D4C9D66000FA6B0 /* lparser.c */,
+				4CD7ECF81D4C9D66000FA6B0 /* lstate.c */,
+				4CD7ECF91D4C9D66000FA6B0 /* lstring.c */,
+				4CD7ECFA1D4C9D66000FA6B0 /* lstrlib.c */,
+				4CD7ECFB1D4C9D66000FA6B0 /* ltable.c */,
+				4CD7ECFC1D4C9D66000FA6B0 /* ltablib.c */,
+				4CD7ECFD1D4C9D66000FA6B0 /* ltm.c */,
+				4CD7ECFF1D4C9D66000FA6B0 /* lundump.c */,
+				4CD7ED001D4C9D66000FA6B0 /* lvm.c */,
+				4CD7ED011D4C9D66000FA6B0 /* lzio.c */,
+				4CD7ED021D4C9D66000FA6B0 /* print.c */,
+			);
+			path = lua;
+			sourceTree = "<group>";
+		};
+		4CD7ED441D4CAF6C000FA6B0 /* streams */ = {
+			isa = PBXGroup;
+			children = (
+				4CD7ED451D4CAF6C000FA6B0 /* U2CodeCvt.h */,
+				4CD7ED461D4CAF6C000FA6B0 /* U2DataFilterStream.h */,
+				4CD7ED471D4CAF6C000FA6B0 /* U2FileHandleStream.h */,
+				4CD7ED481D4CAF6C000FA6B0 /* U2FileStream.h */,
+				4CD7ED491D4CAF6C000FA6B0 /* U2FilterStream.h */,
+				4CD7ED4A1D4CAF6C000FA6B0 /* U2MemoryStream.h */,
+				4CD7ED4B1D4CAF6C000FA6B0 /* U2PipedStream.h */,
+				4CD7ED4C1D4CAF6C000FA6B0 /* U2Stream.h */,
+				4CD7ED4D1D4CAF6C000FA6B0 /* U2StreamQueue.h */,
+				4CD7ED4E1D4CAF6C000FA6B0 /* U2StringStream.h */,
+				4CD7ED4F1D4CAF6C000FA6B0 /* U2VariableMemStream.h */,
+				4CD7ED501D4CAF6C000FA6B0 /* U2ZipStream.h */,
+			);
+			path = streams;
+			sourceTree = "<group>";
+		};
+		4CD7ED511D4CAF99000FA6B0 /* streams */ = {
+			isa = PBXGroup;
+			children = (
+				4CD7ED521D4CAF99000FA6B0 /* U2CodeCvt.cpp */,
+				4CD7ED531D4CAF99000FA6B0 /* U2DataFilterStream.cpp */,
+				4CD7ED541D4CAF99000FA6B0 /* U2FileHandleStream.cpp */,
+				4CD7ED551D4CAF99000FA6B0 /* U2FileStream.cpp */,
+				4CD7ED561D4CAF99000FA6B0 /* U2FilterStream.cpp */,
+				4CD7ED571D4CAF99000FA6B0 /* U2MemoryStream.cpp */,
+				4CD7ED581D4CAF99000FA6B0 /* U2PipedStream.cpp */,
+				4CD7ED591D4CAF99000FA6B0 /* U2Stream.cpp */,
+				4CD7ED5A1D4CAF99000FA6B0 /* U2StringStream.cpp */,
+				4CD7ED5B1D4CAF99000FA6B0 /* U2VariableMemStream.cpp */,
+				4CD7ED5C1D4CAF99000FA6B0 /* U2ZipStream.cpp */,
+			);
+			path = streams;
 			sourceTree = "<group>";
 		};
 		503AE0F517EB97AB00D1A890 /* Icons */ = {
@@ -1608,21 +1733,33 @@
 				5087E78617EB970100C73F5D /* Icon-76.png in Resources */,
 				5087E77F17EB970100C73F5D /* Default@2x.png in Resources */,
 				50EF629917ECD46A001EB2F8 /* Icon-100.png in Resources */,
+				4CD7ED8D1D4CB0AC000FA6B0 /* ShadeViewComp.lua in Resources */,
 				5087E78317EB970100C73F5D /* Icon-152.png in Resources */,
 				5087E77D17EB970100C73F5D /* Default-568h@2x.png in Resources */,
 				5087E78517EB970100C73F5D /* Icon-72.png in Resources */,
+				4CD7ED891D4CB0AC000FA6B0 /* LogoViewComp.lua in Resources */,
 				4CD7EBA11D4C53D8000FA6B0 /* version.h.in in Resources */,
+				4CD7ED8F1D4CB0AC000FA6B0 /* TestViewComp.lua in Resources */,
 				521A8E6519F0C34300D177D7 /* Default-736h@3x.png in Resources */,
+				4CD7ED951D4CB0AC000FA6B0 /* Trans2LogoCmd.lua in Resources */,
 				521A8EA919F11F5000D177D7 /* fonts in Resources */,
+				4CD7ED851D4CB0AC000FA6B0 /* cmlogo1.png in Resources */,
+				4CD7ED911D4CB0AC000FA6B0 /* Trans2BattleCmd.lua in Resources */,
 				4CD7EB9F1D4C53D8000FA6B0 /* json_valueiterator.inl in Resources */,
 				50EF62A317ECD613001EB2F8 /* Icon-50.png in Resources */,
+				4CD7ED831D4CB0AC000FA6B0 /* BattleViewComp.lua in Resources */,
 				5087E78017EB970100C73F5D /* Icon-114.png in Resources */,
 				50EF62A217ECD613001EB2F8 /* Icon-29.png in Resources */,
 				4C1EE4E51CD1DE7700CD21F1 /* resources.cfg in Resources */,
+				4CD7ED811D4CB0AC000FA6B0 /* BattleRowViewComp.lua in Resources */,
+				4CD7ED871D4CB0AC000FA6B0 /* InfoViewComp.lua in Resources */,
 				50EF629617ECD46A001EB2F8 /* Icon-40.png in Resources */,
 				5087E78217EB970100C73F5D /* Icon-144.png in Resources */,
 				3EACC98F19EE6D4300EB3C5E /* res in Resources */,
+				4CD7ED7F1D4CB0AC000FA6B0 /* BattleMasterViewComp.lua in Resources */,
+				4CD7ED931D4CB0AC000FA6B0 /* Trans2InfoCmd.lua in Resources */,
 				50EF629817ECD46A001EB2F8 /* Icon-80.png in Resources */,
+				4CD7ED8B1D4CB0AC000FA6B0 /* main.lua in Resources */,
 				5087E78417EB970100C73F5D /* Icon-57.png in Resources */,
 				5087E77E17EB970100C73F5D /* Default.png in Resources */,
 				521A8E6419F0C34300D177D7 /* Default-667h@2x.png in Resources */,
@@ -1634,10 +1771,22 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4CD7ED961D4CB0AC000FA6B0 /* Trans2LogoCmd.lua in Resources */,
+				4CD7ED861D4CB0AC000FA6B0 /* cmlogo1.png in Resources */,
 				4C1EE4E61CD1DE7700CD21F1 /* resources.cfg in Resources */,
+				4CD7ED821D4CB0AC000FA6B0 /* BattleRowViewComp.lua in Resources */,
+				4CD7ED921D4CB0AC000FA6B0 /* Trans2BattleCmd.lua in Resources */,
 				503AE0F817EB97AB00D1A890 /* Icon.icns in Resources */,
 				3EACC99019EE6D4300EB3C5E /* res in Resources */,
+				4CD7ED941D4CB0AC000FA6B0 /* Trans2InfoCmd.lua in Resources */,
+				4CD7ED8A1D4CB0AC000FA6B0 /* LogoViewComp.lua in Resources */,
+				4CD7ED8C1D4CB0AC000FA6B0 /* main.lua in Resources */,
 				521A8EAA19F11F5000D177D7 /* fonts in Resources */,
+				4CD7ED901D4CB0AC000FA6B0 /* TestViewComp.lua in Resources */,
+				4CD7ED8E1D4CB0AC000FA6B0 /* ShadeViewComp.lua in Resources */,
+				4CD7ED841D4CB0AC000FA6B0 /* BattleViewComp.lua in Resources */,
+				4CD7ED801D4CB0AC000FA6B0 /* BattleMasterViewComp.lua in Resources */,
+				4CD7ED881D4CB0AC000FA6B0 /* InfoViewComp.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1650,167 +1799,165 @@
 			files = (
 				4C68AC301C8930FC007BA5BD /* U2MemoryTracker.cpp in Sources */,
 				4CA4AAC51CC0EB44007B5F39 /* U2GenericThreadPool.cpp in Sources */,
-				4C68AC4A1C8930FC007BA5BD /* U2Mediator.cpp in Sources */,
 				4C68AC461C8930FC007BA5BD /* U2Facade.cpp in Sources */,
 				4C68AC641C8930FC007BA5BD /* U2View.cpp in Sources */,
 				4CD7EB3C1D4C53AA000FA6B0 /* U2SnapshotDataPool.cpp in Sources */,
 				4CD7EB481D4C53BF000FA6B0 /* U2CocosLuaScript.cpp in Sources */,
-				4CD7EBBF1D4C53D8000FA6B0 /* lzio.c in Sources */,
-				4CD7EB231D4C53AA000FA6B0 /* U2CodeCvt.cpp in Sources */,
+				4CD7ED2F1D4C9D66000FA6B0 /* lstrlib.c in Sources */,
+				4CD7ED391D4C9D66000FA6B0 /* lundump.c in Sources */,
 				4C68AC421C8930FC007BA5BD /* U2ContextQueue.cpp in Sources */,
 				4CD7EB371D4C53AA000FA6B0 /* U2HttpDownloadClient.cpp in Sources */,
+				4CD7ED051D4C9D66000FA6B0 /* lauxlib.c in Sources */,
 				4CD7EACC1D4C52CB000FA6B0 /* BattleViewComponents.cpp in Sources */,
 				4C68AC321C8930FC007BA5BD /* U2NameGenerator.cpp in Sources */,
 				4CD7EB331D4C53AA000FA6B0 /* U2GameObject.cpp in Sources */,
-				4CD7EBBA1D4C53D8000FA6B0 /* ltablib.c in Sources */,
+				4CD7ED2D1D4C9D66000FA6B0 /* lstring.c in Sources */,
+				4CD7ECDB1D4C9CF3000FA6B0 /* U2DataModelBridge.cpp in Sources */,
 				4CD7EB361D4C53AA000FA6B0 /* U2HttpClientImpl.cpp in Sources */,
-				4CD7EBAC1D4C53D8000FA6B0 /* linit.c in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
+				4CD7ECDD1D4C9CF3000FA6B0 /* U2GameBridge.cpp in Sources */,
 				4CD7EACE1D4C52CB000FA6B0 /* GameComponentManager.cpp in Sources */,
-				4CD7EB261D4C53AA000FA6B0 /* U2FileStream.cpp in Sources */,
+				4CD7ED111D4C9D66000FA6B0 /* ldump.c in Sources */,
+				4CD7ED291D4C9D66000FA6B0 /* lparser.c in Sources */,
 				4CA4AAA51CC0EB20007B5F39 /* U2Archive.cpp in Sources */,
+				4CD7ED691D4CAF99000FA6B0 /* U2PipedStream.cpp in Sources */,
+				4CD7ED671D4CAF99000FA6B0 /* U2MemoryStream.cpp in Sources */,
 				4CD7EAD11D4C52CB000FA6B0 /* GameSystems.cpp in Sources */,
 				4C1EE4CD1CD1C17D00CD21F1 /* U2AtomicScalar.cpp in Sources */,
 				4CD7EB411D4C53AA000FA6B0 /* U2WebSocketClient.cpp in Sources */,
-				4CD7EBAF1D4C53D8000FA6B0 /* lmathlib.c in Sources */,
 				4C68AC501C8930FC007BA5BD /* U2Notifier.cpp in Sources */,
 				4CA4AAB11CC0EB20007B5F39 /* U2StringUtil.cpp in Sources */,
-				4CD7EBAD1D4C53D8000FA6B0 /* liolib.c in Sources */,
 				4C68AC441C8930FC007BA5BD /* U2Controller.cpp in Sources */,
 				4CD7EB391D4C53AA000FA6B0 /* U2Prototype.cpp in Sources */,
+				4CD7ED191D4C9D66000FA6B0 /* liolib.c in Sources */,
 				4CBA3BDC1D05227B00255CC7 /* U2TaskLoop.cpp in Sources */,
+				4CD7EC841D4C5FD2000FA6B0 /* U2LuaScript.cpp in Sources */,
 				4CD7EAD41D4C52CB000FA6B0 /* GameHttpResponses.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				4C68AC5E1C8930FC007BA5BD /* U2Proxy.cpp in Sources */,
+				4CD7EC851D4C5FD2000FA6B0 /* U2PredefinedLuaTasks.cpp in Sources */,
+				4CD7ED5D1D4CAF99000FA6B0 /* U2CodeCvt.cpp in Sources */,
 				4C68AC661C8930FC007BA5BD /* U2ViewComponent.cpp in Sources */,
 				4CD7EAD81D4C52CB000FA6B0 /* GameWsClientImpl.cpp in Sources */,
 				4CA4AAA71CC0EB20007B5F39 /* U2Exception.cpp in Sources */,
 				4CD7EACF1D4C52CB000FA6B0 /* GameComponents.cpp in Sources */,
-				4CD7EBA31D4C53D8000FA6B0 /* lauxlib.c in Sources */,
-				4CA4AABF1CC0EB2F007B5F39 /* U2ZipStream.cpp in Sources */,
-				4CD7EBBE1D4C53D8000FA6B0 /* lvm.c in Sources */,
 				4C1EE4D91CD1C17D00CD21F1 /* U2StringInterface.cpp in Sources */,
 				4CD7EB301D4C53AA000FA6B0 /* U2Core.cpp in Sources */,
-				4C68AC1C1C8930FC007BA5BD /* U2DataFilterStream.cpp in Sources */,
-				4CD7EBA21D4C53D8000FA6B0 /* lapi.c in Sources */,
 				4CD7EB341D4C53AA000FA6B0 /* U2GameObjectSerialize.cpp in Sources */,
-				4CD7EBB71D4C53D8000FA6B0 /* lstring.c in Sources */,
 				4CD7EAC91D4C52CB000FA6B0 /* AppPrerequisites.cpp in Sources */,
+				4CD7ECD91D4C9CF3000FA6B0 /* U2ConstantBridge.cpp in Sources */,
 				4CD7EB311D4C53AA000FA6B0 /* U2DataPool.cpp in Sources */,
 				4C68AC541C8930FC007BA5BD /* U2PredefinedCommands.cpp in Sources */,
 				4C68AC521C8930FC007BA5BD /* U2Observer.cpp in Sources */,
-				4CD7EBBC1D4C53D8000FA6B0 /* lua.c in Sources */,
-				4CD7EBAA1D4C53D8000FA6B0 /* lfunc.c in Sources */,
 				4CD7EAD21D4C52CB000FA6B0 /* GameDataPool.cpp in Sources */,
-				4CD7EBB11D4C53D8000FA6B0 /* loadlib.c in Sources */,
 				4C68AC341C8930FC007BA5BD /* U2Object.cpp in Sources */,
 				4CD7EB401D4C53AA000FA6B0 /* U2Version.cpp in Sources */,
 				4CD7EAC81D4C52CB000FA6B0 /* AppLuaTasks.cpp in Sources */,
+				4CD7ED0F1D4C9D66000FA6B0 /* ldo.c in Sources */,
 				4CD7EB421D4C53AA000FA6B0 /* U2WebSocketClientImpl.cpp in Sources */,
+				4CD7ED651D4CAF99000FA6B0 /* U2FilterStream.cpp in Sources */,
 				4CD7EB3D1D4C53AA000FA6B0 /* U2SocketTask.cpp in Sources */,
-				4CD7EBB51D4C53D8000FA6B0 /* lparser.c in Sources */,
-				4CD7EBB81D4C53D8000FA6B0 /* lstrlib.c in Sources */,
+				4CD7ECDF1D4C9CF3000FA6B0 /* U2LuaScriptBridge.cpp in Sources */,
 				4C68AC3E1C8930FC007BA5BD /* U2Command.cpp in Sources */,
 				4CA4AAC71CC0EB44007B5F39 /* U2HomogenousQueue.cpp in Sources */,
+				4CD7ED611D4CAF99000FA6B0 /* U2FileHandleStream.cpp in Sources */,
+				4CD7ED3F1D4C9D66000FA6B0 /* print.c in Sources */,
 				4C68AC381C8930FC007BA5BD /* U2Prerequisites.cpp in Sources */,
 				4CD7EB3B1D4C53AA000FA6B0 /* U2Scheduler.cpp in Sources */,
+				4CD7ED3D1D4C9D66000FA6B0 /* lzio.c in Sources */,
 				4CD7EACD1D4C52CB000FA6B0 /* JoystickViewComponent.cpp in Sources */,
 				4C68AC6C1C8930FC007BA5BD /* U2CocosViewComponent.cpp in Sources */,
 				4CD7EBA01D4C53D8000FA6B0 /* json_writer.cpp in Sources */,
 				4C68AC5C1C8930FC007BA5BD /* U2PredefinedProxies.cpp in Sources */,
 				4CD7EAC71D4C52CB000FA6B0 /* AppFacade.cpp in Sources */,
+				4CD7ED351D4C9D66000FA6B0 /* ltm.c in Sources */,
+				4CD7ED091D4C9D66000FA6B0 /* lcode.c in Sources */,
 				4C1EE4D31CD1C17D00CD21F1 /* U2Resource.cpp in Sources */,
-				4C68AC1A1C8930FC007BA5BD /* U2CodeCvt.cpp in Sources */,
 				4C68AC621C8930FC007BA5BD /* U2TransStep.cpp in Sources */,
+				4CD7ED6D1D4CAF99000FA6B0 /* U2StringStream.cpp in Sources */,
 				4CD7EAD61D4C52CB000FA6B0 /* GameSendSocketTasks.cpp in Sources */,
-				4CD7EBC01D4C53D8000FA6B0 /* print.c in Sources */,
-				4CD7EB291D4C53AA000FA6B0 /* U2PipedStream.cpp in Sources */,
+				4CD7EC861D4C5FD2000FA6B0 /* U2Script.cpp in Sources */,
+				4CD7ED151D4C9D66000FA6B0 /* lgc.c in Sources */,
+				4CD7EC831D4C5FD2000FA6B0 /* U2Herald.cpp in Sources */,
 				4C68AC561C8930FC007BA5BD /* U2PredefinedFacade.cpp in Sources */,
 				4CA4AAB31CC0EB20007B5F39 /* U2ZipArchive.cpp in Sources */,
+				4CD7ED711D4CAF99000FA6B0 /* U2ZipStream.cpp in Sources */,
 				4C68AC361C8930FC007BA5BD /* U2PoolingObjectManager.cpp in Sources */,
+				4CD7ED171D4C9D66000FA6B0 /* linit.c in Sources */,
+				4CD7ECE11D4C9CF3000FA6B0 /* U2MvcBridge.cpp in Sources */,
 				4C1EE4D51CD1C17D00CD21F1 /* U2ResourceGroupManager.cpp in Sources */,
 				4CA4AAC91CC0EB44007B5F39 /* U2TaskGroup.cpp in Sources */,
-				4CD7EBA81D4C53D8000FA6B0 /* ldo.c in Sources */,
-				4C68AC201C8930FC007BA5BD /* U2FilterStream.cpp in Sources */,
+				4CD7ED311D4C9D66000FA6B0 /* ltable.c in Sources */,
 				4C68AC681C8930FC007BA5BD /* U2CocosFrameListenerCollection.cpp in Sources */,
+				4CD7ED251D4C9D66000FA6B0 /* lopcodes.c in Sources */,
 				4C68AC2C1C8930FC007BA5BD /* U2FactoryManager.cpp in Sources */,
 				4C68AC2E1C8930FC007BA5BD /* U2MemoryAllocatedObject.cpp in Sources */,
-				4CD7EBA91D4C53D8000FA6B0 /* ldump.c in Sources */,
-				4CD7EB2B1D4C53AA000FA6B0 /* U2StringStream.cpp in Sources */,
 				4C68AC3C1C8930FC007BA5BD /* U2TypedObjectManager.cpp in Sources */,
+				4CD7ED6F1D4CAF99000FA6B0 /* U2VariableMemStream.cpp in Sources */,
 				4C1EE4ED1CD2016400CD21F1 /* iosUtils.mm in Sources */,
 				4CD7EACB1D4C52CB000FA6B0 /* BattleCommands.cpp in Sources */,
-				4CD7EBB31D4C53D8000FA6B0 /* lopcodes.c in Sources */,
 				4CD7EAD01D4C52CB000FA6B0 /* GameEntityCollection.cpp in Sources */,
 				4CD7EB2E1D4C53AA000FA6B0 /* U2Component.cpp in Sources */,
+				4CD7ED3B1D4C9D66000FA6B0 /* lvm.c in Sources */,
 				4CD7EBC21D4C53D8000FA6B0 /* tinyxml.cpp in Sources */,
 				4CA4AAAD1CC0EB20007B5F39 /* U2LogManager.cpp in Sources */,
 				4C68AC5A1C8930FC007BA5BD /* U2PredefinedPrerequisites.cpp in Sources */,
-				4CD7EBB21D4C53D8000FA6B0 /* lobject.c in Sources */,
+				4CD7ED5F1D4CAF99000FA6B0 /* U2DataFilterStream.cpp in Sources */,
+				4CD7ED131D4C9D66000FA6B0 /* lfunc.c in Sources */,
+				4CD7ED631D4CAF99000FA6B0 /* U2FileStream.cpp in Sources */,
 				4CD7EBC41D4C53D8000FA6B0 /* tinyxmlparser.cpp in Sources */,
 				4CA4AAAB1CC0EB20007B5F39 /* U2Log.cpp in Sources */,
 				4CA4AAA91CC0EB20007B5F39 /* U2FileSystemArchive.cpp in Sources */,
 				4C68AC4C1C8930FC007BA5BD /* U2Model.cpp in Sources */,
+				4CD7ED1F1D4C9D66000FA6B0 /* lmem.c in Sources */,
 				4C68AC601C8930FC007BA5BD /* U2SimpleCommand.cpp in Sources */,
-				4CD7EBB01D4C53D8000FA6B0 /* lmem.c in Sources */,
-				4CD7EBBB1D4C53D8000FA6B0 /* ltm.c in Sources */,
-				4CD7EB281D4C53AA000FA6B0 /* U2MemoryStream.cpp in Sources */,
-				4CD7EBA41D4C53D8000FA6B0 /* lbaselib.c in Sources */,
-				4C68AC221C8930FC007BA5BD /* U2Stream.cpp in Sources */,
-				4CD7EBB91D4C53D8000FA6B0 /* ltable.c in Sources */,
 				4CD7EAC61D4C52CB000FA6B0 /* AppCommands.cpp in Sources */,
 				4CD7EAD71D4C52CB000FA6B0 /* GameUrlMaker.cpp in Sources */,
-				4CD7EBA71D4C53D8000FA6B0 /* ldebug.c in Sources */,
 				4CA4AAAF1CC0EB20007B5F39 /* U2SearchOps.cpp in Sources */,
-				4CD7EBB41D4C53D8000FA6B0 /* loslib.c in Sources */,
-				4C68AC1E1C8930FC007BA5BD /* U2FileStream.cpp in Sources */,
+				4CD7ED211D4C9D66000FA6B0 /* loadlib.c in Sources */,
 				4CD7EB3E1D4C53AA000FA6B0 /* U2System.cpp in Sources */,
-				4CA4AABB1CC0EB2F007B5F39 /* U2MemoryStream.cpp in Sources */,
 				4CD7EB3A1D4C53AA000FA6B0 /* U2Root.cpp in Sources */,
 				4C1EE4BA1CD1B74E00CD21F1 /* U2FileSystemLayer.mm in Sources */,
 				4CD7EB381D4C53AA000FA6B0 /* U2LogicClient.cpp in Sources */,
 				4CA4AACB1CC0EB44007B5F39 /* U2Worker.cpp in Sources */,
-				4CD7EBAB1D4C53D8000FA6B0 /* lgc.c in Sources */,
 				4CD7EBC11D4C53D8000FA6B0 /* tinystr.cpp in Sources */,
 				4C70EBBE1D162EBA003D7B3E /* U2ObjectCollection.cpp in Sources */,
-				4CD7EB2D1D4C53AA000FA6B0 /* U2ZipStream.cpp in Sources */,
-				4CD7EB2A1D4C53AA000FA6B0 /* U2Stream.cpp in Sources */,
 				4CD7EAD31D4C52CB000FA6B0 /* GameHttpRequests.cpp in Sources */,
 				4C68AC401C8930FC007BA5BD /* U2Context.cpp in Sources */,
+				4CD7ED271D4C9D66000FA6B0 /* loslib.c in Sources */,
 				4CD7EB491D4C53BF000FA6B0 /* U2CocosPrerequisites.cpp in Sources */,
-				4CD7EBAE1D4C53D8000FA6B0 /* llex.c in Sources */,
-				4CD7EBA61D4C53D8000FA6B0 /* ldblib.c in Sources */,
 				4CD7EB9D1D4C53D8000FA6B0 /* json_reader.cpp in Sources */,
-				4CD7EBBD1D4C53D8000FA6B0 /* lundump.c in Sources */,
-				4C68AC481C8930FC007BA5BD /* U2FrameListenerCollection.cpp in Sources */,
-				4CD7EB241D4C53AA000FA6B0 /* U2DataFilterStream.cpp in Sources */,
+				4CD7ED431D4CA8CA000FA6B0 /* U2Timer.cpp in Sources */,
 				4C1EE4CF1CD1C17D00CD21F1 /* U2Common.cpp in Sources */,
+				4CD7ED1D1D4C9D66000FA6B0 /* lmathlib.c in Sources */,
 				4CD7EACA1D4C52CB000FA6B0 /* AppViewComponents.cpp in Sources */,
 				4C462E8C1D17B99D001F3CC1 /* U2TNedObjectManager.cpp in Sources */,
+				4CD7ED0D1D4C9D66000FA6B0 /* ldebug.c in Sources */,
 				4CD7EBC31D4C53D8000FA6B0 /* tinyxmlerror.cpp in Sources */,
 				4C1EE4D71CD1C17D00CD21F1 /* U2ResourceManager.cpp in Sources */,
 				4C68AC2A1C8930FC007BA5BD /* U2AlignedAllocator.cpp in Sources */,
-				4CD7EB2C1D4C53AA000FA6B0 /* U2VariableMemStream.cpp in Sources */,
 				4CD7EB431D4C53AA000FA6B0 /* U2XmlSerialize.cpp in Sources */,
 				4C68AC581C8930FC007BA5BD /* U2PredefinedMediators.cpp in Sources */,
+				4CD7ED331D4C9D66000FA6B0 /* ltablib.c in Sources */,
 				4CBA3BDB1D05227B00255CC7 /* U2Task.cpp in Sources */,
+				4CD7ED071D4C9D66000FA6B0 /* lbaselib.c in Sources */,
 				4C68AC3A1C8930FC007BA5BD /* U2SimpleObjectManager.cpp in Sources */,
 				4CD7EAD51D4C52CB000FA6B0 /* GameRecvSocketTasks.cpp in Sources */,
 				4CD7EB9E1D4C53D8000FA6B0 /* json_value.cpp in Sources */,
 				4C68AC4E1C8930FC007BA5BD /* U2Notification.cpp in Sources */,
-				4CD7EB251D4C53AA000FA6B0 /* U2FileHandleStream.cpp in Sources */,
+				4CD7ED231D4C9D66000FA6B0 /* lobject.c in Sources */,
+				4CD7ED031D4C9D66000FA6B0 /* lapi.c in Sources */,
 				4C1EE4D11CD1C17D00CD21F1 /* U2ConfigFile.cpp in Sources */,
-				4CA4AAB91CC0EB2F007B5F39 /* U2FileHandleStream.cpp in Sources */,
-				4CD7EBA51D4C53D8000FA6B0 /* lcode.c in Sources */,
 				4CD7EB2F1D4C53AA000FA6B0 /* U2ComponentSerialize.cpp in Sources */,
-				4CD7EB271D4C53AA000FA6B0 /* U2FilterStream.cpp in Sources */,
 				4CD7EB3F1D4C53AA000FA6B0 /* U2UrlUtils.cpp in Sources */,
 				4CD7EB351D4C53AA000FA6B0 /* U2HttpClient.cpp in Sources */,
+				4CD7ED2B1D4C9D66000FA6B0 /* lstate.c in Sources */,
+				4CD7ED1B1D4C9D66000FA6B0 /* llex.c in Sources */,
 				4CD7EB321D4C53AA000FA6B0 /* U2FrameListenerCollection.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
-				4CD7EBB61D4C53D8000FA6B0 /* lstate.c in Sources */,
-				4CA4AABD1CC0EB2F007B5F39 /* U2PipedStream.cpp in Sources */,
+				4CD7ED0B1D4C9D66000FA6B0 /* ldblib.c in Sources */,
+				4CD7ED6B1D4CAF99000FA6B0 /* U2Stream.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1818,70 +1965,164 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C68AC231C8930FC007BA5BD /* U2Stream.cpp in Sources */,
+				4C1EE4BF1CD1B74E00CD21F1 /* U2FileSystemLayer.cpp in Sources */,
+				4CD7ECB31D4C61C1000FA6B0 /* U2Timer.cpp in Sources */,
+				4CA4AAC61CC0EB44007B5F39 /* U2GenericThreadPool.cpp in Sources */,
+				4CD7ED081D4C9D66000FA6B0 /* lbaselib.c in Sources */,
+				4CD7ED301D4C9D66000FA6B0 /* lstrlib.c in Sources */,
+				4CA4AAC81CC0EB44007B5F39 /* U2HomogenousQueue.cpp in Sources */,
+				4CA4AACA1CC0EB44007B5F39 /* U2TaskGroup.cpp in Sources */,
+				4CA4AACC1CC0EB44007B5F39 /* U2Worker.cpp in Sources */,
 				4C68AC2B1C8930FC007BA5BD /* U2AlignedAllocator.cpp in Sources */,
-				4C1EE4D01CD1C17D00CD21F1 /* U2Common.cpp in Sources */,
-				4C68AC511C8930FC007BA5BD /* U2Notifier.cpp in Sources */,
-				4C1EE4D61CD1C17D00CD21F1 /* U2ResourceGroupManager.cpp in Sources */,
-				4C68AC331C8930FC007BA5BD /* U2NameGenerator.cpp in Sources */,
-				4C68AC3D1C8930FC007BA5BD /* U2TypedObjectManager.cpp in Sources */,
-				4C68AC2D1C8930FC007BA5BD /* U2FactoryManager.cpp in Sources */,
-				4C68AC311C8930FC007BA5BD /* U2MemoryTracker.cpp in Sources */,
-				4C68AC4F1C8930FC007BA5BD /* U2Notification.cpp in Sources */,
-				4C68AC3B1C8930FC007BA5BD /* U2SimpleObjectManager.cpp in Sources */,
-				4C68AC5B1C8930FC007BA5BD /* U2PredefinedPrerequisites.cpp in Sources */,
-				4CA4AAAE1CC0EB20007B5F39 /* U2LogManager.cpp in Sources */,
-				4C68AC571C8930FC007BA5BD /* U2PredefinedFacade.cpp in Sources */,
+				4CA4AAA61CC0EB20007B5F39 /* U2Archive.cpp in Sources */,
 				4C1EE4CE1CD1C17D00CD21F1 /* U2AtomicScalar.cpp in Sources */,
+				4C1EE4D01CD1C17D00CD21F1 /* U2Common.cpp in Sources */,
+				4CD7EC9B1D4C61C1000FA6B0 /* U2Component.cpp in Sources */,
+				4CD7ED1E1D4C9D66000FA6B0 /* lmathlib.c in Sources */,
+				4CD7ECDC1D4C9CF3000FA6B0 /* U2DataModelBridge.cpp in Sources */,
+				4CD7EC9C1D4C61C1000FA6B0 /* U2ComponentSerialize.cpp in Sources */,
+				4CD7ED221D4C9D66000FA6B0 /* loadlib.c in Sources */,
+				4CD7ED161D4C9D66000FA6B0 /* lgc.c in Sources */,
+				4CD7ED0E1D4C9D66000FA6B0 /* ldebug.c in Sources */,
+				4C1EE4D21CD1C17D00CD21F1 /* U2ConfigFile.cpp in Sources */,
+				4CD7EC9D1D4C61C1000FA6B0 /* U2Core.cpp in Sources */,
+				4CD7EC9E1D4C61C1000FA6B0 /* U2DataPool.cpp in Sources */,
+				4CA4AAA81CC0EB20007B5F39 /* U2Exception.cpp in Sources */,
+				4C68AC2D1C8930FC007BA5BD /* U2FactoryManager.cpp in Sources */,
+				4CA4AAAA1CC0EB20007B5F39 /* U2FileSystemArchive.cpp in Sources */,
+				4CD7EC9F1D4C61C1000FA6B0 /* U2FrameListenerCollection.cpp in Sources */,
+				4CD7ECA01D4C61C1000FA6B0 /* U2HttpClient.cpp in Sources */,
+				4CD7ECA11D4C61C1000FA6B0 /* U2HttpClientImpl.cpp in Sources */,
+				4CD7ECA21D4C61C1000FA6B0 /* U2HttpDownloadClient.cpp in Sources */,
+				4CD7ED2A1D4C9D66000FA6B0 /* lparser.c in Sources */,
+				4CD7ED6E1D4CAF99000FA6B0 /* U2StringStream.cpp in Sources */,
+				4CA4AAAC1CC0EB20007B5F39 /* U2Log.cpp in Sources */,
+				4CD7ECA31D4C61C1000FA6B0 /* U2LogicClient.cpp in Sources */,
+				4CA4AAAE1CC0EB20007B5F39 /* U2LogManager.cpp in Sources */,
+				4C68AC2F1C8930FC007BA5BD /* U2MemoryAllocatedObject.cpp in Sources */,
+				4CD7ED321D4C9D66000FA6B0 /* ltable.c in Sources */,
+				4C68AC311C8930FC007BA5BD /* U2MemoryTracker.cpp in Sources */,
+				4C68AC331C8930FC007BA5BD /* U2NameGenerator.cpp in Sources */,
+				4CD7ED361D4C9D66000FA6B0 /* ltm.c in Sources */,
+				4C68AC351C8930FC007BA5BD /* U2Object.cpp in Sources */,
+				4CD7ECB01D4C61C1000FA6B0 /* U2ObjectCollection.cpp in Sources */,
+				4CD7ED2E1D4C9D66000FA6B0 /* lstring.c in Sources */,
+				4CD7ED661D4CAF99000FA6B0 /* U2FilterStream.cpp in Sources */,
+				4C68AC371C8930FC007BA5BD /* U2PoolingObjectManager.cpp in Sources */,
+				4CD7ED141D4C9D66000FA6B0 /* lfunc.c in Sources */,
+				4CD7ED6C1D4CAF99000FA6B0 /* U2Stream.cpp in Sources */,
+				4C68AC391C8930FC007BA5BD /* U2Prerequisites.cpp in Sources */,
+				4CD7ECA41D4C61C1000FA6B0 /* U2Prototype.cpp in Sources */,
+				4C1EE4D41CD1C17D00CD21F1 /* U2Resource.cpp in Sources */,
+				4C1EE4D61CD1C17D00CD21F1 /* U2ResourceGroupManager.cpp in Sources */,
+				4CD7ED6A1D4CAF99000FA6B0 /* U2PipedStream.cpp in Sources */,
+				4C1EE4D81CD1C17D00CD21F1 /* U2ResourceManager.cpp in Sources */,
+				4CD7ECA51D4C61C1000FA6B0 /* U2Root.cpp in Sources */,
+				4CD7ECA61D4C61C1000FA6B0 /* U2Scheduler.cpp in Sources */,
+				4CD7ED3E1D4C9D66000FA6B0 /* lzio.c in Sources */,
+				4CA4AAB01CC0EB20007B5F39 /* U2SearchOps.cpp in Sources */,
+				4C68AC3B1C8930FC007BA5BD /* U2SimpleObjectManager.cpp in Sources */,
+				4CD7ED121D4C9D66000FA6B0 /* ldump.c in Sources */,
+				4CD7ED1A1D4C9D66000FA6B0 /* liolib.c in Sources */,
+				4CD7ECA71D4C61C1000FA6B0 /* U2SnapshotDataPool.cpp in Sources */,
+				4CD7ECA81D4C61C1000FA6B0 /* U2SocketTask.cpp in Sources */,
+				4C1EE4DA1CD1C17D00CD21F1 /* U2StringInterface.cpp in Sources */,
+				4CA4AAB21CC0EB20007B5F39 /* U2StringUtil.cpp in Sources */,
+				4CD7ECA91D4C61C1000FA6B0 /* U2System.cpp in Sources */,
+				4CD7ECB11D4C61C1000FA6B0 /* U2Task.cpp in Sources */,
+				4CD7ECB21D4C61C1000FA6B0 /* U2TaskLoop.cpp in Sources */,
+				4CD7ECAF1D4C61C1000FA6B0 /* U2TNedObjectManager.cpp in Sources */,
+				4CD7ED101D4C9D66000FA6B0 /* ldo.c in Sources */,
+				4C68AC3D1C8930FC007BA5BD /* U2TypedObjectManager.cpp in Sources */,
+				4CD7ECAA1D4C61C1000FA6B0 /* U2UrlUtils.cpp in Sources */,
+				4CD7ED401D4C9D66000FA6B0 /* print.c in Sources */,
+				4CD7ECAB1D4C61C1000FA6B0 /* U2Version.cpp in Sources */,
+				4CD7ED641D4CAF99000FA6B0 /* U2FileStream.cpp in Sources */,
+				4CD7ECAC1D4C61C1000FA6B0 /* U2WebSocketClient.cpp in Sources */,
+				4CD7ECAD1D4C61C1000FA6B0 /* U2WebSocketClientImpl.cpp in Sources */,
+				4CD7ECAE1D4C61C1000FA6B0 /* U2XmlSerialize.cpp in Sources */,
+				4CA4AAB41CC0EB20007B5F39 /* U2ZipArchive.cpp in Sources */,
+				4CD7ED3A1D4C9D66000FA6B0 /* lundump.c in Sources */,
+				4CD7ED3C1D4C9D66000FA6B0 /* lvm.c in Sources */,
+				4CD7ED341D4C9D66000FA6B0 /* ltablib.c in Sources */,
+				4CD7ED041D4C9D66000FA6B0 /* lapi.c in Sources */,
+				4CD7ECBF1D4C61D0000FA6B0 /* json_reader.cpp in Sources */,
+				4CD7ECC01D4C61D0000FA6B0 /* json_value.cpp in Sources */,
+				4CD7ECC11D4C61D0000FA6B0 /* json_writer.cpp in Sources */,
+				4CD7ECC21D4C61D0000FA6B0 /* tinystr.cpp in Sources */,
+				4CD7ECDA1D4C9CF3000FA6B0 /* U2ConstantBridge.cpp in Sources */,
+				4CD7ECC31D4C61D0000FA6B0 /* tinyxml.cpp in Sources */,
+				4CD7ED201D4C9D66000FA6B0 /* lmem.c in Sources */,
+				4CD7ECC41D4C61D0000FA6B0 /* tinyxmlerror.cpp in Sources */,
+				4CD7ED1C1D4C9D66000FA6B0 /* llex.c in Sources */,
+				4CD7ECC51D4C61D0000FA6B0 /* tinyxmlparser.cpp in Sources */,
+				4CD7ECB41D4C61C1000FA6B0 /* U2Herald.cpp in Sources */,
+				4CD7ECB51D4C61C1000FA6B0 /* U2LuaScript.cpp in Sources */,
+				4CD7ECB61D4C61C1000FA6B0 /* U2PredefinedLuaTasks.cpp in Sources */,
+				4CD7ECB71D4C61C1000FA6B0 /* U2Script.cpp in Sources */,
+				4CD7ECB81D4C61C1000FA6B0 /* U2CocosLuaScript.cpp in Sources */,
+				4CD7ECB91D4C61C1000FA6B0 /* U2CocosPrerequisites.cpp in Sources */,
+				4CD7ECBA1D4C61C1000FA6B0 /* AppCommands.cpp in Sources */,
+				4CD7ECBB1D4C61C1000FA6B0 /* AppFacade.cpp in Sources */,
+				4CD7ECBC1D4C61C1000FA6B0 /* AppLuaTasks.cpp in Sources */,
+				4CD7ED0C1D4C9D66000FA6B0 /* ldblib.c in Sources */,
+				4CD7ECBD1D4C61C1000FA6B0 /* AppPrerequisites.cpp in Sources */,
+				4CD7ECBE1D4C61C1000FA6B0 /* AppViewComponents.cpp in Sources */,
+				4CD7EC901D4C6172000FA6B0 /* U2GameObject.cpp in Sources */,
+				4CD7EC911D4C6172000FA6B0 /* U2GameObjectSerialize.cpp in Sources */,
+				4CD7ED241D4C9D66000FA6B0 /* lobject.c in Sources */,
+				4CD7EC921D4C6172000FA6B0 /* GameDataPool.cpp in Sources */,
+				4CD7ED2C1D4C9D66000FA6B0 /* lstate.c in Sources */,
+				4CD7EC931D4C6172000FA6B0 /* GameHttpRequests.cpp in Sources */,
+				4CD7EC941D4C6172000FA6B0 /* GameHttpResponses.cpp in Sources */,
+				4CD7ED681D4CAF99000FA6B0 /* U2MemoryStream.cpp in Sources */,
+				4CD7EC951D4C6172000FA6B0 /* GameRecvSocketTasks.cpp in Sources */,
+				4CD7EC961D4C6172000FA6B0 /* GameSendSocketTasks.cpp in Sources */,
+				4CD7EC971D4C6172000FA6B0 /* GameUrlMaker.cpp in Sources */,
+				4CD7EC981D4C6172000FA6B0 /* GameWsClientImpl.cpp in Sources */,
+				4CD7EC8B1D4C612E000FA6B0 /* BattleCommands.cpp in Sources */,
+				4CD7EC8C1D4C612E000FA6B0 /* BattleViewComponents.cpp in Sources */,
+				4CD7EC8D1D4C612E000FA6B0 /* JoystickViewComponent.cpp in Sources */,
+				4CD7EC881D4C611F000FA6B0 /* GameComponentManager.cpp in Sources */,
+				4CD7EC891D4C611F000FA6B0 /* GameComponents.cpp in Sources */,
+				4CD7ED181D4C9D66000FA6B0 /* linit.c in Sources */,
+				4CD7EC8A1D4C611F000FA6B0 /* GameEntityCollection.cpp in Sources */,
+				4CD7EC871D4C60EF000FA6B0 /* GameSystems.cpp in Sources */,
+				4C68AC511C8930FC007BA5BD /* U2Notifier.cpp in Sources */,
+				4CD7ED0A1D4C9D66000FA6B0 /* lcode.c in Sources */,
+				4C68AC4F1C8930FC007BA5BD /* U2Notification.cpp in Sources */,
+				4CD7ED701D4CAF99000FA6B0 /* U2VariableMemStream.cpp in Sources */,
+				4CD7ECDE1D4C9CF3000FA6B0 /* U2GameBridge.cpp in Sources */,
+				4C68AC5B1C8930FC007BA5BD /* U2PredefinedPrerequisites.cpp in Sources */,
+				4C68AC571C8930FC007BA5BD /* U2PredefinedFacade.cpp in Sources */,
 				4C68AC591C8930FC007BA5BD /* U2PredefinedMediators.cpp in Sources */,
 				4C68AC651C8930FC007BA5BD /* U2View.cpp in Sources */,
+				4CD7ED721D4CAF99000FA6B0 /* U2ZipStream.cpp in Sources */,
 				4C68AC631C8930FC007BA5BD /* U2TransStep.cpp in Sources */,
-				4CA4AABE1CC0EB2F007B5F39 /* U2PipedStream.cpp in Sources */,
-				4CA4AAA81CC0EB20007B5F39 /* U2Exception.cpp in Sources */,
-				4C1EE4DA1CD1C17D00CD21F1 /* U2StringInterface.cpp in Sources */,
-				4C68AC391C8930FC007BA5BD /* U2Prerequisites.cpp in Sources */,
-				4CA4AABC1CC0EB2F007B5F39 /* U2MemoryStream.cpp in Sources */,
-				4CA4AAAC1CC0EB20007B5F39 /* U2Log.cpp in Sources */,
-				4C68AC2F1C8930FC007BA5BD /* U2MemoryAllocatedObject.cpp in Sources */,
-				4C1EE4BF1CD1B74E00CD21F1 /* U2FileSystemLayer.cpp in Sources */,
 				46880B8919C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				4C68AC5F1C8930FC007BA5BD /* U2Proxy.cpp in Sources */,
 				4C68AC671C8930FC007BA5BD /* U2ViewComponent.cpp in Sources */,
+				4CD7ECE01D4C9CF3000FA6B0 /* U2LuaScriptBridge.cpp in Sources */,
+				4CD7ED061D4C9D66000FA6B0 /* lauxlib.c in Sources */,
+				4CD7ECE21D4C9CF3000FA6B0 /* U2MvcBridge.cpp in Sources */,
 				4C1EE4BD1CD1B74E00CD21F1 /* macUtils.mm in Sources */,
 				4C68AC3F1C8930FC007BA5BD /* U2Command.cpp in Sources */,
+				4CD7ED601D4CAF99000FA6B0 /* U2DataFilterStream.cpp in Sources */,
 				4C68AC6D1C8930FC007BA5BD /* U2CocosViewComponent.cpp in Sources */,
 				4C68AC4D1C8930FC007BA5BD /* U2Model.cpp in Sources */,
 				4C68AC451C8930FC007BA5BD /* U2Controller.cpp in Sources */,
+				4CD7ED621D4CAF99000FA6B0 /* U2FileHandleStream.cpp in Sources */,
 				4C68AC411C8930FC007BA5BD /* U2Context.cpp in Sources */,
 				4C68AC471C8930FC007BA5BD /* U2Facade.cpp in Sources */,
-				4C1EE4D81CD1C17D00CD21F1 /* U2ResourceManager.cpp in Sources */,
-				4CA4AAAA1CC0EB20007B5F39 /* U2FileSystemArchive.cpp in Sources */,
-				4CA4AAB01CC0EB20007B5F39 /* U2SearchOps.cpp in Sources */,
 				4C68AC431C8930FC007BA5BD /* U2ContextQueue.cpp in Sources */,
-				4C68AC1F1C8930FC007BA5BD /* U2FileStream.cpp in Sources */,
-				4CA4AAB21CC0EB20007B5F39 /* U2StringUtil.cpp in Sources */,
-				4C68AC211C8930FC007BA5BD /* U2FilterStream.cpp in Sources */,
-				4C68AC371C8930FC007BA5BD /* U2PoolingObjectManager.cpp in Sources */,
 				4C68AC531C8930FC007BA5BD /* U2Observer.cpp in Sources */,
-				4CA4AAA61CC0EB20007B5F39 /* U2Archive.cpp in Sources */,
 				4C68AC551C8930FC007BA5BD /* U2PredefinedCommands.cpp in Sources */,
+				4CD7ED281D4C9D66000FA6B0 /* loslib.c in Sources */,
 				4C68AC691C8930FC007BA5BD /* U2CocosFrameListenerCollection.cpp in Sources */,
-				4CA4AAC01CC0EB2F007B5F39 /* U2ZipStream.cpp in Sources */,
-				4C68AC491C8930FC007BA5BD /* U2FrameListenerCollection.cpp in Sources */,
-				4CA4AABA1CC0EB2F007B5F39 /* U2FileHandleStream.cpp in Sources */,
-				4CA4AACA1CC0EB44007B5F39 /* U2TaskGroup.cpp in Sources */,
-				4C1EE4D21CD1C17D00CD21F1 /* U2ConfigFile.cpp in Sources */,
+				4CD7ED5E1D4CAF99000FA6B0 /* U2CodeCvt.cpp in Sources */,
 				4C68AC611C8930FC007BA5BD /* U2SimpleCommand.cpp in Sources */,
-				4C1EE4D41CD1C17D00CD21F1 /* U2Resource.cpp in Sources */,
-				4CA4AAB41CC0EB20007B5F39 /* U2ZipArchive.cpp in Sources */,
-				4C68AC4B1C8930FC007BA5BD /* U2Mediator.cpp in Sources */,
-				4CA4AACC1CC0EB44007B5F39 /* U2Worker.cpp in Sources */,
-				4C68AC351C8930FC007BA5BD /* U2Object.cpp in Sources */,
 				503AE10517EB98FF00D1A890 /* main.cpp in Sources */,
-				4C68AC1D1C8930FC007BA5BD /* U2DataFilterStream.cpp in Sources */,
-				4C68AC1B1C8930FC007BA5BD /* U2CodeCvt.cpp in Sources */,
-				4CA4AAC61CC0EB44007B5F39 /* U2GenericThreadPool.cpp in Sources */,
-				4CA4AAC81CC0EB44007B5F39 /* U2HomogenousQueue.cpp in Sources */,
+				4CD7ED261D4C9D66000FA6B0 /* lopcodes.c in Sources */,
 				4C68AC5D1C8930FC007BA5BD /* U2PredefinedProxies.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1921,7 +2162,6 @@
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
 					"$(SRCROOT)/../cocos2d/cocos/platform/ios",
 					"$(SRCROOT)/../cocos2d/cocos/platform/ios/Simulation",
 					"$(SRCROOT)/../Classes",
@@ -1934,14 +2174,19 @@
 					"$(SRCROOT)/../engine/include/mvc",
 					"$(SRCROOT)/../gamebase",
 					"$(SRCROOT)/../../Dependenices/include",
+					"$(inherited)",
 				);
 				INFOPLIST_FILE = ios/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../../Dependenices/libs/zzip/iOS/Release$(EFFECTIVE_PLATFORM_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(SRCROOT)/../../Dependenices/libs/zzip/iOS/Release$(EFFECTIVE_PLATFORM_NAME)",
+					"$(SRCROOT)/../../Dependenices/libs/curl/iOS/Release$(EFFECTIVE_PLATFORM_NAME)",
+				);
 				OTHER_LDFLAGS = (
 					"$(_COCOS_LIB_IOS_BEGIN)",
 					"$(_COCOS_LIB_IOS_END)",
 					"-lz",
+					"-lcurl",
 				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1967,7 +2212,6 @@
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
 					"$(SRCROOT)/../cocos2d/cocos/platform/ios",
 					"$(SRCROOT)/../cocos2d/cocos/platform/ios/Simulation",
 					"$(SRCROOT)/../Classes",
@@ -1980,14 +2224,19 @@
 					"$(SRCROOT)/../engine/include/mvc",
 					"$(SRCROOT)/../gamebase",
 					"$(SRCROOT)/../../Dependenices/include",
+					"$(inherited)",
 				);
 				INFOPLIST_FILE = ios/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../../Dependenices/libs/zzip/iOS/Release$(EFFECTIVE_PLATFORM_NAME)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(SRCROOT)/../../Dependenices/libs/zzip/iOS/Release$(EFFECTIVE_PLATFORM_NAME)",
+					"$(SRCROOT)/../../Dependenices/libs/curl/iOS/Release$(EFFECTIVE_PLATFORM_NAME)",
+				);
 				OTHER_LDFLAGS = (
 					"$(_COCOS_LIB_IOS_BEGIN)",
 					"$(_COCOS_LIB_IOS_END)",
 					"-lz",
+					"-lcurl",
 				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2014,7 +2263,6 @@
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
 					"$(SRCROOT)/../cocos2d/cocos/platform/mac",
 					"$(SRCROOT)/../cocos2d/external/glfw3/include/mac",
 					"$(SRCROOT)/../Classes",
@@ -2027,9 +2275,13 @@
 					"$(SRCROOT)/../engine/include/mvc",
 					"$(SRCROOT)/../gamebase",
 					"$(SRCROOT)/../../Dependenices/include",
+					"$(inherited)",
 				);
 				INFOPLIST_FILE = mac/Info.plist;
-				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../../Dependenices/libs/zzip/OSX";
+				LIBRARY_SEARCH_PATHS = (
+					"$(SRCROOT)/../../Dependenices/libs/zzip/OSX",
+					"$(SRCROOT)/../../Dependenices/libs/curl/OSX",
+				);
 				OTHER_LDFLAGS = (
 					"$(_COCOS_LIB_MAC_BEGIN)",
 					"$(_COCOS_LIB_MAC_END)",
@@ -2054,7 +2306,6 @@
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
 					"$(SRCROOT)/../cocos2d/cocos/platform/mac",
 					"$(SRCROOT)/../cocos2d/external/glfw3/include/mac",
 					"$(SRCROOT)/../Classes",
@@ -2067,9 +2318,13 @@
 					"$(SRCROOT)/../engine/include/mvc",
 					"$(SRCROOT)/../gamebase",
 					"$(SRCROOT)/../../Dependenices/include",
+					"$(inherited)",
 				);
 				INFOPLIST_FILE = mac/Info.plist;
-				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../../Dependenices/libs/zzip/OSX";
+				LIBRARY_SEARCH_PATHS = (
+					"$(SRCROOT)/../../Dependenices/libs/zzip/OSX",
+					"$(SRCROOT)/../../Dependenices/libs/curl/OSX",
+				);
 				OTHER_LDFLAGS = (
 					"$(_COCOS_LIB_MAC_BEGIN)",
 					"$(_COCOS_LIB_MAC_END)",

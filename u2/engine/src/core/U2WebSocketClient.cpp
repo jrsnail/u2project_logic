@@ -68,15 +68,13 @@ void WsTaskLoop::postTaskAndReply(Task* task, Task* reply)
 //-----------------------------------------------------------------------
 void WsTaskLoop::run()
 {
+    TaskLoop::run();
+    
     U2_LOCK_MUTEX(m_KeepRunningMutex);
     m_bKeepRunning = true;
 
     m_thread = std::move(std::thread(std::bind(&WsTaskLoop::_runInternal, this)));
     m_thread.detach();
-
-    // need sub thread sleep a few milliseconds to call 
-    // TaskLoopListener::postRunCurrentTaskLoop firstly.
-    TaskLoop::run();
 }
 //-----------------------------------------------------------------------
 void WsTaskLoop::quit()
@@ -111,9 +109,8 @@ String WsTaskLoop::getThreadId()
 void WsTaskLoop::_runInternal()
 {
     m_threadId = std::this_thread::get_id();
-    // sleep a few milliseconds for TaskLoopListener::postRunCurrentTaskLoop
-    // can run first.
-    U2_THREAD_SLEEP(100);
+    
+    _postRunCurrentTaskLoop();
 
     _connect();
 
