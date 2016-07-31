@@ -79,12 +79,12 @@ ResourcePtr ResourceManager::load(const String& name,
 //-----------------------------------------------------------------------
 void ResourceManager::addImpl( ResourcePtr& res )
 {
-        U2_LOCK_AUTO_MUTEX;
+    U2_LOCK_AUTO_MUTEX;
 
-        std::pair<ResourceMap::iterator, bool> result;
+    std::pair<ResourceMap::iterator, bool> result;
     if(ResourceGroupManager::getSingleton().isResourceGroupInGlobalPool(res->getGroup()))
     {
-        result = mResources.insert( ResourceMap::value_type( res->getName(), res ) );
+        result = mResources.insert( ResourceMap::value_type( res->getResourceName(), res ) );
     }
     else
     {
@@ -97,7 +97,7 @@ void ResourceManager::addImpl( ResourcePtr& res )
             mResourcesWithGroup.insert( ResourceWithGroupMap::value_type( res->getGroup(), dummy ) );
             itGroup = mResourcesWithGroup.find(res->getGroup());
         }
-        result = itGroup->second.insert( ResourceMap::value_type( res->getName(), res ) );
+        result = itGroup->second.insert( ResourceMap::value_type( res->getResourceName(), res ) );
 
     }
 
@@ -112,16 +112,16 @@ void ResourceManager::addImpl( ResourcePtr& res )
                 std::pair<ResourceMap::iterator, bool> insertResult;
                 if(ResourceGroupManager::getSingleton().isResourceGroupInGlobalPool(res->getGroup()))
                 {
-                    insertResult = mResources.insert( ResourceMap::value_type( res->getName(), res ) );
+                    insertResult = mResources.insert( ResourceMap::value_type( res->getResourceName(), res ) );
                 }
                 else
                 {
                     ResourceWithGroupMap::iterator itGroup = mResourcesWithGroup.find(res->getGroup());
-                    insertResult = itGroup->second.insert( ResourceMap::value_type( res->getName(), res ) );
+                    insertResult = itGroup->second.insert( ResourceMap::value_type( res->getResourceName(), res ) );
                 }
                 if (!insertResult.second)
                 {
-                    U2_EXCEPT(Exception::ERR_DUPLICATE_ITEM, "Resource with the name " + res->getName() + 
+                    U2_EXCEPT(Exception::ERR_DUPLICATE_ITEM, "Resource with the name " + res->getResourceName() + 
                         " already exists.", "ResourceManager::add");
                 }
 
@@ -156,7 +156,7 @@ void ResourceManager::removeImpl( ResourcePtr& res )
 
     if(ResourceGroupManager::getSingleton().isResourceGroupInGlobalPool(res->getGroup()))
     {
-        ResourceMap::iterator nameIt = mResources.find(res->getName());
+        ResourceMap::iterator nameIt = mResources.find(res->getResourceName());
         if (nameIt != mResources.end())
         {
             mResources.erase(nameIt);
@@ -167,7 +167,7 @@ void ResourceManager::removeImpl( ResourcePtr& res )
         ResourceWithGroupMap::iterator groupIt = mResourcesWithGroup.find(res->getGroup());
         if (groupIt != mResourcesWithGroup.end())
         {
-            ResourceMap::iterator nameIt = groupIt->second.find(res->getName());
+            ResourceMap::iterator nameIt = groupIt->second.find(res->getResourceName());
             if (nameIt != groupIt->second.end())
             {
                 groupIt->second.erase(nameIt);

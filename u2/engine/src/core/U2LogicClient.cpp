@@ -12,8 +12,6 @@ U2EG_NAMESPACE_USING
 //-----------------------------------------------------------------------
 LogicTaskLoop::LogicTaskLoop(const String& type, const String& name)
     : TaskLoop(type, name)
-    , m_bKeepRunning(true)
-    , m_bPausing(false)
 {
 }
 //-----------------------------------------------------------------------
@@ -33,9 +31,6 @@ void LogicTaskLoop::postTaskAndReply(Task* task, Task* reply)
 //-----------------------------------------------------------------------
 void LogicTaskLoop::run()
 {
-    U2_LOCK_MUTEX(m_KeepRunningMutex);
-    m_bKeepRunning = true;
-
     FrameListenerCollection::getSingleton().addFrameListener(this
         , std::bind(&LogicTaskLoop::_onUpdate, this, std::placeholders::_1));
 
@@ -44,23 +39,16 @@ void LogicTaskLoop::run()
 //-----------------------------------------------------------------------
 void LogicTaskLoop::quit()
 {
-    U2_LOCK_MUTEX(m_KeepRunningMutex);
-    m_bKeepRunning = false;
-
     TaskLoop::quit();
 }
 //-----------------------------------------------------------------------
 void LogicTaskLoop::pause()
 {
-    U2_LOCK_MUTEX(m_PausingMutex);
-    m_bPausing = true;
     TaskLoop::pause();
 }
 //-----------------------------------------------------------------------
 void LogicTaskLoop::resume()
 {
-    U2_LOCK_MUTEX(m_PausingMutex);
-    m_bPausing = false;
     TaskLoop::resume();
 }
 //-----------------------------------------------------------------------
@@ -73,24 +61,6 @@ String LogicTaskLoop::getThreadId()
 //-----------------------------------------------------------------------
 void LogicTaskLoop::_onUpdate(float dt)
 {
-    {
-        U2_LOCK_MUTEX(m_KeepRunningMutex);
-        if (!m_bKeepRunning)
-        {
-            FrameListenerCollection::getSingleton().removeFrameListener(this);
-            return;
-        }
-    }
-
-    {
-        U2_LOCK_MUTEX(m_PausingMutex);
-        if (m_bPausing)
-        {
-            U2_THREAD_SLEEP(1000);
-            return;
-        }
-    }
-
     if (m_WorkingQueue.empty())
     {
         bool bEmpty = true;
@@ -106,29 +76,10 @@ void LogicTaskLoop::_onUpdate(float dt)
                 }
             }
         }
-        if (bEmpty)
-        {
-            U2_THREAD_SLEEP(1000);
-        }
     }
 
     while (!m_WorkingQueue.empty())
     {
-        {
-            U2_LOCK_MUTEX(m_KeepRunningMutex);
-            if (!m_bKeepRunning)
-                break;
-        }
-
-        {
-            U2_LOCK_MUTEX(m_PausingMutex);
-            if (m_bPausing)
-            {
-                U2_THREAD_SLEEP(1000);
-                continue;
-            }
-        }
-
         Task* pTask = m_WorkingQueue.front();
         if (pTask == nullptr)
         {

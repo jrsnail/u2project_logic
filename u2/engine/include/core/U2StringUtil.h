@@ -3,6 +3,7 @@
 
 #include "U2Prerequisites.h"
 #include "U2STLRedefined.h"
+#include "cocos2d.h"
 #include "U2HeaderPrefix.h"
 
 // If we're using the GCC 3.1 C++ Std lib
@@ -279,6 +280,13 @@ public:
 	or "off".
 	*/
 	static bool parseBool(const String& val, bool defaultValue = 0);
+
+    /** Parses a Vector2 out of a String.
+    @remarks
+    Format is "x y" ie. 2 Real components, space delimited. Failure to parse returns
+    Vector2::ZERO.
+    */
+    static cocos2d::Vec2 parseVector2(const String& val, const cocos2d::Vec2& defaultValue = cocos2d::Vec2::ZERO);
 
 	/** Checks the String is a valid number value. */
 	static bool isNumber(const String& val);

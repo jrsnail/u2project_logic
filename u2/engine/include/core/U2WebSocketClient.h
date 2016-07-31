@@ -22,47 +22,7 @@ U2EG_NAMESPACE_BEGIN
 class Scheduler;
 
 
-class WsCloseRST : public RecvSocketTask
-{
-public:
-    WsCloseRST(const String& type, const String& name);
-    virtual ~WsCloseRST();
-
-    virtual void run() override;
-};
-
-
-class WsErrorRST : public RecvSocketTask
-{
-public:
-    WsErrorRST(const String& type, const String& name);
-    virtual ~WsErrorRST();
-
-    virtual void run() override;
-};
-
-
-class WsOpenRST : public RecvSocketTask
-{
-public:
-    WsOpenRST(const String& type, const String& name);
-    virtual ~WsOpenRST();
-
-    virtual void run() override;
-};
-
-
-class WsHeartBeatSST : public SendSocketTask
-{
-public:
-    WsHeartBeatSST(const String& type, const String& name);
-    virtual ~WsHeartBeatSST();
-
-    virtual void run() override;
-};
-
-
-
+// test url: "ws://echo.websocket.org"
 class _U2Export WsTaskLoop : public TaskLoop
 {
 public:
@@ -100,6 +60,11 @@ public:
     u2uint64 getHeartBeatPeriod() const;
 
     void addProtocol(const String& protocol);
+
+    void setWsCloseRecvTask(const String& type);
+    void setWsErrorRecvTask(const String& type);
+    void setWsOpenRecvTask(const String& type);
+    void setWsHeartBeatSendTask(const String& type);
 
     State getState();
 
@@ -154,6 +119,10 @@ protected:
     vector<String>::type    m_Protocols;
     State                   m_eState;
     vector<u2char>::type	m_RecvBuffer;
+    String                  m_szWsCloseType;
+    String                  m_szWsErrorType;
+    String                  m_szWsOpenType;
+    String                  m_szWsHeartBeatType;
 
     struct ::libwebsocket_protocols* m_aWsProtocols;
     struct ::libwebsocket_context* m_pWsContext;

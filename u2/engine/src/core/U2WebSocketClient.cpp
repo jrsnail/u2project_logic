@@ -11,74 +11,7 @@
 U2EG_NAMESPACE_USING
 
 
-//-----------------------------------------------------------------------
-//-----------------------------------------------------------------------
-WsCloseRST::WsCloseRST(const String& type, const String& name)
-    : RecvSocketTask(type, name)
-{
 
-}
-//-----------------------------------------------------------------------
-WsCloseRST::~WsCloseRST()
-{
-
-}
-//-----------------------------------------------------------------------
-void WsCloseRST::run()
-{
-
-}
-//-----------------------------------------------------------------------
-//-----------------------------------------------------------------------
-WsErrorRST::WsErrorRST(const String& type, const String& name)
-    : RecvSocketTask(type, name)
-{
-
-}
-//-----------------------------------------------------------------------
-WsErrorRST::~WsErrorRST()
-{
-
-}
-//-----------------------------------------------------------------------
-void WsErrorRST::run()
-{
-
-}
-//-----------------------------------------------------------------------
-//-----------------------------------------------------------------------
-WsOpenRST::WsOpenRST(const String& type, const String& name)
-    : RecvSocketTask(type, name)
-{
-
-}
-//-----------------------------------------------------------------------
-WsOpenRST::~WsOpenRST()
-{
-
-}
-//-----------------------------------------------------------------------
-void WsOpenRST::run()
-{
-
-}
-//-----------------------------------------------------------------------
-//-----------------------------------------------------------------------
-WsHeartBeatSST::WsHeartBeatSST(const String& type, const String& name)
-    : SendSocketTask(type, name)
-{
-
-}
-//-----------------------------------------------------------------------
-WsHeartBeatSST::~WsHeartBeatSST()
-{
-
-}
-//-----------------------------------------------------------------------
-void WsHeartBeatSST::run()
-{
-
-}
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
 // Wrapper for converting websocket callback from static function to member function of WebSocket class.
@@ -111,16 +44,11 @@ WsTaskLoop::WsTaskLoop(const String& type, const String& name)
     , m_pWebSocket(nullptr)
     , m_ulHeartBeatPeriod(1000L)
 {
-    CREATE_FACTORY(WsCloseRST);
-    CREATE_FACTORY(WsErrorRST);
-    CREATE_FACTORY(WsOpenRST);
-    CREATE_FACTORY(WsHeartBeatSST);
+    
 }
 //-----------------------------------------------------------------------
 WsTaskLoop::~WsTaskLoop()
 {
-    _destroyHearBeat();
-
     for (size_t i = 0; m_aWsProtocols[i].callback != nullptr; ++i)
     {
         U2_FREE(m_aWsProtocols[i].name, MEMCATEGORY_GENERAL);
@@ -140,6 +68,11 @@ void WsTaskLoop::postTaskAndReply(Task* task, Task* reply)
 //-----------------------------------------------------------------------
 void WsTaskLoop::run()
 {
+    assert(m_szWsErrorType != BLANK);
+    assert(m_szWsCloseType != BLANK);
+    assert(m_szWsOpenType != BLANK);
+    assert(m_szWsHeartBeatType != BLANK);
+
     U2_LOCK_MUTEX(m_KeepRunningMutex);
     m_bKeepRunning = true;
 
@@ -287,6 +220,27 @@ void WsTaskLoop::addProtocol(const String& protocol)
         m_Protocols.push_back(protocol);
     }
 }
+//---------------------------------------------------------------------
+void WsTaskLoop::setWsCloseRecvTask(const String& type)
+{
+    m_szWsCloseType = type;
+}
+//---------------------------------------------------------------------
+void WsTaskLoop::setWsErrorRecvTask(const String& type)
+{
+    m_szWsErrorType = type;
+}
+//---------------------------------------------------------------------
+void WsTaskLoop::setWsOpenRecvTask(const String& type)
+{
+    m_szWsOpenType = type;
+}
+//---------------------------------------------------------------------
+void WsTaskLoop::setWsHeartBeatSendTask(const String& type)
+{
+    m_szWsHeartBeatType = type;
+}
+//---------------------------------------------------------------------
 WsTaskLoop::State WsTaskLoop::getState()
 {
     return m_eState;
@@ -411,7 +365,7 @@ void WsTaskLoop::_connect()
         if (nullptr == m_pWebSocket)
         {
             m_eState = State::CLOSING;
-            Task* pTask = TaskManager::getSingleton().createObject(GET_OBJECT_TYPE(WsErrorRST));
+            Task* pTask = TaskManager::getSingleton().createObject(m_szWsErrorType);
             DataPool* pDataPool = DataPoolManager::getSingleton().retrieveObjectByName(ON_DataPool_Task);
             if (pDataPool)
             {
@@ -441,12 +395,12 @@ int WsTaskLoop::onSocketCallback(struct libwebsocket_context *ctx,
                 || (reason == LWS_CALLBACK_DEL_POLL_FD && m_eState == State::CONNECTING)
                 )
             {
-                pTask = TaskManager::getSingleton().createObject(GET_OBJECT_TYPE(WsErrorRST));
+                pTask = TaskManager::getSingleton().createObject(m_szWsErrorType);
                 m_eState = State::CLOSING;
             }
             else if (reason == LWS_CALLBACK_PROTOCOL_DESTROY && m_eState == State::CLOSING)
             {
-                pTask = TaskManager::getSingleton().createObject(GET_OBJECT_TYPE(WsCloseRST));
+                pTask = TaskManager::getSingleton().createObject(m_szWsCloseType);
             }
 
             if (pTask)
@@ -461,10 +415,8 @@ int WsTaskLoop::onSocketCallback(struct libwebsocket_context *ctx,
         }
         case LWS_CALLBACK_CLIENT_ESTABLISHED:
         {
-            _createHeartBeat();
-
             m_eState = State::OPEN;
-            Task* pTask = TaskManager::getSingleton().createObject(GET_OBJECT_TYPE(WsOpenRST));
+            Task* pTask = TaskManager::getSingleton().createObject(m_szWsOpenType);
             DataPool* pDataPool = DataPoolManager::getSingleton().retrieveObjectByName(ON_DataPool_Task);
             if (pDataPool)
             {
@@ -492,10 +444,8 @@ int WsTaskLoop::onSocketCallback(struct libwebsocket_context *ctx,
 
             if (m_eState != State::CLOSED)
             {
-                _destroyHearBeat();
-
                 m_eState = State::CLOSED;
-                Task* pTask = TaskManager::getSingleton().createObject(GET_OBJECT_TYPE(WsCloseRST));
+                Task* pTask = TaskManager::getSingleton().createObject(m_szWsCloseType);
                 DataPool* pDataPool = DataPoolManager::getSingleton().retrieveObjectByName(ON_DataPool_Task);
                 if (pDataPool)
                 {
@@ -680,7 +630,7 @@ void WsTaskLoop::_onSend(struct libwebsocket_context *ctx, struct libwebsocket *
 void WsTaskLoop::_createHeartBeat()
 {
     postSchedulerTask(getName() + "_scheduler"
-        , GET_OBJECT_TYPE(WsHeartBeatSST), BLANK
+        , m_szWsHeartBeatType, BLANK
         , getHeartBeatPeriod(), true, false);
 }
 //---------------------------------------------------------------------

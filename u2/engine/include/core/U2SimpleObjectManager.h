@@ -45,6 +45,10 @@ public:
         typename NamedObjectMap::iterator eit = m_NamedMap.end();
         return ObjectMapIterator(bit, eit);
     }
+
+    void addObject(T* obj);
+
+    void removeObject(T* obj);
 	
 
 protected:
@@ -148,6 +152,36 @@ T* SimpleObjectManager<T>::retrieveObjectByGuid(const String& guid)
         }
     }
     return nullptr;
+}
+//-----------------------------------------------------------------------
+template <class T>
+void SimpleObjectManager<T>::addObject(T* obj)
+{
+    assert(obj);
+    NamedObjectMap::iterator it = m_NamedMap.find(obj->getName());
+    if (it == m_NamedMap.end())
+    {
+        m_NamedMap[obj->getName()] = obj;
+    }
+    else
+    {
+        assert(0);
+    }
+}
+//-----------------------------------------------------------------------
+template <class T>
+void SimpleObjectManager<T>::removeObject(T* obj)
+{
+    assert(obj);
+    NamedObjectMap::iterator it = m_NamedMap.find(obj->getName());
+    if (it == m_NamedMap.end())
+    {
+        m_NamedMap.erase(it);
+    }
+    else
+    {
+        assert(0);
+    }
 }
 
 

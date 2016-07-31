@@ -164,6 +164,24 @@ size_t InStream::skipLine(const String& delim)
 	return total;
 }
 //-----------------------------------------------------------------------
+String InStream::getAsString(void)
+{
+    // Read the entire buffer - ideally in one read, but if the size of
+    // the buffer is unknown, do multiple fixed size reads.
+    size_t bufSize = (m_uSize > 0 ? m_uSize : 4096);
+    char* pBuf = U2_ALLOC_T(char, bufSize, MEMCATEGORY_GENERAL);
+    // Ensure read from begin of stream
+    seek(0);
+    String result;
+    while (!eof())
+    {
+        size_t nr = read((u2byte*)pBuf, bufSize);
+        result.append(pBuf, nr);
+    }
+    U2_FREE(pBuf, MEMCATEGORY_GENERAL);
+    return result;
+}
+//-----------------------------------------------------------------------
 // std::streamoff InStream::skip(std::streamoff count)
 // {
 //     u2byte* s = static_cast<u2byte*>(U2_MALLOC(count, MEMCATEGORY_GENERAL));

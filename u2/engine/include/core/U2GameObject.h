@@ -4,7 +4,6 @@
 
 #include "U2Prerequisites.h"
 #include "U2STLRedefined.h"
-#include "U2Object.h"
 #include "U2Prototype.h"
 #include "U2ResourceManager.h"
 #include "U2TypedObjectManager.h"
@@ -83,8 +82,14 @@ public:
 
     GameObject* retrieveChildGameObjectByGuid(const String& guid);
 
+    GameObject* retrieveParentGameObject();
+
     void addListener(Listener* listener);
     void removeListener(Listener* listener);
+
+    /** Is this a game object which dependent by a prototype.
+    */
+    bool isPrototypeDependent();
 
 protected:
     /// @copydoc Resource::loadImpl
@@ -96,6 +101,7 @@ protected:
 protected:
     TypedComponentMap           m_ComponentMap;
     TypedGameObjectMap          m_GameObjMap;
+    GameObject*                 m_pParentGameObj;
 
     typedef vector<Listener*>::type ListenerList;
     ListenerList m_Listeners;
@@ -104,6 +110,8 @@ protected:
 
 class GameObjectManager : public ResourceManager, public GameObject::Listener, public Singleton < GameObjectManager >
 {
+    friend GameObject;
+
 public:
     GameObjectManager();
     virtual ~GameObjectManager();
@@ -130,6 +138,8 @@ public:
     virtual void onAttachComponent(GameObject* gameObj, Component* comp) override;
     virtual void onDetachComponent(GameObject* gameObj, Component* comp) override;
 
+protected:
+    GameObject* _createObject(const String& type, const String& name);
 
 public:
     /** Override standard Singleton retrieval.

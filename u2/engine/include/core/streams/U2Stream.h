@@ -220,6 +220,13 @@ public:
 	*/
 	virtual size_t skipLine(const String& delim = "\n");
 
+    /** Returns a String containing the entire stream.
+    @remarks
+        This is a convenience method for text streams only, allowing you to
+        retrieve a String object containing all the data in the stream.
+    */
+    virtual String getAsString(void);
+
 protected:
 	/// Size of the data in the stream (may be 0 if size cannot be determined)
 	size_t			m_uSize;

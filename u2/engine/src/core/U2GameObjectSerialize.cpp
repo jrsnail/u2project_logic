@@ -1,26 +1,28 @@
 ﻿#include "U2GameObjectSerialize.h"
 
+#include "tinyxml.h"
+
 
 U2EG_NAMESPACE_USING
 
 
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-GameObjectSerialize::GameObjectSerialize(const String& type, const String& name)
-    : Serialize(type, name)
+GameObjectSerialize_0_0_1::GameObjectSerialize_0_0_1(const String& type, const String& name)
+    : XmlSerialize(type, name)
 {
 }
 //-----------------------------------------------------------------------
-GameObjectSerialize::~GameObjectSerialize()
+GameObjectSerialize_0_0_1::~GameObjectSerialize_0_0_1()
 {
 }
 //-----------------------------------------------------------------------
-void GameObjectSerialize::load(const void* data)
+bool GameObjectSerialize_0_0_1::load(const TiXmlElement* elem, const String& groupName)
 {
-
+    return false;
 }
 //-----------------------------------------------------------------------
-void GameObjectSerialize::save()
+bool GameObjectSerialize_0_0_1::save()
 {
-
+    return false;
 }

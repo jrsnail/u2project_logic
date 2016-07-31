@@ -4,26 +4,31 @@
 
 #include "U2Prerequisites.h"
 #include "U2STLRedefined.h"
-#include "U2Serialize.h"
+#include "U2XmlSerialize.h"
+#include "U2HeaderPrefix.h"
+
+
+class TiXmlElement;
 
 
 U2EG_NAMESPACE_BEGIN
 
 
-
-class GameObjectSerialize : public Serialize
+class GameObjectSerialize_0_0_1 : public XmlSerialize
 {
 public:
-    GameObjectSerialize(const String& type, const String& name);
-    virtual ~GameObjectSerialize();
+    GameObjectSerialize_0_0_1(const String& type, const String& name);
+    virtual ~GameObjectSerialize_0_0_1();
 
-    virtual void load(const void* data) override;
-    virtual void save() override;
+    virtual bool load(const TiXmlElement* elem, const String& groupName) override;
+    virtual bool save() override;
 
 protected:
 };
 
 
 U2EG_NAMESPACE_END
+
+#include "U2HeaderSuffix.h"
 
 #endif /* defined(__U2GameObjectSerialize__) */

@@ -12,11 +12,17 @@ GameObject::GameObject(ResourceManager* creator, const String& type, ResourceHan
     const String& group, const String& name, bool isManual, ManualResourceLoader* loader)
     : Resource(creator, type, handle, group, isManual, loader)
     , Prototype(type, name)
+    , m_pParentGameObj(nullptr)
 {
 }
 //-----------------------------------------------------------------------
 GameObject::~GameObject()
 {
+    GameObject* pPrototype = this->retrievePrototype();
+    if (pPrototype)
+    {
+        pPrototype->removeInstance(this);
+    }
 }
 //-----------------------------------------------------------------------
 void GameObject::copy(const GameObject& src)
@@ -27,7 +33,7 @@ void GameObject::copy(const GameObject& src)
 GameObject* GameObject::cloneFromPrototype(const String& name)
 {
     GameObject* pPrototype = retrievePrototype();
-    GameObject* pNewGameObj = GameObjectManager::getSingleton().createObject(pPrototype->getType(), name);
+    GameObject* pNewGameObj = GameObjectManager::getSingleton()._createObject(pPrototype->getType(), name);
     pNewGameObj->copy(*pPrototype);
     pPrototype->addInstance(pNewGameObj);
     return pNewGameObj;
@@ -35,7 +41,7 @@ GameObject* GameObject::cloneFromPrototype(const String& name)
 //-----------------------------------------------------------------------
 GameObject* GameObject::cloneFromInstance(const String& name)
 {
-    GameObject* pNewGameObj = GameObjectManager::getSingleton().createObject(this->getType(), name);
+    GameObject* pNewGameObj = GameObjectManager::getSingleton()._createObject(this->getType(), name);
     pNewGameObj->copy(*this);
     GameObject* pPrototype = retrievePrototype();
     pPrototype->addInstance(pNewGameObj);
@@ -172,6 +178,7 @@ void GameObject::addChildGameObject(GameObject* gameObj)
     assert(gameObj);
 
     m_GameObjMap.insert(std::make_pair(gameObj->getType(), gameObj));
+    gameObj->m_pParentGameObj = this;
 }
 //-----------------------------------------------------------------------
 void GameObject::removeChildGameObject(GameObject* gameObj)
@@ -202,6 +209,11 @@ GameObject* GameObject::retrieveChildGameObjectByGuid(const String& guid)
     return nullptr;
 }
 //---------------------------------------------------------------------
+GameObject* GameObject::retrieveParentGameObject()
+{
+    return m_pParentGameObj;
+}
+//---------------------------------------------------------------------
 void GameObject::addListener(Listener* listener)
 {
     ListenerList::iterator it
@@ -219,6 +231,25 @@ void GameObject::removeListener(Listener* listener)
     if (it != m_Listeners.end())
     {
         m_Listeners.erase(it);
+    }
+}
+//---------------------------------------------------------------------
+bool GameObject::isPrototypeDependent()
+{
+    if (m_pParentGameObj != nullptr)
+    {
+        if (m_pParentGameObj->isPrototype())
+        {
+            return true;
+        }
+        else
+        {
+            return m_pParentGameObj->isPrototypeDependent();
+        }
+    }
+    else
+    {
+        return false;
     }
 }
 //-----------------------------------------------------------------------
@@ -269,7 +300,6 @@ GameObject* GameObjectManager::createObject(const String& type, const String& na
         if (pPrototype)
         {
             GameObject* pObj = pPrototype->cloneFromPrototype(name);
-            m_InstanceCollection.addObject(pObj);
             return pObj;
         }
         else
@@ -287,7 +317,7 @@ GameObject* GameObjectManager::createObject(const String& type, const String& na
 void GameObjectManager::destoryObject(GameObject* obj)
 {
     assert(obj);
-    if (obj->isPrototype())
+    if (obj->isPrototype() || obj->isPrototypeDependent())
     {
         // In editor, we should delete prototype GameObject actually, 
         // but now in game, we just assert it.
@@ -295,8 +325,6 @@ void GameObjectManager::destoryObject(GameObject* obj)
     }
     else
     {
-        GameObject* pPrototype = obj->retrievePrototype();
-        pPrototype->removeChildGameObject(obj);
         m_InstanceCollection.destoryObject(obj);
     }
 }
@@ -319,6 +347,11 @@ GameObject* GameObjectManager::retrieveObjectByGuid(const String& guid)
 GameObject* GameObjectManager::retrieveObjectByType(const String& type)
 {
     return m_InstanceCollection.retrieveObjectByType(type);
+}
+//-----------------------------------------------------------------------
+GameObject* GameObjectManager::_createObject(const String& type, const String& name)
+{
+    return m_InstanceCollection.createObject(type, name);
 }
 //-----------------------------------------------------------------------
 void GameObjectManager::onAttachComponent(GameObject* gameObj, Component* comp)

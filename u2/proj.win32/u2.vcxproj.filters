@@ -76,6 +76,12 @@
     <Filter Include="engine\include\core\Win">
       <UniqueIdentifier>{171d850d-8cb7-41fb-9d49-49cf0f19882d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="engine\include\xml">
+      <UniqueIdentifier>{12242b20-4906-4f98-a939-55ca96d05bde}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\src\xml">
+      <UniqueIdentifier>{d9bd801a-5990-47a3-b308-b6c5effab288}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -453,9 +459,6 @@
     <ClCompile Include="..\engine\src\core\U2Prototype.cpp">
       <Filter>engine\src\core</Filter>
     </ClCompile>
-    <ClCompile Include="..\engine\src\core\U2Serialize.cpp">
-      <Filter>engine\src\core</Filter>
-    </ClCompile>
     <ClCompile Include="..\engine\src\core\U2XmlSerialize.cpp">
       <Filter>engine\src\core</Filter>
     </ClCompile>
@@ -488,6 +491,24 @@
     </ClCompile>
     <ClCompile Include="..\engine\src\core\Win\U2Timer.cpp">
       <Filter>engine\src\core\Win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\U2ComponentSerialize.cpp">
+      <Filter>engine\src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\xml\tinystr.cpp">
+      <Filter>engine\src\xml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\xml\tinyxml.cpp">
+      <Filter>engine\src\xml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\xml\tinyxmlerror.cpp">
+      <Filter>engine\src\xml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\xml\tinyxmlparser.cpp">
+      <Filter>engine\src\xml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\U2PredefinedComponents.cpp">
+      <Filter>engine\src\core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -917,9 +938,6 @@
     <ClInclude Include="..\engine\include\core\U2Prototype.h">
       <Filter>engine\include\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\engine\include\core\U2Serialize.h">
-      <Filter>engine\include\core</Filter>
-    </ClInclude>
     <ClInclude Include="..\engine\include\core\U2XmlSerialize.h">
       <Filter>engine\include\core</Filter>
     </ClInclude>
@@ -984,6 +1002,18 @@
       <Filter>engine\include\core</Filter>
     </ClInclude>
     <ClInclude Include="..\engine\include\core\U2Bitwise.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2ComponentSerialize.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\xml\tinystr.h">
+      <Filter>engine\include\xml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\xml\tinyxml.h">
+      <Filter>engine\include\xml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2PredefinedComponents.h">
       <Filter>engine\include\core</Filter>
     </ClInclude>
   </ItemGroup>

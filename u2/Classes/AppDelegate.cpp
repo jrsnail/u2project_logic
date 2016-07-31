@@ -438,6 +438,10 @@ bool AppDelegate::applicationDidFinishLaunching() {
             TaskLoopManager::getSingleton().createObject(GET_OBJECT_TYPE(JsonWsTaskLoop), "websocket")
             );
         pWsTaskLoop->setUrl("ws://echo.websocket.org");
+        pWsTaskLoop->setWsCloseRecvTask(GET_OBJECT_TYPE(WsCloseRST));
+        pWsTaskLoop->setWsErrorRecvTask(GET_OBJECT_TYPE(WsErrorRST));
+        pWsTaskLoop->setWsOpenRecvTask(GET_OBJECT_TYPE(WsOpenRST));
+        pWsTaskLoop->setWsHeartBeatSendTask(GET_OBJECT_TYPE(WsHeartBeatSST));
         pWsTaskLoop->run();
 //         cocos2d::network::WebSocket* _wsiSendText = new network::WebSocket();
 //         _wsiSendText->init(*this, "ws://echo.websocket.org");

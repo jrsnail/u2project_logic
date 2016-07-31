@@ -283,7 +283,7 @@ public:
 
     /** Gets resource name.
     */
-    virtual const String& getName(void) const 
+    virtual const String& getResourceName(void) const 
     { 
         return mName; 
     }

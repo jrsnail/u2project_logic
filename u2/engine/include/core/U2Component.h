@@ -4,9 +4,13 @@
 
 #include "U2Prerequisites.h"
 #include "U2STLRedefined.h"
-#include "U2Object.h"
+#include "U2Prototype.h"
+#include "U2ResourceManager.h"
 #include "U2SimpleObjectManager.h"
 #include "U2Singleton.h"
+
+
+class TiXmlElement;
 
 
 U2EG_NAMESPACE_BEGIN
@@ -15,11 +19,20 @@ U2EG_NAMESPACE_BEGIN
 class GameObject;
 
 
-class Component : public Object
+class Component : public Resource, public Prototype<Component>
 {
 public:
-    Component(const String& type, const String& name);
+    Component(ResourceManager* creator, const String& type, ResourceHandle handle,
+        const String& group, const String& name = BLANK, bool isManual = false
+        , ManualResourceLoader* loader = 0);
     virtual ~Component();
+
+    virtual void copy(const Component& src);
+
+    virtual Component* cloneFromPrototype(const String& name = BLANK) override;
+    virtual Component* cloneFromInstance(const String& name = BLANK) override;
+    virtual void resetFromPrototype() override;
+    virtual void applyToPrototype() override;
 
     void bornOn(GameObject* gameObj);
     GameObject* getBornGameObject() const;
@@ -29,6 +42,15 @@ public:
 
     void setState(size_t state);
     size_t getState() const;
+
+    virtual bool _loadFromXml(const TiXmlElement* compElem, String& error) { return false; };
+
+protected:
+    /// @copydoc Resource::loadImpl
+    virtual void loadImpl(void) override;
+
+    /// @copydoc Resource::unloadImpl
+    virtual void unloadImpl(void) override;
 
 public:
     static const size_t CS_None = 0;
@@ -44,8 +66,13 @@ protected:
 };
 
 
-class ComponentManager : public SimpleObjectManager<u2::Component>, public Singleton < ComponentManager >
+typedef std::shared_ptr<Component>	ComponentPtr;
+
+
+class ComponentManager : public ResourceManager, public Singleton < ComponentManager >
 {
+    friend Component;
+
 public:
     /** Default constructor - should never get called by a client app.
     */
@@ -54,6 +81,35 @@ public:
     /** Default destructor.
     */
     virtual ~ComponentManager();
+
+    /// @copydoc ScriptLoader::parseScript
+    virtual void parseScript(InStreamPtr& stream, const String& groupName) override;
+
+    virtual Resource* createImpl(const String& name, ResourceHandle handle,
+        const String& group, bool isManual, ManualResourceLoader* loader,
+        const NameValuePairList* createParams) override;
+
+    /// @see ResourceManager::createResource
+    ComponentPtr create(const String& name, const String& group,
+        bool isManual = false, ManualResourceLoader* loader = 0,
+        const NameValuePairList* createParams = 0);
+
+    Component* createObject(const String& type, const String& name = BLANK);
+
+    void destoryObject(Component* obj);
+
+    void destoryObjectByName(const String& name);
+
+    Component* retrieveObjectByName(const String& name);
+
+    Component* retrieveObjectByGuid(const String& guid);
+
+    bool hasObjectByName(const String& name);
+
+    SimpleObjectManager<Component>::ObjectMapIterator retrieveAllObjects();
+
+protected:
+    Component* _createObject(const String& type, const String& name);
 
 public:
     /** Override standard Singleton retrieval.
@@ -89,6 +145,9 @@ public:
     preventing link errors.
     */
     static ComponentManager* getSingletonPtr(void);
+
+protected:
+    SimpleObjectManager<Component> m_InstanceCollection;
 };
 
 

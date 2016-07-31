@@ -8,8 +8,10 @@ U2EG_NAMESPACE_USING
 
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-Component::Component(const String& type, const String& name)
-    : Object(type, name)
+Component::Component(ResourceManager* creator, const String& type, ResourceHandle handle,
+    const String& group, const String& name, bool isManual, ManualResourceLoader* loader)
+    : Resource(creator, type, handle, group, isManual, loader)
+    , Prototype(type, name)
     , m_pBornGameObj(nullptr)
     , m_pAttachedGameObj(nullptr)
     , m_uState(CS_None)
@@ -18,6 +20,62 @@ Component::Component(const String& type, const String& name)
 //-----------------------------------------------------------------------
 Component::~Component()
 {
+    Component* pPrototype = this->retrievePrototype();
+    if (pPrototype)
+    {
+        pPrototype->removeInstance(this);
+    }
+}
+//-----------------------------------------------------------------------
+void Component::copy(const Component& src)
+{
+
+}
+//-----------------------------------------------------------------------
+Component* Component::cloneFromPrototype(const String& name)
+{
+    Component* pPrototype = retrievePrototype();
+    Component* pComponent = ComponentManager::getSingleton()._createObject(pPrototype->getType(), name);
+    pComponent->copy(*pPrototype);
+    pPrototype->addInstance(pComponent);
+    return pComponent;
+}
+//-----------------------------------------------------------------------
+Component* Component::cloneFromInstance(const String& name)
+{
+    Component* pComponent = ComponentManager::getSingleton()._createObject(this->getType(), name);
+    pComponent->copy(*this);
+    Component* pPrototype = retrievePrototype();
+    pPrototype->addInstance(pComponent);
+    return pComponent;
+}
+//-----------------------------------------------------------------------
+void Component::resetFromPrototype()
+{
+    if (m_pPrototype == nullptr)
+    {
+        return;
+    }
+    copy(*m_pPrototype);
+}
+//-----------------------------------------------------------------------
+void Component::applyToPrototype()
+{
+    if (m_pPrototype == nullptr)
+    {
+        return;
+    }
+    m_pPrototype->copy(*this);
+}
+//-----------------------------------------------------------------------
+void Component::loadImpl(void)
+{
+
+}
+//-----------------------------------------------------------------------
+void Component::unloadImpl(void)
+{
+
 }
 //-----------------------------------------------------------------------
 void Component::bornOn(GameObject* gameObj)
@@ -73,4 +131,93 @@ ComponentManager::ComponentManager()
 //-----------------------------------------------------------------------
 ComponentManager::~ComponentManager()
 {
+}
+//-----------------------------------------------------------------------
+void ComponentManager::parseScript(InStreamPtr& stream, const String& groupName)
+{
+    
+}
+//-----------------------------------------------------------------------
+Resource* ComponentManager::createImpl(const String& name, ResourceHandle handle,
+    const String& group, bool isManual, ManualResourceLoader* loader,
+    const NameValuePairList* createParams)
+{
+    return U2_NEW Component(this, name, handle, group
+        , String("prototype_component_") + name, isManual, loader);
+}
+//-----------------------------------------------------------------------
+ComponentPtr ComponentManager::create(const String& name, const String& group,
+    bool isManual, ManualResourceLoader* loader, const NameValuePairList* createParams)
+{
+    return std::dynamic_pointer_cast<Component>(
+        createResource(name, group, isManual, loader, createParams));
+}
+//-----------------------------------------------------------------------
+Component* ComponentManager::createObject(const String& type, const String& name)
+{
+    ResourcePtr resPtr = this->getResourceByName(type);
+    if (resPtr)
+    {
+        Component* pPrototype = dynamic_cast<Component*>(resPtr.get());
+        if (pPrototype)
+        {
+            Component* pObj = pPrototype->cloneFromPrototype(name);
+            return pObj;
+        }
+        else
+        {
+            assert(0);
+        }
+    }
+    else
+    {
+        assert(0);
+    }
+    return nullptr;
+}
+//-----------------------------------------------------------------------
+void ComponentManager::destoryObject(Component* obj)
+{
+    assert(obj);
+    if (obj->isPrototype())
+    {
+        // In editor, we should delete prototype GameObject actually, 
+        // but now in game, we just assert it.
+        assert(0);
+    }
+    else
+    {
+        m_InstanceCollection.destoryObject(obj);
+    }
+}
+//-----------------------------------------------------------------------
+void ComponentManager::destoryObjectByName(const String& name)
+{
+    Component* pObj = retrieveObjectByName(name);
+    destoryObject(pObj);
+}
+//-----------------------------------------------------------------------
+Component* ComponentManager::retrieveObjectByName(const String& name)
+{
+    return m_InstanceCollection.retrieveObjectByName(name);
+}
+//-----------------------------------------------------------------------
+Component* ComponentManager::retrieveObjectByGuid(const String& guid)
+{
+    return m_InstanceCollection.retrieveObjectByGuid(guid);
+}
+//-----------------------------------------------------------------------
+bool ComponentManager::hasObjectByName(const String& name)
+{
+    return m_InstanceCollection.hasObjectByName(name);
+}
+//-----------------------------------------------------------------------
+SimpleObjectManager<Component>::ObjectMapIterator ComponentManager::retrieveAllObjects()
+{
+    return m_InstanceCollection.retrieveAllObjects();
+}
+//-----------------------------------------------------------------------
+Component* ComponentManager::_createObject(const String& type, const String& name)
+{
+    return m_InstanceCollection.createObject(type, name);
 }

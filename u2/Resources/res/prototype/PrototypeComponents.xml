@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<PrototypeComponents version = "0.0.1">
+	<Component type = "component_sprite" guid = "prototype_component_sprite">
+		<Filename value = "default.png" />
+	</Component>
+	<Component type = "component_position" guid = "prototype_component_position">
+		<Position value = "240 300" />
+	</Component>
+	<Component type = "component_velocity" guid = "prototype_component_velocity">
+		<Velocity value = "10 10" />
+	</Component>
+	<Component type = "component_speed" guid = "prototype_component_speed">
+		<Speed value = "10" />
+		<MaxSpeed value = "20" />
+		<MinSpeed value = "0" />
+	</Component>
+	<Component type = "component_hp" guid = "prototype_component_hp">
+		<Hp value = "0" />
+		<MaxHp value = "0" />
+		<MinHp value = "0" />
+	</Component>
+	<Component type = "component_base_hp" guid = "prototype_component_base_hp">
+		<Hp value = "100" />
+		<MaxHp value = "200" />
+		<MinHp value = "0" />
+	</Component>
+	<Component type = "component_delta_hp" guid = "prototype_component_delta_hp">
+		<DeltaHp value = "10" />
+		<DeltaMaxHp value = "200" />
+		<DeltaMinHp value = "0" />
+	</Component>
+</PrototypeComponents>

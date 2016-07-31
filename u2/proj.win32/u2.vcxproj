@@ -72,7 +72,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(EngineRoot)cocos\audio\include;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;..\..\Dependenices\include;..\engine;..\engine\include;..\engine\include\core;..\engine\include\core\streams;..\engine\include\core\threading;..\engine\include\core\threading\threadpool;..\engine\include\core\sserver;..\engine\include\mvc;..\engine\include\lua;..\gamebase;..\Classes;..\luabridge;..;$(EngineRoot)external;%(AdditionalIncludeDirectories);$(_COCOS_HEADER_WIN32_BEGIN);$(_COCOS_HEADER_WIN32_END)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot)cocos\audio\include;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;..\..\Dependenices\include;..\engine;..\engine\include;..\engine\include\core;..\engine\include\core\streams;..\engine\include\core\threading;..\engine\include\core\threading\threadpool;..\engine\include\core\sserver;..\engine\include\mvc;..\engine\include\lua;..\engine\include\xml;..\gamebase;..\Classes;..\luabridge;..;$(EngineRoot)external;%(AdditionalIncludeDirectories);$(_COCOS_HEADER_WIN32_BEGIN);$(_COCOS_HEADER_WIN32_END)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_CHIPMUNK_INTEGRATION=1;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;U2_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -171,6 +171,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\engine\src\core\U2AtomicScalar.cpp" />
     <ClCompile Include="..\engine\src\core\U2Common.cpp" />
     <ClCompile Include="..\engine\src\core\U2Component.cpp" />
+    <ClCompile Include="..\engine\src\core\U2ComponentSerialize.cpp" />
     <ClCompile Include="..\engine\src\core\U2ConfigFile.cpp" />
     <ClCompile Include="..\engine\src\core\U2DataPool.cpp" />
     <ClCompile Include="..\engine\src\core\U2Exception.cpp" />
@@ -191,6 +192,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\engine\src\core\U2Object.cpp" />
     <ClCompile Include="..\engine\src\core\U2ObjectCollection.cpp" />
     <ClCompile Include="..\engine\src\core\U2PoolingObjectManager.cpp" />
+    <ClCompile Include="..\engine\src\core\U2PredefinedComponents.cpp" />
     <ClCompile Include="..\engine\src\core\U2Prerequisites.cpp" />
     <ClCompile Include="..\engine\src\core\U2Prototype.cpp" />
     <ClCompile Include="..\engine\src\core\U2Resource.cpp" />
@@ -198,7 +200,6 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\engine\src\core\U2ResourceManager.cpp" />
     <ClCompile Include="..\engine\src\core\U2Scheduler.cpp" />
     <ClCompile Include="..\engine\src\core\U2SearchOps.cpp" />
-    <ClCompile Include="..\engine\src\core\U2Serialize.cpp" />
     <ClCompile Include="..\engine\src\core\U2SimpleObjectManager.cpp" />
     <ClCompile Include="..\engine\src\core\U2SocketTask.cpp" />
     <ClCompile Include="..\engine\src\core\U2StringInterface.cpp" />
@@ -272,6 +273,10 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\engine\src\mvc\U2TransStep.cpp" />
     <ClCompile Include="..\engine\src\mvc\U2View.cpp" />
     <ClCompile Include="..\engine\src\mvc\U2ViewComponent.cpp" />
+    <ClCompile Include="..\engine\src\xml\tinystr.cpp" />
+    <ClCompile Include="..\engine\src\xml\tinyxml.cpp" />
+    <ClCompile Include="..\engine\src\xml\tinyxmlerror.cpp" />
+    <ClCompile Include="..\engine\src\xml\tinyxmlparser.cpp" />
     <ClCompile Include="..\gamebase\U2CocosFrameListenerCollection.cpp" />
     <ClCompile Include="..\gamebase\U2CocosLuaScript.cpp" />
     <ClCompile Include="..\gamebase\U2CocosPrerequisites.cpp" />
@@ -318,6 +323,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\engine\include\core\U2Bitwise.h" />
     <ClInclude Include="..\engine\include\core\U2Common.h" />
     <ClInclude Include="..\engine\include\core\U2Component.h" />
+    <ClInclude Include="..\engine\include\core\U2ComponentSerialize.h" />
     <ClInclude Include="..\engine\include\core\U2Config.h" />
     <ClInclude Include="..\engine\include\core\U2ConfigFile.h" />
     <ClInclude Include="..\engine\include\core\U2Core.h" />
@@ -349,6 +355,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\engine\include\core\U2ObjectCollection.h" />
     <ClInclude Include="..\engine\include\core\U2Platform.h" />
     <ClInclude Include="..\engine\include\core\U2PoolingObjectManager.h" />
+    <ClInclude Include="..\engine\include\core\U2PredefinedComponents.h" />
     <ClInclude Include="..\engine\include\core\U2Prerequisites.h" />
     <ClInclude Include="..\engine\include\core\U2Prototype.h" />
     <ClInclude Include="..\engine\include\core\U2Resource.h" />
@@ -357,7 +364,6 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\engine\include\core\U2Scheduler.h" />
     <ClInclude Include="..\engine\include\core\U2ScriptLoader.h" />
     <ClInclude Include="..\engine\include\core\U2SearchOps.h" />
-    <ClInclude Include="..\engine\include\core\U2Serialize.h" />
     <ClInclude Include="..\engine\include\core\U2SimpleObjectManager.h" />
     <ClInclude Include="..\engine\include\core\U2Singleton.h" />
     <ClInclude Include="..\engine\include\core\U2SocketTask.h" />
@@ -437,6 +443,8 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\engine\include\mvc\U2TransStep.h" />
     <ClInclude Include="..\engine\include\mvc\U2View.h" />
     <ClInclude Include="..\engine\include\mvc\U2ViewComponent.h" />
+    <ClInclude Include="..\engine\include\xml\tinystr.h" />
+    <ClInclude Include="..\engine\include\xml\tinyxml.h" />
     <ClInclude Include="..\gamebase\U2CocosFrameListenerCollection.h" />
     <ClInclude Include="..\gamebase\U2CocosLuaScript.h" />
     <ClInclude Include="..\gamebase\U2CocosPrerequisites.h" />

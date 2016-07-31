@@ -705,6 +705,21 @@ bool StringUtil::parseBool(const String& val, bool defaultValue)
 		return defaultValue;
 }
 //-----------------------------------------------------------------------
+cocos2d::Vec2 StringUtil::parseVector2(const String& val, const cocos2d::Vec2& defaultValue)
+{
+    // Split on space
+    vector<String>::type vec = StringUtil::split(val);
+
+    if (vec.size() != 2)
+    {
+        return defaultValue;
+    }
+    else
+    {
+        return cocos2d::Vec2(parseReal(vec[0], defaultValue.x), parseReal(vec[1], defaultValue.y));
+    }
+}
+//-----------------------------------------------------------------------
 bool StringUtil::isNumber(const String& val)
 {
 	StringStream str(val);
