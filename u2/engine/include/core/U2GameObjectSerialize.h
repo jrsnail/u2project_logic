@@ -24,6 +24,7 @@ public:
     virtual bool save() override;
 
 protected:
+    bool _loadGameObject(const TiXmlElement* compElem, String& error, const String& groupName);
 };
 
 

@@ -31,6 +31,7 @@
 #endif
 #include "U2LogicClient.h"
 #include "U2WebSocketClientImpl.h"
+#include "U2Component.h"
 #include "cocos2d.h"
 #include "network/WebSocket.h" 
 
@@ -165,7 +166,8 @@ private:
 	PipedOutStream* m_pOutStream;
 };
 
-bool AppDelegate::applicationDidFinishLaunching() {
+bool AppDelegate::applicationDidFinishLaunching()
+{
 	cocos2d::log("Hello world! CCLog! = %d", std::this_thread::get_id());
 	CCLOG("Hello world! CCLOG");
 
@@ -219,13 +221,12 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	cocos2d::FileUtils::getInstance()->addSearchPath("res/ui/cg");
     cocos2d::FileUtils::getInstance()->addSearchPath("res/ui/ui_info");
 
+
+    
+
+
     {
         //------------------------------- init u2 ----------------------------------------
-        // frame listener
-        m_pFrameListenerCollection = new CocosFrameListenerCollection;
-        // script manager
-        u2::ScriptManager* pScriptManager = new u2::LuaScriptManager;
-
         // Create log manager and default log file if there is no log manager yet
         if (u2::LogManager::getSingletonPtr() == nullptr)
         {
@@ -240,6 +241,14 @@ bool AppDelegate::applicationDidFinishLaunching() {
         AndroidLogListener* mAndroidLogger = U2_NEW AndroidLogListener();
         m_pLogManager->getDefaultLog()->addListener(mAndroidLogger);
 #endif
+
+        // frame listener
+        m_pFrameListenerCollection = new CocosFrameListenerCollection;
+        // script manager
+        u2::ScriptManager* pScriptManager = new u2::LuaScriptManager;
+        // component manager
+        m_pComponentManager = new u2::ComponentManager;
+
 
         // Logic task loop
         LogicTaskLoop* pLogicTaskLoop = dynamic_cast<LogicTaskLoop*>(
@@ -322,6 +331,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
 					<< ", secName:" << secName << "\n";
 			}
 		}
+
+        ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 	}
 	
 

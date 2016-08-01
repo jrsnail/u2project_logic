@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- entities -->
+<PrototypeGameObjects version = "0.0.1">
+	<GameObject type = "aircraft" guid = "prototype_entity_aircraft_001" name = "aircraft">
+		<Component type = "component_sprite" name = "spr_aircraft">
+			<Filename value = "aircraft.png" />
+		</Component>
+		<Component type = "component_position" name = "pos">
+			<Position value = "240, 300" />
+		</Component>
+		<Component type = "component_speed" name = "speed">
+			<Speed value = "10" />
+			<MaxSpeed value = "20" />
+			<MinSpeed value = "0" />
+		</Component>
+		<Component type = "component_hp" name = "hp">
+			<Attribute name = "hp" value = "200" />
+			<Attribute name = "max_hp" value = "200" />
+			<Attribute name = "min_hp" value = "0" />
+		</Component>
+		<Component type = "component_base_hp" guid = "base_hp">
+			<Hp value = "100" />
+			<MaxHp value = "200" />
+			<MinHp value = "0" />
+		</Component>
+		<GameObject type = "sub_aircraft" name = "sub_aircraft">
+			<Component type = "component_sprite" name = "spr_aircraft">
+				<Filename value = "aircraft.png" />
+			</Component>
+			<Component type = "component_delta_hp" name = "delta_hp" attachOn = "aircraft">
+				<DeltaHp value = "10" />
+				<DeltaMaxHp value = "200" />
+				<DeltaMinHp value = "0" />
+			</Component>
+		</GameObject>
+	</GameObject>
+</PrototypeGameObjects>

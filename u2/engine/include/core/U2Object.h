@@ -65,31 +65,31 @@ template <class T>
 class TemplateObjectFactory : public ObjectFactory
 {
 public:
-    TemplateObjectFactory(const std::string& type = BLANK);
+    TemplateObjectFactory(const String& type = BLANK);
     virtual ~TemplateObjectFactory() {}
 
-    virtual const std::string& getType() const override;
+    virtual const String& getType() const override;
 
-    virtual Object* createInstance(const std::string& name) override;
+    virtual Object* createInstance(const String& name) override;
 
     virtual void destroyInstance(Object* ptr) override;
 
 protected:
-    std::string     m_szType;
+    String     m_szType;
 };
 
 
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
 template <class T>
-const std::string& TemplateObjectFactory<T>::getType(void) const
+const String& TemplateObjectFactory<T>::getType(void) const
 {
-    //static std::string name = GET_OBJECT_TYPE(T);
+    //static String name = GET_OBJECT_TYPE(T);
     return m_szType;
 }
 //-----------------------------------------------------------------------
 template <class T>
-TemplateObjectFactory<T>::TemplateObjectFactory(const std::string& type)
+TemplateObjectFactory<T>::TemplateObjectFactory(const String& type)
 {
     if (type == BLANK)
     {
@@ -111,7 +111,7 @@ void TemplateObjectFactory<T>::destroyInstance(Object* obj)
 }
 //-----------------------------------------------------------------------
 template <class T>
-Object* TemplateObjectFactory<T>::createInstance(const std::string& name)
+Object* TemplateObjectFactory<T>::createInstance(const String& name)
 {
     T* pObj = new T(getType(), name);
     return pObj;

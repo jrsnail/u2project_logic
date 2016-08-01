@@ -1,6 +1,8 @@
 ﻿#include "U2Component.h"
 
 #include "U2GameObject.h"
+#include "U2XmlSerialize.h"
+#include "U2PredefinedComponents.h"
 
 
 U2EG_NAMESPACE_USING
@@ -127,23 +129,78 @@ ComponentManager& ComponentManager::getSingleton(void)
 //-----------------------------------------------------------------------
 ComponentManager::ComponentManager()
 {
+    // Loading order
+    mLoadOrder = 999.0f;
+
+    // Scripting is supported by this manager
+    mScriptPatterns.push_back("*.comp");
+    ResourceGroupManager::getSingleton()._registerScriptLoader(this);
+
+    // Resource type
+    mResourceType = "Component";
+
+    // Register with resource group manager
+    ResourceGroupManager::getSingleton()._registerResourceManager(mResourceType, this);
 }
 //-----------------------------------------------------------------------
 ComponentManager::~ComponentManager()
 {
+    // Unregister with resource group manager
+    ResourceGroupManager::getSingleton()._unregisterResourceManager(mResourceType);
+    ResourceGroupManager::getSingleton()._unregisterScriptLoader(this);
 }
 //-----------------------------------------------------------------------
 void ComponentManager::parseScript(InStreamPtr& stream, const String& groupName)
 {
-    
+    XmlSerializeManager::getSingleton().load(stream, groupName);
 }
 //-----------------------------------------------------------------------
 Resource* ComponentManager::createImpl(const String& name, ResourceHandle handle,
     const String& group, bool isManual, ManualResourceLoader* loader,
     const NameValuePairList* createParams)
 {
-    return U2_NEW Component(this, name, handle, group
-        , String("prototype_component_") + name, isManual, loader);
+    // todo: integrate resource into object
+
+    if ("component_sprite" == name)
+    {
+        return U2_NEW SpriteComponent(this, name, handle, group
+            , String("prototype_component_") + name, isManual, loader);
+    }
+    else if ("component_position" == name)
+    {
+        return U2_NEW PositionComponent(this, name, handle, group
+            , String("prototype_component_") + name, isManual, loader);
+    }
+    else if ("component_velocity" == name)
+    {
+        return U2_NEW VelocityComponent(this, name, handle, group
+            , String("prototype_component_") + name, isManual, loader);
+    }
+    else if ("component_speed" == name)
+    {
+        return U2_NEW SpeedComponent(this, name, handle, group
+            , String("prototype_component_") + name, isManual, loader);
+    }
+    else if ("component_hp" == name)
+    {
+        return U2_NEW HpComponent(this, name, handle, group
+            , String("prototype_component_") + name, isManual, loader);
+    }
+    else if ("component_base_hp" == name)
+    {
+        return U2_NEW BaseHpComponent(this, name, handle, group
+            , String("prototype_component_") + name, isManual, loader);
+    }
+    else if ("component_delta_hp" == name)
+    {
+        return U2_NEW DeltaHpComponent(this, name, handle, group
+            , String("prototype_component_") + name, isManual, loader);
+    }
+    else
+    {
+        assert(0);
+        return nullptr;
+    }
 }
 //-----------------------------------------------------------------------
 ComponentPtr ComponentManager::create(const String& name, const String& group,

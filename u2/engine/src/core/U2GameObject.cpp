@@ -1,6 +1,8 @@
 ﻿#include "U2GameObject.h"
 
 #include "U2Component.h"
+#include "U2XmlSerialize.h"
+#include "tinyxml.h"
 
 
 U2EG_NAMESPACE_USING
@@ -252,6 +254,66 @@ bool GameObject::isPrototypeDependent()
         return false;
     }
 }
+//---------------------------------------------------------------------
+bool GameObject::_loadFromXml(const TiXmlElement* gameObjElem, String& error)
+{
+    const TiXmlElement* pGameObjElem = gameObjElem;
+    String& szError = error;
+
+    do
+    {
+        const char* pszGameObjType = pGameObjElem->Attribute("type");
+        GET_ERROR_LINE_AND_BREAK(pszGameObjType, szError);
+        const char* pszGameObjName = pGameObjElem->Attribute("name");
+        GET_ERROR_LINE_AND_BREAK(pszGameObjName, szError);
+
+        if (isPrototype())
+        {
+            const char* pszGameObjGuid = pGameObjElem->Attribute("guid");
+            GET_ERROR_LINE_AND_BREAK(pszGameObjGuid, szError);
+        }
+        else
+        {
+
+        }
+
+        // parse every component
+        for (const TiXmlElement* pCompElem = pGameObjElem->FirstChildElement("Component");
+        pCompElem; pCompElem = pCompElem->NextSiblingElement("Component"))
+        {
+            const char* pszCompType = pCompElem->Attribute("type");
+            GET_ERROR_LINE_AND_BREAK(pszCompType, szError);
+            const char* pszCompName = pCompElem->Attribute("name");
+            GET_ERROR_LINE_AND_BREAK(pszCompName, szError);
+            Component* pComp = ComponentManager::getSingleton().createObject(pszCompType, pszCompName);
+            if (!pComp->_loadFromXml(pCompElem, szError))
+            {
+                ComponentManager::getSingleton().destoryObject(pComp);
+                break;
+            }
+        }
+
+        // parse every children game object
+        for (const TiXmlElement* pChildGameObjElem = pGameObjElem->FirstChildElement("GameObject");
+        pChildGameObjElem; pChildGameObjElem = pChildGameObjElem->NextSiblingElement("GameObject"))
+        {
+            const char* pszGameObjType = pGameObjElem->Attribute("type");
+            GET_ERROR_LINE_AND_BREAK(pszGameObjType, szError);
+            const char* pszGameObjName = pGameObjElem->Attribute("name");
+            GET_ERROR_LINE_AND_BREAK(pszGameObjName, szError);
+
+            GameObject* pChildGameObj
+                = GameObjectManager::getSingleton().createObject(pszGameObjType, pszGameObjName);
+            if (!pChildGameObj->_loadFromXml(pChildGameObjElem, szError))
+            {
+                break;
+            }
+        }
+
+    } while (0);
+
+    return szError == BLANK;
+}
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
 template<> GameObjectManager* Singleton<GameObjectManager>::msSingleton = 0;
@@ -272,15 +334,28 @@ GameObjectManager::GameObjectManager()
 {
     // Loading order
     mLoadOrder = 1000.0f;
+
+    // Scripting is supported by this manager
+    mScriptPatterns.push_back("*.gobj");
+    ResourceGroupManager::getSingleton()._registerScriptLoader(this);
+
+    // Resource type
+    mResourceType = "GameObject";
+
+    // Register with resource group manager
+    ResourceGroupManager::getSingleton()._registerResourceManager(mResourceType, this);
 }
 //-----------------------------------------------------------------------
 GameObjectManager::~GameObjectManager()
 {
+    // Unregister with resource group manager
+    ResourceGroupManager::getSingleton()._unregisterResourceManager(mResourceType);
+    ResourceGroupManager::getSingleton()._unregisterScriptLoader(this);
 }
 //-----------------------------------------------------------------------
 void GameObjectManager::parseScript(InStreamPtr& stream, const String& groupName)
 {
-
+    XmlSerializeManager::getSingleton().load(stream, groupName);
 }
 //-----------------------------------------------------------------------
 Resource* GameObjectManager::createImpl(const String& name, ResourceHandle handle,
@@ -289,6 +364,13 @@ Resource* GameObjectManager::createImpl(const String& name, ResourceHandle handl
 {
     return U2_NEW GameObject(this, name, handle, group
         , String("prototype_gameobject_") + name, isManual, loader);
+}
+//-----------------------------------------------------------------------
+GameObjectPtr GameObjectManager::create(const String& name, const String& group,
+    bool isManual, ManualResourceLoader* loader, const NameValuePairList* createParams)
+{
+    return std::dynamic_pointer_cast<GameObject>(
+        createResource(name, group, isManual, loader, createParams));
 }
 //-----------------------------------------------------------------------
 GameObject* GameObjectManager::createObject(const String& type, const String& name)

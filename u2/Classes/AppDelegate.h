@@ -8,8 +8,14 @@
 
 U2EG_NAMESPACE_USING
 
-class FrameListenerCollection;
-class LogManager;
+
+namespace u2
+{
+    class FrameListenerCollection;
+    class LogManager;
+    class ComponentManager;
+}
+
 
 
 /**
@@ -53,6 +59,7 @@ protected:
 protected:
 	u2::FrameListenerCollection*	m_pFrameListenerCollection;
 	u2::LogManager*					m_pLogManager;
+    u2::ComponentManager*		    m_pComponentManager;
 };
 
 #endif // _APP_DELEGATE_H_

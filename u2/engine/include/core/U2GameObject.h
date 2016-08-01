@@ -10,7 +10,11 @@
 #include "U2Singleton.h"
 
 
+class TiXmlElement;
+
+
 U2EG_NAMESPACE_BEGIN
+
 
 class Component;
 
@@ -40,7 +44,7 @@ public:
         , ManualResourceLoader* loader = 0);
     virtual ~GameObject();
 
-    void copy(const GameObject& src);
+    virtual void copy(const GameObject& src);
 
     virtual GameObject* cloneFromPrototype(const String& name = BLANK) override;
     virtual GameObject* cloneFromInstance(const String& name = BLANK) override;
@@ -91,6 +95,8 @@ public:
     */
     bool isPrototypeDependent();
 
+    virtual bool _loadFromXml(const TiXmlElement* gameObjElem, String& error);
+
 protected:
     /// @copydoc Resource::loadImpl
     virtual void loadImpl(void) override;
@@ -108,6 +114,9 @@ protected:
 };
 
 
+typedef std::shared_ptr<GameObject>	GameObjectPtr;
+
+
 class GameObjectManager : public ResourceManager, public GameObject::Listener, public Singleton < GameObjectManager >
 {
     friend GameObject;
@@ -122,6 +131,11 @@ public:
     virtual Resource* createImpl(const String& name, ResourceHandle handle,
         const String& group, bool isManual, ManualResourceLoader* loader,
         const NameValuePairList* createParams) override;
+
+    /// @see ResourceManager::createResource
+    GameObjectPtr create(const String& name, const String& group,
+        bool isManual = false, ManualResourceLoader* loader = 0,
+        const NameValuePairList* createParams = 0);
 
     GameObject* createObject(const String& type, const String& name = BLANK);
 

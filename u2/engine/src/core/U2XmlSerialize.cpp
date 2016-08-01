@@ -47,7 +47,9 @@ XmlSerializeManager::~XmlSerializeManager()
 //-----------------------------------------------------------------------
 void XmlSerializeManager::_initialize()
 {
+    CREATE_FACTORY(ComponentSerialize_0_0_1);
     addTypeVersionPair("PrototypeComponents", Version("0.0.1"), GET_OBJECT_TYPE(ComponentSerialize_0_0_1));
+    CREATE_FACTORY(GameObjectSerialize_0_0_1);
     addTypeVersionPair("PrototypeEntities", Version("0.0.1"), GET_OBJECT_TYPE(GameObjectSerialize_0_0_1));
 }
 //-----------------------------------------------------------------------

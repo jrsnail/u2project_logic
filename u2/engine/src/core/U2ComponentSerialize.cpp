@@ -1,5 +1,6 @@
 ﻿#include "U2ComponentSerialize.h"
 
+#include "U2LogManager.h"
 #include "tinyxml.h"
 #include "U2Version.h"
 #include "U2Component.h"
@@ -53,6 +54,7 @@ bool ComponentSerialize_0_0_1::load(const TiXmlElement* elem, const String& grou
     }
     else
     {
+        LogManager::getSingleton().stream(LML_CRITICAL) << szError;
         return false;
     }
 }
@@ -71,15 +73,9 @@ bool ComponentSerialize_0_0_1::_loadComponent(const TiXmlElement* compElem, Stri
         }
 
         const char* pszCompType = pCompElem->Attribute("type");
+        GET_ERROR_LINE_AND_BREAK(pszCompType, szError);
         const char* pszCompGuid = pCompElem->Attribute("guid");
-        if (pszCompType == nullptr)
-        {
-            break;
-        }
-        if (pszCompGuid == nullptr)
-        {
-            break;
-        }
+        GET_ERROR_LINE_AND_BREAK(pszCompGuid, szError);
         ComponentPtr spCompPtr = ComponentManager::getSingleton().create(pszCompType, groupName);
         if (!spCompPtr->_loadFromXml(pCompElem, szError))
         {
