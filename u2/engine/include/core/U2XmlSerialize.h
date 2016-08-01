@@ -25,6 +25,7 @@ U2EG_NAMESPACE_BEGIN
     if (elem == nullptr)                            \
     {                                               \
         GET_ERROR_LINE(errstr);                     \
+        assert(0);                                  \
         break;                                      \
     }
 

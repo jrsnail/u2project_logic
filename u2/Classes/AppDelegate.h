@@ -14,6 +14,7 @@ namespace u2
     class FrameListenerCollection;
     class LogManager;
     class ComponentManager;
+    class GameObjectManager;
 }
 
 
@@ -60,6 +61,7 @@ protected:
 	u2::FrameListenerCollection*	m_pFrameListenerCollection;
 	u2::LogManager*					m_pLogManager;
     u2::ComponentManager*		    m_pComponentManager;
+    u2::GameObjectManager*          m_pGameObjectManager;
 };
 
 #endif // _APP_DELEGATE_H_

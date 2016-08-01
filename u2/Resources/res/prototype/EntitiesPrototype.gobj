@@ -19,9 +19,9 @@
 			<Attribute name = "min_hp" value = "0" />
 		</Component>
 		<Component type = "component_base_hp" guid = "base_hp">
-			<Hp value = "100" />
-			<MaxHp value = "200" />
-			<MinHp value = "0" />
+			<BaseHp value = "100" />
+			<BaseMaxHp value = "200" />
+			<BaseMinHp value = "0" />
 		</Component>
 		<GameObject type = "sub_aircraft" name = "sub_aircraft">
 			<Component type = "component_sprite" name = "spr_aircraft">

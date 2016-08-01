@@ -20,9 +20,9 @@
 		<MinHp value = "0" />
 	</Component>
 	<Component type = "component_base_hp" guid = "prototype_component_base_hp">
-		<Hp value = "100" />
-		<MaxHp value = "200" />
-		<MinHp value = "0" />
+		<BaseHp value = "100" />
+		<BaseMaxHp value = "200" />
+		<BaseMinHp value = "0" />
 	</Component>
 	<Component type = "component_delta_hp" guid = "prototype_component_delta_hp">
 		<DeltaHp value = "10" />
