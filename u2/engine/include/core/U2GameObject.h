@@ -67,6 +67,12 @@ public:
         return ComponentMapIterator(p.first, p.second);
     }
 
+    u2::Component* retrieveComponentByType(const String& type) const
+    {
+        TypedComponentMap::const_iterator it = m_ComponentMap.find(type);
+        return it->second;
+    }
+
     u2::Component* retrieveComponentByGuid(const String& guid);
 
     GameObject* createChildGameObject(const String& type, const String& name);
@@ -122,6 +128,23 @@ class GameObjectManager : public ResourceManager, public GameObject::Listener, p
     friend GameObject;
 
 public:
+    struct StGameObjRef
+    {
+        GameObject* pGameObj;
+        size_t uRefCount;
+
+        StGameObjRef(GameObject* gameObj, size_t refCount)
+            : pGameObj(gameObj)
+            , uRefCount(refCount)
+        {
+
+        }
+    };
+    // <Component type, StGameObjRef>
+    typedef std::multimap<String, StGameObjRef>      CompRefMap;
+    typedef std::pair<CompRefMap::iterator, CompRefMap::iterator> CompRefPair;
+
+public:
     GameObjectManager();
     virtual ~GameObjectManager();
 
@@ -151,6 +174,14 @@ public:
 
     virtual void onAttachComponent(GameObject* gameObj, Component* comp) override;
     virtual void onDetachComponent(GameObject* gameObj, Component* comp) override;
+
+    typedef MapIterator<CompRefMap>          CompRefMapIterator;
+    typedef ConstMapIterator<CompRefMap>     ConstCompRefMapIterator;
+    CompRefMapIterator retrieveAllGameObjectsByCompType(const String& type)
+    {
+        CompRefPair p = m_CompRefMap.equal_range(type);
+        return CompRefMapIterator(p.first, p.second);
+    }
 
 protected:
     GameObject* _createObject(const String& type, const String& name);
@@ -192,22 +223,6 @@ public:
 
 protected:
     TypedObjectManager<GameObject> m_InstanceCollection;
-
-    struct StGameObjRef
-    {
-        GameObject* pGameObj;
-        size_t uRefCount;
-
-        StGameObjRef(GameObject* gameObj, size_t refCount)
-            : pGameObj(gameObj)
-            , uRefCount(refCount)
-        {
-
-        }
-    };
-    // <Component type, StGameObjRef>
-    typedef std::multimap<String, StGameObjRef>      CompRefMap;
-    typedef std::pair<CompRefMap::iterator, CompRefMap::iterator> CompRefPair;
     CompRefMap m_CompRefMap;
 };
 

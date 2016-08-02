@@ -27,8 +27,9 @@ public:
 
     virtual bool _loadFromXml(const TiXmlElement* compElem, String& error) override;
 
-protected:
-    String m_szFilename;
+public:
+    String szFilename;
+    cocos2d::Sprite*    pSprite;
 };
 
 
@@ -44,8 +45,8 @@ public:
 
     virtual bool _loadFromXml(const TiXmlElement* compElem, String& error) override;
 
-protected:
-    cocos2d::Vec2   m_v2Pos;
+public:
+    cocos2d::Vec2   v2Pos;
 };
 
 

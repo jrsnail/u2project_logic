@@ -1,6 +1,7 @@
 ﻿#include "U2System.h"
 
 
+
 U2EG_NAMESPACE_USING
 
 
@@ -44,12 +45,59 @@ SystemManager::~SystemManager()
 {
 }
 //-----------------------------------------------------------------------
+System* SystemManager::createObject(const String& type, const String& name, size_t priority)
+{
+    System* pObj = createObject(type, name);
+    if (pObj == nullptr)
+    {
+        assert(0);
+    }
+    else
+    {
+        pObj->initialize(priority);
+
+        PriorityMap::iterator it = m_ActiveMap.find(priority);
+        if (it == m_ActiveMap.end())
+        {
+            m_ActiveMap[priority] = pObj;
+        }
+        else
+        {
+            assert(0);
+        }
+    }
+    return pObj;
+}
+//-----------------------------------------------------------------------
+System* SystemManager::createObject(const String& type, const String& name)
+{
+    return SimpleObjectManager<System>::createObject(type, name);
+}
+//-----------------------------------------------------------------------
+void SystemManager::destoryObject(System* obj)
+{
+    assert(obj != nullptr);
+
+    size_t priority = obj->getPriority();
+    PriorityMap::iterator it = m_ActiveMap.find(priority);
+    if (it == m_ActiveMap.end())
+    {
+        assert(0);
+    }
+    else
+    {
+        m_ActiveMap.erase(it);
+    }
+
+    SimpleObjectManager<System>::destoryObject(obj);
+}
+//-----------------------------------------------------------------------
 void SystemManager::enter()
 {
     for (PriorityMap::iterator it = m_ActiveMap.begin(); it != m_ActiveMap.end(); it++)
     {
         System* pSystem = it->second;
-        if (pSystem == nullptr)
+        if (pSystem != nullptr)
         {
             pSystem->enter();
         }
@@ -61,7 +109,7 @@ void SystemManager::execute(u2real dt)
     for (PriorityMap::iterator it = m_ActiveMap.begin(); it != m_ActiveMap.end(); it++)
     {
         System* pSystem = it->second;
-        if (pSystem == nullptr)
+        if (pSystem != nullptr)
         {
             pSystem->execute(dt);
         }
@@ -73,7 +121,7 @@ void SystemManager::exit()
     for (PriorityMap::iterator it = m_ActiveMap.begin(); it != m_ActiveMap.end(); it++)
     {
         System* pSystem = it->second;
-        if (pSystem == nullptr)
+        if (pSystem != nullptr)
         {
             pSystem->exit();
         }
@@ -85,7 +133,7 @@ void SystemManager::pause()
     for (PriorityMap::iterator it = m_ActiveMap.begin(); it != m_ActiveMap.end(); it++)
     {
         System* pSystem = it->second;
-        if (pSystem == nullptr)
+        if (pSystem != nullptr)
         {
             pSystem->pause();
         }
@@ -97,7 +145,7 @@ void SystemManager::resume()
     for (PriorityMap::iterator it = m_ActiveMap.begin(); it != m_ActiveMap.end(); it++)
     {
         System* pSystem = it->second;
-        if (pSystem == nullptr)
+        if (pSystem != nullptr)
         {
             pSystem->resume();
         }

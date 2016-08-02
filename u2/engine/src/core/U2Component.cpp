@@ -105,6 +105,7 @@ void Component::attachedOn(GameObject* gameObj)
 {
     assert(m_pAttachedGameObj == nullptr);
     m_pAttachedGameObj = gameObj;
+    m_uState = CS_Attaching;
 }
 //-----------------------------------------------------------------------
 GameObject* Component::getAttachedGameObject() const

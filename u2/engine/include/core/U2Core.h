@@ -27,6 +27,7 @@
 #include "U2Version.h"
 #include "U2DataPool.h"
 #include "U2PredefinedComponents.h"
+#include "U2PredefinedSystems.h"
 
 
 

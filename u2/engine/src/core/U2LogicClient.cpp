@@ -96,6 +96,9 @@ void LogicTaskLoop::_onUpdate(float dt)
         }
         m_WorkingQueue.pop_front();
     }
+
+    // execute systems
+    SystemManager::getSingleton().execute(dt);
 }
 //---------------------------------------------------------------------
 void LogicTaskLoop::_addToIncomingQueue(Task* task)

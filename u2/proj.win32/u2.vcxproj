@@ -194,6 +194,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\engine\src\core\U2ObjectCollection.cpp" />
     <ClCompile Include="..\engine\src\core\U2PoolingObjectManager.cpp" />
     <ClCompile Include="..\engine\src\core\U2PredefinedComponents.cpp" />
+    <ClCompile Include="..\engine\src\core\U2PredefinedSystems.cpp" />
     <ClCompile Include="..\engine\src\core\U2Prerequisites.cpp" />
     <ClCompile Include="..\engine\src\core\U2Prototype.cpp" />
     <ClCompile Include="..\engine\src\core\U2Resource.cpp" />
@@ -357,6 +358,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\engine\include\core\U2Platform.h" />
     <ClInclude Include="..\engine\include\core\U2PoolingObjectManager.h" />
     <ClInclude Include="..\engine\include\core\U2PredefinedComponents.h" />
+    <ClInclude Include="..\engine\include\core\U2PredefinedSystems.h" />
     <ClInclude Include="..\engine\include\core\U2Prerequisites.h" />
     <ClInclude Include="..\engine\include\core\U2Prototype.h" />
     <ClInclude Include="..\engine\include\core\U2Resource.h" />

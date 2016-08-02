@@ -217,6 +217,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 
 	FileUtils::getInstance()->addSearchPath(FileUtils::getInstance()->getWritablePath());
 	cocos2d::FileUtils::getInstance()->addSearchPath("res");
+    cocos2d::FileUtils::getInstance()->addSearchPath("res/entities");
 	cocos2d::FileUtils::getInstance()->addSearchPath("res/ui/plist");
 	cocos2d::FileUtils::getInstance()->addSearchPath("res/ui/application");
 	cocos2d::FileUtils::getInstance()->addSearchPath("res/ui/cg");
@@ -449,6 +450,13 @@ bool AppDelegate::applicationDidFinishLaunching()
 	}
 
     {
+        //------------------------------- Test ECS ----------------------------------------
+        SystemManager::getSingleton().createObject("system_render", "system_render", 10000);
+
+        SystemManager::getSingleton().enter();
+    }
+
+    {
         //------------------------------- Test Net ----------------------------------------
         WsTaskLoop* pWsTaskLoop = dynamic_cast<WsTaskLoop*>(
             TaskLoopManager::getSingleton().createObject(GET_OBJECT_TYPE(JsonWsTaskLoop), "websocket")
@@ -473,6 +481,8 @@ void AppDelegate::applicationDidEnterBackground() {
 
     // if you use SimpleAudioEngine, it must be pause
     // SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
+
+    SystemManager::getSingleton().pause();
 }
 
 // this function will be called when the app is active again
@@ -481,6 +491,8 @@ void AppDelegate::applicationWillEnterForeground() {
 
     // if you use SimpleAudioEngine, it must resume here
     // SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
+
+    SystemManager::getSingleton().resume();
 }
 
 

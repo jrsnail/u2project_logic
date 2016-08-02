@@ -21,6 +21,10 @@ public:
 
     void initialize(size_t priority);
 
+    size_t getPriority() const {
+        return m_uPriority;
+    };
+
     virtual void enter() = 0;
     virtual void exit() = 0;
     virtual void execute(u2real dt) = 0;
@@ -43,11 +47,18 @@ public:
     */
     virtual ~SystemManager();
 
+    virtual System* createObject(const String& type, const String& name, size_t priority);
+
+    virtual void destoryObject(System* obj);
+
     void enter();
     void execute(u2real dt);
     void exit();
     void pause();
     void resume();
+
+protected:
+    virtual System* createObject(const String& type, const String& name = BLANK);
 
 public:
     /** Override standard Singleton retrieval.

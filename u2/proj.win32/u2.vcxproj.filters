@@ -513,6 +513,9 @@
     <ClCompile Include="..\engine\src\core\U2Core.cpp">
       <Filter>engine\src\core</Filter>
     </ClCompile>
+    <ClCompile Include="..\engine\src\core\U2PredefinedSystems.cpp">
+      <Filter>engine\src\core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -1017,6 +1020,9 @@
       <Filter>engine\include\xml</Filter>
     </ClInclude>
     <ClInclude Include="..\engine\include\core\U2PredefinedComponents.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2PredefinedSystems.h">
       <Filter>engine\include\core</Filter>
     </ClInclude>
   </ItemGroup>

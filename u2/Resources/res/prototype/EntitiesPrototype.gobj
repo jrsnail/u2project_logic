@@ -3,7 +3,7 @@
 <PrototypeGameObjects version = "0.0.1">
 	<GameObject type = "aircraft" guid = "prototype_entity_aircraft_001" name = "aircraft">
 		<Component type = "component_sprite" name = "spr_aircraft">
-			<Filename value = "aircraft.png" />
+			<Filename value = "Arrow.png" />
 		</Component>
 		<Component type = "component_position" name = "pos">
 			<Position value = "240, 300" />
@@ -25,7 +25,7 @@
 		</Component>
 		<GameObject type = "sub_aircraft" guid = "prototype_entity_sub_aircraft_001" name = "sub_aircraft">
 			<Component type = "component_sprite" name = "spr_sub_aircraft">
-				<Filename value = "aircraft.png" />
+				<Filename value = "Arrow.png" />
 			</Component>
 			<Component type = "component_delta_hp" name = "delta_hp" attachOn = "aircraft">
 				<DeltaHp value = "10" />

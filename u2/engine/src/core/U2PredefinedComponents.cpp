@@ -12,11 +12,13 @@ U2EG_NAMESPACE_USING
 SpriteComponent::SpriteComponent(ResourceManager* creator, const String& type, ResourceHandle handle,
     const String& group, bool isManual, ManualResourceLoader* loader)
     : Component(creator, type, handle, group, isManual, loader)
+    , pSprite(nullptr)
 {
 }
 //-----------------------------------------------------------------------
 SpriteComponent::SpriteComponent(const String& type, const String& name)
     : Component(type, name)
+    , pSprite(nullptr)
 {
 
 }
@@ -30,7 +32,7 @@ void SpriteComponent::copy(const Component& src)
     Component::copy(src);
 
     const SpriteComponent& srcComp = dynamic_cast<const SpriteComponent&>(src);
-    m_szFilename = srcComp.m_szFilename;
+    szFilename = srcComp.szFilename;
 }
 //-----------------------------------------------------------------------
 bool SpriteComponent::_loadFromXml(const TiXmlElement* compElem, String& error)
@@ -57,7 +59,7 @@ bool SpriteComponent::_loadFromXml(const TiXmlElement* compElem, String& error)
         GET_ERROR_LINE_AND_BREAK(pFilenameElem, szError);
         const char* pszValue = pFilenameElem->Attribute("value");
         GET_ERROR_LINE_AND_BREAK(pszValue, szError);
-        m_szFilename = pszValue;
+        szFilename = pszValue;
 
     } while (0);
 
@@ -68,7 +70,7 @@ bool SpriteComponent::_loadFromXml(const TiXmlElement* compElem, String& error)
 PositionComponent::PositionComponent(ResourceManager* creator, const String& type, ResourceHandle handle,
     const String& group, bool isManual, ManualResourceLoader* loader)
     : Component(creator, type, handle, group, isManual, loader)
-    , m_v2Pos(cocos2d::Vec2::ZERO)
+    , v2Pos(cocos2d::Vec2::ZERO)
 {
 }
 //-----------------------------------------------------------------------
@@ -87,7 +89,7 @@ void PositionComponent::copy(const Component& src)
     Component::copy(src);
 
     const PositionComponent& srcComp = dynamic_cast<const PositionComponent&>(src);
-    m_v2Pos = srcComp.m_v2Pos;
+    v2Pos = srcComp.v2Pos;
 }
 //-----------------------------------------------------------------------
 bool PositionComponent::_loadFromXml(const TiXmlElement* compElem, String& error)
@@ -114,7 +116,7 @@ bool PositionComponent::_loadFromXml(const TiXmlElement* compElem, String& error
         GET_ERROR_LINE_AND_BREAK(pPositionElem, szError);
         const char* pszValue = pPositionElem->Attribute("value");
         GET_ERROR_LINE_AND_BREAK(pszValue, szError);
-        m_v2Pos = StringUtil::parseVector2(pszValue);
+        v2Pos = StringUtil::parseVector2(pszValue);
 
     } while (0);
 

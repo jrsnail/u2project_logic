@@ -7,6 +7,7 @@ U2EG_NAMESPACE_USING
 
 void initFactroy()
 {
+    // component
     CREATE_FACTORY_WITH_TYPE(SpriteComponent, "component_sprite");
     CREATE_FACTORY_WITH_TYPE(PositionComponent, "component_position");
     CREATE_FACTORY_WITH_TYPE(VelocityComponent, "component_velocity");
@@ -14,4 +15,7 @@ void initFactroy()
     CREATE_FACTORY_WITH_TYPE(HpComponent, "component_hp");
     CREATE_FACTORY_WITH_TYPE(BaseHpComponent, "component_base_hp");
     CREATE_FACTORY_WITH_TYPE(DeltaHpComponent, "component_delta_hp");
+
+    // system
+    CREATE_FACTORY_WITH_TYPE(RenderSystem, "system_render");
 }
