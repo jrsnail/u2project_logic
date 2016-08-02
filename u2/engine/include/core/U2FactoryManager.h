@@ -89,6 +89,16 @@ protected:
 #define DESTROY_FACTORY(T)                                                          \
 	u2::FactoryManager::getSingleton().destroyObjectFactory(GET_OBJECT_TYPE(T));
 
+#define CREATE_FACTORY_WITH_TYPE(T, TypeStr)                                        \
+	if (!u2::FactoryManager::getSingleton().hasObjectFactory(TypeStr))              \
+	{                                                                               \
+		u2::ObjectFactory* pObjectFactory = new u2::TemplateObjectFactory < T > (TypeStr);   \
+		u2::FactoryManager::getSingleton().addObjectFactory(pObjectFactory);        \
+	}
+
+#define DESTROY_FACTORY_WITH_TYPE(TypeStr)                                          \
+	u2::FactoryManager::getSingleton().destroyObjectFactory(TypeStr);
+
 
 U2EG_NAMESPACE_END
 

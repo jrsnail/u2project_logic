@@ -10,9 +10,15 @@ U2EG_NAMESPACE_USING
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
 SpriteComponent::SpriteComponent(ResourceManager* creator, const String& type, ResourceHandle handle,
-    const String& group, const String& name, bool isManual, ManualResourceLoader* loader)
-    : Component(creator, type, handle, group, name, isManual, loader)
+    const String& group, bool isManual, ManualResourceLoader* loader)
+    : Component(creator, type, handle, group, isManual, loader)
 {
+}
+//-----------------------------------------------------------------------
+SpriteComponent::SpriteComponent(const String& type, const String& name)
+    : Component(type, name)
+{
+
 }
 //-----------------------------------------------------------------------
 SpriteComponent::~SpriteComponent()
@@ -60,10 +66,16 @@ bool SpriteComponent::_loadFromXml(const TiXmlElement* compElem, String& error)
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
 PositionComponent::PositionComponent(ResourceManager* creator, const String& type, ResourceHandle handle,
-    const String& group, const String& name, bool isManual, ManualResourceLoader* loader)
-    : Component(creator, type, handle, group, name, isManual, loader)
+    const String& group, bool isManual, ManualResourceLoader* loader)
+    : Component(creator, type, handle, group, isManual, loader)
     , m_v2Pos(cocos2d::Vec2::ZERO)
 {
+}
+//-----------------------------------------------------------------------
+PositionComponent::PositionComponent(const String& type, const String& name)
+    : Component(type, name)
+{
+
 }
 //-----------------------------------------------------------------------
 PositionComponent::~PositionComponent()
@@ -111,10 +123,16 @@ bool PositionComponent::_loadFromXml(const TiXmlElement* compElem, String& error
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
 VelocityComponent::VelocityComponent(ResourceManager* creator, const String& type, ResourceHandle handle,
-    const String& group, const String& name, bool isManual, ManualResourceLoader* loader)
-    : Component(creator, type, handle, group, name, isManual, loader)
+    const String& group, bool isManual, ManualResourceLoader* loader)
+    : Component(creator, type, handle, group, isManual, loader)
     , m_v2Velocity(cocos2d::Vec2::ZERO)
 {
+}
+//-----------------------------------------------------------------------
+VelocityComponent::VelocityComponent(const String& type, const String& name)
+    : Component(type, name)
+{
+
 }
 //-----------------------------------------------------------------------
 VelocityComponent::~VelocityComponent()
@@ -162,12 +180,18 @@ bool VelocityComponent::_loadFromXml(const TiXmlElement* compElem, String& error
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
 SpeedComponent::SpeedComponent(ResourceManager* creator, const String& type, ResourceHandle handle,
-    const String& group, const String& name, bool isManual, ManualResourceLoader* loader)
-    : Component(creator, type, handle, group, name, isManual, loader)
+    const String& group, bool isManual, ManualResourceLoader* loader)
+    : Component(creator, type, handle, group, isManual, loader)
     , m_fSpeed(0.0f)
     , m_fMaxSpeed(0.0f)
     , m_fMinSpeed(0.0f)
 {
+}
+//-----------------------------------------------------------------------
+SpeedComponent::SpeedComponent(const String& type, const String& name)
+    : Component(type, name)
+{
+
 }
 //-----------------------------------------------------------------------
 SpeedComponent::~SpeedComponent()
@@ -237,12 +261,18 @@ bool SpeedComponent::_loadFromXml(const TiXmlElement* compElem, String& error)
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
 HpComponent::HpComponent(ResourceManager* creator, const String& type, ResourceHandle handle,
-    const String& group, const String& name, bool isManual, ManualResourceLoader* loader)
-    : Component(creator, type, handle, group, name, isManual, loader)
+    const String& group, bool isManual, ManualResourceLoader* loader)
+    : Component(creator, type, handle, group, isManual, loader)
     , m_uHp(0)
     , m_uMaxHp(0)
     , m_uMinHp(0)
 {
+}
+//-----------------------------------------------------------------------
+HpComponent::HpComponent(const String& type, const String& name)
+    : Component(type, name)
+{
+
 }
 //-----------------------------------------------------------------------
 HpComponent::~HpComponent()
@@ -312,12 +342,18 @@ bool HpComponent::_loadFromXml(const TiXmlElement* compElem, String& error)
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
 BaseHpComponent::BaseHpComponent(ResourceManager* creator, const String& type, ResourceHandle handle,
-    const String& group, const String& name, bool isManual, ManualResourceLoader* loader)
-    : Component(creator, type, handle, group, name, isManual, loader)
+    const String& group, bool isManual, ManualResourceLoader* loader)
+    : Component(creator, type, handle, group, isManual, loader)
     , m_uBaseHp(0)
     , m_uBaseMaxHp(0)
     , m_uBaseMinHp(0)
 {
+}
+//-----------------------------------------------------------------------
+BaseHpComponent::BaseHpComponent(const String& type, const String& name)
+    : Component(type, name)
+{
+
 }
 //-----------------------------------------------------------------------
 BaseHpComponent::~BaseHpComponent()
@@ -387,12 +423,18 @@ bool BaseHpComponent::_loadFromXml(const TiXmlElement* compElem, String& error)
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
 DeltaHpComponent::DeltaHpComponent(ResourceManager* creator, const String& type, ResourceHandle handle,
-    const String& group, const String& name, bool isManual, ManualResourceLoader* loader)
-    : Component(creator, type, handle, group, name, isManual, loader)
+    const String& group, bool isManual, ManualResourceLoader* loader)
+    : Component(creator, type, handle, group, isManual, loader)
     , m_nDeltaHp(0)
     , m_nDeltaMaxHp(0)
     , m_nDeltaMinHp(0)
 {
+}
+//-----------------------------------------------------------------------
+DeltaHpComponent::DeltaHpComponent(const String& type, const String& name)
+    : Component(type, name)
+{
+
 }
 //-----------------------------------------------------------------------
 DeltaHpComponent::~DeltaHpComponent()

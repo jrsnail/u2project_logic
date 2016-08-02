@@ -40,8 +40,8 @@ public:
 
 public:
     GameObject(ResourceManager* creator, const String& type, ResourceHandle handle,
-        const String& group, const String& name = BLANK, bool isManual = false
-        , ManualResourceLoader* loader = 0);
+        const String& group, bool isManual = false, ManualResourceLoader* loader = 0);
+    GameObject(const String& type, const String& name);
     virtual ~GameObject();
 
     virtual void copy(const GameObject& src);

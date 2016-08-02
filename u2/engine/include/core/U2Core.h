@@ -6,6 +6,7 @@
 #include "U2Object.h"
 #include "U2Singleton.h"
 #include "U2FactoryObj.h"
+#include "U2FactoryManager.h"
 #include "U2IteratorWrapper.h"
 #include "U2NameGenerator.h"
 #include "U2FactoryManager.h"
@@ -25,6 +26,14 @@
 #include "U2StringUtil.h"
 #include "U2Version.h"
 #include "U2DataPool.h"
+#include "U2PredefinedComponents.h"
+
+
+
+extern "C"
+{
+    void initFactroy();
+}
 
 
 #endif

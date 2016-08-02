@@ -19,8 +19,8 @@ class SpriteComponent : public Component
 {
 public:
     SpriteComponent(ResourceManager* creator, const String& type, ResourceHandle handle,
-        const String& group, const String& name = BLANK, bool isManual = false
-        , ManualResourceLoader* loader = 0);
+        const String& group, bool isManual = false, ManualResourceLoader* loader = 0);
+    SpriteComponent(const String& type, const String& name);
     virtual ~SpriteComponent();
 
     virtual void copy(const Component& src) override;
@@ -36,8 +36,8 @@ class PositionComponent : public Component
 {
 public:
     PositionComponent(ResourceManager* creator, const String& type, ResourceHandle handle,
-        const String& group, const String& name = BLANK, bool isManual = false
-        , ManualResourceLoader* loader = 0);
+        const String& group, bool isManual = false, ManualResourceLoader* loader = 0);
+    PositionComponent(const String& type, const String& name);
     virtual ~PositionComponent();
 
     virtual void copy(const Component& src) override;
@@ -53,8 +53,8 @@ class VelocityComponent : public Component
 {
 public:
     VelocityComponent(ResourceManager* creator, const String& type, ResourceHandle handle,
-        const String& group, const String& name = BLANK, bool isManual = false
-        , ManualResourceLoader* loader = 0);
+        const String& group, bool isManual = false, ManualResourceLoader* loader = 0);
+    VelocityComponent(const String& type, const String& name);
     virtual ~VelocityComponent();
 
     virtual void copy(const Component& src) override;
@@ -70,8 +70,8 @@ class SpeedComponent : public Component
 {
 public:
     SpeedComponent(ResourceManager* creator, const String& type, ResourceHandle handle,
-        const String& group, const String& name = BLANK, bool isManual = false
-        , ManualResourceLoader* loader = 0);
+        const String& group, bool isManual = false, ManualResourceLoader* loader = 0);
+    SpeedComponent(const String& type, const String& name);
     virtual ~SpeedComponent();
 
     virtual void copy(const Component& src) override;
@@ -89,8 +89,8 @@ class HpComponent : public Component
 {
 public:
     HpComponent(ResourceManager* creator, const String& type, ResourceHandle handle,
-        const String& group, const String& name = BLANK, bool isManual = false
-        , ManualResourceLoader* loader = 0);
+        const String& group, bool isManual = false, ManualResourceLoader* loader = 0);
+    HpComponent(const String& type, const String& name);
     virtual ~HpComponent();
 
     virtual void copy(const Component& src) override;
@@ -108,8 +108,8 @@ class BaseHpComponent : public Component
 {
 public:
     BaseHpComponent(ResourceManager* creator, const String& type, ResourceHandle handle,
-        const String& group, const String& name = BLANK, bool isManual = false
-        , ManualResourceLoader* loader = 0);
+        const String& group, bool isManual = false, ManualResourceLoader* loader = 0);
+    BaseHpComponent(const String& type, const String& name);
     virtual ~BaseHpComponent();
 
     virtual void copy(const Component& src) override;
@@ -127,8 +127,8 @@ class DeltaHpComponent : public Component
 {
 public:
     DeltaHpComponent(ResourceManager* creator, const String& type, ResourceHandle handle,
-        const String& group, const String& name = BLANK, bool isManual = false
-        , ManualResourceLoader* loader = 0);
+        const String& group, bool isManual = false, ManualResourceLoader* loader = 0);
+    DeltaHpComponent(const String& type, const String& name);
     virtual ~DeltaHpComponent();
 
     virtual void copy(const Component& src) override;

@@ -14,17 +14,17 @@
 			<MinSpeed value = "0" />
 		</Component>
 		<Component type = "component_hp" name = "hp">
-			<Attribute name = "hp" value = "200" />
-			<Attribute name = "max_hp" value = "200" />
-			<Attribute name = "min_hp" value = "0" />
+			<Hp value = "200" />
+			<MaxHp value = "200" />
+			<MinHp value = "0" />
 		</Component>
-		<Component type = "component_base_hp" guid = "base_hp">
+		<Component type = "component_base_hp" name = "base_hp">
 			<BaseHp value = "100" />
 			<BaseMaxHp value = "200" />
 			<BaseMinHp value = "0" />
 		</Component>
-		<GameObject type = "sub_aircraft" name = "sub_aircraft">
-			<Component type = "component_sprite" name = "spr_aircraft">
+		<GameObject type = "sub_aircraft" guid = "prototype_entity_sub_aircraft_001" name = "sub_aircraft">
+			<Component type = "component_sprite" name = "spr_sub_aircraft">
 				<Filename value = "aircraft.png" />
 			</Component>
 			<Component type = "component_delta_hp" name = "delta_hp" attachOn = "aircraft">

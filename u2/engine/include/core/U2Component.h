@@ -23,8 +23,9 @@ class Component : public Resource, public Prototype<Component>
 {
 public:
     Component(ResourceManager* creator, const String& type, ResourceHandle handle,
-        const String& group, const String& name = BLANK, bool isManual = false
+        const String& group, bool isManual = false
         , ManualResourceLoader* loader = 0);
+    Component(const String& type, const String& name);
     virtual ~Component();
 
     virtual void copy(const Component& src);

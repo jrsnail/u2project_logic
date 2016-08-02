@@ -228,6 +228,8 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     {
         //------------------------------- init u2 ----------------------------------------
+        initFactroy();
+
         // Create log manager and default log file if there is no log manager yet
         if (u2::LogManager::getSingletonPtr() == nullptr)
         {

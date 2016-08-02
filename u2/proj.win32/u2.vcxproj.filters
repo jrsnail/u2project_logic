@@ -510,6 +510,9 @@
     <ClCompile Include="..\engine\src\core\U2PredefinedComponents.cpp">
       <Filter>engine\src\core</Filter>
     </ClCompile>
+    <ClCompile Include="..\engine\src\core\U2Core.cpp">
+      <Filter>engine\src\core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">

@@ -11,11 +11,19 @@ U2EG_NAMESPACE_USING
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
 GameObject::GameObject(ResourceManager* creator, const String& type, ResourceHandle handle,
-    const String& group, const String& name, bool isManual, ManualResourceLoader* loader)
+    const String& group, bool isManual, ManualResourceLoader* loader)
     : Resource(creator, type, handle, group, isManual, loader)
+    , Prototype(type, String("prototype_gameobject_") + type)
+    , m_pParentGameObj(nullptr)
+{
+}
+//-----------------------------------------------------------------------
+GameObject::GameObject(const String& type, const String& name)
+    : Resource()
     , Prototype(type, name)
     , m_pParentGameObj(nullptr)
 {
+
 }
 //-----------------------------------------------------------------------
 GameObject::~GameObject()
@@ -291,15 +299,19 @@ bool GameObject::_loadFromXml(const TiXmlElement* gameObjElem, String& error)
                 ComponentManager::getSingleton().destoryObject(pComp);
                 break;
             }
+            else
+            {
+                this->addComponent(pComp);
+            }
         }
 
         // parse every children game object
         for (const TiXmlElement* pChildGameObjElem = pGameObjElem->FirstChildElement("GameObject");
         pChildGameObjElem; pChildGameObjElem = pChildGameObjElem->NextSiblingElement("GameObject"))
         {
-            const char* pszGameObjType = pGameObjElem->Attribute("type");
+            const char* pszGameObjType = pChildGameObjElem->Attribute("type");
             GET_ERROR_LINE_AND_BREAK(pszGameObjType, szError);
-            const char* pszGameObjName = pGameObjElem->Attribute("name");
+            const char* pszGameObjName = pChildGameObjElem->Attribute("name");
             GET_ERROR_LINE_AND_BREAK(pszGameObjName, szError);
 
             GameObject* pChildGameObj
@@ -307,6 +319,10 @@ bool GameObject::_loadFromXml(const TiXmlElement* gameObjElem, String& error)
             if (!pChildGameObj->_loadFromXml(pChildGameObjElem, szError))
             {
                 break;
+            }
+            else
+            {
+                this->addChildGameObject(pChildGameObj);
             }
         }
 
@@ -362,8 +378,7 @@ Resource* GameObjectManager::createImpl(const String& name, ResourceHandle handl
     const String& group, bool isManual, ManualResourceLoader* loader,
     const NameValuePairList* createParams)
 {
-    return U2_NEW GameObject(this, name, handle, group
-        , String("prototype_gameobject_") + name, isManual, loader);
+    return U2_NEW GameObject(this, name, handle, group, isManual, loader);
 }
 //-----------------------------------------------------------------------
 GameObjectPtr GameObjectManager::create(const String& name, const String& group,
@@ -376,9 +391,11 @@ GameObjectPtr GameObjectManager::create(const String& name, const String& group,
 GameObject* GameObjectManager::createObject(const String& type, const String& name)
 {
     ResourcePtr resPtr = this->getResourceByName(type);
+    // prototype existed
     if (resPtr)
     {
         GameObject* pPrototype = dynamic_cast<GameObject*>(resPtr.get());
+        // create instance from prototype
         if (pPrototype)
         {
             GameObject* pObj = pPrototype->cloneFromPrototype(name);
@@ -389,9 +406,13 @@ GameObject* GameObjectManager::createObject(const String& type, const String& na
             assert(0);
         }
     }
+    // prototype not existed
     else
     {
-        assert(0);
+        // create as an alone object
+        CREATE_FACTORY_WITH_TYPE(GameObject, type);
+        GameObject* pObj = GameObjectManager::getSingleton()._createObject(type, name);
+        return pObj;
     }
     return nullptr;
 }

@@ -51,10 +51,10 @@ protected:
 };
 
 
-#define CREATE_LUATASK_FACTORY(type)                                                            \
-    if (!u2::FactoryManager::getSingletonPtr()->hasObjectFactory(#type))                        \
+#define CREATE_LUATASK_FACTORY(TypeStr)                                                         \
+    if (!u2::FactoryManager::getSingletonPtr()->hasObjectFactory(TypeStr))                      \
     {                                                                                           \
-        u2::ObjectFactory* pObjectFactory = new u2::TemplateObjectFactory<u2::LuaTask>(#type);  \
+        u2::ObjectFactory* pObjectFactory = new u2::TemplateObjectFactory<u2::LuaTask>(TypeStr);\
         u2::FactoryManager::getSingletonPtr()->addObjectFactory(pObjectFactory);                \
     }
 

@@ -11,13 +11,23 @@ U2EG_NAMESPACE_USING
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
 Component::Component(ResourceManager* creator, const String& type, ResourceHandle handle,
-    const String& group, const String& name, bool isManual, ManualResourceLoader* loader)
+    const String& group, bool isManual, ManualResourceLoader* loader)
     : Resource(creator, type, handle, group, isManual, loader)
+    , Prototype(type, String("prototype_component_") + type)
+    , m_pBornGameObj(nullptr)
+    , m_pAttachedGameObj(nullptr)
+    , m_uState(CS_None)
+{
+}
+//-----------------------------------------------------------------------
+Component::Component(const String& type, const String& name)
+    : Resource()
     , Prototype(type, name)
     , m_pBornGameObj(nullptr)
     , m_pAttachedGameObj(nullptr)
     , m_uState(CS_None)
 {
+
 }
 //-----------------------------------------------------------------------
 Component::~Component()
@@ -164,37 +174,37 @@ Resource* ComponentManager::createImpl(const String& name, ResourceHandle handle
     if ("component_sprite" == name)
     {
         return U2_NEW SpriteComponent(this, name, handle, group
-            , String("prototype_component_") + name, isManual, loader);
+            , isManual, loader);
     }
     else if ("component_position" == name)
     {
         return U2_NEW PositionComponent(this, name, handle, group
-            , String("prototype_component_") + name, isManual, loader);
+            , isManual, loader);
     }
     else if ("component_velocity" == name)
     {
         return U2_NEW VelocityComponent(this, name, handle, group
-            , String("prototype_component_") + name, isManual, loader);
+            , isManual, loader);
     }
     else if ("component_speed" == name)
     {
         return U2_NEW SpeedComponent(this, name, handle, group
-            , String("prototype_component_") + name, isManual, loader);
+            , isManual, loader);
     }
     else if ("component_hp" == name)
     {
         return U2_NEW HpComponent(this, name, handle, group
-            , String("prototype_component_") + name, isManual, loader);
+            , isManual, loader);
     }
     else if ("component_base_hp" == name)
     {
         return U2_NEW BaseHpComponent(this, name, handle, group
-            , String("prototype_component_") + name, isManual, loader);
+            , isManual, loader);
     }
     else if ("component_delta_hp" == name)
     {
         return U2_NEW DeltaHpComponent(this, name, handle, group
-            , String("prototype_component_") + name, isManual, loader);
+            , isManual, loader);
     }
     else
     {

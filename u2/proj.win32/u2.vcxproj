@@ -173,6 +173,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\engine\src\core\U2Component.cpp" />
     <ClCompile Include="..\engine\src\core\U2ComponentSerialize.cpp" />
     <ClCompile Include="..\engine\src\core\U2ConfigFile.cpp" />
+    <ClCompile Include="..\engine\src\core\U2Core.cpp" />
     <ClCompile Include="..\engine\src\core\U2DataPool.cpp" />
     <ClCompile Include="..\engine\src\core\U2Exception.cpp" />
     <ClCompile Include="..\engine\src\core\U2FactoryManager.cpp" />
