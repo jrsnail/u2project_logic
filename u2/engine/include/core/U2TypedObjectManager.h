@@ -85,7 +85,7 @@ void TypedObjectManager<T>::destoryObject(T* obj)
     ObjectMapIterator it = retrieveAllObjectsByType(obj->getType());
     while (it.hasMoreElements())
     {
-        TypedObjectMap::iterator curIt = it.current();
+        typename TypedObjectMap::iterator curIt = it.current();
         T* pObj = it.getNext();
         if (pObj == obj)
         {
