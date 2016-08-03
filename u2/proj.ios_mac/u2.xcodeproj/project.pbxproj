@@ -127,6 +127,10 @@
 		4CA4AAD21CC0F070007B5F39 /* libzziplib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CA4AACE1CC0ED88007B5F39 /* libzziplib.a */; };
 		4CBA3BDB1D05227B00255CC7 /* U2Task.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CBA3BD91D05227B00255CC7 /* U2Task.cpp */; };
 		4CBA3BDC1D05227B00255CC7 /* U2TaskLoop.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CBA3BDA1D05227B00255CC7 /* U2TaskLoop.cpp */; };
+		4CC68BA81D52016F00FFA865 /* GameSnapshot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CC68BA61D52016F00FFA865 /* GameSnapshot.cpp */; };
+		4CC68BA91D52016F00FFA865 /* GameSnapshot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CC68BA61D52016F00FFA865 /* GameSnapshot.cpp */; };
+		4CC68BAC1D5201AC00FFA865 /* U2Snapshot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CC68BAB1D5201AC00FFA865 /* U2Snapshot.cpp */; };
+		4CC68BAD1D5201AC00FFA865 /* U2Snapshot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CC68BAB1D5201AC00FFA865 /* U2Snapshot.cpp */; };
 		4CD7EAC61D4C52CB000FA6B0 /* AppCommands.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EA9D1D4C52CB000FA6B0 /* AppCommands.cpp */; };
 		4CD7EAC71D4C52CB000FA6B0 /* AppFacade.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EA9F1D4C52CB000FA6B0 /* AppFacade.cpp */; };
 		4CD7EAC81D4C52CB000FA6B0 /* AppLuaTasks.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EAA11D4C52CB000FA6B0 /* AppLuaTasks.cpp */; };
@@ -137,9 +141,7 @@
 		4CD7EACD1D4C52CB000FA6B0 /* JoystickViewComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EAAC1D4C52CB000FA6B0 /* JoystickViewComponent.cpp */; };
 		4CD7EACE1D4C52CB000FA6B0 /* GameComponentManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EAAF1D4C52CB000FA6B0 /* GameComponentManager.cpp */; };
 		4CD7EACF1D4C52CB000FA6B0 /* GameComponents.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EAB11D4C52CB000FA6B0 /* GameComponents.cpp */; };
-		4CD7EAD01D4C52CB000FA6B0 /* GameEntityCollection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EAB31D4C52CB000FA6B0 /* GameEntityCollection.cpp */; };
 		4CD7EAD11D4C52CB000FA6B0 /* GameSystems.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EAB51D4C52CB000FA6B0 /* GameSystems.cpp */; };
-		4CD7EAD21D4C52CB000FA6B0 /* GameDataPool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EAB71D4C52CB000FA6B0 /* GameDataPool.cpp */; };
 		4CD7EAD31D4C52CB000FA6B0 /* GameHttpRequests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EABA1D4C52CB000FA6B0 /* GameHttpRequests.cpp */; };
 		4CD7EAD41D4C52CB000FA6B0 /* GameHttpResponses.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EABC1D4C52CB000FA6B0 /* GameHttpResponses.cpp */; };
 		4CD7EAD51D4C52CB000FA6B0 /* GameRecvSocketTasks.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EABE1D4C52CB000FA6B0 /* GameRecvSocketTasks.cpp */; };
@@ -160,7 +162,6 @@
 		4CD7EB391D4C53AA000FA6B0 /* U2Prototype.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB181D4C53AA000FA6B0 /* U2Prototype.cpp */; };
 		4CD7EB3A1D4C53AA000FA6B0 /* U2Root.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB191D4C53AA000FA6B0 /* U2Root.cpp */; };
 		4CD7EB3B1D4C53AA000FA6B0 /* U2Scheduler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB1A1D4C53AA000FA6B0 /* U2Scheduler.cpp */; };
-		4CD7EB3C1D4C53AA000FA6B0 /* U2SnapshotDataPool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB1B1D4C53AA000FA6B0 /* U2SnapshotDataPool.cpp */; };
 		4CD7EB3D1D4C53AA000FA6B0 /* U2SocketTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB1C1D4C53AA000FA6B0 /* U2SocketTask.cpp */; };
 		4CD7EB3E1D4C53AA000FA6B0 /* U2System.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB1D1D4C53AA000FA6B0 /* U2System.cpp */; };
 		4CD7EB3F1D4C53AA000FA6B0 /* U2UrlUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB1E1D4C53AA000FA6B0 /* U2UrlUtils.cpp */; };
@@ -186,13 +187,11 @@
 		4CD7EC871D4C60EF000FA6B0 /* GameSystems.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EAB51D4C52CB000FA6B0 /* GameSystems.cpp */; };
 		4CD7EC881D4C611F000FA6B0 /* GameComponentManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EAAF1D4C52CB000FA6B0 /* GameComponentManager.cpp */; };
 		4CD7EC891D4C611F000FA6B0 /* GameComponents.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EAB11D4C52CB000FA6B0 /* GameComponents.cpp */; };
-		4CD7EC8A1D4C611F000FA6B0 /* GameEntityCollection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EAB31D4C52CB000FA6B0 /* GameEntityCollection.cpp */; };
 		4CD7EC8B1D4C612E000FA6B0 /* BattleCommands.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EAA81D4C52CB000FA6B0 /* BattleCommands.cpp */; };
 		4CD7EC8C1D4C612E000FA6B0 /* BattleViewComponents.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EAAA1D4C52CB000FA6B0 /* BattleViewComponents.cpp */; };
 		4CD7EC8D1D4C612E000FA6B0 /* JoystickViewComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EAAC1D4C52CB000FA6B0 /* JoystickViewComponent.cpp */; };
 		4CD7EC901D4C6172000FA6B0 /* U2GameObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB121D4C53AA000FA6B0 /* U2GameObject.cpp */; };
 		4CD7EC911D4C6172000FA6B0 /* U2GameObjectSerialize.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB131D4C53AA000FA6B0 /* U2GameObjectSerialize.cpp */; };
-		4CD7EC921D4C6172000FA6B0 /* GameDataPool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EAB71D4C52CB000FA6B0 /* GameDataPool.cpp */; };
 		4CD7EC931D4C6172000FA6B0 /* GameHttpRequests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EABA1D4C52CB000FA6B0 /* GameHttpRequests.cpp */; };
 		4CD7EC941D4C6172000FA6B0 /* GameHttpResponses.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EABC1D4C52CB000FA6B0 /* GameHttpResponses.cpp */; };
 		4CD7EC951D4C6172000FA6B0 /* GameRecvSocketTasks.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EABE1D4C52CB000FA6B0 /* GameRecvSocketTasks.cpp */; };
@@ -211,7 +210,6 @@
 		4CD7ECA41D4C61C1000FA6B0 /* U2Prototype.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB181D4C53AA000FA6B0 /* U2Prototype.cpp */; };
 		4CD7ECA51D4C61C1000FA6B0 /* U2Root.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB191D4C53AA000FA6B0 /* U2Root.cpp */; };
 		4CD7ECA61D4C61C1000FA6B0 /* U2Scheduler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB1A1D4C53AA000FA6B0 /* U2Scheduler.cpp */; };
-		4CD7ECA71D4C61C1000FA6B0 /* U2SnapshotDataPool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB1B1D4C53AA000FA6B0 /* U2SnapshotDataPool.cpp */; };
 		4CD7ECA81D4C61C1000FA6B0 /* U2SocketTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB1C1D4C53AA000FA6B0 /* U2SocketTask.cpp */; };
 		4CD7ECA91D4C61C1000FA6B0 /* U2System.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB1D1D4C53AA000FA6B0 /* U2System.cpp */; };
 		4CD7ECAA1D4C61C1000FA6B0 /* U2UrlUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD7EB1E1D4C53AA000FA6B0 /* U2UrlUtils.cpp */; };
@@ -589,6 +587,10 @@
 		4CBA3BD81D05225E00255CC7 /* U2TaskLoop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2TaskLoop.h; sourceTree = "<group>"; };
 		4CBA3BD91D05227B00255CC7 /* U2Task.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2Task.cpp; sourceTree = "<group>"; };
 		4CBA3BDA1D05227B00255CC7 /* U2TaskLoop.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2TaskLoop.cpp; sourceTree = "<group>"; };
+		4CC68BA61D52016F00FFA865 /* GameSnapshot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameSnapshot.cpp; sourceTree = "<group>"; };
+		4CC68BA71D52016F00FFA865 /* GameSnapshot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameSnapshot.h; sourceTree = "<group>"; };
+		4CC68BAA1D52019900FFA865 /* U2Snapshot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2Snapshot.h; sourceTree = "<group>"; };
+		4CC68BAB1D5201AC00FFA865 /* U2Snapshot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2Snapshot.cpp; sourceTree = "<group>"; };
 		4CD7EA9D1D4C52CB000FA6B0 /* AppCommands.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppCommands.cpp; sourceTree = "<group>"; };
 		4CD7EA9E1D4C52CB000FA6B0 /* AppCommands.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppCommands.h; sourceTree = "<group>"; };
 		4CD7EA9F1D4C52CB000FA6B0 /* AppFacade.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppFacade.cpp; sourceTree = "<group>"; };
@@ -609,12 +611,8 @@
 		4CD7EAB01D4C52CB000FA6B0 /* GameComponentManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameComponentManager.h; sourceTree = "<group>"; };
 		4CD7EAB11D4C52CB000FA6B0 /* GameComponents.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameComponents.cpp; sourceTree = "<group>"; };
 		4CD7EAB21D4C52CB000FA6B0 /* GameComponents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameComponents.h; sourceTree = "<group>"; };
-		4CD7EAB31D4C52CB000FA6B0 /* GameEntityCollection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameEntityCollection.cpp; sourceTree = "<group>"; };
-		4CD7EAB41D4C52CB000FA6B0 /* GameEntityCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameEntityCollection.h; sourceTree = "<group>"; };
 		4CD7EAB51D4C52CB000FA6B0 /* GameSystems.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameSystems.cpp; sourceTree = "<group>"; };
 		4CD7EAB61D4C52CB000FA6B0 /* GameSystems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameSystems.h; sourceTree = "<group>"; };
-		4CD7EAB71D4C52CB000FA6B0 /* GameDataPool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameDataPool.cpp; sourceTree = "<group>"; };
-		4CD7EAB81D4C52CB000FA6B0 /* GameDataPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameDataPool.h; sourceTree = "<group>"; };
 		4CD7EABA1D4C52CB000FA6B0 /* GameHttpRequests.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameHttpRequests.cpp; sourceTree = "<group>"; };
 		4CD7EABB1D4C52CB000FA6B0 /* GameHttpRequests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameHttpRequests.h; sourceTree = "<group>"; };
 		4CD7EABC1D4C52CB000FA6B0 /* GameHttpResponses.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameHttpResponses.cpp; sourceTree = "<group>"; };
@@ -641,7 +639,6 @@
 		4CD7EAF11D4C532B000FA6B0 /* U2Prototype.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2Prototype.h; sourceTree = "<group>"; };
 		4CD7EAF21D4C532B000FA6B0 /* U2Root.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2Root.h; sourceTree = "<group>"; };
 		4CD7EAF31D4C532B000FA6B0 /* U2Scheduler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2Scheduler.h; sourceTree = "<group>"; };
-		4CD7EAF41D4C532B000FA6B0 /* U2SnapshotDataPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2SnapshotDataPool.h; sourceTree = "<group>"; };
 		4CD7EAF51D4C532B000FA6B0 /* U2SocketTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2SocketTask.h; sourceTree = "<group>"; };
 		4CD7EAF61D4C532B000FA6B0 /* U2System.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2System.h; sourceTree = "<group>"; };
 		4CD7EAF71D4C532B000FA6B0 /* U2Timer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = U2Timer.h; sourceTree = "<group>"; };
@@ -668,7 +665,6 @@
 		4CD7EB181D4C53AA000FA6B0 /* U2Prototype.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2Prototype.cpp; sourceTree = "<group>"; };
 		4CD7EB191D4C53AA000FA6B0 /* U2Root.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2Root.cpp; sourceTree = "<group>"; };
 		4CD7EB1A1D4C53AA000FA6B0 /* U2Scheduler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2Scheduler.cpp; sourceTree = "<group>"; };
-		4CD7EB1B1D4C53AA000FA6B0 /* U2SnapshotDataPool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2SnapshotDataPool.cpp; sourceTree = "<group>"; };
 		4CD7EB1C1D4C53AA000FA6B0 /* U2SocketTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2SocketTask.cpp; sourceTree = "<group>"; };
 		4CD7EB1D1D4C53AA000FA6B0 /* U2System.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2System.cpp; sourceTree = "<group>"; };
 		4CD7EB1E1D4C53AA000FA6B0 /* U2UrlUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2UrlUtils.cpp; sourceTree = "<group>"; };
@@ -1012,8 +1008,6 @@
 				4CD7EA9C1D4C52CB000FA6B0 /* application */,
 				4CD7EAA71D4C52CB000FA6B0 /* battle */,
 				4CD7EAAE1D4C52CB000FA6B0 /* ecs */,
-				4CD7EAB71D4C52CB000FA6B0 /* GameDataPool.cpp */,
-				4CD7EAB81D4C52CB000FA6B0 /* GameDataPool.h */,
 				4CD7EAB91D4C52CB000FA6B0 /* tasks */,
 				4C68AC6E1C893119007BA5BD /* application */,
 				46880B8419C43A87006E1F66 /* AppDelegate.cpp */,
@@ -1086,6 +1080,7 @@
 		4C68AB951C8930FC007BA5BD /* core */ = {
 			isa = PBXGroup;
 			children = (
+				4CC68BAA1D52019900FFA865 /* U2Snapshot.h */,
 				4CD7ED441D4CAF6C000FA6B0 /* streams */,
 				4CD7EAE61D4C532B000FA6B0 /* U2Bitwise.h */,
 				4CD7EAE71D4C532B000FA6B0 /* U2Component.h */,
@@ -1101,7 +1096,6 @@
 				4CD7EAF11D4C532B000FA6B0 /* U2Prototype.h */,
 				4CD7EAF21D4C532B000FA6B0 /* U2Root.h */,
 				4CD7EAF31D4C532B000FA6B0 /* U2Scheduler.h */,
-				4CD7EAF41D4C532B000FA6B0 /* U2SnapshotDataPool.h */,
 				4CD7EAF51D4C532B000FA6B0 /* U2SocketTask.h */,
 				4CD7EAF61D4C532B000FA6B0 /* U2System.h */,
 				4CD7EAF71D4C532B000FA6B0 /* U2Timer.h */,
@@ -1225,6 +1219,7 @@
 		4C68ABE61C8930FC007BA5BD /* core */ = {
 			isa = PBXGroup;
 			children = (
+				4CC68BAB1D5201AC00FFA865 /* U2Snapshot.cpp */,
 				4CD7ED511D4CAF99000FA6B0 /* streams */,
 				4CD7EB0D1D4C53AA000FA6B0 /* U2Component.cpp */,
 				4CD7EB0E1D4C53AA000FA6B0 /* U2ComponentSerialize.cpp */,
@@ -1240,7 +1235,6 @@
 				4CD7EB181D4C53AA000FA6B0 /* U2Prototype.cpp */,
 				4CD7EB191D4C53AA000FA6B0 /* U2Root.cpp */,
 				4CD7EB1A1D4C53AA000FA6B0 /* U2Scheduler.cpp */,
-				4CD7EB1B1D4C53AA000FA6B0 /* U2SnapshotDataPool.cpp */,
 				4CD7EB1C1D4C53AA000FA6B0 /* U2SocketTask.cpp */,
 				4CD7EB1D1D4C53AA000FA6B0 /* U2System.cpp */,
 				4CD7EB1E1D4C53AA000FA6B0 /* U2UrlUtils.cpp */,
@@ -1382,12 +1376,12 @@
 		4CD7EAAE1D4C52CB000FA6B0 /* ecs */ = {
 			isa = PBXGroup;
 			children = (
+				4CC68BA61D52016F00FFA865 /* GameSnapshot.cpp */,
+				4CC68BA71D52016F00FFA865 /* GameSnapshot.h */,
 				4CD7EAAF1D4C52CB000FA6B0 /* GameComponentManager.cpp */,
 				4CD7EAB01D4C52CB000FA6B0 /* GameComponentManager.h */,
 				4CD7EAB11D4C52CB000FA6B0 /* GameComponents.cpp */,
 				4CD7EAB21D4C52CB000FA6B0 /* GameComponents.h */,
-				4CD7EAB31D4C52CB000FA6B0 /* GameEntityCollection.cpp */,
-				4CD7EAB41D4C52CB000FA6B0 /* GameEntityCollection.h */,
 				4CD7EAB51D4C52CB000FA6B0 /* GameSystems.cpp */,
 				4CD7EAB61D4C52CB000FA6B0 /* GameSystems.h */,
 			);
@@ -1801,13 +1795,13 @@
 				4CA4AAC51CC0EB44007B5F39 /* U2GenericThreadPool.cpp in Sources */,
 				4C68AC461C8930FC007BA5BD /* U2Facade.cpp in Sources */,
 				4C68AC641C8930FC007BA5BD /* U2View.cpp in Sources */,
-				4CD7EB3C1D4C53AA000FA6B0 /* U2SnapshotDataPool.cpp in Sources */,
 				4CD7EB481D4C53BF000FA6B0 /* U2CocosLuaScript.cpp in Sources */,
 				4CD7ED2F1D4C9D66000FA6B0 /* lstrlib.c in Sources */,
 				4CD7ED391D4C9D66000FA6B0 /* lundump.c in Sources */,
 				4C68AC421C8930FC007BA5BD /* U2ContextQueue.cpp in Sources */,
 				4CD7EB371D4C53AA000FA6B0 /* U2HttpDownloadClient.cpp in Sources */,
 				4CD7ED051D4C9D66000FA6B0 /* lauxlib.c in Sources */,
+				4CC68BA81D52016F00FFA865 /* GameSnapshot.cpp in Sources */,
 				4CD7EACC1D4C52CB000FA6B0 /* BattleViewComponents.cpp in Sources */,
 				4C68AC321C8930FC007BA5BD /* U2NameGenerator.cpp in Sources */,
 				4CD7EB331D4C53AA000FA6B0 /* U2GameObject.cpp in Sources */,
@@ -1849,7 +1843,6 @@
 				4CD7EB311D4C53AA000FA6B0 /* U2DataPool.cpp in Sources */,
 				4C68AC541C8930FC007BA5BD /* U2PredefinedCommands.cpp in Sources */,
 				4C68AC521C8930FC007BA5BD /* U2Observer.cpp in Sources */,
-				4CD7EAD21D4C52CB000FA6B0 /* GameDataPool.cpp in Sources */,
 				4C68AC341C8930FC007BA5BD /* U2Object.cpp in Sources */,
 				4CD7EB401D4C53AA000FA6B0 /* U2Version.cpp in Sources */,
 				4CD7EAC81D4C52CB000FA6B0 /* AppLuaTasks.cpp in Sources */,
@@ -1896,7 +1889,6 @@
 				4CD7ED6F1D4CAF99000FA6B0 /* U2VariableMemStream.cpp in Sources */,
 				4C1EE4ED1CD2016400CD21F1 /* iosUtils.mm in Sources */,
 				4CD7EACB1D4C52CB000FA6B0 /* BattleCommands.cpp in Sources */,
-				4CD7EAD01D4C52CB000FA6B0 /* GameEntityCollection.cpp in Sources */,
 				4CD7EB2E1D4C53AA000FA6B0 /* U2Component.cpp in Sources */,
 				4CD7ED3B1D4C9D66000FA6B0 /* lvm.c in Sources */,
 				4CD7EBC21D4C53D8000FA6B0 /* tinyxml.cpp in Sources */,
@@ -1917,6 +1909,7 @@
 				4CD7ED211D4C9D66000FA6B0 /* loadlib.c in Sources */,
 				4CD7EB3E1D4C53AA000FA6B0 /* U2System.cpp in Sources */,
 				4CD7EB3A1D4C53AA000FA6B0 /* U2Root.cpp in Sources */,
+				4CC68BAC1D5201AC00FFA865 /* U2Snapshot.cpp in Sources */,
 				4C1EE4BA1CD1B74E00CD21F1 /* U2FileSystemLayer.mm in Sources */,
 				4CD7EB381D4C53AA000FA6B0 /* U2LogicClient.cpp in Sources */,
 				4CA4AACB1CC0EB44007B5F39 /* U2Worker.cpp in Sources */,
@@ -2021,10 +2014,10 @@
 				4CD7ECA61D4C61C1000FA6B0 /* U2Scheduler.cpp in Sources */,
 				4CD7ED3E1D4C9D66000FA6B0 /* lzio.c in Sources */,
 				4CA4AAB01CC0EB20007B5F39 /* U2SearchOps.cpp in Sources */,
+				4CC68BAD1D5201AC00FFA865 /* U2Snapshot.cpp in Sources */,
 				4C68AC3B1C8930FC007BA5BD /* U2SimpleObjectManager.cpp in Sources */,
 				4CD7ED121D4C9D66000FA6B0 /* ldump.c in Sources */,
 				4CD7ED1A1D4C9D66000FA6B0 /* liolib.c in Sources */,
-				4CD7ECA71D4C61C1000FA6B0 /* U2SnapshotDataPool.cpp in Sources */,
 				4CD7ECA81D4C61C1000FA6B0 /* U2SocketTask.cpp in Sources */,
 				4C1EE4DA1CD1C17D00CD21F1 /* U2StringInterface.cpp in Sources */,
 				4CA4AAB21CC0EB20007B5F39 /* U2StringUtil.cpp in Sources */,
@@ -2071,7 +2064,6 @@
 				4CD7EC901D4C6172000FA6B0 /* U2GameObject.cpp in Sources */,
 				4CD7EC911D4C6172000FA6B0 /* U2GameObjectSerialize.cpp in Sources */,
 				4CD7ED241D4C9D66000FA6B0 /* lobject.c in Sources */,
-				4CD7EC921D4C6172000FA6B0 /* GameDataPool.cpp in Sources */,
 				4CD7ED2C1D4C9D66000FA6B0 /* lstate.c in Sources */,
 				4CD7EC931D4C6172000FA6B0 /* GameHttpRequests.cpp in Sources */,
 				4CD7EC941D4C6172000FA6B0 /* GameHttpResponses.cpp in Sources */,
@@ -2086,7 +2078,6 @@
 				4CD7EC881D4C611F000FA6B0 /* GameComponentManager.cpp in Sources */,
 				4CD7EC891D4C611F000FA6B0 /* GameComponents.cpp in Sources */,
 				4CD7ED181D4C9D66000FA6B0 /* linit.c in Sources */,
-				4CD7EC8A1D4C611F000FA6B0 /* GameEntityCollection.cpp in Sources */,
 				4CD7EC871D4C60EF000FA6B0 /* GameSystems.cpp in Sources */,
 				4C68AC511C8930FC007BA5BD /* U2Notifier.cpp in Sources */,
 				4CD7ED0A1D4C9D66000FA6B0 /* lcode.c in Sources */,
@@ -2120,6 +2111,7 @@
 				4CD7ED281D4C9D66000FA6B0 /* loslib.c in Sources */,
 				4C68AC691C8930FC007BA5BD /* U2CocosFrameListenerCollection.cpp in Sources */,
 				4CD7ED5E1D4CAF99000FA6B0 /* U2CodeCvt.cpp in Sources */,
+				4CC68BA91D52016F00FFA865 /* GameSnapshot.cpp in Sources */,
 				4C68AC611C8930FC007BA5BD /* U2SimpleCommand.cpp in Sources */,
 				503AE10517EB98FF00D1A890 /* main.cpp in Sources */,
 				4CD7ED261D4C9D66000FA6B0 /* lopcodes.c in Sources */,
