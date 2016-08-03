@@ -27,69 +27,121 @@ public:
     void addInstance(T* instance)
     {
         assert(instance != nullptr);
-        if (isPrototype())
+        assert(this->getType() == instance->getType());
+        assert(!instance->hasPrototype());
+        if (hasPrototype())
         {
-            InstanceMap::iterator it = m_InstanceMap.find(instance->getGuid());
-            if (it == m_InstanceMap.end())
+            if (isPrototype())
             {
-                m_InstanceMap.insert(make_pair(instance->getGuid(), instance));
+                InstanceMap::iterator it = m_InstanceMap.find(instance->getGuid());
+                if (it == m_InstanceMap.end())
+                {
+                    m_InstanceMap.insert(make_pair(instance->getGuid(), instance));
+                    instance->setPrototype(dynamic_cast<T*>(this));
+                }
+                else
+                {
+                    assert(0);
+                }
             }
             else
             {
-                assert(0);
+                m_pPrototype->addInstance(instance);
             }
         }
         else
         {
-            m_pPrototype->addInstance(instance);
+            assert(0);
         }
     }
 
     void removeInstance(T* instance)
     {
         assert(instance != nullptr);
-        if (isPrototype())
+        assert(this->getType() == instance->getType());
+        assert(!instance->hasPrototype());
+        if (hasPrototype())
         {
-            InstanceMap::iterator it = m_InstanceMap.find(instance->getGuid());
-            if (it == m_InstanceMap.end())
+            if (isPrototype())
             {
-                assert(0);
+                InstanceMap::iterator it = m_InstanceMap.find(instance->getGuid());
+                if (it == m_InstanceMap.end())
+                {
+                    assert(0);
+                }
+                else
+                {
+                    m_InstanceMap.erase(it);
+                    instance->clearPrototype();
+                }
             }
             else
             {
-                m_InstanceMap.erase(it);
+                m_pPrototype->removeInstance(instance);
             }
         }
         else
         {
-            m_pPrototype->removeInstance(instance);
+            assert(0);
         }
     }
 
     void resetAllInstances()
     {
-        if (isPrototype())
+        if (hasPrototype())
         {
-            for (InstanceMap::iterator it = m_InstanceMap.begin();
-            it != m_InstanceMap.end(); it++)
+            if (isPrototype())
             {
-                it->second->resetFromPrototype();
+                for (InstanceMap::iterator it = m_InstanceMap.begin();
+                it != m_InstanceMap.end(); it++)
+                {
+                    it->second->resetFromPrototype();
+                }
+            }
+            else
+            {
+                m_pPrototype->resetAllInstances();
             }
         }
         else
         {
-            m_pPrototype->resetAllInstances();
+            assert(0);
         }
     }
 
-    virtual bool isPrototype()
+    void setPrototype(T* prototype)
     {
-        return m_pPrototype == nullptr;
+        assert(prototype != nullptr);
+        assert(this->getType() == prototype->getType());
+        assert(this == prototype || prototype->isPrototype());
+        if (hasPrototype())
+        {
+            assert(0);
+        }
+        else
+        {
+            m_pPrototype = prototype;
+        }
     }
 
-    virtual T* retrievePrototype()
+    void clearPrototype()
     {
-        return (m_pPrototype == nullptr) ? dynamic_cast<T*>(this) : m_pPrototype;
+        m_pPrototype = nullptr;
+    }
+
+    bool hasPrototype() const
+    {
+        return m_pPrototype != nullptr;
+    }
+
+    bool isPrototype() const
+    {
+        return m_pPrototype == this;
+    }
+
+    T* retrievePrototype()
+    {
+        return hasPrototype() ? m_pPrototype : nullptr;
     }
 
     virtual T* cloneFromPrototype(const String& name = BLANK) = 0;

@@ -50,8 +50,8 @@ bool SpriteComponent::_loadFromXml(const TiXmlElement* compElem, String& error)
         }
         else
         {
-            const char* pszCompGuid = pCompElem->Attribute("guid");
-            GET_ERROR_LINE_AND_BREAK(pszCompGuid, szError);
+            const char* pszCompName = pCompElem->Attribute("name");
+            GET_ERROR_LINE_AND_BREAK(pszCompName, szError);
         }
 
         // parse every attribute
@@ -107,8 +107,8 @@ bool PositionComponent::_loadFromXml(const TiXmlElement* compElem, String& error
         }
         else
         {
-            const char* pszCompGuid = pCompElem->Attribute("guid");
-            GET_ERROR_LINE_AND_BREAK(pszCompGuid, szError);
+            const char* pszCompName = pCompElem->Attribute("name");
+            GET_ERROR_LINE_AND_BREAK(pszCompName, szError);
         }
 
         // parse every attribute
@@ -164,8 +164,8 @@ bool VelocityComponent::_loadFromXml(const TiXmlElement* compElem, String& error
         }
         else
         {
-            const char* pszCompGuid = pCompElem->Attribute("guid");
-            GET_ERROR_LINE_AND_BREAK(pszCompGuid, szError);
+            const char* pszCompName = pCompElem->Attribute("name");
+            GET_ERROR_LINE_AND_BREAK(pszCompName, szError);
         }
 
         // parse every attribute
@@ -225,8 +225,8 @@ bool SpeedComponent::_loadFromXml(const TiXmlElement* compElem, String& error)
         }
         else
         {
-            const char* pszCompGuid = pCompElem->Attribute("guid");
-            GET_ERROR_LINE_AND_BREAK(pszCompGuid, szError);
+            const char* pszCompName = pCompElem->Attribute("name");
+            GET_ERROR_LINE_AND_BREAK(pszCompName, szError);
         }
 
         {
@@ -306,8 +306,8 @@ bool HpComponent::_loadFromXml(const TiXmlElement* compElem, String& error)
         }
         else
         {
-            const char* pszCompGuid = pCompElem->Attribute("guid");
-            GET_ERROR_LINE_AND_BREAK(pszCompGuid, szError);
+            const char* pszCompName = pCompElem->Attribute("name");
+            GET_ERROR_LINE_AND_BREAK(pszCompName, szError);
         }
 
         {
@@ -387,8 +387,8 @@ bool BaseHpComponent::_loadFromXml(const TiXmlElement* compElem, String& error)
         }
         else
         {
-            const char* pszCompGuid = pCompElem->Attribute("guid");
-            GET_ERROR_LINE_AND_BREAK(pszCompGuid, szError);
+            const char* pszCompName = pCompElem->Attribute("name");
+            GET_ERROR_LINE_AND_BREAK(pszCompName, szError);
         }
 
         {
@@ -468,8 +468,8 @@ bool DeltaHpComponent::_loadFromXml(const TiXmlElement* compElem, String& error)
         }
         else
         {
-            const char* pszCompGuid = pCompElem->Attribute("guid");
-            GET_ERROR_LINE_AND_BREAK(pszCompGuid, szError);
+            const char* pszCompName = pCompElem->Attribute("name");
+            GET_ERROR_LINE_AND_BREAK(pszCompName, szError);
         }
 
         {

@@ -18,6 +18,7 @@ Component::Component(ResourceManager* creator, const String& type, ResourceHandl
     , m_pAttachedGameObj(nullptr)
     , m_uState(CS_None)
 {
+    setPrototype(this);
 }
 //-----------------------------------------------------------------------
 Component::Component(const String& type, const String& name)
@@ -46,38 +47,59 @@ void Component::copy(const Component& src)
 //-----------------------------------------------------------------------
 Component* Component::cloneFromPrototype(const String& name)
 {
-    Component* pPrototype = retrievePrototype();
-    Component* pComponent = ComponentManager::getSingleton()._createObject(pPrototype->getType(), name);
-    pComponent->copy(*pPrototype);
-    pPrototype->addInstance(pComponent);
-    return pComponent;
+    if (hasPrototype())
+    {
+        Component* pPrototype = retrievePrototype();
+        Component* pComponent = ComponentManager::getSingleton()._createObject(pPrototype->getType(), name);
+        pComponent->copy(*pPrototype);
+        pPrototype->addInstance(pComponent);
+        return pComponent;
+    }
+    else
+    {
+        assert(0);
+        return nullptr;
+    }
 }
 //-----------------------------------------------------------------------
 Component* Component::cloneFromInstance(const String& name)
 {
-    Component* pComponent = ComponentManager::getSingleton()._createObject(this->getType(), name);
-    pComponent->copy(*this);
-    Component* pPrototype = retrievePrototype();
-    pPrototype->addInstance(pComponent);
-    return pComponent;
+    if (hasPrototype())
+    {
+        Component* pComponent = ComponentManager::getSingleton()._createObject(this->getType(), name);
+        pComponent->copy(*this);
+        this->addInstance(pComponent);
+        return pComponent;
+    }
+    else
+    {
+        assert(0);
+        return nullptr;
+    }
 }
 //-----------------------------------------------------------------------
 void Component::resetFromPrototype()
 {
-    if (m_pPrototype == nullptr)
+    if (hasPrototype())
     {
-        return;
+        copy(*retrievePrototype());
     }
-    copy(*m_pPrototype);
+    else
+    {
+        assert(0);
+    }
 }
 //-----------------------------------------------------------------------
 void Component::applyToPrototype()
 {
-    if (m_pPrototype == nullptr)
+    if (hasPrototype())
     {
-        return;
+        retrievePrototype()->copy(*this);
     }
-    m_pPrototype->copy(*this);
+    else
+    {
+        assert(0);
+    }
 }
 //-----------------------------------------------------------------------
 void Component::loadImpl(void)

@@ -55,6 +55,8 @@ public:
 
     void destroyComponent(u2::Component* comp);
 
+    void destroyAllComponents();
+
     void addComponent(u2::Component* comp);
 
     void removeComponent(u2::Component* comp);
@@ -70,7 +72,24 @@ public:
     u2::Component* retrieveComponentByType(const String& type) const
     {
         TypedComponentMap::const_iterator it = m_ComponentMap.find(type);
-        return it->second;
+        if (it == m_ComponentMap.end())
+        {
+            return nullptr;
+        }
+        else
+        {
+            return it->second;
+        }
+    }
+
+    ComponentMapIterator retrieveAllComponents()
+    {
+        return ComponentMapIterator(m_ComponentMap.begin(), m_ComponentMap.end());
+    }
+
+    ConstComponentMapIterator retrieveConstAllComponents() const
+    {
+        return ConstComponentMapIterator(m_ComponentMap.begin(), m_ComponentMap.end());
     }
 
     u2::Component* retrieveComponentByGuid(const String& guid);
@@ -79,15 +98,22 @@ public:
 
     void destroyChildGameObject(GameObject* gameObj);
 
+    void destroyAllChildGameObjects();
+
     void addChildGameObject(GameObject* gameObj);
 
     void removeChildGameObject(GameObject* gameObj);
 
     typedef MapIterator<TypedGameObjectMap>          GameObjectMapIterator;
     typedef ConstMapIterator<TypedGameObjectMap>     ConstGameObjectMapIterator;
-    GameObjectMapIterator retrieveChildGameObjects()
+    GameObjectMapIterator retrieveAllChildGameObjects()
     {
         return GameObjectMapIterator(m_GameObjMap.begin(), m_GameObjMap.end());
+    }
+
+    ConstGameObjectMapIterator retrieveConstAllChildGameObjects() const
+    {
+        return ConstGameObjectMapIterator(m_GameObjMap.begin(), m_GameObjMap.end());
     }
 
     GameObject* retrieveChildGameObjectByGuid(const String& guid);
@@ -96,10 +122,6 @@ public:
 
     void addListener(Listener* listener);
     void removeListener(Listener* listener);
-
-    /** Is this a game object which dependent by a prototype.
-    */
-    bool isPrototypeDependent();
 
     virtual bool _loadFromXml(const TiXmlElement* gameObjElem, String& error);
 

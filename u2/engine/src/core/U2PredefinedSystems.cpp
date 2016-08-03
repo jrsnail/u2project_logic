@@ -32,11 +32,15 @@ void RenderSystem::exit()
 void RenderSystem::execute(u2real dt)
 {
     GameObjectManager::CompRefMapIterator it 
-        = GameObjectManager::getSingleton().retrieveAllGameObjectsByCompType(GET_OBJECT_TYPE(SpriteComponent));
+        = GameObjectManager::getSingleton().retrieveAllGameObjectsByCompType("component_sprite");
     while (it.hasMoreElements())
     {
+        
         GameObjectManager::StGameObjRef stGameObjRef = it.getNext();
-        _execute(stGameObjRef.pGameObj, dt);
+        if (!stGameObjRef.pGameObj->isPrototype())
+        {
+            _execute(stGameObjRef.pGameObj, dt);
+        }
     }
 }
 //-----------------------------------------------------------------------
@@ -63,7 +67,7 @@ void RenderSystem::_exit()
 void RenderSystem::_execute(GameObject* gameObj, u2real dt)
 {
     GameObject::ComponentMapIterator it
-        = gameObj->retrieveComponentsByType(GET_OBJECT_TYPE(SpriteComponent));
+        = gameObj->retrieveComponentsByType("component_sprite");
     while (it.hasMoreElements())
     {
         SpriteComponent* pSpriteComp = dynamic_cast<SpriteComponent*>(it.getNext());
@@ -73,7 +77,7 @@ void RenderSystem::_execute(GameObject* gameObj, u2real dt)
             continue;
         }
         PositionComponent* pPositionComp = dynamic_cast<PositionComponent*>(
-            gameObj->retrieveComponentByType(GET_OBJECT_TYPE(PositionComponent)));
+            gameObj->retrieveComponentByType("component_position"));
         if (pPositionComp == nullptr)
         {
             assert(0);
@@ -81,7 +85,7 @@ void RenderSystem::_execute(GameObject* gameObj, u2real dt)
         }
 
         if (pSpriteComp->getState() == Component::CS_Attaching 
-            && pSpriteComp->pSprite->getParent() == nullptr)
+            && pSpriteComp->pSprite == nullptr)
         {
             pSpriteComp->pSprite = cocos2d::CCSprite::create(pSpriteComp->szFilename);
             pSpriteComp->setState(Component::CS_Active);

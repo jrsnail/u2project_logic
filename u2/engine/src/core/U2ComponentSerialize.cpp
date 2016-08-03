@@ -74,8 +74,6 @@ bool ComponentSerialize_0_0_1::_loadComponent(const TiXmlElement* compElem, Stri
 
         const char* pszCompType = pCompElem->Attribute("type");
         GET_ERROR_LINE_AND_BREAK(pszCompType, szError);
-        const char* pszCompGuid = pCompElem->Attribute("guid");
-        GET_ERROR_LINE_AND_BREAK(pszCompGuid, szError);
         ComponentPtr spCompPtr = ComponentManager::getSingleton().create(pszCompType, groupName);
         if (!spCompPtr->_loadFromXml(pCompElem, szError))
         {
