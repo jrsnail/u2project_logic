@@ -4,6 +4,8 @@
 #include "application/AppCommands.h"
 #include "application/AppViewComponents.h"
 #include "application/AppLuaTasks.h"
+#include "battle/BattleCommands.h"
+#include "battle/JoystickViewComponent.h"
 
 
 
@@ -27,6 +29,7 @@ AppFacade::AppFacade(const std::string& type, const std::string& name)
     CREATE_FACTORY(StartupCommand);
     CREATE_FACTORY(Trans2ShadeCommand);
     CREATE_FACTORY(StartupLuaCommand);
+    CREATE_FACTORY(Trans2BattleCommand);
 
     // lua script factory
     CREATE_FACTORY(CocosLuaScript);
@@ -52,6 +55,7 @@ AppFacade::AppFacade(const std::string& type, const std::string& name)
     // view component factory
     CREATE_FACTORY(CocosViewComponent);
     CREATE_FACTORY(ShadeViewComponent);
+    CREATE_FACTORY(JoystickViewComponent);
 
 }
 //-----------------------------------------------------------------------
@@ -75,6 +79,7 @@ void AppFacade::initializeController(void)
     registerCommand(NTF_App_Startup, OT_StartupCommand);
     registerCommand(NTF_App_Trans2Shade, OT_Trans2ShadeCommand);
     registerCommand(NTF_App_StartLua, OT_StartupLuaCommand);
+    registerCommand(NTF_App_Trans2Battle, OT_Trans2BattleCommand);
 }
 //-----------------------------------------------------------------------
 void AppFacade::initializeModel(void)

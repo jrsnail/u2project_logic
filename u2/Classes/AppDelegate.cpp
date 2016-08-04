@@ -220,6 +220,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     cocos2d::FileUtils::getInstance()->addSearchPath("res/entities");
 	cocos2d::FileUtils::getInstance()->addSearchPath("res/ui/plist");
 	cocos2d::FileUtils::getInstance()->addSearchPath("res/ui/application");
+    cocos2d::FileUtils::getInstance()->addSearchPath("res/ui/joystick");
 	cocos2d::FileUtils::getInstance()->addSearchPath("res/ui/cg");
     cocos2d::FileUtils::getInstance()->addSearchPath("res/ui/ui_info");
 
@@ -451,6 +452,8 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     {
         //------------------------------- Test ECS ----------------------------------------
+        GameObjectManager::getSingleton().createObject("aircraft", "test_aircraft");
+
         SystemManager::getSingleton().createObject("system_render", "system_render", 10000);
 
         SystemManager::getSingleton().enter();

@@ -75,5 +75,5 @@ void ShadeViewComponent::handleNotification(const Notification& notification)
 //-----------------------------------------------------------------------
 void ShadeViewComponent::startup()
 {
-    getFacade().sendNotification(NTF_App_StartLua);
+    getFacade().sendNotification(NTF_App_Trans2Battle);
 }

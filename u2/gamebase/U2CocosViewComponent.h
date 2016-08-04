@@ -75,18 +75,18 @@ protected:
     void _initWidget(cocos2d::Node* pWidget);
     void _onButtonClicked(cocos2d::Ref *ref);
 
-    void _onTouchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* ev);
-    void _onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* ev);
-    void _onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* ev);
-    void _onTouchesCancelled(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* ev);
+    virtual void _onTouchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* ev);
+    virtual void _onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* ev);
+    virtual void _onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* ev);
+    virtual void _onTouchesCancelled(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* ev);
 
-    bool _onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* ev);
-    void _onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* ev);
-    void _onTouchEnd(cocos2d::Touch* touch, cocos2d::Event* ev);
-    void _onTouchCancelled(cocos2d::Touch* touch, cocos2d::Event* ev);
+    virtual bool _onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* ev);
+    virtual void _onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* ev);
+    virtual void _onTouchEnd(cocos2d::Touch* touch, cocos2d::Event* ev);
+    virtual void _onTouchCancelled(cocos2d::Touch* touch, cocos2d::Event* ev);
 
-    void _onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* ev);
-    void _onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* ev);
+    virtual void _onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* ev);
+    virtual void _onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* ev);
 
 protected:
     cocos2d::Node*      m_pRootNode;

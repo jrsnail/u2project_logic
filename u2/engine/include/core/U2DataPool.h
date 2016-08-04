@@ -1,11 +1,4 @@
-﻿//
-//  CRemoteMsgManager.h
-//  myGame
-//
-//  Created by jiang on 13-7-23.
-//
-//
-#ifndef __U2DataPool__
+﻿#ifndef __U2DataPool__
 #define __U2DataPool__
 
 
@@ -14,6 +7,7 @@
 #include "U2FactoryObj.h"
 #include "U2Object.h"
 #include "U2SimpleObjectManager.h"
+#include "cocos2d.h"
 
 
 U2EG_NAMESPACE_BEGIN
@@ -63,6 +57,13 @@ public:
     bool loadCharVectorData(const String& key, const vector<u2char>::type& value);
     
     void removeData(const String& key);
+
+
+    bool saveMemoryFloatData(const String& key, float value);
+    bool saveMemoryVec2Data(const String& key, const cocos2d::Vec2& value);
+
+    bool loadMemoryFloatData(const String& key, float& value);
+    bool loadMemoryVec2Data(const String& key, cocos2d::Vec2& value);
     
 
     void pushTask(const String& taskLoopName, Task* task);
@@ -70,6 +71,11 @@ public:
     void popTask(const String& taskLoopName);
 
 protected:
+    U2_MUTEX(m_MemoryMapMutex);
+    typedef map<String, vector<u2char>::type>::type  MemoryMap;
+    MemoryMap           m_MemoryMap;
+
+
     U2_MUTEX(m_TaskQueueMapMutex);
     typedef list<Task*>::type       TaskQueue;
     typedef map<String, TaskQueue>::type  TaskQueueMap;
@@ -120,6 +126,18 @@ public:
 
 protected:
 };
+
+
+
+static DataPool* DATAPOOL(String tableName)
+{
+    DataPool* pDataPool = DataPoolManager::getSingleton().retrieveObjectByName(tableName);
+    if (pDataPool == nullptr)
+    {
+        assert(0);
+    }
+    return pDataPool;
+}
 
 
 

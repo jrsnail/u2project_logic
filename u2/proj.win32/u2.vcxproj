@@ -151,6 +151,9 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\application\AppLuaTasks.cpp" />
     <ClCompile Include="..\Classes\application\AppPrerequisites.cpp" />
     <ClCompile Include="..\Classes\application\AppViewComponents.cpp" />
+    <ClCompile Include="..\Classes\battle\BattleCommands.cpp" />
+    <ClCompile Include="..\Classes\battle\BattleViewComponents.cpp" />
+    <ClCompile Include="..\Classes\battle\JoystickViewComponent.cpp" />
     <ClCompile Include="..\engine\src\core\sserver\U2SServerMsgCenter.cpp" />
     <ClCompile Include="..\engine\src\core\streams\U2CodeCvt.cpp" />
     <ClCompile Include="..\engine\src\core\streams\U2DataFilterStream.cpp" />
@@ -161,6 +164,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\engine\src\core\streams\U2PipedStream.cpp" />
     <ClCompile Include="..\engine\src\core\streams\U2Stream.cpp" />
     <ClCompile Include="..\engine\src\core\streams\U2StringStream.cpp" />
+    <ClCompile Include="..\engine\src\core\streams\U2VariableMemStream.cpp" />
     <ClCompile Include="..\engine\src\core\streams\U2ZipStream.cpp" />
     <ClCompile Include="..\engine\src\core\threading\U2GenericThreadPool.cpp" />
     <ClCompile Include="..\engine\src\core\threading\U2HomogenousQueue.cpp" />
@@ -297,6 +301,9 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\application\AppLuaTasks.h" />
     <ClInclude Include="..\Classes\application\AppPrerequisites.h" />
     <ClInclude Include="..\Classes\application\AppViewComponents.h" />
+    <ClInclude Include="..\Classes\battle\BattleCommands.h" />
+    <ClInclude Include="..\Classes\battle\BattleViewComponents.h" />
+    <ClInclude Include="..\Classes\battle\JoystickViewComponent.h" />
     <ClInclude Include="..\engine\include\core\sserver\U2SServerMsgCenter.h" />
     <ClInclude Include="..\engine\include\core\streams\U2CodeCvt.h" />
     <ClInclude Include="..\engine\include\core\streams\U2DataFilterStream.h" />
@@ -308,6 +315,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\engine\include\core\streams\U2Stream.h" />
     <ClInclude Include="..\engine\include\core\streams\U2StreamQueue.h" />
     <ClInclude Include="..\engine\include\core\streams\U2StringStream.h" />
+    <ClInclude Include="..\engine\include\core\streams\U2VariableMemStream.h" />
     <ClInclude Include="..\engine\include\core\streams\U2ZipStream.h" />
     <ClInclude Include="..\engine\include\core\threading\U2GenericThreadPool.h" />
     <ClInclude Include="..\engine\include\core\threading\U2HomogenousQueue.h" />

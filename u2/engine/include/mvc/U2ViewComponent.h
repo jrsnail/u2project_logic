@@ -56,7 +56,7 @@ public:
         m_szUiName = uiName;
     }
 
-    inline const String& getUiName() const { return m_szUiName; };
+    virtual const String& getUiName() const { return m_szUiName; };
     virtual void loadUi() = 0;
     virtual void onUiLoaded() = 0;
     virtual void unloadUi() = 0;

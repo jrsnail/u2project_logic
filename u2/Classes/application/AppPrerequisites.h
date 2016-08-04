@@ -24,14 +24,17 @@ extern const char* OT_AppFacade;
 extern const char* OT_StartupCommand;
 extern const char* OT_Trans2ShadeCommand;
 extern const char* OT_StartupLuaCommand;
+extern const char* OT_Trans2BattleCommand;
 
 // view
 extern const char* OT_ShadeViewComponent;
+extern const char* OT_JoystickViewComponent;
 
 // notification
 static const char* NTF_App_Startup = "NTF_App_Startup";
 static const char* NTF_App_Trans2Shade = "NTF_App_Trans2Shade";
 static const char* NTF_App_StartLua = "NTF_App_StartLua";
+static const char* NTF_App_Trans2Battle = "NTF_App_Trans2Battle";
 
 // context
 
