@@ -6,24 +6,13 @@
 #include "application/AppLuaTasks.h"
 #include "battle/BattleCommands.h"
 #include "battle/JoystickViewComponent.h"
+#include "ecs/GameComponents.h"
+#include "ecs/GameSystems.h"
 
 
 
-//-----------------------------------------------------------------------
-//-----------------------------------------------------------------------
-AppFacade* AppFacade::ms_pSingleton = nullptr;
-//-----------------------------------------------------------------------
-AppFacade::AppFacade(const std::string& type, const std::string& name)
-    : Facade(type, name)
+static void initGameFactories()
 {
-	if (ms_pSingleton != nullptr)
-	{
-		assert(0);
-		return;
-	}
-
-	ms_pSingleton = this;
-
     // proxy factory
     // command factory
     CREATE_FACTORY(StartupCommand);
@@ -34,6 +23,7 @@ AppFacade::AppFacade(const std::string& type, const std::string& name)
     // lua script factory
     CREATE_FACTORY(CocosLuaScript);
 
+    // lua 2 c task
     CREATE_FACTORY(CreateLuaScriptLuaTask);
     CREATE_FACTORY(SetViewCompUiNameLuaTask);
     CREATE_FACTORY(SetViewCompEnterActionLuaTask);
@@ -41,6 +31,7 @@ AppFacade::AppFacade(const std::string& type, const std::string& name)
     CREATE_FACTORY(CenterViewCompLuaTask);
     CREATE_FACTORY(PreloadLuaTask);
 
+    // c 2 lua task
     CREATE_LUATASK_FACTORY(OT_C2LTask_ViewCompCreated);
     CREATE_LUATASK_FACTORY(OT_C2LTask_ButtonCliecked);
     CREATE_LUATASK_FACTORY(OT_C2LTask_TouchesBegan);
@@ -57,6 +48,39 @@ AppFacade::AppFacade(const std::string& type, const std::string& name)
     CREATE_FACTORY(ShadeViewComponent);
     CREATE_FACTORY(JoystickViewComponent);
 
+    // component
+    CREATE_FACTORY_WITH_TYPE(SpriteComponent, "component_sprite");
+    CREATE_FACTORY_WITH_TYPE(PositionComponent, "component_position");
+    CREATE_FACTORY_WITH_TYPE(VelocityComponent, "component_velocity");
+    CREATE_FACTORY_WITH_TYPE(SpeedDirComponent, "component_speed_dir");
+    CREATE_FACTORY_WITH_TYPE(SpeedComponent, "component_speed");
+    CREATE_FACTORY_WITH_TYPE(HpComponent, "component_hp");
+    CREATE_FACTORY_WITH_TYPE(BaseHpComponent, "component_base_hp");
+    CREATE_FACTORY_WITH_TYPE(DeltaHpComponent, "component_delta_hp");
+    CREATE_FACTORY_WITH_TYPE(JoystickComponent, "component_joystick");
+
+    // system
+    CREATE_FACTORY_WITH_TYPE(RenderSystem, "system_render");
+    CREATE_FACTORY_WITH_TYPE(InputSystem, "system_input");
+    CREATE_FACTORY_WITH_TYPE(MoveSystem, "system_move");
+}
+
+//-----------------------------------------------------------------------
+//-----------------------------------------------------------------------
+AppFacade* AppFacade::ms_pSingleton = nullptr;
+//-----------------------------------------------------------------------
+AppFacade::AppFacade(const std::string& type, const std::string& name)
+    : Facade(type, name)
+{
+	if (ms_pSingleton != nullptr)
+	{
+		assert(0);
+		return;
+	}
+
+	ms_pSingleton = this;
+
+    initGameFactories();
 }
 //-----------------------------------------------------------------------
 AppFacade::~AppFacade(void)

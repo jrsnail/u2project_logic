@@ -154,6 +154,9 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\battle\BattleCommands.cpp" />
     <ClCompile Include="..\Classes\battle\BattleViewComponents.cpp" />
     <ClCompile Include="..\Classes\battle\JoystickViewComponent.cpp" />
+    <ClCompile Include="..\Classes\ecs\GameComponentManager.cpp" />
+    <ClCompile Include="..\Classes\ecs\GameComponents.cpp" />
+    <ClCompile Include="..\Classes\ecs\GameSystems.cpp" />
     <ClCompile Include="..\engine\src\core\sserver\U2SServerMsgCenter.cpp" />
     <ClCompile Include="..\engine\src\core\streams\U2CodeCvt.cpp" />
     <ClCompile Include="..\engine\src\core\streams\U2DataFilterStream.cpp" />
@@ -197,8 +200,6 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\engine\src\core\U2Object.cpp" />
     <ClCompile Include="..\engine\src\core\U2ObjectCollection.cpp" />
     <ClCompile Include="..\engine\src\core\U2PoolingObjectManager.cpp" />
-    <ClCompile Include="..\engine\src\core\U2PredefinedComponents.cpp" />
-    <ClCompile Include="..\engine\src\core\U2PredefinedSystems.cpp" />
     <ClCompile Include="..\engine\src\core\U2Prerequisites.cpp" />
     <ClCompile Include="..\engine\src\core\U2Prototype.cpp" />
     <ClCompile Include="..\engine\src\core\U2Resource.cpp" />
@@ -304,6 +305,9 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\battle\BattleCommands.h" />
     <ClInclude Include="..\Classes\battle\BattleViewComponents.h" />
     <ClInclude Include="..\Classes\battle\JoystickViewComponent.h" />
+    <ClInclude Include="..\Classes\ecs\GameComponentManager.h" />
+    <ClInclude Include="..\Classes\ecs\GameComponents.h" />
+    <ClInclude Include="..\Classes\ecs\GameSystems.h" />
     <ClInclude Include="..\engine\include\core\sserver\U2SServerMsgCenter.h" />
     <ClInclude Include="..\engine\include\core\streams\U2CodeCvt.h" />
     <ClInclude Include="..\engine\include\core\streams\U2DataFilterStream.h" />
@@ -365,8 +369,6 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\engine\include\core\U2ObjectCollection.h" />
     <ClInclude Include="..\engine\include\core\U2Platform.h" />
     <ClInclude Include="..\engine\include\core\U2PoolingObjectManager.h" />
-    <ClInclude Include="..\engine\include\core\U2PredefinedComponents.h" />
-    <ClInclude Include="..\engine\include\core\U2PredefinedSystems.h" />
     <ClInclude Include="..\engine\include\core\U2Prerequisites.h" />
     <ClInclude Include="..\engine\include\core\U2Prototype.h" />
     <ClInclude Include="..\engine\include\core\U2Resource.h" />

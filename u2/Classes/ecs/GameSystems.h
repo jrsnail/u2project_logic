@@ -1,23 +1,18 @@
-﻿#ifndef __U2PredefinedSystems__
-#define __U2PredefinedSystems__
+﻿#ifndef __PredefinedSystems__
+#define __PredefinedSystems__
 
 
-#include "U2Prerequisites.h"
-#include "U2STLRedefined.h"
-#include "U2System.h"
-#include "U2HeaderPrefix.h"
+#include "U2Core.h"
 
 
-U2EG_NAMESPACE_BEGIN
+U2EG_NAMESPACE_USING
 
-
-class GameObject;
 
 
 class RenderSystem : public System
 {
 public:
-    RenderSystem(const String& type, const String& name);
+    RenderSystem(const u2::String& type, const u2::String& name);
     virtual ~RenderSystem();
 
     virtual void enter() override;
@@ -38,7 +33,7 @@ protected:
 class InputSystem : public System
 {
 public:
-    InputSystem(const String& type, const String& name);
+    InputSystem(const u2::String& type, const u2::String& name);
     virtual ~InputSystem();
 
     virtual void enter() override;
@@ -59,7 +54,7 @@ protected:
 class MoveSystem : public System
 {
 public:
-    MoveSystem(const String& type, const String& name);
+    MoveSystem(const u2::String& type, const u2::String& name);
     virtual ~MoveSystem();
 
     virtual void enter() override;
@@ -77,8 +72,5 @@ protected:
 };
 
 
-U2EG_NAMESPACE_END
 
-#include "U2HeaderSuffix.h"
-
-#endif /* defined(__U2PredefinedSystems__) */
+#endif /* defined(__PredefinedSystems__) */

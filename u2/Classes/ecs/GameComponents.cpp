@@ -1,22 +1,18 @@
-﻿#include "U2PredefinedComponents.h"
+﻿#include "GameComponents.h"
 
 #include "tinyxml.h"
-#include "U2XmlSerialize.h"
-
-
-U2EG_NAMESPACE_USING
 
 
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-SpriteComponent::SpriteComponent(ResourceManager* creator, const String& type, ResourceHandle handle,
-    const String& group, bool isManual, ManualResourceLoader* loader)
+SpriteComponent::SpriteComponent(ResourceManager* creator, const u2::String& type, ResourceHandle handle,
+    const u2::String& group, bool isManual, ManualResourceLoader* loader)
     : Component(creator, type, handle, group, isManual, loader)
     , pSprite(nullptr)
 {
 }
 //-----------------------------------------------------------------------
-SpriteComponent::SpriteComponent(const String& type, const String& name)
+SpriteComponent::SpriteComponent(const u2::String& type, const u2::String& name)
     : Component(type, name)
     , pSprite(nullptr)
 {
@@ -35,10 +31,10 @@ void SpriteComponent::copy(const Component& src)
     szFilename = srcComp.szFilename;
 }
 //-----------------------------------------------------------------------
-bool SpriteComponent::_loadFromXml(const TiXmlElement* compElem, String& error)
+bool SpriteComponent::_loadFromXml(const TiXmlElement* compElem, u2::String& error)
 {
     const TiXmlElement* pCompElem = compElem;
-    String& szError = error;
+    u2::String& szError = error;
 
     do 
     {
@@ -67,14 +63,14 @@ bool SpriteComponent::_loadFromXml(const TiXmlElement* compElem, String& error)
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-PositionComponent::PositionComponent(ResourceManager* creator, const String& type, ResourceHandle handle,
-    const String& group, bool isManual, ManualResourceLoader* loader)
+PositionComponent::PositionComponent(ResourceManager* creator, const u2::String& type, ResourceHandle handle,
+    const u2::String& group, bool isManual, ManualResourceLoader* loader)
     : Component(creator, type, handle, group, isManual, loader)
     , v2Pos(cocos2d::Vec2::ZERO)
 {
 }
 //-----------------------------------------------------------------------
-PositionComponent::PositionComponent(const String& type, const String& name)
+PositionComponent::PositionComponent(const u2::String& type, const u2::String& name)
     : Component(type, name)
 {
 
@@ -92,10 +88,10 @@ void PositionComponent::copy(const Component& src)
     v2Pos = srcComp.v2Pos;
 }
 //-----------------------------------------------------------------------
-bool PositionComponent::_loadFromXml(const TiXmlElement* compElem, String& error)
+bool PositionComponent::_loadFromXml(const TiXmlElement* compElem, u2::String& error)
 {
     const TiXmlElement* pCompElem = compElem;
-    String& szError = error;
+    u2::String& szError = error;
 
     do
     {
@@ -124,14 +120,14 @@ bool PositionComponent::_loadFromXml(const TiXmlElement* compElem, String& error
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-VelocityComponent::VelocityComponent(ResourceManager* creator, const String& type, ResourceHandle handle,
-    const String& group, bool isManual, ManualResourceLoader* loader)
+VelocityComponent::VelocityComponent(ResourceManager* creator, const u2::String& type, ResourceHandle handle,
+    const u2::String& group, bool isManual, ManualResourceLoader* loader)
     : Component(creator, type, handle, group, isManual, loader)
     , v2Velocity(cocos2d::Vec2::ZERO)
 {
 }
 //-----------------------------------------------------------------------
-VelocityComponent::VelocityComponent(const String& type, const String& name)
+VelocityComponent::VelocityComponent(const u2::String& type, const u2::String& name)
     : Component(type, name)
 {
 
@@ -149,10 +145,10 @@ void VelocityComponent::copy(const Component& src)
     v2Velocity = srcComp.v2Velocity;
 }
 //-----------------------------------------------------------------------
-bool VelocityComponent::_loadFromXml(const TiXmlElement* compElem, String& error)
+bool VelocityComponent::_loadFromXml(const TiXmlElement* compElem, u2::String& error)
 {
     const TiXmlElement* pCompElem = compElem;
-    String& szError = error;
+    u2::String& szError = error;
 
     do
     {
@@ -181,14 +177,14 @@ bool VelocityComponent::_loadFromXml(const TiXmlElement* compElem, String& error
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-SpeedDirComponent::SpeedDirComponent(ResourceManager* creator, const String& type, ResourceHandle handle,
-    const String& group, bool isManual, ManualResourceLoader* loader)
+SpeedDirComponent::SpeedDirComponent(ResourceManager* creator, const u2::String& type, ResourceHandle handle,
+    const u2::String& group, bool isManual, ManualResourceLoader* loader)
     : Component(creator, type, handle, group, isManual, loader)
     , v2Dir(cocos2d::Vec2::ZERO)
 {
 }
 //-----------------------------------------------------------------------
-SpeedDirComponent::SpeedDirComponent(const String& type, const String& name)
+SpeedDirComponent::SpeedDirComponent(const u2::String& type, const u2::String& name)
     : Component(type, name)
 {
 
@@ -206,10 +202,10 @@ void SpeedDirComponent::copy(const Component& src)
     v2Dir = srcComp.v2Dir;
 }
 //-----------------------------------------------------------------------
-bool SpeedDirComponent::_loadFromXml(const TiXmlElement* compElem, String& error)
+bool SpeedDirComponent::_loadFromXml(const TiXmlElement* compElem, u2::String& error)
 {
     const TiXmlElement* pCompElem = compElem;
-    String& szError = error;
+    u2::String& szError = error;
 
     do
     {
@@ -238,8 +234,8 @@ bool SpeedDirComponent::_loadFromXml(const TiXmlElement* compElem, String& error
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-SpeedComponent::SpeedComponent(ResourceManager* creator, const String& type, ResourceHandle handle,
-    const String& group, bool isManual, ManualResourceLoader* loader)
+SpeedComponent::SpeedComponent(ResourceManager* creator, const u2::String& type, ResourceHandle handle,
+    const u2::String& group, bool isManual, ManualResourceLoader* loader)
     : Component(creator, type, handle, group, isManual, loader)
     , fSpeed(0.0f)
     , fMaxSpeed(0.0f)
@@ -247,7 +243,7 @@ SpeedComponent::SpeedComponent(ResourceManager* creator, const String& type, Res
 {
 }
 //-----------------------------------------------------------------------
-SpeedComponent::SpeedComponent(const String& type, const String& name)
+SpeedComponent::SpeedComponent(const u2::String& type, const u2::String& name)
     : Component(type, name)
 {
 
@@ -267,10 +263,10 @@ void SpeedComponent::copy(const Component& src)
     fMinSpeed = srcComp.fMinSpeed;
 }
 //-----------------------------------------------------------------------
-bool SpeedComponent::_loadFromXml(const TiXmlElement* compElem, String& error)
+bool SpeedComponent::_loadFromXml(const TiXmlElement* compElem, u2::String& error)
 {
     const TiXmlElement* pCompElem = compElem;
-    String& szError = error;
+    u2::String& szError = error;
 
     do
     {
@@ -319,8 +315,8 @@ bool SpeedComponent::_loadFromXml(const TiXmlElement* compElem, String& error)
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-HpComponent::HpComponent(ResourceManager* creator, const String& type, ResourceHandle handle,
-    const String& group, bool isManual, ManualResourceLoader* loader)
+HpComponent::HpComponent(ResourceManager* creator, const u2::String& type, ResourceHandle handle,
+    const u2::String& group, bool isManual, ManualResourceLoader* loader)
     : Component(creator, type, handle, group, isManual, loader)
     , m_uHp(0)
     , m_uMaxHp(0)
@@ -328,7 +324,7 @@ HpComponent::HpComponent(ResourceManager* creator, const String& type, ResourceH
 {
 }
 //-----------------------------------------------------------------------
-HpComponent::HpComponent(const String& type, const String& name)
+HpComponent::HpComponent(const u2::String& type, const u2::String& name)
     : Component(type, name)
 {
 
@@ -348,10 +344,10 @@ void HpComponent::copy(const Component& src)
     m_uMinHp = srcComp.m_uMinHp;
 }
 //-----------------------------------------------------------------------
-bool HpComponent::_loadFromXml(const TiXmlElement* compElem, String& error)
+bool HpComponent::_loadFromXml(const TiXmlElement* compElem, u2::String& error)
 {
     const TiXmlElement* pCompElem = compElem;
-    String& szError = error;
+    u2::String& szError = error;
 
     do
     {
@@ -400,8 +396,8 @@ bool HpComponent::_loadFromXml(const TiXmlElement* compElem, String& error)
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-BaseHpComponent::BaseHpComponent(ResourceManager* creator, const String& type, ResourceHandle handle,
-    const String& group, bool isManual, ManualResourceLoader* loader)
+BaseHpComponent::BaseHpComponent(ResourceManager* creator, const u2::String& type, ResourceHandle handle,
+    const u2::String& group, bool isManual, ManualResourceLoader* loader)
     : Component(creator, type, handle, group, isManual, loader)
     , m_uBaseHp(0)
     , m_uBaseMaxHp(0)
@@ -409,7 +405,7 @@ BaseHpComponent::BaseHpComponent(ResourceManager* creator, const String& type, R
 {
 }
 //-----------------------------------------------------------------------
-BaseHpComponent::BaseHpComponent(const String& type, const String& name)
+BaseHpComponent::BaseHpComponent(const u2::String& type, const u2::String& name)
     : Component(type, name)
 {
 
@@ -429,10 +425,10 @@ void BaseHpComponent::copy(const Component& src)
     m_uBaseMinHp = srcComp.m_uBaseMinHp;
 }
 //-----------------------------------------------------------------------
-bool BaseHpComponent::_loadFromXml(const TiXmlElement* compElem, String& error)
+bool BaseHpComponent::_loadFromXml(const TiXmlElement* compElem, u2::String& error)
 {
     const TiXmlElement* pCompElem = compElem;
-    String& szError = error;
+    u2::String& szError = error;
 
     do
     {
@@ -481,8 +477,8 @@ bool BaseHpComponent::_loadFromXml(const TiXmlElement* compElem, String& error)
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-DeltaHpComponent::DeltaHpComponent(ResourceManager* creator, const String& type, ResourceHandle handle,
-    const String& group, bool isManual, ManualResourceLoader* loader)
+DeltaHpComponent::DeltaHpComponent(ResourceManager* creator, const u2::String& type, ResourceHandle handle,
+    const u2::String& group, bool isManual, ManualResourceLoader* loader)
     : Component(creator, type, handle, group, isManual, loader)
     , m_nDeltaHp(0)
     , m_nDeltaMaxHp(0)
@@ -490,7 +486,7 @@ DeltaHpComponent::DeltaHpComponent(ResourceManager* creator, const String& type,
 {
 }
 //-----------------------------------------------------------------------
-DeltaHpComponent::DeltaHpComponent(const String& type, const String& name)
+DeltaHpComponent::DeltaHpComponent(const u2::String& type, const u2::String& name)
     : Component(type, name)
 {
 
@@ -510,10 +506,10 @@ void DeltaHpComponent::copy(const Component& src)
     m_nDeltaMinHp = srcComp.m_nDeltaMinHp;
 }
 //-----------------------------------------------------------------------
-bool DeltaHpComponent::_loadFromXml(const TiXmlElement* compElem, String& error)
+bool DeltaHpComponent::_loadFromXml(const TiXmlElement* compElem, u2::String& error)
 {
     const TiXmlElement* pCompElem = compElem;
-    String& szError = error;
+    u2::String& szError = error;
 
     do
     {
@@ -562,13 +558,13 @@ bool DeltaHpComponent::_loadFromXml(const TiXmlElement* compElem, String& error)
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-JoystickComponent::JoystickComponent(ResourceManager* creator, const String& type, ResourceHandle handle,
-    const String& group, bool isManual, ManualResourceLoader* loader)
+JoystickComponent::JoystickComponent(ResourceManager* creator, const u2::String& type, ResourceHandle handle,
+    const u2::String& group, bool isManual, ManualResourceLoader* loader)
     : Component(creator, type, handle, group, isManual, loader)
 {
 }
 //-----------------------------------------------------------------------
-JoystickComponent::JoystickComponent(const String& type, const String& name)
+JoystickComponent::JoystickComponent(const u2::String& type, const u2::String& name)
     : Component(type, name)
 {
 
@@ -585,7 +581,7 @@ void JoystickComponent::copy(const Component& src)
     const JoystickComponent& srcComp = dynamic_cast<const JoystickComponent&>(src);
 }
 //-----------------------------------------------------------------------
-bool JoystickComponent::_loadFromXml(const TiXmlElement* compElem, String& error)
+bool JoystickComponent::_loadFromXml(const TiXmlElement* compElem, u2::String& error)
 {
     return true;
 }

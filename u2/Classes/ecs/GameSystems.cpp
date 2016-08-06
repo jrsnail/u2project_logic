@@ -1,9 +1,6 @@
-﻿#include "U2PredefinedSystems.h"
+﻿#include "GameSystems.h"
 
-#include "U2GameObject.h"
-#include "U2PredefinedComponents.h"
-#include "U2DataPool.h"
-#include "U2PredefinedPrerequisites.h"
+#include "GameComponents.h"
 
 
 
@@ -12,7 +9,7 @@ U2EG_NAMESPACE_USING
 
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-RenderSystem::RenderSystem(const String& type, const String& name)
+RenderSystem::RenderSystem(const u2::String& type, const u2::String& name)
     : System(type, name)
 {
 }
@@ -122,7 +119,7 @@ void RenderSystem::_resume()
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-InputSystem::InputSystem(const String& type, const String& name)
+InputSystem::InputSystem(const u2::String& type, const u2::String& name)
     : System(type, name)
 {
 }
@@ -229,7 +226,7 @@ void InputSystem::_resume()
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-MoveSystem::MoveSystem(const String& type, const String& name)
+MoveSystem::MoveSystem(const u2::String& type, const u2::String& name)
     : System(type, name)
 {
 }

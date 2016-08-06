@@ -26,8 +26,10 @@
 #include "U2StringUtil.h"
 #include "U2Version.h"
 #include "U2DataPool.h"
-#include "U2PredefinedComponents.h"
-#include "U2PredefinedSystems.h"
+#include "U2Component.h"
+#include "U2GameObject.h"
+#include "U2System.h"
+#include "U2XmlSerialize.h"
 #include "U2PredefinedPrerequisites.h"
 
 

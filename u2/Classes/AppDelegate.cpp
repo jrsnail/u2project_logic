@@ -31,8 +31,7 @@
 #endif
 #include "U2LogicClient.h"
 #include "U2WebSocketClientImpl.h"
-#include "U2Component.h"
-#include "U2GameObject.h"
+#include "ecs/GameComponentManager.h"
 #include "cocos2d.h"
 #include "network/WebSocket.h" 
 
@@ -256,7 +255,7 @@ bool AppDelegate::applicationDidFinishLaunching()
         // script manager
         u2::ScriptManager* pScriptManager = new u2::LuaScriptManager;
         // component manager
-        m_pComponentManager = new u2::ComponentManager;
+        m_pComponentManager = new GameComponentManager;
         // game object manager
         m_pGameObjectManager = new u2::GameObjectManager;
 
