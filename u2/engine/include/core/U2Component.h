@@ -6,7 +6,7 @@
 #include "U2STLRedefined.h"
 #include "U2Prototype.h"
 #include "U2ResourceManager.h"
-#include "U2SimpleObjectManager.h"
+#include "U2TypedObjectManager.h"
 #include "U2Singleton.h"
 
 
@@ -99,15 +99,13 @@ public:
 
     void destoryObject(Component* obj);
 
-    void destoryObjectByName(const String& name);
+    Component* retrieveObjectByTN(const String& type, const String& name);
 
-    Component* retrieveObjectByName(const String& name);
+    TypedObjectManager<Component>::ObjectMapIterator retrieveAllObjectsByType(const String& type);
 
     Component* retrieveObjectByGuid(const String& guid);
 
-    bool hasObjectByName(const String& name);
-
-    SimpleObjectManager<Component>::ObjectMapIterator retrieveAllObjects();
+    Component* retrieveObjectByType(const String& type);
 
 protected:
     Component* _createObject(const String& type, const String& name);
@@ -148,7 +146,7 @@ public:
     static ComponentManager* getSingletonPtr(void);
 
 protected:
-    SimpleObjectManager<Component> m_InstanceCollection;
+    TypedObjectManager<Component> m_InstanceCollection;
 };
 
 

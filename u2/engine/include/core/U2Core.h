@@ -28,6 +28,7 @@
 #include "U2DataPool.h"
 #include "U2PredefinedComponents.h"
 #include "U2PredefinedSystems.h"
+#include "U2PredefinedPrerequisites.h"
 
 
 

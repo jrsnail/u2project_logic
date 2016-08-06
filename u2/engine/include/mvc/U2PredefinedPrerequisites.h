@@ -59,6 +59,7 @@ static const char* ON_Proxy_Context = "ON_Proxy_Context";
 
 // data pool
 static const char* ON_DataPool_Task = "ON_DataPool_Task";
+static const char* ON_DataPool_Memory = "ON_DataPool_Memory";
 
 // task loop
 static const char* ON_Logic_TaskLoop = "ON_Logic_TaskLoop";

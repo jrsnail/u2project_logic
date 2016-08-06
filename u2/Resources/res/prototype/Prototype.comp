@@ -7,7 +7,10 @@
 		<Position value = "240 300" />
 	</Component>
 	<Component type = "component_velocity">
-		<Velocity value = "10 10" />
+		<Velocity value = "0 0" />
+	</Component>
+	<Component type = "component_speed_dir">
+		<Dir value = "0 0" />
 	</Component>
 	<Component type = "component_speed">
 		<Speed value = "10" />

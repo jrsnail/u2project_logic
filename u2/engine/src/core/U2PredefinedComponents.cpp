@@ -127,7 +127,7 @@ bool PositionComponent::_loadFromXml(const TiXmlElement* compElem, String& error
 VelocityComponent::VelocityComponent(ResourceManager* creator, const String& type, ResourceHandle handle,
     const String& group, bool isManual, ManualResourceLoader* loader)
     : Component(creator, type, handle, group, isManual, loader)
-    , m_v2Velocity(cocos2d::Vec2::ZERO)
+    , v2Velocity(cocos2d::Vec2::ZERO)
 {
 }
 //-----------------------------------------------------------------------
@@ -146,7 +146,7 @@ void VelocityComponent::copy(const Component& src)
     Component::copy(src);
 
     const VelocityComponent& srcComp = dynamic_cast<const VelocityComponent&>(src);
-    m_v2Velocity = srcComp.m_v2Velocity;
+    v2Velocity = srcComp.v2Velocity;
 }
 //-----------------------------------------------------------------------
 bool VelocityComponent::_loadFromXml(const TiXmlElement* compElem, String& error)
@@ -173,7 +173,64 @@ bool VelocityComponent::_loadFromXml(const TiXmlElement* compElem, String& error
         GET_ERROR_LINE_AND_BREAK(pPositionElem, szError);
         const char* pszValue = pPositionElem->Attribute("value");
         GET_ERROR_LINE_AND_BREAK(pszValue, szError);
-        m_v2Velocity = StringUtil::parseVector2(pszValue);
+        v2Velocity = StringUtil::parseVector2(pszValue);
+
+    } while (0);
+
+    return szError == BLANK;
+}
+//-----------------------------------------------------------------------
+//-----------------------------------------------------------------------
+SpeedDirComponent::SpeedDirComponent(ResourceManager* creator, const String& type, ResourceHandle handle,
+    const String& group, bool isManual, ManualResourceLoader* loader)
+    : Component(creator, type, handle, group, isManual, loader)
+    , v2Dir(cocos2d::Vec2::ZERO)
+{
+}
+//-----------------------------------------------------------------------
+SpeedDirComponent::SpeedDirComponent(const String& type, const String& name)
+    : Component(type, name)
+{
+
+}
+//-----------------------------------------------------------------------
+SpeedDirComponent::~SpeedDirComponent()
+{
+}
+//-----------------------------------------------------------------------
+void SpeedDirComponent::copy(const Component& src)
+{
+    Component::copy(src);
+
+    const SpeedDirComponent& srcComp = dynamic_cast<const SpeedDirComponent&>(src);
+    v2Dir = srcComp.v2Dir;
+}
+//-----------------------------------------------------------------------
+bool SpeedDirComponent::_loadFromXml(const TiXmlElement* compElem, String& error)
+{
+    const TiXmlElement* pCompElem = compElem;
+    String& szError = error;
+
+    do
+    {
+        const char* pszCompType = pCompElem->Attribute("type");
+        GET_ERROR_LINE_AND_BREAK(pszCompType, szError);
+
+        if (isPrototype())
+        {
+        }
+        else
+        {
+            const char* pszCompName = pCompElem->Attribute("name");
+            GET_ERROR_LINE_AND_BREAK(pszCompName, szError);
+        }
+
+        // parse every attribute
+        const TiXmlElement* pDirElem = pCompElem->FirstChildElement("Dir");
+        GET_ERROR_LINE_AND_BREAK(pDirElem, szError);
+        const char* pszValue = pDirElem->Attribute("value");
+        GET_ERROR_LINE_AND_BREAK(pszValue, szError);
+        v2Dir = StringUtil::parseVector2(pszValue);
 
     } while (0);
 
@@ -184,9 +241,9 @@ bool VelocityComponent::_loadFromXml(const TiXmlElement* compElem, String& error
 SpeedComponent::SpeedComponent(ResourceManager* creator, const String& type, ResourceHandle handle,
     const String& group, bool isManual, ManualResourceLoader* loader)
     : Component(creator, type, handle, group, isManual, loader)
-    , m_fSpeed(0.0f)
-    , m_fMaxSpeed(0.0f)
-    , m_fMinSpeed(0.0f)
+    , fSpeed(0.0f)
+    , fMaxSpeed(0.0f)
+    , fMinSpeed(0.0f)
 {
 }
 //-----------------------------------------------------------------------
@@ -205,9 +262,9 @@ void SpeedComponent::copy(const Component& src)
     Component::copy(src);
 
     const SpeedComponent& srcComp = dynamic_cast<const SpeedComponent&>(src);
-    m_fSpeed = srcComp.m_fSpeed;
-    m_fMaxSpeed = srcComp.m_fMaxSpeed;
-    m_fMinSpeed = srcComp.m_fMinSpeed;
+    fSpeed = srcComp.fSpeed;
+    fMaxSpeed = srcComp.fMaxSpeed;
+    fMinSpeed = srcComp.fMinSpeed;
 }
 //-----------------------------------------------------------------------
 bool SpeedComponent::_loadFromXml(const TiXmlElement* compElem, String& error)
@@ -235,7 +292,7 @@ bool SpeedComponent::_loadFromXml(const TiXmlElement* compElem, String& error)
             GET_ERROR_LINE_AND_BREAK(pSpeedElem, szError);
             const char* pszValue = pSpeedElem->Attribute("value");
             GET_ERROR_LINE_AND_BREAK(pszValue, szError);
-            m_fSpeed = StringUtil::parseReal(pszValue);
+            fSpeed = StringUtil::parseReal(pszValue);
         }
         
         {
@@ -244,7 +301,7 @@ bool SpeedComponent::_loadFromXml(const TiXmlElement* compElem, String& error)
             GET_ERROR_LINE_AND_BREAK(pMaxSpeedElem, szError);
             const char* pszValue = pMaxSpeedElem->Attribute("value");
             GET_ERROR_LINE_AND_BREAK(pszValue, szError);
-            m_fMaxSpeed = StringUtil::parseReal(pszValue);
+            fMaxSpeed = StringUtil::parseReal(pszValue);
         }
 
         {
@@ -253,7 +310,7 @@ bool SpeedComponent::_loadFromXml(const TiXmlElement* compElem, String& error)
             GET_ERROR_LINE_AND_BREAK(pMinSpeedElem, szError);
             const char* pszValue = pMinSpeedElem->Attribute("value");
             GET_ERROR_LINE_AND_BREAK(pszValue, szError);
-            m_fMinSpeed = StringUtil::parseReal(pszValue);
+            fMinSpeed = StringUtil::parseReal(pszValue);
         }
         
     } while (0);
@@ -502,4 +559,33 @@ bool DeltaHpComponent::_loadFromXml(const TiXmlElement* compElem, String& error)
     } while (0);
 
     return szError == BLANK;
+}
+//-----------------------------------------------------------------------
+//-----------------------------------------------------------------------
+JoystickComponent::JoystickComponent(ResourceManager* creator, const String& type, ResourceHandle handle,
+    const String& group, bool isManual, ManualResourceLoader* loader)
+    : Component(creator, type, handle, group, isManual, loader)
+{
+}
+//-----------------------------------------------------------------------
+JoystickComponent::JoystickComponent(const String& type, const String& name)
+    : Component(type, name)
+{
+
+}
+//-----------------------------------------------------------------------
+JoystickComponent::~JoystickComponent()
+{
+}
+//-----------------------------------------------------------------------
+void JoystickComponent::copy(const Component& src)
+{
+    Component::copy(src);
+
+    const JoystickComponent& srcComp = dynamic_cast<const JoystickComponent&>(src);
+}
+//-----------------------------------------------------------------------
+bool JoystickComponent::_loadFromXml(const TiXmlElement* compElem, String& error)
+{
+    return true;
 }

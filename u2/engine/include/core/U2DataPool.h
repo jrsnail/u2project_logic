@@ -64,6 +64,8 @@ public:
 
     bool loadMemoryFloatData(const String& key, float& value);
     bool loadMemoryVec2Data(const String& key, cocos2d::Vec2& value);
+
+    void removeMemoryData(const String& key);
     
 
     void pushTask(const String& taskLoopName, Task* task);

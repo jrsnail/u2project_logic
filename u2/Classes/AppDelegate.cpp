@@ -247,6 +247,10 @@ bool AppDelegate::applicationDidFinishLaunching()
         m_pLogManager->getDefaultLog()->addListener(mAndroidLogger);
 #endif
 
+        // data pool
+        DataPoolManager::getSingleton().createObject(GET_OBJECT_TYPE(DataPool), ON_DataPool_Memory);
+        DataPoolManager::getSingleton().createObject(GET_OBJECT_TYPE(DataPool), ON_DataPool_Task);
+
         // frame listener
         m_pFrameListenerCollection = new CocosFrameListenerCollection;
         // script manager
@@ -452,8 +456,11 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     {
         //------------------------------- Test ECS ----------------------------------------
-        GameObjectManager::getSingleton().createObject("aircraft", "test_aircraft");
+        GameObject* pSelf = GameObjectManager::getSingleton().createObject("aircraft", "self_aircraft");
+        pSelf->addComponent(ComponentManager::getSingleton().createObject("component_joystick"));
 
+        SystemManager::getSingleton().createObject("system_input", "system_input", 9980);
+        SystemManager::getSingleton().createObject("system_move", "system_move", 9990);
         SystemManager::getSingleton().createObject("system_render", "system_render", 10000);
 
         SystemManager::getSingleton().enter();

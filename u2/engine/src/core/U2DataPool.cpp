@@ -179,6 +179,9 @@ bool DataPool::saveMemoryFloatData(const String& key, float value)
     U2_LOCK_MUTEX(m_MemoryMapMutex);
     vector<u2char>::type& vec = m_MemoryMap[key];
 
+    // clear old data first
+    vec.clear();
+
     OutStreamQueue<DataFilterOutStream> out;
     out.push<VariableMemOutStream>("aaa", &vec);
     out.push<DataFilterOutStream>("bbb");
@@ -191,6 +194,9 @@ bool DataPool::saveMemoryVec2Data(const String& key, const cocos2d::Vec2& value)
 {
     U2_LOCK_MUTEX(m_MemoryMapMutex);
     vector<u2char>::type& vec = m_MemoryMap[key];
+
+    // clear old data first
+    vec.clear();
 
     OutStreamQueue<DataFilterOutStream> out;
     out.push<VariableMemOutStream>("aaa", &vec);
@@ -234,6 +240,11 @@ bool DataPool::loadMemoryVec2Data(const String& key, cocos2d::Vec2& value)
     value.x = in->readFloat();
     value.y = in->readFloat();
     return true;
+}
+//-----------------------------------------------------------------------
+void DataPool::removeMemoryData(const String& key)
+{
+
 }
 //-----------------------------------------------------------------------
 void DataPool::pushTask(const String& taskLoopName, Task* task)

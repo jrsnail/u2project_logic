@@ -31,7 +31,7 @@ public:
     virtual void _onTouchCancelled(cocos2d::Touch* touch, cocos2d::Event* ev) override;
 
     cocos2d::Vec2 getDirection();
-    float getVelocity();
+    float getSpeedRate();
 
 protected:
     void _updatePos(float dt);

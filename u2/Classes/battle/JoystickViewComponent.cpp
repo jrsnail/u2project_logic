@@ -91,19 +91,19 @@ void JoystickViewComponent::deactive()
 //-----------------------------------------------------------------------
 cocos2d::Vec2 JoystickViewComponent::getDirection()
 {
-    return cocos2d::ccpNormalize(m_v2CurrentPos);
+    return cocos2d::ccpNormalize(m_v2CurrentPos - _getJoystickCenter());
 }
 //-----------------------------------------------------------------------
-float JoystickViewComponent::getVelocity()
+float JoystickViewComponent::getSpeedRate()
 {
-    return cocos2d::ccpDistance(cocos2d::Vec2::ZERO, m_v2CurrentPos);
+    return cocos2d::ccpDistance(m_v2CurrentPos, _getJoystickCenter()) / m_fRadius;
 }
 //-----------------------------------------------------------------------
 void JoystickViewComponent::_updatePos(float dt)
 {
     m_pJsSpr->setPosition(m_v2CurrentPos);
-    DATAPOOL("memory")->saveMemoryVec2Data("joystick_dir", getDirection());
-    DATAPOOL("memory")->saveMemoryFloatData("joystick_v", getVelocity());
+    DATAPOOL(ON_DataPool_Memory)->saveMemoryVec2Data("joystick_dir", getDirection());
+    DATAPOOL(ON_DataPool_Memory)->saveMemoryFloatData("joystick_speed_rate", getSpeedRate());
 }
 //-----------------------------------------------------------------------
 bool JoystickViewComponent::_onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* ev)

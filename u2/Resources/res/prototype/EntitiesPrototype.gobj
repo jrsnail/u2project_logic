@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!-- entities -->
 <PrototypeGameObjects version = "0.0.1">
-	<GameObject type = "aircraft" guid = "prototype_entity_aircraft_001" name = "aircraft">
+	<GameObject type = "test_aircraft" guid = "prototype_entity_aircraft_001" name = "test_aircraft">
 		<Component type = "component_sprite" name = "spr_aircraft">
 			<Filename value = "Arrow.png" />
 		</Component>
 		<Component type = "component_position" name = "pos">
-			<Position value = "240, 300" />
+			<Position value = "240 300" />
+		</Component>
+		<Component type = "component_velocity" name = "velocity">
+			<Velocity value = "0 0" />
+		</Component>
+		<Component type = "component_speed_dir" name = "speed_dir">
+			<Dir value = "0 0" />
 		</Component>
 		<Component type = "component_speed" name = "speed">
 			<Speed value = "10" />
@@ -28,7 +34,7 @@
 				<Filename value = "Arrow.png" />
 			</Component>
 			<Component type = "component_position" name = "sub_pos">
-				<Position value = "30, 30" />
+				<Position value = "30 30" />
 			</Component>
 			<Component type = "component_delta_hp" name = "delta_hp" attachOn = "aircraft">
 				<DeltaHp value = "10" />
@@ -36,5 +42,34 @@
 				<DeltaMinHp value = "0" />
 			</Component>
 		</GameObject>
+	</GameObject>
+	<GameObject type = "aircraft" guid = "prototype_entity_aircraft_002" name = "aircraft">
+		<Component type = "component_sprite" name = "spr_aircraft">
+			<Filename value = "Arrow.png" />
+		</Component>
+		<Component type = "component_position" name = "pos">
+			<Position value = "240 300" />
+		</Component>
+		<Component type = "component_velocity" name = "velocity">
+			<Velocity value = "0 0" />
+		</Component>
+		<Component type = "component_speed_dir" name = "speed_dir">
+			<Dir value = "0 0" />
+		</Component>
+		<Component type = "component_speed" name = "speed">
+			<Speed value = "10" />
+			<MaxSpeed value = "20" />
+			<MinSpeed value = "0" />
+		</Component>
+		<Component type = "component_hp" name = "hp">
+			<Hp value = "200" />
+			<MaxHp value = "200" />
+			<MinHp value = "0" />
+		</Component>
+		<Component type = "component_base_hp" name = "base_hp">
+			<BaseHp value = "100" />
+			<BaseMaxHp value = "200" />
+			<BaseMinHp value = "0" />
+		</Component>
 	</GameObject>
 </PrototypeGameObjects>

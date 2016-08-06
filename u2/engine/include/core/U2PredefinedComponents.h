@@ -62,8 +62,25 @@ public:
 
     virtual bool _loadFromXml(const TiXmlElement* compElem, String& error) override;
 
-protected:
-    cocos2d::Vec2   m_v2Velocity;
+public:
+    cocos2d::Vec2   v2Velocity;
+};
+
+
+class SpeedDirComponent : public Component
+{
+public:
+    SpeedDirComponent(ResourceManager* creator, const String& type, ResourceHandle handle,
+        const String& group, bool isManual = false, ManualResourceLoader* loader = 0);
+    SpeedDirComponent(const String& type, const String& name);
+    virtual ~SpeedDirComponent();
+
+    virtual void copy(const Component& src) override;
+
+    virtual bool _loadFromXml(const TiXmlElement* compElem, String& error) override;
+
+public:
+    cocos2d::Vec2   v2Dir;
 };
 
 
@@ -79,10 +96,10 @@ public:
 
     virtual bool _loadFromXml(const TiXmlElement* compElem, String& error) override;
 
-protected:
-    u2real   m_fSpeed;
-    u2real   m_fMaxSpeed;
-    u2real   m_fMinSpeed;
+public:
+    u2real   fSpeed;
+    u2real   fMaxSpeed;
+    u2real   fMinSpeed;
 };
 
 
@@ -140,6 +157,22 @@ protected:
     u2int32   m_nDeltaHp;
     u2int32   m_nDeltaMaxHp;
     u2int32   m_nDeltaMinHp;
+};
+
+
+class JoystickComponent : public Component
+{
+public:
+    JoystickComponent(ResourceManager* creator, const String& type, ResourceHandle handle,
+        const String& group, bool isManual = false, ManualResourceLoader* loader = 0);
+    JoystickComponent(const String& type, const String& name);
+    virtual ~JoystickComponent();
+
+    virtual void copy(const Component& src) override;
+
+    virtual bool _loadFromXml(const TiXmlElement* compElem, String& error) override;
+
+protected:
 };
 
 

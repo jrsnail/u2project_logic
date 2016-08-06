@@ -209,6 +209,11 @@ Resource* ComponentManager::createImpl(const String& name, ResourceHandle handle
         return U2_NEW VelocityComponent(this, name, handle, group
             , isManual, loader);
     }
+    else if ("component_speed_dir" == name)
+    {
+        return U2_NEW SpeedDirComponent(this, name, handle, group
+            , isManual, loader);
+    }
     else if ("component_speed" == name)
     {
         return U2_NEW SpeedComponent(this, name, handle, group
@@ -227,6 +232,11 @@ Resource* ComponentManager::createImpl(const String& name, ResourceHandle handle
     else if ("component_delta_hp" == name)
     {
         return U2_NEW DeltaHpComponent(this, name, handle, group
+            , isManual, loader);
+    }
+    else if ("component_joystick" == name)
+    {
+        return U2_NEW JoystickComponent(this, name, handle, group
             , isManual, loader);
     }
     else
@@ -281,15 +291,14 @@ void ComponentManager::destoryObject(Component* obj)
     }
 }
 //-----------------------------------------------------------------------
-void ComponentManager::destoryObjectByName(const String& name)
+Component* ComponentManager::retrieveObjectByTN(const String& type, const String& name)
 {
-    Component* pObj = retrieveObjectByName(name);
-    destoryObject(pObj);
+    return m_InstanceCollection.retrieveObjectByTN(type, name);
 }
 //-----------------------------------------------------------------------
-Component* ComponentManager::retrieveObjectByName(const String& name)
+TypedObjectManager<Component>::ObjectMapIterator ComponentManager::retrieveAllObjectsByType(const String& type)
 {
-    return m_InstanceCollection.retrieveObjectByName(name);
+    return m_InstanceCollection.retrieveAllObjectsByType(type);
 }
 //-----------------------------------------------------------------------
 Component* ComponentManager::retrieveObjectByGuid(const String& guid)
@@ -297,14 +306,9 @@ Component* ComponentManager::retrieveObjectByGuid(const String& guid)
     return m_InstanceCollection.retrieveObjectByGuid(guid);
 }
 //-----------------------------------------------------------------------
-bool ComponentManager::hasObjectByName(const String& name)
+Component* ComponentManager::retrieveObjectByType(const String& type)
 {
-    return m_InstanceCollection.hasObjectByName(name);
-}
-//-----------------------------------------------------------------------
-SimpleObjectManager<Component>::ObjectMapIterator ComponentManager::retrieveAllObjects()
-{
-    return m_InstanceCollection.retrieveAllObjects();
+    return m_InstanceCollection.retrieveObjectByType(type);
 }
 //-----------------------------------------------------------------------
 Component* ComponentManager::_createObject(const String& type, const String& name)
