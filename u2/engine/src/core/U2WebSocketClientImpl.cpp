@@ -2,6 +2,7 @@
 
 #include <json/json.h>
 #include "U2LogManager.h"
+#include "U2PredefinedPrerequisites.h"
 
 
 
@@ -23,7 +24,37 @@ JsonWsTaskLoop::~JsonWsTaskLoop()
 {
 }
 //-----------------------------------------------------------------------
-RecvSocketTask* JsonWsTaskLoop::_dispatchRecvTask(vector<u2char>::type& buffer, bool binary)
+inline const String& JsonWsTaskLoop::_getWsCloseRecvTask()
+{
+    static String szType = GET_OBJECT_TYPE(WsCloseRST);
+    return szType;
+}
+//-----------------------------------------------------------------------
+inline const String& JsonWsTaskLoop::_getWsErrorRecvTask()
+{
+    static String szType = GET_OBJECT_TYPE(WsErrorRST);
+    return szType;
+}
+//-----------------------------------------------------------------------
+inline const String& JsonWsTaskLoop::_getWsOpenRecvTask()
+{
+    static String szType = GET_OBJECT_TYPE(WsOpenRST);
+    return szType;
+}
+//-----------------------------------------------------------------------
+inline const String& JsonWsTaskLoop::_getWsHeartBeatSendTask()
+{
+    static String szType = GET_OBJECT_TYPE(WsHeartBeatSST);
+    return szType;
+}
+//-----------------------------------------------------------------------
+inline const String& JsonWsTaskLoop::_getRecvTaskLoop()
+{
+    static u2::String szTaskLoop = ON_Logic_TaskLoop;
+    return szTaskLoop;
+}
+//-----------------------------------------------------------------------
+RecvSocketTask* JsonWsTaskLoop::_splitRecvTask(vector<u2char>::type& buffer, bool binary)
 {
     std::string szJson(buffer.begin(), buffer.end());
 

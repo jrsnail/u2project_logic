@@ -88,6 +88,9 @@
     <Filter Include="src\ecs">
       <UniqueIdentifier>{c6acf7af-2b3d-44fd-bfb9-ea861c94f7c9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\tasks">
+      <UniqueIdentifier>{2bc5e768-12f9-4b2c-9d1a-ed0b41006bdc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -536,6 +539,15 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ecs\GameSystems.cpp">
       <Filter>src\ecs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tasks\SendSocketTasks.cpp">
+      <Filter>src\tasks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tasks\RecvSocketTasks.cpp">
+      <Filter>src\tasks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tasks\GameWsClientImpl.cpp">
+      <Filter>src\tasks</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1060,6 +1072,15 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ecs\GameSystems.h">
       <Filter>src\ecs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\tasks\SendSocketTasks.h">
+      <Filter>src\tasks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\tasks\RecvSocketTasks.h">
+      <Filter>src\tasks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\tasks\GameWsClientImpl.h">
+      <Filter>src\tasks</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

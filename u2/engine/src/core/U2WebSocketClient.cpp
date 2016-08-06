@@ -68,11 +68,6 @@ void WsTaskLoop::postTaskAndReply(Task* task, Task* reply)
 //-----------------------------------------------------------------------
 void WsTaskLoop::run()
 {
-    assert(m_szWsErrorType != BLANK);
-    assert(m_szWsCloseType != BLANK);
-    assert(m_szWsOpenType != BLANK);
-    assert(m_szWsHeartBeatType != BLANK);
-
     U2_LOCK_MUTEX(m_KeepRunningMutex);
     m_bKeepRunning = true;
 
@@ -221,26 +216,6 @@ void WsTaskLoop::addProtocol(const String& protocol)
     }
 }
 //---------------------------------------------------------------------
-void WsTaskLoop::setWsCloseRecvTask(const String& type)
-{
-    m_szWsCloseType = type;
-}
-//---------------------------------------------------------------------
-void WsTaskLoop::setWsErrorRecvTask(const String& type)
-{
-    m_szWsErrorType = type;
-}
-//---------------------------------------------------------------------
-void WsTaskLoop::setWsOpenRecvTask(const String& type)
-{
-    m_szWsOpenType = type;
-}
-//---------------------------------------------------------------------
-void WsTaskLoop::setWsHeartBeatSendTask(const String& type)
-{
-    m_szWsHeartBeatType = type;
-}
-//---------------------------------------------------------------------
 WsTaskLoop::State WsTaskLoop::getState()
 {
     return m_eState;
@@ -365,7 +340,7 @@ void WsTaskLoop::_connect()
         if (nullptr == m_pWebSocket)
         {
             m_eState = State::CLOSING;
-            Task* pTask = TaskManager::getSingleton().createObject(m_szWsErrorType);
+            Task* pTask = TaskManager::getSingleton().createObject(_getWsErrorRecvTask());
             DataPool* pDataPool = DataPoolManager::getSingleton().retrieveObjectByName(ON_DataPool_Task);
             if (pDataPool)
             {
@@ -395,33 +370,22 @@ int WsTaskLoop::onSocketCallback(struct libwebsocket_context *ctx,
                 || (reason == LWS_CALLBACK_DEL_POLL_FD && m_eState == State::CONNECTING)
                 )
             {
-                pTask = TaskManager::getSingleton().createObject(m_szWsErrorType);
+                pTask = TaskManager::getSingleton().createObject(_getWsErrorRecvTask());
                 m_eState = State::CLOSING;
             }
             else if (reason == LWS_CALLBACK_PROTOCOL_DESTROY && m_eState == State::CLOSING)
             {
-                pTask = TaskManager::getSingleton().createObject(m_szWsCloseType);
+                pTask = TaskManager::getSingleton().createObject(_getWsCloseRecvTask());
             }
 
-            if (pTask)
-            {
-                DataPool* pDataPool = DataPoolManager::getSingleton().retrieveObjectByName(ON_DataPool_Task);
-                if (pDataPool)
-                {
-                    pDataPool->pushTask("MainTaskLoop", pTask);
-                }
-            }
+            _dispatchRecvTask(pTask);
             break;
         }
         case LWS_CALLBACK_CLIENT_ESTABLISHED:
         {
             m_eState = State::OPEN;
-            Task* pTask = TaskManager::getSingleton().createObject(m_szWsOpenType);
-            DataPool* pDataPool = DataPoolManager::getSingleton().retrieveObjectByName(ON_DataPool_Task);
-            if (pDataPool)
-            {
-                pDataPool->pushTask("MainTaskLoop", pTask);
-            }
+            Task* pTask = TaskManager::getSingleton().createObject(_getWsOpenRecvTask());
+            _dispatchRecvTask(pTask);
 
             // start the ball rolling,
             // LWS_CALLBACK_CLIENT_WRITEABLE will come next service
@@ -445,12 +409,8 @@ int WsTaskLoop::onSocketCallback(struct libwebsocket_context *ctx,
             if (m_eState != State::CLOSED)
             {
                 m_eState = State::CLOSED;
-                Task* pTask = TaskManager::getSingleton().createObject(m_szWsCloseType);
-                DataPool* pDataPool = DataPoolManager::getSingleton().retrieveObjectByName(ON_DataPool_Task);
-                if (pDataPool)
-                {
-                    pDataPool->pushTask("MainTaskLoop", pTask);
-                }
+                Task* pTask = TaskManager::getSingleton().createObject(_getWsCloseRecvTask());
+                _dispatchRecvTask(pTask);
             }
             break;
         }
@@ -476,17 +436,10 @@ void WsTaskLoop::_onRecv(struct libwebsocket_context *ctx, struct libwebsocket *
         // If no more data pending, send it to the client thread
         if (uPendingFrameDataLen == 0)
         {
-            RecvSocketTask* pTask = _dispatchRecvTask(m_RecvBuffer, lws_frame_is_binary(wsi));
+            RecvSocketTask* pTask = _splitRecvTask(m_RecvBuffer, lws_frame_is_binary(wsi));
             m_RecvBuffer.clear();
 
-            if (pTask != nullptr)
-            {
-                DataPool* pDataPool = DataPoolManager::getSingleton().retrieveObjectByName(ON_DataPool_Task);
-                if (pDataPool)
-                {
-                    pDataPool->pushTask("MainTaskLoop", pTask);
-                }
-            }
+            _dispatchRecvTask(pTask);
         }
     }
 }
@@ -627,14 +580,29 @@ void WsTaskLoop::_onSend(struct libwebsocket_context *ctx, struct libwebsocket *
     libwebsocket_callback_on_writable(ctx, wsi);
 }
 //---------------------------------------------------------------------
-void WsTaskLoop::_createHeartBeat()
+void WsTaskLoop::_dispatchRecvTask(Task* task)
+{
+    assert(task != nullptr);
+
+    TaskLoop* pTaskLoop = TaskLoopManager::getSingleton().retrieveObjectByName(_getRecvTaskLoop());
+    if (pTaskLoop == nullptr)
+    {
+        assert(0);
+    }
+    else
+    {
+        pTaskLoop->postTask(task);
+    }
+}
+//---------------------------------------------------------------------
+void WsTaskLoop::startHeartBeat()
 {
     postSchedulerTask(getName() + "_scheduler"
-        , m_szWsHeartBeatType, BLANK
+        , _getWsHeartBeatSendTask(), BLANK
         , getHeartBeatPeriod(), true, false);
 }
 //---------------------------------------------------------------------
-void WsTaskLoop::_destroyHearBeat()
+void WsTaskLoop::stopHearBeat()
 {
     if (m_pScheduler != nullptr)
     {

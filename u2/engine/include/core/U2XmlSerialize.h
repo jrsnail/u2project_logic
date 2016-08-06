@@ -1,5 +1,5 @@
-﻿#ifndef __U2XmlSerialize__
-#define __U2XmlSerialize__
+﻿#ifndef __U2XmlSerialize_H__
+#define __U2XmlSerialize_H__
 
 
 #include "U2Prerequisites.h"

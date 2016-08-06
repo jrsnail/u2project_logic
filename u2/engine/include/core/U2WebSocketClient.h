@@ -61,15 +61,14 @@ public:
 
     void addProtocol(const String& protocol);
 
-    void setWsCloseRecvTask(const String& type);
-    void setWsErrorRecvTask(const String& type);
-    void setWsOpenRecvTask(const String& type);
-    void setWsHeartBeatSendTask(const String& type);
-
     State getState();
 
     int onSocketCallback(struct libwebsocket_context *ctx, struct libwebsocket *wsi,
         int reason, void *user, void *in, size_t len);
+
+    void startHeartBeat();
+
+    void stopHearBeat();
 
 protected:
     virtual void postTaskAndReply(Task* task, Task* reply) override;
@@ -86,11 +85,16 @@ protected:
     void _onSend(struct libwebsocket_context *ctx, struct libwebsocket *wsi,
         int reason, void *user, void *in, size_t len);
 
-    virtual RecvSocketTask* _dispatchRecvTask(vector<u2char>::type& buffer, bool binary) = 0;
+    virtual RecvSocketTask* _splitRecvTask(vector<u2char>::type& buffer, bool binary) = 0;
 
-    void _createHeartBeat();
+    virtual const String& _getWsCloseRecvTask() = 0;
+    virtual const String& _getWsErrorRecvTask() = 0;
+    virtual const String& _getWsOpenRecvTask() = 0;
+    virtual const String& _getWsHeartBeatSendTask() = 0;
 
-    void _destroyHearBeat();
+    virtual const String& _getRecvTaskLoop() = 0;
+
+    void _dispatchRecvTask(Task* task);
 
 protected:
     std::thread     m_thread;
@@ -119,10 +123,6 @@ protected:
     vector<String>::type    m_Protocols;
     State                   m_eState;
     vector<u2char>::type	m_RecvBuffer;
-    String                  m_szWsCloseType;
-    String                  m_szWsErrorType;
-    String                  m_szWsOpenType;
-    String                  m_szWsHeartBeatType;
 
     struct ::libwebsocket_protocols* m_aWsProtocols;
     struct ::libwebsocket_context* m_pWsContext;

@@ -14,7 +14,6 @@
 #include "U2SimpleObjectManager.h"
 #include "U2TypedObjectManager.h"
 #include "U2PoolingObjectManager.h"
-
 #include "U2MemoryAllocatorConfig.h"
 #include "U2MemoryAllocatedObject.h"
 #include "U2STLRedefined.h"
@@ -30,6 +29,9 @@
 #include "U2GameObject.h"
 #include "U2System.h"
 #include "U2XmlSerialize.h"
+#include "U2WebSocketClient.h"
+#include "U2WebSocketClientImpl.h"
+#include "U2SocketTask.h"
 #include "U2PredefinedPrerequisites.h"
 
 

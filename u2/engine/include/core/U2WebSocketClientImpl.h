@@ -17,7 +17,14 @@ public:
     virtual ~JsonWsTaskLoop();
 
 protected:
-    virtual RecvSocketTask* _dispatchRecvTask(vector<u2char>::type& buffer, bool binary) override;
+    virtual const String& _getWsCloseRecvTask() override;
+    virtual const String& _getWsErrorRecvTask() override;
+    virtual const String& _getWsOpenRecvTask() override;
+    virtual const String& _getWsHeartBeatSendTask() override;
+
+    virtual RecvSocketTask* _splitRecvTask(vector<u2char>::type& buffer, bool binary) override;
+
+    virtual const String& _getRecvTaskLoop() override;
 
 };
 
