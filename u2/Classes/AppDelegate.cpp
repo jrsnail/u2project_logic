@@ -44,8 +44,10 @@
 #include "ecs/GameComponents.h"
 #include "ecs/GameSystems.h"
 #include "tasks/GameWsClientImpl.h"
-#include "tasks/RecvSocketTasks.h"
-#include "tasks/SendSocketTasks.h"
+#include "tasks/GameRecvSocketTasks.h"
+#include "tasks/GameSendSocketTasks.h"
+#include "tasks/GameHttpRequests.h"
+#include "tasks/GameHttpResponses.h"
 
 
 
@@ -114,6 +116,8 @@ static void initGameFactories()
     CREATE_FACTORY(GameWsErrorRST);
     CREATE_FACTORY(GameWsOpenRST);
     CREATE_FACTORY(GameWsHeartBeatSST);
+    CREATE_FACTORY(TimeHReq);
+    CREATE_FACTORY(TimeHRsp);
 }
 
 
@@ -545,6 +549,17 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     {
         //------------------------------- Test Net ----------------------------------------
+        // http
+        HttpTaskLoop* pHttpTaskLoop = dynamic_cast<HttpTaskLoop*>(
+            TaskLoopManager::getSingleton().createObject(GET_OBJECT_TYPE(ActiveHttpTaskLoop), "http")
+            );
+        pHttpTaskLoop->run();
+        HttpRequest* pHttpReq = static_cast<HttpRequest*>(
+            TaskManager::getSingleton().createObject(GET_OBJECT_TYPE(TimeHReq))
+            );
+        pHttpTaskLoop->postTask(pHttpReq);
+
+        // websocket
         WsTaskLoop* pWsTaskLoop = dynamic_cast<WsTaskLoop*>(
             TaskLoopManager::getSingleton().createObject(GET_OBJECT_TYPE(GameWsTaskLoop), "websocket")
             );

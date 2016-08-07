@@ -19,6 +19,7 @@ U2EG_NAMESPACE_USING
 Object::Object(const String& type, const String& name)
     : m_szType(type)
     , m_szName(name)
+    , m_bDeserializeSucceed(true)
 {
     NameGeneratorManager::getSingleton().registerNameGenerator(m_szType);
     m_szGuid = NameGeneratorManager::getSingleton().generator(m_szType);

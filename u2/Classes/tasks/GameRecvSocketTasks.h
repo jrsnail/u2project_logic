@@ -1,5 +1,5 @@
-﻿#ifndef __RecvSocketTasks_H__
-#define __RecvSocketTasks_H__
+﻿#ifndef __GameRecvSocketTasks_H__
+#define __GameRecvSocketTasks_H__
 
 
 #include "U2Core.h"
@@ -85,4 +85,4 @@ private:
 };
 
 
-#endif /* defined(__RecvSocketTasks_H__) */
+#endif /* defined(__GameRecvSocketTasks_H__) */

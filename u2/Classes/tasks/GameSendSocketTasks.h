@@ -1,5 +1,5 @@
-﻿#ifndef __SendSocketTasks_H__
-#define __SendSocketTasks_H__
+﻿#ifndef __GameSendSocketTasks_H__
+#define __GameSendSocketTasks_H__
 
 
 #include "U2Core.h"
@@ -40,4 +40,4 @@ private:
 };
 
 
-#endif /* defined(__SendSocketTasks_H__) */
+#endif /* defined(__GameSendSocketTasks_H__) */

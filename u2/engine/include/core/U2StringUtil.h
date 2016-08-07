@@ -215,6 +215,11 @@ public:
 		unsigned short width = 0, char fill = ' ',
 		std::ios::fmtflags flags = std::ios::fmtflags(0));
 #	endif
+
+    /** Converts an unsigned long to a String. */
+    static String toString(u2uint64 val,
+        unsigned short width = 0, char fill = ' ',
+        std::ios::fmtflags flags = std::ios::fmtflags(0));
 #else
 	/** Converts a size_t to a String. */
 	static String toString(size_t val,
@@ -225,6 +230,11 @@ public:
 	static String toString(unsigned long val,
 		unsigned short width = 0, char fill = ' ',
 		std::ios::fmtflags flags = std::ios::fmtflags(0));
+
+    /** Converts an unsigned int64 to a String. */
+    static String toString(u2uint64 val,
+        unsigned short width = 0, char fill = ' ',
+        std::ios::fmtflags flags = std::ios::fmtflags(0));
 #endif
 
 	/** Converts a long to a String. */
@@ -261,11 +271,23 @@ public:
 	*/
 	static long parseLong(const String& val, long defaultValue = 0);
 
+    /** Converts a String to a whole number.
+    @return
+    0.0 if the value could not be parsed, otherwise the numeric version of the String.
+    */
+    static u2int64 parseInt64(const String& val, u2int64 defaultValue = 0);
+
 	/** Converts a String to a whole number.
 	@return
 	0.0 if the value could not be parsed, otherwise the numeric version of the String.
 	*/
 	static unsigned long parseUnsignedLong(const String& val, unsigned long defaultValue = 0);
+
+    /** Converts a String to a whole number.
+    @return
+    0.0 if the value could not be parsed, otherwise the numeric version of the String.
+    */
+    static u2uint64 parseUnsignedInt64(const String& val, u2uint64 defaultValue = 0);
 
 	/** Converts a String to size_t.
 	@return

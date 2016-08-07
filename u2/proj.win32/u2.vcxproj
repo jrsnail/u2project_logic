@@ -157,9 +157,11 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\ecs\GameComponentManager.cpp" />
     <ClCompile Include="..\Classes\ecs\GameComponents.cpp" />
     <ClCompile Include="..\Classes\ecs\GameSystems.cpp" />
+    <ClCompile Include="..\Classes\tasks\GameHttpRequests.cpp" />
+    <ClCompile Include="..\Classes\tasks\GameHttpResponses.cpp" />
+    <ClCompile Include="..\Classes\tasks\GameRecvSocketTasks.cpp" />
+    <ClCompile Include="..\Classes\tasks\GameSendSocketTasks.cpp" />
     <ClCompile Include="..\Classes\tasks\GameWsClientImpl.cpp" />
-    <ClCompile Include="..\Classes\tasks\RecvSocketTasks.cpp" />
-    <ClCompile Include="..\Classes\tasks\SendSocketTasks.cpp" />
     <ClCompile Include="..\engine\src\core\sserver\U2SServerMsgCenter.cpp" />
     <ClCompile Include="..\engine\src\core\streams\U2CodeCvt.cpp" />
     <ClCompile Include="..\engine\src\core\streams\U2DataFilterStream.cpp" />
@@ -311,9 +313,11 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\ecs\GameComponentManager.h" />
     <ClInclude Include="..\Classes\ecs\GameComponents.h" />
     <ClInclude Include="..\Classes\ecs\GameSystems.h" />
+    <ClInclude Include="..\Classes\tasks\GameHttpRequests.h" />
+    <ClInclude Include="..\Classes\tasks\GameHttpResponses.h" />
+    <ClInclude Include="..\Classes\tasks\GameRecvSocketTasks.h" />
+    <ClInclude Include="..\Classes\tasks\GameSendSocketTasks.h" />
     <ClInclude Include="..\Classes\tasks\GameWsClientImpl.h" />
-    <ClInclude Include="..\Classes\tasks\RecvSocketTasks.h" />
-    <ClInclude Include="..\Classes\tasks\SendSocketTasks.h" />
     <ClInclude Include="..\engine\include\core\sserver\U2SServerMsgCenter.h" />
     <ClInclude Include="..\engine\include\core\streams\U2CodeCvt.h" />
     <ClInclude Include="..\engine\include\core\streams\U2DataFilterStream.h" />

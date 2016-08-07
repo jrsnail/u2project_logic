@@ -87,7 +87,7 @@ public:
             Function f;
 
         public:
-            WrappedFunction(const String& type, const String& name)
+            WrappedFunction(const String& type, const String& name, function_type&& f)
                 : Task(type, name)
                 , f(std::move(f))
             {
@@ -95,13 +95,17 @@ public:
 
             virtual void run() override
             {
+                // as lamda created task, we must input lamda parameter in ctor, 
+                // so we could not use object factory as creator, and the instance
+                // should be deleted when function run() end.
                 f();
-                //delete this;
+                U2_DELETE this;
             }
         };
 
-        CREATE_FACTORY(WrappedFunction);
-        return createObject(GET_OBJECT_TYPE(WrappedFunction), BLANK);
+//         CREATE_FACTORY(WrappedFunction);
+//         return createObject(GET_OBJECT_TYPE(WrappedFunction), BLANK);
+        return U2_NEW WrappedFunction(GET_OBJECT_TYPE(WrappedFunction), BLANK, std::forward<Function>(f));
     }
 
     PostTaskAndReplyRelay* createObject(const String& type, const String& name, Task* task, Task* reply);

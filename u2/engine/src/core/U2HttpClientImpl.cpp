@@ -1,5 +1,7 @@
 ﻿#include "U2HttpClientImpl.h"
 
+#include "U2PredefinedPrerequisites.h"
+
 
 
 U2EG_NAMESPACE_USING
@@ -86,7 +88,7 @@ void ActiveHttpTaskLoop::_runInternal()
             }
             else
             {
-                _runTask(pTask);
+                processTask(dynamic_cast<HttpRequest*>(pTask), m_ResponseMessage);
             }
             m_WorkingQueue.pop_front();
         }
@@ -97,4 +99,10 @@ void ActiveHttpTaskLoop::_addToIncomingQueue(Task* task)
 {
     U2_LOCK_MUTEX(m_mtxIncomingQueue);
     m_IncomingQueue.push_back(task);
+}
+//---------------------------------------------------------------------
+inline const String& ActiveHttpTaskLoop::_getRecvTaskLoop()
+{
+    static u2::String szTaskLoop = ON_Logic_TaskLoop;
+    return szTaskLoop;
 }

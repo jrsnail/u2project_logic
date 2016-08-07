@@ -22,6 +22,8 @@ protected:
 
     virtual void _addToIncomingQueue(Task* task) override;
 
+    virtual const String& _getRecvTaskLoop() override;
+
 protected:
     // Protect access to m_IncomingQueue.
     U2_MUTEX(m_mtxIncomingQueue);

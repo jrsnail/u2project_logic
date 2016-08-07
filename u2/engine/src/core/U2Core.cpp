@@ -10,5 +10,9 @@ void initFactroy()
     // data pool
     CREATE_FACTORY(DataPool);
 
-    
+    // task loop
+    CREATE_FACTORY(ActiveHttpTaskLoop);
+    CREATE_FACTORY(JsonWsTaskLoop);
+
+    // task
 }

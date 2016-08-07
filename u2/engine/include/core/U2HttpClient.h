@@ -32,6 +32,7 @@ public:
     HttpRequest(const String& type, const String& name)
 		: Task(type, name)
         , m_nRetry(3)
+        , m_eType(Type::HTTP_POST)
 	{}
 	virtual ~HttpRequest() {};
 
@@ -65,25 +66,15 @@ public:
 		return m_Headers;
 	}
 
-    /** Get the request data pointer of HttpRequest object.
-    @return char* the request data pointer.
-    */
-    inline const u2char* const getData();
-
-    /** Get the size of request data
-    @return ssize_t the size of request data
-    */
-    inline size_t getDataSize();
-
-
     virtual void run() override;
+
+    virtual const String& getHttpResponse() = 0;
 
 protected:
 	String		m_szUrl;
 	Type		m_eType;
     size_t      m_nRetry;
 	vector<String>::type	m_Headers;
-    vector<u2char>::type	m_Data;
 };
 
 
@@ -147,16 +138,6 @@ public:
         return m_szErrorBuffer;
     }
 
-    /** Get the request data pointer of HttpRequest object.
-    @return char* the request data pointer.
-    */
-    inline u2char* getData();
-
-    /** Get the size of request data
-    @return ssize_t the size of request data
-    */
-    inline size_t getDataSize();
-
     inline void setSucceed(bool succeed) { m_bSucceed = succeed; };
 
     inline bool isSucceed() const { return m_bSucceed; };
@@ -165,7 +146,6 @@ public:
 
 protected:
     vector<u2char>::type	m_Headers;
-    vector<u2char>::type	m_Data;
     u2int64                 m_lResultCode;   //< the status code returned from libcurl, e.g. 200, 404
     String					m_szErrorBuffer;   //< if _responseCode != 200, please read _errorBuffer to find the reason
     bool                    m_bSucceed;
@@ -255,6 +235,10 @@ protected:
 
     virtual void _addToIncomingQueue(Task* task) = 0;
 
+    virtual const String& _getRecvTaskLoop() = 0;
+
+    void _dispatchRecvTask(Task* task);
+
 protected:
     std::thread     m_thread;
     /** when detach, thread.get_id() will return back 0,
@@ -281,6 +265,9 @@ protected:
     U2_MUTEX(m_CookieFilenameMutex);
     String m_szCookieFilename;
     
+    /// The buffer size of _responseMessage
+    static const int RESPONSE_BUFFER_SIZE = 256;
+    char m_ResponseMessage[RESPONSE_BUFFER_SIZE];
 };
 
 

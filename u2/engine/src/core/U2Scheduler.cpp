@@ -108,7 +108,8 @@ bool Scheduler::_next()
         }
         else
         {
-            SimpleObjectManager<SchedulerTask>::destoryObject(pTask);
+            //SimpleObjectManager<SchedulerTask>::destoryObject(pTask);
+            U2_DELETE pTask;
         }
         return true;
     }

@@ -87,6 +87,8 @@ public:
             // should run scheduler on logic(main) thread only
             assert(ON_Logic_TaskLoop == pCurTaskLoop->getName());
         }
+
+        typedef typename std::remove_reference<Function>::type function_type;
         
         class WrappedFunction : public SchedulerTask
         {
@@ -94,7 +96,7 @@ public:
             Function f;
 
         public:
-            WrappedFunction(const String& type, const String& name)
+            WrappedFunction(const String& type, const String& name, function_type&& f)
                 : SchedulerTask(type, name)
                 , f(std::move(f))
             {
@@ -102,12 +104,18 @@ public:
 
             virtual void run() override
             {
+                // as lamda created task, we must input lamda parameter in ctor, 
+                // so we could not use object factory as creator, and the instance
+                // should be deleted when function run() end.
                 f();
+                // delete in Scheduler::_next()
+                //U2_DELETE this;
             }
         };
 
-        CREATE_FACTORY(WrappedFunction);
-        SchedulerTask* pTask = createObject(GET_OBJECT_TYPE(WrappedFunction), name);
+        //CREATE_FACTORY(WrappedFunction);
+        //SchedulerTask* pTask = createObject(GET_OBJECT_TYPE(WrappedFunction), name);
+        SchedulerTask* pTask = U2_NEW WrappedFunction(GET_OBJECT_TYPE(WrappedFunction), name, std::forward<Function>(f));
         pTask->initialize(period, repeat, catchUp);
 
         u2uint64 now = mTimer.getMilliseconds();

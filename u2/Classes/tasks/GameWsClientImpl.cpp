@@ -1,8 +1,8 @@
 ﻿#include "GameWsClientImpl.h"
 
 #include <json/json.h>
-#include "RecvSocketTasks.h"
-#include "SendSocketTasks.h"
+#include "GameRecvSocketTasks.h"
+#include "GameSendSocketTasks.h"
 
 
 

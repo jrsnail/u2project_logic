@@ -540,13 +540,19 @@
     <ClCompile Include="..\Classes\ecs\GameSystems.cpp">
       <Filter>src\ecs</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\tasks\SendSocketTasks.cpp">
-      <Filter>src\tasks</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\tasks\RecvSocketTasks.cpp">
-      <Filter>src\tasks</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\tasks\GameWsClientImpl.cpp">
+      <Filter>src\tasks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tasks\GameRecvSocketTasks.cpp">
+      <Filter>src\tasks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tasks\GameSendSocketTasks.cpp">
+      <Filter>src\tasks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tasks\GameHttpRequests.cpp">
+      <Filter>src\tasks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tasks\GameHttpResponses.cpp">
       <Filter>src\tasks</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1073,13 +1079,19 @@
     <ClInclude Include="..\Classes\ecs\GameSystems.h">
       <Filter>src\ecs</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\tasks\SendSocketTasks.h">
-      <Filter>src\tasks</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\tasks\RecvSocketTasks.h">
-      <Filter>src\tasks</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\tasks\GameWsClientImpl.h">
+      <Filter>src\tasks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\tasks\GameRecvSocketTasks.h">
+      <Filter>src\tasks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\tasks\GameSendSocketTasks.h">
+      <Filter>src\tasks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\tasks\GameHttpRequests.h">
+      <Filter>src\tasks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\tasks\GameHttpResponses.h">
       <Filter>src\tasks</Filter>
     </ClInclude>
   </ItemGroup>

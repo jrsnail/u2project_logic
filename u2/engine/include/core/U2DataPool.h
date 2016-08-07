@@ -60,9 +60,11 @@ public:
 
 
     bool saveMemoryFloatData(const String& key, float value);
+    bool saveMemoryStringData(const String& key, const String& value);
     bool saveMemoryVec2Data(const String& key, const cocos2d::Vec2& value);
 
     bool loadMemoryFloatData(const String& key, float& value);
+    bool loadMemoryStringData(const String& key, String& value);
     bool loadMemoryVec2Data(const String& key, cocos2d::Vec2& value);
 
     void removeMemoryData(const String& key);

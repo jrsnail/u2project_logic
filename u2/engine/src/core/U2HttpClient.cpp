@@ -70,19 +70,6 @@ bool HttpRequest::canConcate(const HttpRequest* request)
 	return false;
 }
 //-----------------------------------------------------------------------
-const u2char* const HttpRequest::getData()
-{
-    if (m_Data.size() != 0)
-        return &(m_Data.front());
-
-    return nullptr;
-}
-//-----------------------------------------------------------------------
-size_t HttpRequest::getDataSize()
-{
-    return m_Data.size();
-}
-//-----------------------------------------------------------------------
 void HttpRequest::run()
 {
 
@@ -117,19 +104,6 @@ HttpResponse::~HttpResponse()
 //     m_lResultCode = 0L;
 //     m_szErrorBuffer = BLANK;
 // }
-//-----------------------------------------------------------------------
-u2char* HttpResponse::getData()
-{
-    if (m_Data.size() != 0)
-        return &(m_Data.front());
-
-    return nullptr;
-}
-//-----------------------------------------------------------------------
-size_t HttpResponse::getDataSize()
-{
-    return m_Data.size();
-}
 //-----------------------------------------------------------------------
 void HttpResponse::run()
 {
@@ -318,7 +292,7 @@ static int processPostTask(HttpTaskLoop* client, HttpRequest* request, write_cal
     CURLRaii curl;
     bool ok = curl.init(client, request, callback, stream, headerCallback, headerStream, errorBuffer)
         && curl.setOption(CURLOPT_POST, 1)
-        && curl.setOption(CURLOPT_POSTFIELDS, request->getData())
+        && curl.setOption(CURLOPT_POSTFIELDS, (request->getDataSize() == 0) ? nullptr : &(request->getData()))
         && curl.setOption(CURLOPT_POSTFIELDSIZE, request->getDataSize())
         && curl.perform(responseCode);
     return ok ? 0 : 1;
@@ -330,7 +304,7 @@ static int processPutTask(HttpTaskLoop* client, HttpRequest* request, write_call
     CURLRaii curl;
     bool ok = curl.init(client, request, callback, stream, headerCallback, headerStream, errorBuffer)
         && curl.setOption(CURLOPT_CUSTOMREQUEST, "PUT")
-        && curl.setOption(CURLOPT_POSTFIELDS, request->getData())
+        && curl.setOption(CURLOPT_POSTFIELDS, (request->getDataSize() == 0) ? nullptr : &(request->getData()))
         && curl.setOption(CURLOPT_POSTFIELDSIZE, request->getDataSize())
         && curl.perform(responseCode);
     return ok ? 0 : 1;
@@ -355,6 +329,7 @@ HttpTaskLoop::HttpTaskLoop(const String& type, const String& name)
     , m_uTimeoutForConnect(30)
     , m_uTimeoutForRead(60)
 {
+    memset(m_ResponseMessage, 0, RESPONSE_BUFFER_SIZE * sizeof(char));
 }
 //-----------------------------------------------------------------------
 HttpTaskLoop::~HttpTaskLoop()
@@ -415,9 +390,14 @@ String HttpTaskLoop::getThreadId()
 //-----------------------------------------------------------------------
 void HttpTaskLoop::processTask(HttpRequest* request, char* responseMessage)
 {
+    if (request == nullptr)
+    {
+        return;
+    }
+
     HttpResponse* response =
-        (HttpResponse*)TaskManager::getSingleton().createObject(GET_OBJECT_TYPE(HttpResponse), BLANK);
-    if (request == nullptr || response == nullptr)
+        (HttpResponse*)TaskManager::getSingleton().createObject(request->getHttpResponse(), BLANK);
+    if (response == nullptr)
     {
         return;
     }
@@ -431,7 +411,7 @@ void HttpTaskLoop::processTask(HttpRequest* request, char* responseMessage)
     case HttpRequest::Type::HTTP_GET: // HTTP GET
         retValue = processGetTask(this, request,
             writeData,
-            response->getData(),
+            &(response->getData()),
             &responseCode,
             writeHeaderData,
             response->getHttpHeader(),
@@ -441,7 +421,7 @@ void HttpTaskLoop::processTask(HttpRequest* request, char* responseMessage)
     case HttpRequest::Type::HTTP_POST: // HTTP POST
         retValue = processPostTask(this, request,
             writeData,
-            response->getData(),
+            &(response->getData()),
             &responseCode,
             writeHeaderData,
             response->getHttpHeader(),
@@ -451,7 +431,7 @@ void HttpTaskLoop::processTask(HttpRequest* request, char* responseMessage)
     case HttpRequest::Type::HTTP_PUT:
         retValue = processPutTask(this, request,
             writeData,
-            response->getData(),
+            &(response->getData()),
             &responseCode,
             writeHeaderData,
             response->getHttpHeader(),
@@ -461,7 +441,7 @@ void HttpTaskLoop::processTask(HttpRequest* request, char* responseMessage)
     case HttpRequest::Type::HTTP_DELETE:
         retValue = processDeleteTask(this, request,
             writeData,
-            response->getData(),
+            &(response->getData()),
             &responseCode,
             writeHeaderData,
             response->getHttpHeader(),
@@ -483,6 +463,23 @@ void HttpTaskLoop::processTask(HttpRequest* request, char* responseMessage)
     else
     {
         response->setSucceed(true);
+    }
+
+    _dispatchRecvTask(response);
+}
+//---------------------------------------------------------------------
+void HttpTaskLoop::_dispatchRecvTask(Task* task)
+{
+    assert(task != nullptr);
+
+    TaskLoop* pTaskLoop = TaskLoopManager::getSingleton().retrieveObjectByName(_getRecvTaskLoop());
+    if (pTaskLoop == nullptr)
+    {
+        assert(0);
+    }
+    else
+    {
+        pTaskLoop->postTask(task);
     }
 }
 //-----------------------------------------------------------------------

@@ -568,6 +568,20 @@ String StringUtil::toString(unsigned long val,
 }
 #	endif
 //-----------------------------------------------------------------------
+String StringUtil::toString(u2uint64 val,
+    unsigned short width, char fill, std::ios::fmtflags flags)
+{
+    StringStream stream;
+    if (m_sUseLocale)
+        stream.imbue(m_sLocale);
+    stream.width(width);
+    stream.fill(fill);
+    if (flags)
+        stream.setf(flags);
+    stream << val;
+    return stream.str();
+}
+//-----------------------------------------------------------------------
 #else
 String StringUtil::toString(size_t val,
 	unsigned short width, char fill, std::ios::fmtflags flags)
@@ -595,6 +609,20 @@ String StringUtil::toString(unsigned long val,
 		stream.setf(flags);
 	stream << val;
 	return stream.str();
+}
+//-----------------------------------------------------------------------
+String StringUtil::toString(u2uint64 val,
+    unsigned short width, char fill, std::ios::fmtflags flags)
+{
+    StringStream stream;
+    if (m_sUseLocale)
+        stream.imbue(m_sLocale);
+    stream.width(width);
+    stream.fill(fill);
+    if (flags)
+        stream.setf(flags);
+    stream << val;
+    return stream.str();
 }
 //-----------------------------------------------------------------------
 #endif
@@ -664,6 +692,19 @@ long StringUtil::parseLong(const String& val, long defaultValue)
 	return ret;
 }
 //-----------------------------------------------------------------------
+u2int64 StringUtil::parseInt64(const String& val, u2int64 defaultValue)
+{
+    // Use iStringStream for direct correspondence with toString
+    StringStream str(val);
+    if (m_sUseLocale)
+        str.imbue(m_sLocale);
+    u2int64 ret = defaultValue;
+    if (!(str >> ret))
+        return defaultValue;
+
+    return ret;
+}
+//-----------------------------------------------------------------------
 unsigned long StringUtil::parseUnsignedLong(const String& val, unsigned long defaultValue)
 {
 	// Use iStringStream for direct correspondence with toString
@@ -675,6 +716,19 @@ unsigned long StringUtil::parseUnsignedLong(const String& val, unsigned long def
 		return defaultValue;
 
 	return ret;
+}
+//-----------------------------------------------------------------------
+u2uint64 StringUtil::parseUnsignedInt64(const String& val, u2uint64 defaultValue)
+{
+    // Use iStringStream for direct correspondence with toString
+    StringStream str(val);
+    if (m_sUseLocale)
+        str.imbue(m_sLocale);
+    u2uint64 ret = defaultValue;
+    if (!(str >> ret))
+        return defaultValue;
+
+    return ret;
 }
 //-----------------------------------------------------------------------
 size_t StringUtil::parseSizeT(const String& val, size_t defaultValue)

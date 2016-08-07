@@ -36,14 +36,18 @@ public:
 
     virtual void serialize() {};
     virtual void deserialize() {};
+    bool isDeserializeSucceed() { return m_bDeserializeSucceed; };
     void setData(const vector<u2char>::type& data) { m_Data = data; }
-    const vector<u2char>::type& getData() { return m_Data; };
+    const vector<u2char>::type& getData() const { return m_Data; };
+    vector<u2char>::type& getData() { return m_Data; };
+    size_t getDataSize() { return m_Data.size(); }
 
 protected:
     String                  m_szType;       //< 子类类型
     String                  m_szName;       //< 对象名称
     String                  m_szGuid;       //< 唯一标识对象，每个对象递增
     vector<u2char>::type    m_Data;
+    bool                    m_bDeserializeSucceed;
 };
 
 
