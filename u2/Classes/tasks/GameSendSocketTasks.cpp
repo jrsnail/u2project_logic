@@ -4,8 +4,8 @@
 
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-GameWsHeartBeatSST::GameWsHeartBeatSST(const u2::String& type, const u2::String& name)
-    : WsHeartBeatSST(type, name)
+GameWsHeartBeatSST::GameWsHeartBeatSST(const u2::String& type, const u2::String& name, const u2::String& guid)
+    : WsHeartBeatSST(type, name, guid)
 {
 
 }
@@ -21,8 +21,8 @@ void GameWsHeartBeatSST::run()
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-MoveSST::MoveSST(const String& type, const String& name)
-    : SendSocketTask(type, name)
+MoveSST::MoveSST(const String& type, const String& name, const u2::String& guid)
+    : SendSocketTask(type, name, guid)
     , m_v2Velocity(cocos2d::Vec2::ZERO)
     , m_v2Position(cocos2d::Vec2::ZERO)
     , m_ulTimestamp(0L)

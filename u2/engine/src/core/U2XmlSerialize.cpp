@@ -11,8 +11,8 @@ U2EG_NAMESPACE_USING
 
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-XmlSerialize::XmlSerialize(const String& type, const String& name)
-    : Object(type, name)
+XmlSerialize::XmlSerialize(const String& type, const String& name, const String& guid)
+    : Object(type, name, guid)
 {
 }
 //-----------------------------------------------------------------------

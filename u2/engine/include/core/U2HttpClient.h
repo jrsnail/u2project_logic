@@ -29,8 +29,8 @@ public:
 	};
 
 public:
-    HttpRequest(const String& type, const String& name)
-		: Task(type, name)
+    HttpRequest(const String& type, const String& name, const u2::String& guid = BLANK)
+		: Task(type, name, guid)
         , m_nRetry(3)
         , m_eType(Type::HTTP_POST)
 	{}
@@ -81,7 +81,7 @@ protected:
 class _U2Export HttpResponse : public Task
 {
 public:
-    HttpResponse(const String& type, const String& name);
+    HttpResponse(const String& type, const String& name, const u2::String& guid = BLANK);
     virtual ~HttpResponse();
 
 //     virtual void preRecycleByPool() override;
@@ -155,7 +155,7 @@ protected:
 class _U2Export HttpTaskLoop : public TaskLoop
 {
 public:
-    explicit HttpTaskLoop(const String& type, const String& name);
+    explicit HttpTaskLoop(const String& type, const String& name, const u2::String& guid = BLANK);
     virtual ~HttpTaskLoop();
 
     virtual void postTask(Task* task) override;

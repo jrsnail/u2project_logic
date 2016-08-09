@@ -17,7 +17,7 @@ U2EG_NAMESPACE_BEGIN
 class SchedulerTask : public Task
 {
 public:
-    SchedulerTask(const String& type, const String& name);
+    SchedulerTask(const String& type, const String& name = BLANK, const String& guid = BLANK);
     virtual ~SchedulerTask();
 
     void initialize(u2uint64 period
@@ -67,7 +67,7 @@ public:
         during frame started, if false, callbacks will be sent during frame 
         ended.
     */
-    Scheduler(const String& type, const String& name);
+    Scheduler(const String& type, const String& name = BLANK, const String& guid = BLANK);
     virtual ~Scheduler();
 
     void initialize(bool callOnFrameStarted = true);
@@ -126,7 +126,7 @@ public:
     virtual void destoryObject(SchedulerTask* obj);
 
 protected:
-    virtual SchedulerTask* createObject(const String& type, const String& name = BLANK);
+    virtual SchedulerTask* createObject(const String& type, const String& name = BLANK, const String& guid = BLANK);
 
     void _onUpdate(float dt);
 
@@ -152,10 +152,10 @@ public:
     SchedulerManager();
     virtual ~SchedulerManager();
 
-    virtual Scheduler* createObject(const String& type, const String& name, bool callOnFrameStarted);
+    virtual Scheduler* createObject(const String& type, const String& name, const String& guid, bool callOnFrameStarted);
 
 protected:
-    virtual Scheduler* createObject(const String& type, const String& name = BLANK);
+    virtual Scheduler* createObject(const String& type, const String& name = BLANK, const String& guid = BLANK);
 
 public:
     /** Override standard Singleton retrieval.

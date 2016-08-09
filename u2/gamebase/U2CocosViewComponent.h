@@ -32,7 +32,7 @@ public:
     /**
     * Constructor.
     */
-    CocosViewComponent(const String& type, const String& name);
+    CocosViewComponent(const String& type, const String& name, const String& guid = BLANK);
 
     /**
     * Virtual destructor.

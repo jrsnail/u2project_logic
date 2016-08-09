@@ -16,8 +16,8 @@ U2EG_NAMESPACE_USING
 
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-ViewComponent::ViewComponent(const String& type, const String& name)
-    : u2::Object(type, name)
+ViewComponent::ViewComponent(const String& type, const String& name, const String& guid)
+    : u2::Object(type, name, guid)
     , m_ViewCompState(ViewCompState::VCS_Unloaded)
 {
 }

@@ -12,8 +12,8 @@
 U2EG_NAMESPACE_USING
 
 
-SimpleCommand::SimpleCommand(const String& type, const String& name)
-    : Command(type, name)
+SimpleCommand::SimpleCommand(const String& type, const String& name, const String& guid)
+    : Command(type, name, guid)
 {
 }
 

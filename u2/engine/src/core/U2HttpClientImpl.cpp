@@ -9,8 +9,8 @@ U2EG_NAMESPACE_USING
 
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-ActiveHttpTaskLoop::ActiveHttpTaskLoop(const String& type, const String& name)
-    : HttpTaskLoop(type, name)
+ActiveHttpTaskLoop::ActiveHttpTaskLoop(const String& type, const String& name, const u2::String& guid)
+    : HttpTaskLoop(type, name, guid)
 {
 }
 //-----------------------------------------------------------------------

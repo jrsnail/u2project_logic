@@ -93,9 +93,9 @@ Archive* ArchiveManager::createObject(const String& type, const String& name, bo
 	return pObj;
 }
 //-----------------------------------------------------------------------
-Archive* ArchiveManager::createObject(const String& type, const String& name)
+Archive* ArchiveManager::createObject(const String& type, const String& name, const String& guid)
 {
-	return SimpleObjectManager<Archive>::createObject(type, name);
+	return SimpleObjectManager<Archive>::createObject(type, name, guid);
 }
 //-----------------------------------------------------------------------
 void ArchiveManager::destoryObject(Archive* obj)

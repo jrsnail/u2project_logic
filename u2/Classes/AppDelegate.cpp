@@ -546,9 +546,9 @@ bool AppDelegate::applicationDidFinishLaunching()
         GameObject* pSelf = GameObjectManager::getSingleton().createObject("aircraft", "self_aircraft");
         pSelf->addComponent(ComponentManager::getSingleton().createObject("component_joystick"));
 
-        SystemManager::getSingleton().createObject("system_input", "system_input", 9980);
-        SystemManager::getSingleton().createObject("system_move", "system_move", 9990);
-        SystemManager::getSingleton().createObject("system_render", "system_render", 10000);
+        SystemManager::getSingleton().createObject("system_input", "system_input", BLANK, 9980);
+        SystemManager::getSingleton().createObject("system_move", "system_move", BLANK, 9990);
+        SystemManager::getSingleton().createObject("system_render", "system_render", BLANK, 10000);
 
         SystemManager::getSingleton().enter();
     }

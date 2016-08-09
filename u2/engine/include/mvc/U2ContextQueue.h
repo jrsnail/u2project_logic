@@ -73,7 +73,7 @@ public:
     };
 
 public:
-    ContextQueue(const String& type, const String& name);
+    ContextQueue(const String& type, const String& name, const String& guid = BLANK);
     virtual ~ContextQueue();
 
     inline ContextQueue::eBackKeyPriority getPriority() const { return m_ePriority; };
@@ -105,7 +105,7 @@ protected:
 class SingleContextQueue : public ContextQueue
 {
 public:
-    SingleContextQueue(const String& type, const String& name);
+    SingleContextQueue(const String& type, const String& name, const String& guid = BLANK);
     virtual ~SingleContextQueue();
 
     virtual void initialize(eTransType defaultTransType, eBackKeyPriority priority, ContextProxy* contextProxy) override;
@@ -120,7 +120,7 @@ public:
 class InfiniteContextQueue : public ContextQueue
 {
 public:
-    InfiniteContextQueue(const String& type, const String& name);
+    InfiniteContextQueue(const String& type, const String& name, const String& guid = BLANK);
     virtual ~InfiniteContextQueue();
 
     virtual void initialize(eTransType defaultTransType, eBackKeyPriority priority, ContextProxy* contextProxy) override;

@@ -38,9 +38,9 @@ ObjectCollection::~ObjectCollection()
 {
 }
 //-----------------------------------------------------------------------
-Object* ObjectCollection::createObject(const String& type, const String& name)
+Object* ObjectCollection::createObject(const String& type, const String& name, const String& guid)
 {
-    Object* pObj = FactoryManager::getSingleton().createObject(type, name);
+    Object* pObj = FactoryManager::getSingleton().createObject(type, name, guid);
     mObjects[pObj->getGuid()] = pObj;
     return pObj;
 }
@@ -66,5 +66,28 @@ Object* ObjectCollection::retrieveObjectByGuid(const String& guid)
     else
     {
         return nullptr;
+    }
+}
+//-----------------------------------------------------------------------
+void ObjectCollection::renameObjectAsGuid(const String& oldGuid, const String& newGuid)
+{
+    u2::Object* pObj = retrieveObjectByGuid(oldGuid);
+    if (pObj == nullptr)
+    {
+        assert(0);
+    }
+    else
+    {
+        ReusableObject* pReusableObj = dynamic_cast<ReusableObject*>(pObj);
+        if (pReusableObj == nullptr)
+        {
+            assert(0);
+        }
+        else
+        {
+            mObjects.erase(oldGuid);
+            pReusableObj->renameAsGuid(newGuid);
+            mObjects[pReusableObj->getGuid()] = pReusableObj;
+        }
     }
 }

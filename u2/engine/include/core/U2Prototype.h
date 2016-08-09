@@ -15,8 +15,8 @@ template <typename T>
 class Prototype : public Object
 {
 public:
-    Prototype(const String& type, const String& name)
-        : Object(type, name)
+    Prototype(const String& type, const String& name = BLANK, const String& guid = BLANK)
+        : Object(type, name, guid)
         , m_pPrototype(nullptr)
     {
 
@@ -144,8 +144,8 @@ public:
         return hasPrototype() ? m_pPrototype : nullptr;
     }
 
-    virtual T* cloneFromPrototype(const String& name = BLANK) = 0;
-    virtual T* cloneFromInstance(const String& name = BLANK) = 0;
+    virtual T* cloneFromPrototype(const String& name = BLANK, const String& guid = BLANK) = 0;
+    virtual T* cloneFromInstance(const String& name = BLANK, const String& guid = BLANK) = 0;
     virtual void resetFromPrototype() = 0;
     virtual void applyToPrototype() = 0;
 

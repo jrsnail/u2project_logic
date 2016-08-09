@@ -71,8 +71,8 @@ protected:
 public:
     /** Constructor - don't call direct, used by ArchiveFactory.
     */
-    Archive(const String& type, const String& name )
-        : Object(type, name), mReadOnly(true)
+    Archive(const String& type, const String& name, const String& guid = BLANK)
+        : Object(type, name, guid), mReadOnly(true)
 	{}
 
     /** Default destructor.
@@ -213,7 +213,7 @@ public:
 	virtual void destoryObject(Archive* obj);
 
 protected:
-	virtual Archive* createObject(const String& type, const String& name = BLANK);
+	virtual Archive* createObject(const String& type, const String& name = BLANK, const String& guid = BLANK);
 
 public:
 	/** Override standard Singleton retrieval.

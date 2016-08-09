@@ -11,7 +11,7 @@ U2EG_NAMESPACE_USING
 class GameWsTaskLoop : public JsonWsTaskLoop
 {
 public:
-    GameWsTaskLoop(const u2::String& type, const u2::String& name);
+    GameWsTaskLoop(const u2::String& type, const u2::String& name, const u2::String& guid = BLANK);
     virtual ~GameWsTaskLoop();
 
 protected:

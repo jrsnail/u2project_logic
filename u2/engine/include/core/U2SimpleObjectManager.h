@@ -24,7 +24,7 @@ public:
     */
     virtual ~SimpleObjectManager();
 
-    T* createObject(const String& type, const String& name = BLANK);
+    T* createObject(const String& type, const String& name = BLANK, const String& guid = BLANK);
     
     void destoryObject(T* obj);
 
@@ -71,12 +71,12 @@ SimpleObjectManager<T>::~SimpleObjectManager()
 }
 //-----------------------------------------------------------------------
 template <class T>
-T* SimpleObjectManager<T>::createObject(const String& type, const String& name)
+T* SimpleObjectManager<T>::createObject(const String& type, const String& name, const String& guid)
 {
     // As simple object manager, we index object with name which should be an unique key
     assert(SimpleObjectManager<T>::retrieveObjectByName(name) == nullptr);
     
-    T* pObj = dynamic_cast<T*>(ObjectCollection::getSingletonPtr()->createObject(type, name));
+    T* pObj = dynamic_cast<T*>(ObjectCollection::getSingletonPtr()->createObject(type, name, guid));
     if (pObj != nullptr)
     {
         m_NamedMap[pObj->getName()] = pObj;

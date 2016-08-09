@@ -17,7 +17,7 @@ class Chunk;
 class _U2Export HttpDownloadRequest : public Task
 {
 public:
-    HttpDownloadRequest(const String& type, const String& name);
+    HttpDownloadRequest(const String& type, const String& name, const u2::String& guid = BLANK);
     virtual ~HttpDownloadRequest();
 
     void setUrl(const String& url) { m_szUrl = url; };
@@ -109,7 +109,7 @@ public:
     };
 
 public:
-    Chunk(const String& type, const String& name);
+    Chunk(const String& type, const String& name, const u2::String& guid = BLANK);
     virtual ~Chunk();
 
     void initialize(HttpDownloadRequest* request, u2uint64 start, u2uint64 end);
@@ -168,7 +168,7 @@ protected:
 class _U2Export HttpDownloadTaskLoop : public TaskLoop
 {
 public:
-    explicit HttpDownloadTaskLoop(const String& type, const String& name);
+    explicit HttpDownloadTaskLoop(const String& type, const String& name, const u2::String& guid = BLANK);
     virtual ~HttpDownloadTaskLoop();
 
 

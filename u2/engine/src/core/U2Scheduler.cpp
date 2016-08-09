@@ -10,8 +10,8 @@ U2EG_NAMESPACE_USING
 
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-SchedulerTask::SchedulerTask(const String& type, const String& name)
-    : Task(type, name)
+SchedulerTask::SchedulerTask(const String& type, const String& name, const String& guid)
+    : Task(type, name, guid)
     , m_ulPeriod(0L)
     , m_bRepeat(false)
     , m_bCatchup(true)
@@ -33,8 +33,8 @@ void SchedulerTask::initialize(u2uint64 period
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-Scheduler::Scheduler(const String& type, const String& name)
-    : Object(type, name)
+Scheduler::Scheduler(const String& type, const String& name, const String& guid)
+    : Object(type, name, guid)
     , m_bCallOnFrameStarted(true)
 {
     FrameListenerCollection::getSingleton().addFrameListener(this
@@ -51,9 +51,9 @@ void Scheduler::initialize(bool callOnFrameStarted)
     m_bCallOnFrameStarted = callOnFrameStarted;
 }
 //-----------------------------------------------------------------------
-SchedulerTask* Scheduler::createObject(const String& type, const String& name)
+SchedulerTask* Scheduler::createObject(const String& type, const String& name, const String& guid)
 {
-    SchedulerTask* pObj = SimpleObjectManager<SchedulerTask>::createObject(type, name);
+    SchedulerTask* pObj = SimpleObjectManager<SchedulerTask>::createObject(type, name, guid);
     if (pObj != nullptr)
     {
         // do some init
@@ -140,15 +140,15 @@ SchedulerManager::~SchedulerManager()
 {
 }
 //-----------------------------------------------------------------------
-Scheduler* SchedulerManager::createObject(const String& type, const String& name)
+Scheduler* SchedulerManager::createObject(const String& type, const String& name, const String& guid)
 {
-    return SimpleObjectManager<Scheduler>::createObject(type, name);
+    return SimpleObjectManager<Scheduler>::createObject(type, name, guid);
 }
 //-----------------------------------------------------------------------
-Scheduler* SchedulerManager::createObject(const String& type, const String& name
+Scheduler* SchedulerManager::createObject(const String& type, const String& name, const String& guid
     , bool callOnFrameStarted)
 {
-    Scheduler* pObj = createObject(type, name);
+    Scheduler* pObj = createObject(type, name, guid);
     if (pObj != nullptr)
     {
         pObj->initialize(callOnFrameStarted);

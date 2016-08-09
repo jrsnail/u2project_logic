@@ -55,8 +55,8 @@ public:
     * @param notify_method the notification method of the interested object
     * @param notify_context the notification context of the interested object
     */
-    explicit Observer(const String& type, const String& name)
-		: ReusableObject(type)
+    explicit Observer(const String& type, const String& name = BLANK, const String& guid = BLANK)
+		: ReusableObject(type, name, guid)
     { }
 
 	/**
@@ -130,7 +130,7 @@ public:
         , Observer::NotifyCallbackFun callback, void* target);
 
 protected:
-    virtual Observer* createOrReuseObject(const String& type);
+    virtual Observer* reuseObject(const String& type, const String& name = BLANK, const String& guid = BLANK);
 
 public:
 	/** Override standard Singleton retrieval.

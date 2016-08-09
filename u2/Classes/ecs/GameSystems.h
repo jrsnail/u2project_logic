@@ -12,7 +12,7 @@ U2EG_NAMESPACE_USING
 class RenderSystem : public System
 {
 public:
-    RenderSystem(const u2::String& type, const u2::String& name);
+    RenderSystem(const u2::String& type, const u2::String& name, const u2::String& guid = BLANK);
     virtual ~RenderSystem();
 
     virtual void enter() override;
@@ -33,7 +33,7 @@ protected:
 class InputSystem : public System
 {
 public:
-    InputSystem(const u2::String& type, const u2::String& name);
+    InputSystem(const u2::String& type, const u2::String& name, const u2::String& guid = BLANK);
     virtual ~InputSystem();
 
     virtual void enter() override;
@@ -54,7 +54,7 @@ protected:
 class MoveSystem : public System
 {
 public:
-    MoveSystem(const u2::String& type, const u2::String& name);
+    MoveSystem(const u2::String& type, const u2::String& name, const u2::String& guid = BLANK);
     virtual ~MoveSystem();
 
     virtual void enter() override;

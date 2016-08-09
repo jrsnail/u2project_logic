@@ -76,8 +76,8 @@ void HttpRequest::run()
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-HttpResponse::HttpResponse(const String& type, const String& name)
-    : Task(type, name)
+HttpResponse::HttpResponse(const String& type, const String& name, const u2::String& guid)
+    : Task(type, name, guid)
     , m_lResultCode(0L)
     , m_bSucceed(false)
 {
@@ -322,8 +322,8 @@ static int processDeleteTask(HttpTaskLoop* client, HttpRequest* request, write_c
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-HttpTaskLoop::HttpTaskLoop(const String& type, const String& name)
-    : TaskLoop(type, name)
+HttpTaskLoop::HttpTaskLoop(const String& type, const String& name, const u2::String& guid)
+    : TaskLoop(type, name, guid)
     , m_bKeepRunning(true)
     , m_bPausing(false)
     , m_uTimeoutForConnect(30)

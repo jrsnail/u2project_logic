@@ -33,7 +33,7 @@ U2EG_NAMESPACE_BEGIN
 class XmlSerialize : public Object
 {
 public:
-    XmlSerialize(const String& type, const String& name);
+    XmlSerialize(const String& type, const String& name, const String& guid = BLANK);
     virtual ~XmlSerialize();
 
     virtual bool load(const TiXmlElement* elem, const String& groupName) = 0;

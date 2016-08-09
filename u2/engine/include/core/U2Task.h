@@ -18,8 +18,8 @@ class _U2Export Task : public Object, public GeneralAllocatedObject
 public:
     /** Constructor - don't call direct, used by ArchiveFactory.
     */
-	Task(const String& type, const String& name)
-        : Object(type, name)
+	Task(const String& type, const String& name = BLANK, const String& guid = BLANK)
+        : Object(type, name, guid)
 	{}
 
     /** Default destructor.
@@ -44,7 +44,7 @@ public:
 class PostTaskAndReplyRelay : public Task
 {
 public:
-    PostTaskAndReplyRelay(const String& type, const String& name);
+    PostTaskAndReplyRelay(const String& type, const String& name = BLANK, const String& guid = BLANK);
 
     virtual ~PostTaskAndReplyRelay();
 
@@ -74,7 +74,7 @@ public:
     */
     virtual ~TaskManager();
 
-    virtual Task* createObject(const String& type, const String& name = BLANK);
+    virtual Task* createObject(const String& type, const String& name = BLANK, const String& guid = BLANK);
 
     template<class Function>
     Task* createObjectWithFunction(Function&& f)
@@ -108,7 +108,8 @@ public:
         return U2_NEW WrappedFunction(GET_OBJECT_TYPE(WrappedFunction), BLANK, std::forward<Function>(f));
     }
 
-    PostTaskAndReplyRelay* createObject(const String& type, const String& name, Task* task, Task* reply);
+    PostTaskAndReplyRelay* createObject(const String& type, const String& name, const String& guid
+        , Task* task, Task* reply);
 
     virtual void destoryObject(Task* obj);
 

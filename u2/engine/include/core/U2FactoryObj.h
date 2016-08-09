@@ -30,7 +30,7 @@ public:
 		An object created by the factory. The type of the object depends on
 		the factory.
 	*/
-    virtual T* createInstance(const String& name) = 0;
+    virtual T* createInstance(const String& name, const String& guid) = 0;
 
 	/** Destroys an object which was created by this factory.
 	@param ptr Pointer to the object to destroy

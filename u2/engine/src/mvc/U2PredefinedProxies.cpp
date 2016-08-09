@@ -18,8 +18,8 @@ U2EG_NAMESPACE_USING
 
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-ContextProxy::ContextProxy(const String& type, const String& name)
-    : Proxy(type, name)
+ContextProxy::ContextProxy(const String& type, const String& name, const String& guid)
+    : Proxy(type, name, guid)
 {
     // context queue factory
     CREATE_FACTORY(SingleContextQueue);
@@ -104,13 +104,13 @@ void ContextProxy::_switch(u2::Context* from, ContextQueue::eTransType transType
     getFacade().sendNotification(NTF_Predefined_Trans, &data);
 }
 //-----------------------------------------------------------------------
-ContextQueue* ContextProxy::createContextQueue(const String& type, const String& name
+ContextQueue* ContextProxy::createContextQueue(const String& type, const String& name, const String& guid
     , ContextQueue::eTransType defaultTransType, ContextQueue::eBackKeyPriority priority)
 {
     ContextQueue* pQueue = retrieveObjectByName(name);
     if (pQueue == nullptr)
     {
-        pQueue = createObject(type, name);
+        pQueue = createObject(type, name, guid);
         pQueue->initialize(defaultTransType, priority, this);
         for (PriorityQueueList::iterator it = m_priorityQueues.begin();
             it != m_priorityQueues.end(); 
@@ -134,7 +134,7 @@ ContextQueue* ContextProxy::createContextQueue(const String& type, const String&
     return pQueue;
 }
 //-----------------------------------------------------------------------
-ContextQueue* ContextProxy::createObject(const String& type, const String& name)
+ContextQueue* ContextProxy::createObject(const String& type, const String& name, const String& guid)
 {
-    return SimpleObjectManager<ContextQueue>::createObject(type, name);
+    return SimpleObjectManager<ContextQueue>::createObject(type, name, guid);
 }

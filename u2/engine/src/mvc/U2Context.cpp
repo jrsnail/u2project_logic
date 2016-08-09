@@ -14,8 +14,8 @@ U2EG_NAMESPACE_USING
 
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-Context::Context(const String& type, const String& name)
-    : u2::Object(type, name)
+Context::Context(const String& type, const String& name, const String& guid)
+    : u2::Object(type, name, guid)
     , m_pParent(nullptr)
 {
 }
@@ -34,13 +34,13 @@ void Context::initialize(const String& facadeName
     m_szScriptName = scriptName;
 }
 //-----------------------------------------------------------------------
-Context* Context::createChild(const String& type, const String& name
+Context* Context::createChild(const String& type, const String& name, const String& guid
     , const String& facadeName
     , const String& viewCompClass, const String& viewCompName
     , const String& uiName)
 {
     u2::Context* pChild = ContextManager::getSingletonPtr()->createObject(
-        type, name
+        type, name, guid
         , facadeName
         , viewCompClass, viewCompName
         , uiName
@@ -128,17 +128,17 @@ ContextManager::~ContextManager()
 {
 }
 //-----------------------------------------------------------------------
-Context* ContextManager::createObject(const String& type, const String& name
+Context* ContextManager::createObject(const String& type, const String& name, const String& guid
     , const String& facadeName
     , const String& viewCompClass, const String& viewCompName
     , const String& scriptName)
 {
-    Context* pContext = createObject(type, name);
+    Context* pContext = createObject(type, name, guid);
     pContext->initialize(facadeName, viewCompClass, viewCompName, scriptName);
     return pContext;
 }
 //-----------------------------------------------------------------------
-Context* ContextManager::createObject(const String& type, const String& name)
+Context* ContextManager::createObject(const String& type, const String& name, const String& guid)
 {
-    return SimpleObjectManager<Context>::createObject(type, name);
+    return SimpleObjectManager<Context>::createObject(type, name, guid);
 }

@@ -8,8 +8,8 @@ U2EG_NAMESPACE_USING
 
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
-PostTaskAndReplyRelay::PostTaskAndReplyRelay(const std::string& type, const std::string& name)
-    : Task(GET_OBJECT_TYPE(PostTaskAndReplyRelay), name)
+PostTaskAndReplyRelay::PostTaskAndReplyRelay(const String& type, const String& name, const String& guid)
+    : Task(GET_OBJECT_TYPE(PostTaskAndReplyRelay), name, guid)
     , m_spOriginLoop(TaskLoopManager::current())
 {
 
@@ -65,9 +65,9 @@ TaskManager::~TaskManager()
 {
 }
 //-----------------------------------------------------------------------
-Task* TaskManager::createObject(const String& type, const String& name)
+Task* TaskManager::createObject(const String& type, const String& name, const String& guid)
 {
-    Task* pObj = SimpleObjectManager<Task>::createObject(type, name);
+    Task* pObj = SimpleObjectManager<Task>::createObject(type, name, guid);
     if (pObj != nullptr)
     {
         // do some init
@@ -76,9 +76,9 @@ Task* TaskManager::createObject(const String& type, const String& name)
 }
 //-----------------------------------------------------------------------
 PostTaskAndReplyRelay* TaskManager::createObject(
-    const String& type, const String& name, Task* task, Task* reply)
+    const String& type, const String& name, const String& guid, Task* task, Task* reply)
 {
-    PostTaskAndReplyRelay* pRelay = dynamic_cast<PostTaskAndReplyRelay*>(createObject(type, name));
+    PostTaskAndReplyRelay* pRelay = dynamic_cast<PostTaskAndReplyRelay*>(createObject(type, name, guid));
     if (pRelay != nullptr)
     {
         pRelay->initialize(task, reply);

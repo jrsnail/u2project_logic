@@ -40,7 +40,7 @@ public:
 	* @throws Error Error if instance for this Multiton key instance has already been constructed
 	*
 	*/
-    explicit Model(const String& type, const String& name);
+    explicit Model(const String& type, const String& name, const String& guid);
 
 public:
 	/**

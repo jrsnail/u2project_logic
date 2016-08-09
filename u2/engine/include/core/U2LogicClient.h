@@ -17,7 +17,7 @@ U2EG_NAMESPACE_BEGIN
 class _U2Export LogicTaskLoop : public TaskLoop
 {
 public:
-    explicit LogicTaskLoop(const String& type, const String& name);
+    explicit LogicTaskLoop(const String& type, const String& name, const String& guid = BLANK);
     virtual ~LogicTaskLoop();
 
     virtual void postTask(Task* task) override;

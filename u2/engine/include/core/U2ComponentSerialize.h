@@ -17,7 +17,7 @@ U2EG_NAMESPACE_BEGIN
 class ComponentSerialize_0_0_1 : public XmlSerialize
 {
 public:
-    ComponentSerialize_0_0_1(const String& type, const String& name);
+    ComponentSerialize_0_0_1(const String& type, const String& name, const String& guid = BLANK);
     virtual ~ComponentSerialize_0_0_1();
 
     virtual bool load(const TiXmlElement* elem, const String& groupName) override;

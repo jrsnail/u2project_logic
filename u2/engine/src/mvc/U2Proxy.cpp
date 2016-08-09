@@ -14,8 +14,8 @@ U2EG_NAMESPACE_USING
 
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-Proxy::Proxy(const String& type, const String& name, void const* data)
-    : Object(type, name)
+Proxy::Proxy(const String& type, const String& name, const String& guid, void const* data)
+    : Object(type, name, guid)
     , _data(data)
 { }
 //-----------------------------------------------------------------------

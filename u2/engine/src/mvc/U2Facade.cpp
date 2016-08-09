@@ -17,8 +17,8 @@
 U2EG_NAMESPACE_USING
 
 
-Facade::Facade(const String& type, const String& name)
-    : Object(type, name)
+Facade::Facade(const String& type, const String& name, const String& guid)
+    : Object(type, name, guid)
     , _controller(nullptr)
 	, _model(nullptr)
 	, _view(nullptr)
@@ -341,7 +341,7 @@ FacadeManager::~FacadeManager()
 {
 }
 //-----------------------------------------------------------------------
-Facade* FacadeManager::createObject(const String& type, const String& name)
+Facade* FacadeManager::createObject(const String& type, const String& name, const String& guid)
 {
     if (!u2::FactoryManager::getSingletonPtr()->hasObjectFactory(type))
     {
@@ -349,5 +349,5 @@ Facade* FacadeManager::createObject(const String& type, const String& name)
         u2::FactoryManager::getSingletonPtr()->addObjectFactory(pObjectFactory);
     }
 
-    return SimpleObjectManager<Facade>::createObject(type, name);
+    return SimpleObjectManager<Facade>::createObject(type, name, guid);
 }

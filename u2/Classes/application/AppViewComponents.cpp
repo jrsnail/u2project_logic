@@ -12,8 +12,8 @@
 
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-ShadeViewComponent::ShadeViewComponent(const std::string& type, const std::string& name)
-    : CocosViewComponent(type, name)
+ShadeViewComponent::ShadeViewComponent(const String& type, const String& name, const String& guid)
+    : CocosViewComponent(type, name, guid)
 {
 }
 //-----------------------------------------------------------------------
@@ -63,12 +63,12 @@ void ShadeViewComponent::unloadUi()
 //-----------------------------------------------------------------------
 ViewComponent::NotificationNames ShadeViewComponent::listNotificationInterests(void) const
 {
-    return std::list<std::string>();
+    return std::list<String>();
 }
 //-----------------------------------------------------------------------
 void ShadeViewComponent::handleNotification(const Notification& notification)
 {
-    const std::string& szNtfName = notification.getName();
+    const String& szNtfName = notification.getName();
     const void* pData = notification.getData();
 
 }

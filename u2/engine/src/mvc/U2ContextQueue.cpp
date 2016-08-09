@@ -20,8 +20,8 @@ U2EG_NAMESPACE_USING
 
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-ContextQueue::ContextQueue(const String& type, const String& name)
-    : Object(type, name)
+ContextQueue::ContextQueue(const String& type, const String& name, const String& guid)
+    : Object(type, name, guid)
     , m_pContextProxy(nullptr)
 {
 
@@ -92,8 +92,8 @@ void ContextQueue::_switch(u2::Context* from, eTransType transType, u2::Context*
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-SingleContextQueue::SingleContextQueue(const String& type, const String& name)
-    : ContextQueue(type, name)
+SingleContextQueue::SingleContextQueue(const String& type, const String& name, const String& guid)
+    : ContextQueue(type, name, guid)
 {
 
 }
@@ -195,8 +195,8 @@ void SingleContextQueue::replace(u2::Context* from, u2::Context* to, eTransType 
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-InfiniteContextQueue::InfiniteContextQueue(const String& type, const String& name)
-    : ContextQueue(type, name)
+InfiniteContextQueue::InfiniteContextQueue(const String& type, const String& name, const String& guid)
+    : ContextQueue(type, name, guid)
 {
 
 }

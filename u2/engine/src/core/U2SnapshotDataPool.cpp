@@ -21,8 +21,8 @@ void SceneSnapshot::addMovableSnapshot(MovableSnapshot* movable)
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-SnapshotDataPool::SnapshotDataPool(const String& type, const String& name)
-    : DataPool(type, name)
+SnapshotDataPool::SnapshotDataPool(const String& type, const String& name, const u2::String& guid)
+    : DataPool(type, name, guid)
 {
 }
 //-----------------------------------------------------------------------

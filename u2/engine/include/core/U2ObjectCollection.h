@@ -33,7 +33,7 @@ public:
     typedef MapIterator<ObjectMap>          ObjectMapIterator;
 	typedef ConstMapIterator<ObjectMap>     ConstObjectMapIterator;
 
-	u2::Object* createObject(const String& type, const String& name = BLANK);
+	u2::Object* createObject(const String& type, const String& name = BLANK, const String& guid = BLANK);
 
 	void destoryObject(u2::Object* obj);
 
@@ -45,6 +45,8 @@ public:
 	}
 
 	u2::Object* retrieveObjectByGuid(const String& guid);
+
+    void renameObjectAsGuid(const String& oldGuid, const String& newGuid);
     
     
 public:

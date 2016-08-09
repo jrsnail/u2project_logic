@@ -60,7 +60,7 @@ public:
     };
 
 public:
-    explicit TaskLoop(const String& type, const String& name);
+    explicit TaskLoop(const String& type, const String& name = BLANK, const String& guid = BLANK);
     virtual ~TaskLoop();
 
     // Add a DestructionObserver, which will start receiving notifications
@@ -185,7 +185,7 @@ public:
     TaskLoopManager();
     virtual ~TaskLoopManager();
 
-    virtual TaskLoop* createObject(const String& type, const String& name = BLANK);
+    virtual TaskLoop* createObject(const String& type, const String& name = BLANK, const String& guid = BLANK);
 
     void postTask(const String& loopName, Task* task);
     void postTaskAndReply(const String& loopName, Task* task, Task* reply);

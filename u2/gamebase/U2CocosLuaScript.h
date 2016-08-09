@@ -19,7 +19,7 @@ U2EG_NAMESPACE_BEGIN
 class CocosLuaScript : public u2::LuaScript
 {
 public:
-    CocosLuaScript(const String& type, const String& name);
+    CocosLuaScript(const String& type, const String& name = BLANK, const String& guid = BLANK);
     virtual ~CocosLuaScript();
     
     virtual Script::NotificationNames listNotificationInterests(void) override;

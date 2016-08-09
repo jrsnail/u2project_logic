@@ -21,8 +21,8 @@ static cocos2d::FiniteTimeAction* createFadeInAction()
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-CocosViewComponent::CocosViewComponent(const String& type, const String& name)
-    : ViewComponent(type, name)
+CocosViewComponent::CocosViewComponent(const String& type, const String& name, const String& guid)
+    : ViewComponent(type, name, guid)
     , m_pRootNode(nullptr)
     , m_pParent(nullptr)
     , m_bTransEnd(false)

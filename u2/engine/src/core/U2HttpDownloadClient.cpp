@@ -17,8 +17,8 @@ U2EG_NAMESPACE_USING
 String HttpDownloadRequest::ExtName = ".udl";
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-HttpDownloadRequest::HttpDownloadRequest(const String& type, const String& name)
-    : Task(type, name)
+HttpDownloadRequest::HttpDownloadRequest(const String& type, const String& name, const u2::String& guid)
+    : Task(type, name, guid)
     , m_nRetry(3)
     , m_nExpectedChunkCount(DefaultChunkCount)
     , m_ulTotalFileLen(0L)
@@ -211,8 +211,8 @@ void HttpDownloadRequest::deserialize()
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-Chunk::Chunk(const String& type, const String& name)
-    : Object(type, name)
+Chunk::Chunk(const String& type, const String& name, const u2::String& guid)
+    : Object(type, name, guid)
     , m_ulStart(0L)
     , m_ulEnd(0L)
     , m_ulTotal(0L)
@@ -386,8 +386,8 @@ static int progressCallback(void *clientp, curl_off_t dltotal, curl_off_t dlnow,
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-HttpDownloadTaskLoop::HttpDownloadTaskLoop(const String& type, const String& name)
-    : TaskLoop(type, name)
+HttpDownloadTaskLoop::HttpDownloadTaskLoop(const String& type, const String& name, const u2::String& guid)
+    : TaskLoop(type, name, guid)
     , m_bKeepRunning(true)
     , m_bPausing(false)
     , m_uTimeoutForConnect(30)

@@ -69,7 +69,7 @@ public:
     * @throws Error Error if instance for this Multiton key has already been constructed
     *
     */
-    explicit View(const String& type, const String& name);
+    explicit View(const String& type, const String& name = BLANK, const String& guid = BLANK);
 
 public:
     /**

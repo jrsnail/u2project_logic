@@ -10,8 +10,8 @@ U2EG_NAMESPACE_USING
 
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-DataPool::DataPool(const String& type, const String& name)
-    : Object(type, name)
+DataPool::DataPool(const String& type, const String& name, const String& guid)
+    : Object(type, name, guid)
 {
 }
 //-----------------------------------------------------------------------

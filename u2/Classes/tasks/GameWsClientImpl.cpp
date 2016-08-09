@@ -8,8 +8,8 @@
 
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-GameWsTaskLoop::GameWsTaskLoop(const u2::String& type, const u2::String& name)
-    : JsonWsTaskLoop(type, name)
+GameWsTaskLoop::GameWsTaskLoop(const u2::String& type, const u2::String& name, const u2::String& guid)
+    : JsonWsTaskLoop(type, name, guid)
 {
     CREATE_FACTORY(GameWsCloseRST);
     CREATE_FACTORY(GameWsErrorRST);

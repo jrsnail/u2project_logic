@@ -34,8 +34,8 @@ public:
 
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-WsTaskLoop::WsTaskLoop(const String& type, const String& name)
-    : TaskLoop(type, name)
+WsTaskLoop::WsTaskLoop(const String& type, const String& name, const String& guid)
+    : TaskLoop(type, name, guid)
     , m_bKeepRunning(true)
     , m_bPausing(false)
     , m_eState(State::CONNECTING)

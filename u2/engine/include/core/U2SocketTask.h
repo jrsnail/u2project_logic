@@ -14,7 +14,7 @@ U2EG_NAMESPACE_BEGIN
 class SendSocketTask : public Task
 {
 public:
-    SendSocketTask(const String& type, const String& name);
+    SendSocketTask(const String& type, const String& name, const u2::String& guid = BLANK);
     virtual ~SendSocketTask();
 
     virtual void run() override;
@@ -33,7 +33,7 @@ protected:
 class RecvSocketTask : public Task
 {
 public:
-    RecvSocketTask(const String& type, const String& name);
+    RecvSocketTask(const String& type, const String& name, const u2::String& guid = BLANK);
     virtual ~RecvSocketTask();
 
     virtual void run() override;

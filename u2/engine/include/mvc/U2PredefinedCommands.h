@@ -27,7 +27,7 @@ which attached to this context will be destroyed also.
 class DestoryContextCommand : public SimpleCommand
 {
 public:
-    DestoryContextCommand(const String& type, const String& name);
+    DestoryContextCommand(const String& type, const String& name, const String& guid = BLANK);
     virtual ~DestoryContextCommand();
 
     virtual void go(const Notification& notification) override;
@@ -40,7 +40,7 @@ protected:
 class TransCommand : public SimpleCommand
 {
 public:
-    TransCommand(const String& type, const String& name);
+    TransCommand(const String& type, const String& name, const String& guid = BLANK);
     virtual ~TransCommand();
 
     virtual void go(const Notification& notification) override;
@@ -54,7 +54,7 @@ protected:
 class BackKeyCommand : public SimpleCommand
 {
 public:
-    BackKeyCommand(const String& type, const String& name);
+    BackKeyCommand(const String& type, const String& name, const String& guid = BLANK);
     virtual ~BackKeyCommand();
 
     virtual void go(const Notification& notification) override;

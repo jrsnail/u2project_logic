@@ -7,8 +7,8 @@ U2EG_NAMESPACE_USING
 
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-System::System(const String& type, const String& name)
-    : Object(type, name)
+System::System(const String& type, const String& name, const String& guid)
+    : Object(type, name, guid)
     , m_uPriority(0)
 {
 }
@@ -45,9 +45,9 @@ SystemManager::~SystemManager()
 {
 }
 //-----------------------------------------------------------------------
-System* SystemManager::createObject(const String& type, const String& name, size_t priority)
+System* SystemManager::createObject(const String& type, const String& name, const String& guid, size_t priority)
 {
-    System* pObj = createObject(type, name);
+    System* pObj = createObject(type, name, guid);
     if (pObj == nullptr)
     {
         assert(0);
@@ -69,9 +69,9 @@ System* SystemManager::createObject(const String& type, const String& name, size
     return pObj;
 }
 //-----------------------------------------------------------------------
-System* SystemManager::createObject(const String& type, const String& name)
+System* SystemManager::createObject(const String& type, const String& name, const String& guid)
 {
-    return SimpleObjectManager<System>::createObject(type, name);
+    return SimpleObjectManager<System>::createObject(type, name, guid);
 }
 //-----------------------------------------------------------------------
 void SystemManager::destoryObject(System* obj)

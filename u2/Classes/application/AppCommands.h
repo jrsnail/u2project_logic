@@ -21,7 +21,7 @@ class Context;
 class StartupCommand : public SimpleCommand
 {
 public:
-    StartupCommand(const std::string& type, const std::string& name);
+    StartupCommand(const String& type, const String& name = BLANK, const String& guid = BLANK);
     virtual ~StartupCommand();
 
     virtual void go(const Notification& notification) override;
@@ -31,7 +31,7 @@ public:
 class Trans2ShadeCommand : public SimpleCommand
 {
 public:
-    Trans2ShadeCommand(const std::string& type, const std::string& name);
+    Trans2ShadeCommand(const String& type, const String& name = BLANK, const String& guid = BLANK);
     virtual ~Trans2ShadeCommand();
 
     virtual void go(const Notification& notification) override;
@@ -41,7 +41,7 @@ public:
 class StartupLuaCommand : public SimpleCommand
 {
 public:
-    StartupLuaCommand(const std::string& type, const std::string& name);
+    StartupLuaCommand(const String& type, const String& name = BLANK, const String& guid = BLANK);
     virtual ~StartupLuaCommand();
 
     virtual void go(const Notification& notification) override;
@@ -52,13 +52,13 @@ public:
 class HotUpdateCommand : public SimpleCommand
 {
 public:
-    HotUpdateCommand(const std::string& type, const std::string& name);
+    HotUpdateCommand(const String& type, const String& name);
     virtual ~HotUpdateCommand();
 
     virtual void go(const Notification& notification) override;
 
 private:
-    void _parseServerJson(const std::string& json);
+    void _parseServerJson(const String& json);
     void _parseLocalJson();
     void _calUpdateList();
     void _startDownload();
@@ -66,9 +66,9 @@ private:
 private:
     struct StUpdatingFile
     {
-        std::string szUrl;
-        std::string szFolder;
-        std::string szTmpFilename;
+        String szUrl;
+        String szFolder;
+        String szTmpFilename;
         bool bCompleted;
 
         StUpdatingFile::StUpdatingFile() 
@@ -79,7 +79,7 @@ private:
     };
 
     /// <key, StUpdatingFile>
-    typedef std::map<std::string, StUpdatingFile>               FileList;
+    typedef std::map<String, StUpdatingFile>               FileList;
 
     struct StUpdatingCollection
     {

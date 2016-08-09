@@ -12,7 +12,7 @@
 class JoystickViewComponent : public CocosViewComponent
 {
 public:
-    JoystickViewComponent(const u2::String& type, const u2::String& name);
+    JoystickViewComponent(const u2::String& type, const u2::String& name, const u2::String& guid = BLANK);
 
     virtual ~JoystickViewComponent(void);
 

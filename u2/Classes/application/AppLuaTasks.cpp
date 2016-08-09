@@ -9,8 +9,8 @@ U2EG_NAMESPACE_USING
 
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-CreateLuaScriptLuaTask::CreateLuaScriptLuaTask(const std::string& type, const std::string& name)
-: LuaTask(type, name)
+CreateLuaScriptLuaTask::CreateLuaScriptLuaTask(const String& type, const String& name, const String& guid)
+: LuaTask(type, name, guid)
 {
 }
 //-----------------------------------------------------------------------
@@ -20,8 +20,8 @@ CreateLuaScriptLuaTask::~CreateLuaScriptLuaTask()
 //-----------------------------------------------------------------------
 void CreateLuaScriptLuaTask::run()
 {
-    std::string szLuaFileName = getField("LuaFileName");
-    std::string szFacadeName = getField("FacadeName");
+    String szLuaFileName = getField("LuaFileName");
+    String szFacadeName = getField("FacadeName");
 
     u2::Script* pLuaScript = u2::ScriptManager::getSingletonPtr()->createObject(GET_OBJECT_TYPE(u2::CocosLuaScript), BLANK);
     if (pLuaScript)
@@ -39,8 +39,8 @@ void CreateLuaScriptLuaTask::run()
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-SetViewCompUiNameLuaTask::SetViewCompUiNameLuaTask(const std::string& type, const std::string& name)
-    : LuaTask(type, name)
+SetViewCompUiNameLuaTask::SetViewCompUiNameLuaTask(const String& type, const String& name, const String& guid)
+    : LuaTask(type, name, guid)
 {
 }
 //-----------------------------------------------------------------------
@@ -50,8 +50,8 @@ SetViewCompUiNameLuaTask::~SetViewCompUiNameLuaTask()
 //-----------------------------------------------------------------------
 void SetViewCompUiNameLuaTask::run()
 {
-    std::string szViewCompName = getField("ViewCompName");
-    std::string szUiName = getField("UiName");
+    String szViewCompName = getField("ViewCompName");
+    String szUiName = getField("UiName");
 
     u2::ViewComponent* pViewComp = u2::ViewComponentManager::getSingletonPtr()->retrieveObjectByName(szViewCompName);
     if (pViewComp == nullptr)
@@ -65,8 +65,8 @@ void SetViewCompUiNameLuaTask::run()
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-SetViewCompEnterActionLuaTask::SetViewCompEnterActionLuaTask(const std::string& type, const std::string& name)
-    : LuaTask(type, name)
+SetViewCompEnterActionLuaTask::SetViewCompEnterActionLuaTask(const String& type, const String& name, const String& guid)
+    : LuaTask(type, name, guid)
 {
 }
 //-----------------------------------------------------------------------
@@ -76,7 +76,7 @@ SetViewCompEnterActionLuaTask::~SetViewCompEnterActionLuaTask()
 //-----------------------------------------------------------------------
 void SetViewCompEnterActionLuaTask::run()
 {
-    std::string szViewCompName = getField("ViewCompName");
+    String szViewCompName = getField("ViewCompName");
     CocosViewComponent::eTransAction eTrans
         = (CocosViewComponent::eTransAction)u2::StringUtil::parseInt(getField("EnterAction"));
 
@@ -93,8 +93,8 @@ void SetViewCompEnterActionLuaTask::run()
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-SetViewCompExitActionLuaTask::SetViewCompExitActionLuaTask(const std::string& type, const std::string& name)
-    : LuaTask(type, name)
+SetViewCompExitActionLuaTask::SetViewCompExitActionLuaTask(const String& type, const String& name, const String& guid)
+    : LuaTask(type, name, guid)
 {
 }
 //-----------------------------------------------------------------------
@@ -104,7 +104,7 @@ SetViewCompExitActionLuaTask::~SetViewCompExitActionLuaTask()
 //-----------------------------------------------------------------------
 void SetViewCompExitActionLuaTask::run()
 {
-    std::string szViewCompName = getField("ViewCompName");
+    String szViewCompName = getField("ViewCompName");
     CocosViewComponent::eTransAction eTrans
         = (CocosViewComponent::eTransAction)u2::StringUtil::parseInt(getField("ExitAction"));
 
@@ -121,8 +121,8 @@ void SetViewCompExitActionLuaTask::run()
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-CenterViewCompLuaTask::CenterViewCompLuaTask(const std::string& type, const std::string& name)
-    : LuaTask(type, name)
+CenterViewCompLuaTask::CenterViewCompLuaTask(const String& type, const String& name, const String& guid)
+    : LuaTask(type, name, guid)
 {
 }
 //-----------------------------------------------------------------------
@@ -132,7 +132,7 @@ CenterViewCompLuaTask::~CenterViewCompLuaTask()
 //-----------------------------------------------------------------------
 void CenterViewCompLuaTask::run()
 {
-    std::string szViewCompName = getField("ViewCompName");
+    String szViewCompName = getField("ViewCompName");
 
     CocosViewComponent* pViewComp
         = dynamic_cast<CocosViewComponent*>(u2::ViewComponentManager::getSingletonPtr()->retrieveObjectByName(szViewCompName));
@@ -147,8 +147,8 @@ void CenterViewCompLuaTask::run()
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-PreloadLuaTask::PreloadLuaTask(const std::string& type, const std::string& name)
-: LuaTask(type, name)
+PreloadLuaTask::PreloadLuaTask(const String& type, const String& name, const String& guid)
+: LuaTask(type, name, guid)
 {
 }
 //-----------------------------------------------------------------------

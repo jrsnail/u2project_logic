@@ -19,9 +19,9 @@ GameObject::GameObject(ResourceManager* creator, const String& type, ResourceHan
     setPrototype(this);
 }
 //-----------------------------------------------------------------------
-GameObject::GameObject(const String& type, const String& name)
+GameObject::GameObject(const String& type, const String& name, const String& guid)
     : Resource()
-    , Prototype(type, name)
+    , Prototype(type, name, guid)
     , m_pParentGameObj(nullptr)
 {
 
@@ -83,12 +83,13 @@ void GameObject::copy(const GameObject& src)
     }
 }
 //-----------------------------------------------------------------------
-GameObject* GameObject::cloneFromPrototype(const String& name)
+GameObject* GameObject::cloneFromPrototype(const String& name, const String& guid)
 {
     if (hasPrototype())
     {
         GameObject* pPrototype = retrievePrototype();
-        GameObject* pNewGameObj = GameObjectManager::getSingleton()._createObject(pPrototype->getType(), name);
+        GameObject* pNewGameObj 
+            = GameObjectManager::getSingleton()._createObject(pPrototype->getType(), name, guid);
         pNewGameObj->addListener(GameObjectManager::getSingletonPtr());
         pNewGameObj->copy(*pPrototype);
         pPrototype->addInstance(pNewGameObj);
@@ -101,11 +102,12 @@ GameObject* GameObject::cloneFromPrototype(const String& name)
     }
 }
 //-----------------------------------------------------------------------
-GameObject* GameObject::cloneFromInstance(const String& name)
+GameObject* GameObject::cloneFromInstance(const String& name, const String& guid)
 {
     if (hasPrototype())
     {
-        GameObject* pNewGameObj = GameObjectManager::getSingleton()._createObject(this->getType(), name);
+        GameObject* pNewGameObj 
+            = GameObjectManager::getSingleton()._createObject(this->getType(), name, guid);
         pNewGameObj->addListener(GameObjectManager::getSingletonPtr());
         pNewGameObj->copy(*this);
         this->addInstance(pNewGameObj);
@@ -152,9 +154,9 @@ void GameObject::unloadImpl(void)
 
 }
 //-----------------------------------------------------------------------
-u2::Component* GameObject::createComponent(const String& type, const String& name)
+u2::Component* GameObject::createComponent(const String& type, const String& name, const String& guid)
 {
-    u2::Component* pComp = ComponentManager::getSingleton().createObject(type, name);
+    u2::Component* pComp = ComponentManager::getSingleton().createObject(type, name, guid);
     pComp->bornOn(this);
     return pComp;
 }
@@ -228,9 +230,9 @@ u2::Component* GameObject::retrieveComponentByGuid(const String& guid)
     return nullptr;
 }
 //-----------------------------------------------------------------------
-GameObject* GameObject::createChildGameObject(const String& type, const String& name)
+GameObject* GameObject::createChildGameObject(const String& type, const String& name, const String& guid)
 {
-    GameObject* pObj = GameObjectManager::getSingleton().createObject(type, name);
+    GameObject* pObj = GameObjectManager::getSingleton().createObject(type, name, guid);
     if (pObj)
     {
         addChildGameObject(pObj);
@@ -460,7 +462,7 @@ GameObjectPtr GameObjectManager::create(const String& name, const String& group,
         createResource(name, group, isManual, loader, createParams));
 }
 //-----------------------------------------------------------------------
-GameObject* GameObjectManager::createObject(const String& type, const String& name)
+GameObject* GameObjectManager::createObject(const String& type, const String& name, const String& guid)
 {
     ResourcePtr resPtr = this->getResourceByName(type);
     // prototype existed
@@ -470,7 +472,7 @@ GameObject* GameObjectManager::createObject(const String& type, const String& na
         // create instance from prototype
         if (pPrototype)
         {
-            GameObject* pObj = pPrototype->cloneFromPrototype(name);
+            GameObject* pObj = pPrototype->cloneFromPrototype(name, guid);
             return pObj;
         }
         else
@@ -483,7 +485,7 @@ GameObject* GameObjectManager::createObject(const String& type, const String& na
     {
         // create as an alone object
         CREATE_FACTORY_WITH_TYPE(GameObject, type);
-        GameObject* pObj = GameObjectManager::getSingleton()._createObject(type, name);
+        GameObject* pObj = GameObjectManager::getSingleton()._createObject(type, name, guid);
         pObj->addListener(this);
         return pObj;
     }
@@ -526,9 +528,9 @@ GameObject* GameObjectManager::retrieveObjectByType(const String& type)
     return m_InstanceCollection.retrieveObjectByType(type);
 }
 //-----------------------------------------------------------------------
-GameObject* GameObjectManager::_createObject(const String& type, const String& name)
+GameObject* GameObjectManager::_createObject(const String& type, const String& name, const String& guid)
 {
-    return m_InstanceCollection.createObject(type, name);
+    return m_InstanceCollection.createObject(type, name, guid);
 }
 //-----------------------------------------------------------------------
 void GameObjectManager::onAttachComponent(GameObject* gameObj, Component* comp)

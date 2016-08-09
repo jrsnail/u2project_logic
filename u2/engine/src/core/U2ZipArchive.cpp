@@ -54,8 +54,8 @@ struct FileNameCompare : public std::binary_function<FileInfo, String, bool>
 	}
 };
 //-----------------------------------------------------------------------
-ZipArchive::ZipArchive(const String& type, const String& name)
-	: Archive(type, name)
+ZipArchive::ZipArchive(const String& type, const String& name, const String& guid)
+	: Archive(type, name, guid)
 	, mZzipDir(0)
 	, mPluginIo(nullptr)
 {
@@ -512,9 +512,9 @@ const String& EmbeddedZipArchiveFactory::getType() const
 	return name;
 }
 //-----------------------------------------------------------------------
-Object* EmbeddedZipArchiveFactory::createInstance(const String& name)
+Object* EmbeddedZipArchiveFactory::createInstance(const String& name, const String& guid)
 {
-	ZipArchive* pObj = static_cast<ZipArchive*>(TemplateObjectFactory<ZipArchive>::createInstance(name));
+	ZipArchive* pObj = static_cast<ZipArchive*>(TemplateObjectFactory<ZipArchive>::createInstance(name, guid));
 	if (pObj != nullptr)
 	{
 		pObj->initializeZip(mPluginIo);

@@ -17,8 +17,8 @@
 //-----------------------------------------------------------------------
 AppFacade* AppFacade::ms_pSingleton = nullptr;
 //-----------------------------------------------------------------------
-AppFacade::AppFacade(const std::string& type, const std::string& name)
-    : Facade(type, name)
+AppFacade::AppFacade(const u2::String& type, const u2::String& name, const u2::String& guid)
+    : Facade(type, name, guid)
 {
 	if (ms_pSingleton != nullptr)
 	{
@@ -70,15 +70,15 @@ void AppFacade::initializeHerald(void)
 void AppFacade::initializeContextQueue(void)
 {
     ContextProxy* contextProxy = getFacade(ON_Facade_Predefined).retrieveProxy<ContextProxy>(ON_Proxy_Context);
-    contextProxy->createContextQueue(OT_SingleContextQueue, ON_ContextQueue_Shade
+    contextProxy->createContextQueue(OT_SingleContextQueue, ON_ContextQueue_Shade, BLANK
         , ContextQueue::eTransType::TT_Overlay, ContextQueue::eBackKeyPriority::Pri_0_Shade);
-    contextProxy->createContextQueue(OT_SingleContextQueue, ON_ContextQueue_Scene
+    contextProxy->createContextQueue(OT_SingleContextQueue, ON_ContextQueue_Scene, BLANK
         , ContextQueue::eTransType::TT_OneByOne, ContextQueue::eBackKeyPriority::Pri_10);
-    contextProxy->createContextQueue(OT_SingleContextQueue, ON_ContextQueue_Tab
+    contextProxy->createContextQueue(OT_SingleContextQueue, ON_ContextQueue_Tab, BLANK
         , ContextQueue::eTransType::TT_OneByOne, ContextQueue::eBackKeyPriority::Pri_20);
-    contextProxy->createContextQueue(OT_InfiniteContextQueue, ON_ContextQueue_Common
+    contextProxy->createContextQueue(OT_InfiniteContextQueue, ON_ContextQueue_Common, BLANK
         , ContextQueue::eTransType::TT_Overlay, ContextQueue::eBackKeyPriority::Pri_50);
-    contextProxy->createContextQueue(OT_InfiniteContextQueue, ON_ContextQueue_Dialog
+    contextProxy->createContextQueue(OT_InfiniteContextQueue, ON_ContextQueue_Dialog, BLANK
         , ContextQueue::eTransType::TT_Cross, ContextQueue::eBackKeyPriority::Pri_100_Dialog);
 }
 //-----------------------------------------------------------------------

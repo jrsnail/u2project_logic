@@ -15,8 +15,8 @@ U2EG_NAMESPACE_USING
 
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-Script::Script(const String& type, const String& name)
-: Object(type, name)
+Script::Script(const String& type, const String& name, const String& guid)
+: Object(type, name, guid)
 {
 }
 //-----------------------------------------------------------------------
@@ -56,7 +56,7 @@ ScriptManager::~ScriptManager()
 {
 }
 //-----------------------------------------------------------------------
-Script* ScriptManager::createObject(const String& type, const String& name)
+Script* ScriptManager::createObject(const String& type, const String& name, const String& guid)
 {
-    return SimpleObjectManager<Script>::createObject(type, name);
+    return SimpleObjectManager<Script>::createObject(type, name, guid);
 }

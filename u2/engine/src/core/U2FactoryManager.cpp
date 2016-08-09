@@ -66,7 +66,7 @@ void FactoryManager::destroyObjectFactory(const String& type)
 	}
 }
 //-----------------------------------------------------------------------
-Object* FactoryManager::createObject(const String& type, const String& name)
+Object* FactoryManager::createObject(const String& type, const String& name, const String& guid)
 {
 	// Search factories
 	ObjectFactoryMap::iterator fit = mObjectFactories.find(type);
@@ -75,7 +75,7 @@ Object* FactoryManager::createObject(const String& type, const String& name)
 		assert(0);
 	}
 
-	return fit->second->createInstance(name);
+	return fit->second->createInstance(name, guid);
 }
 //-----------------------------------------------------------------------
 void FactoryManager::destroyObject(Object* obj)

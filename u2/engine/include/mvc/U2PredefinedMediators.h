@@ -20,7 +20,7 @@ U2EG_NAMESPACE_USING
 class TransMediator : public u2::Object, public ViewComponent::Listener
 {
 public:
-    TransMediator(const String& type, const String& name);
+    TransMediator(const String& type, const String& name = BLANK, const String& guid = BLANK);
 
     virtual ~TransMediator(void);
 

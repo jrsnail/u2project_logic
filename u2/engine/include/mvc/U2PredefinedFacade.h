@@ -13,13 +13,13 @@
 #include "U2Facade.h"
 
 
-U2EG_NAMESPACE_USING
+U2EG_NAMESPACE_BEGIN
 
 
 class PredefinedFacade : public Facade
 {
 public:
-    PredefinedFacade(const String& type, const String& name);
+    PredefinedFacade(const String& type, const String& name, const String& guid = BLANK);
 
     virtual ~PredefinedFacade(void);
 
@@ -32,6 +32,9 @@ public:
 private:
 	static PredefinedFacade*			ms_pSingleton;
 };
+
+
+U2EG_NAMESPACE_END
 
 
 #endif /* defined(__U2PredefinedFacade__) */

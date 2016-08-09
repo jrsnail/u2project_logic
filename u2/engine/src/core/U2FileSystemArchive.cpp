@@ -54,8 +54,8 @@ static String concatenate_path(const String& base, const String& name)
 //-----------------------------------------------------------------------
 bool FileSystemArchive::msIgnoreHidden = true;
 //-----------------------------------------------------------------------
-FileSystemArchive::FileSystemArchive(const String& type, const String& name)
-    : Archive(type, name)
+FileSystemArchive::FileSystemArchive(const String& type, const String& name, const String& guid)
+    : Archive(type, name, guid)
 {
     
 }

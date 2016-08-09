@@ -42,7 +42,7 @@ public:
     /**
     * Constructor.
     */
-    explicit Proxy(const String& type, const String& name, void const* data = NULL);
+    explicit Proxy(const String& type, const String& name, const String& guid = BLANK, void const* data = NULL);
 
     /**
     * Set the data object.

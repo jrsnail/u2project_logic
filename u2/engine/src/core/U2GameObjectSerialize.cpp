@@ -10,8 +10,8 @@ U2EG_NAMESPACE_USING
 
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-GameObjectSerialize_0_0_1::GameObjectSerialize_0_0_1(const String& type, const String& name)
-    : XmlSerialize(type, name)
+GameObjectSerialize_0_0_1::GameObjectSerialize_0_0_1(const String& type, const String& name, const String& guid)
+    : XmlSerialize(type, name, guid)
 {
 }
 //-----------------------------------------------------------------------

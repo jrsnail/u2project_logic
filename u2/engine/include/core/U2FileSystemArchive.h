@@ -38,7 +38,7 @@ protected:
         StringVector* simpleList, FileInfoList* detailList);
 
 public:
-    FileSystemArchive(const String& type, const String& name);
+    FileSystemArchive(const String& type, const String& name, const String& guid = BLANK);
     ~FileSystemArchive();
 
     /// @copydoc Archive::isCaseSensitive

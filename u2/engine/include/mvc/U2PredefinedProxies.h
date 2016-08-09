@@ -26,10 +26,10 @@ protected:
     typedef std::vector<ContextQueue*>  PriorityQueueList;
 
 public:
-    ContextProxy(const String& type, const String& name);
+    ContextProxy(const String& type, const String& name = BLANK, const String& guid = BLANK);
     virtual ~ContextProxy(void);
 
-    ContextQueue* createContextQueue(const String& type, const String& name
+    ContextQueue* createContextQueue(const String& type, const String& name, const String& guid
         , ContextQueue::eTransType defaultTransType, ContextQueue::eBackKeyPriority priority);
 
     void pushBack(const String& name, u2::Context* context, ContextQueue::eTransType transType = ContextQueue::eTransType::TT_None);
@@ -49,7 +49,7 @@ public:
     void _switch(u2::Context* from, ContextQueue::eTransType transType, u2::Context* to);
 
 protected:
-    virtual ContextQueue* createObject(const String& type, const String& name);
+    virtual ContextQueue* createObject(const String& type, const String& name = BLANK, const String& guid = BLANK);
 
     ContextQueue* _retrieveContextQueue(const String& name);
 

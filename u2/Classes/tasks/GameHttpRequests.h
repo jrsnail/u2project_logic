@@ -12,7 +12,7 @@ U2EG_NAMESPACE_USING
 class TimeHReq : public HttpRequest
 {
 public:
-    TimeHReq(const u2::String& type, const u2::String& name);
+    TimeHReq(const u2::String& type, const u2::String& name, const u2::String& guid = BLANK);
     virtual ~TimeHReq();
 
     virtual const u2::String& getHttpResponse() override;
@@ -26,7 +26,7 @@ private:
 class RegisterHReq : public HttpRequest
 {
 public:
-    RegisterHReq(const u2::String& type, const u2::String& name);
+    RegisterHReq(const u2::String& type, const u2::String& name, const u2::String& guid = BLANK);
     virtual ~RegisterHReq();
 
     virtual const u2::String& getHttpResponse() override;
@@ -40,7 +40,7 @@ private:
 class PlayHReq : public HttpRequest
 {
 public:
-    PlayHReq(const u2::String& type, const u2::String& name);
+    PlayHReq(const u2::String& type, const u2::String& name, const u2::String& guid = BLANK);
     virtual ~PlayHReq();
 
     virtual const u2::String& getHttpResponse() override;

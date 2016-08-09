@@ -9,7 +9,7 @@
 U2EG_NAMESPACE_BEGIN
 
 
-
+// todo: check T is ReusableObject type in compile time
 template <class T> 
 class PoolingObjectManager : public TypedObjectManager<T>
 {
@@ -22,16 +22,16 @@ public:
     */
     virtual ~PoolingObjectManager();
 
-    T* reuseObjectAsName(const String& type, const String& name = BLANK);
+    T* reuseObject(const String& type, const String& name = BLANK, const String& guid = BLANK);
 
     void recycleObject(T* obj);
 
     void destoryUnusedObject(const String& type);
 
 protected:
-	T* createObject(const String& type, const String& name = BLANK)
+	T* createObject(const String& type, const String& name = BLANK, const String& guid = BLANK)
 	{
-		return TypedObjectManager<T>::createObject(type, name);
+		return TypedObjectManager<T>::createObject(type, name, guid);
 	}
 
 	void destoryObject(T* obj)
@@ -69,18 +69,19 @@ PoolingObjectManager<T>::~PoolingObjectManager()
 }
 //-----------------------------------------------------------------------
 template <class T>
-T* PoolingObjectManager<T>::reuseObjectAsName(const String& type, const String& name)
+T* PoolingObjectManager<T>::reuseObject(const String& type, const String& name, const String& guid)
 {
 	T* pObj = mUnusedObjects.retrieveObjectByType(type);
 	if (pObj == nullptr)
 	{
-		pObj = mUnusedObjects.createObject(type, name);
+		pObj = mUnusedObjects.createObject(type, name, guid);
 		mUnusedObjects.removeObject(pObj);
 	}
 	else
 	{
 		mUnusedObjects.removeObject(pObj);
-		pObj->renameForPooling(name);
+		pObj->renameAsName(name);
+        pObj->renameAsGuid(guid);
 	}
 	
 	addObject(pObj);

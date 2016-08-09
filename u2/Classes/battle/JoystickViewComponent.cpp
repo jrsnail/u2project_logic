@@ -5,8 +5,8 @@
 
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-JoystickViewComponent::JoystickViewComponent(const u2::String& type, const u2::String& name)
-    : CocosViewComponent(type, name)
+JoystickViewComponent::JoystickViewComponent(const u2::String& type, const u2::String& name, const u2::String& guid)
+    : CocosViewComponent(type, name, guid)
     , m_bIsActived(false)
     , m_v2CurrentPos(cocos2d::Vec2::ZERO)
     , m_fRadius(0.0f)

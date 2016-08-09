@@ -64,7 +64,7 @@ public:
     typedef list<SceneSnapshot*>::type      SceneSnapshotList;
 
 public:
-    SnapshotDataPool(const String& type, const String& name = BLANK);
+    SnapshotDataPool(const String& type, const String& name = BLANK, const u2::String& guid = BLANK);
     virtual ~SnapshotDataPool();
 
     void addSceneSnapshot(SceneSnapshot* scene);

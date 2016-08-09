@@ -31,7 +31,7 @@ protected:
 	void checkZzipError(int zzipError, const String& operation) const;
 
 public:
-	ZipArchive(const String& type, const String& name);
+	ZipArchive(const String& type, const String& name, const String& guid = BLANK);
 
 	~ZipArchive();
 
@@ -103,7 +103,7 @@ public:
 
 	virtual const String& getType() const override;
 
-	virtual Object* createInstance(const String& name) override;
+	virtual Object* createInstance(const String& name, const String& guid = BLANK) override;
 
 	/** a function type to decrypt embedded zip file
 	@param pos pos in file

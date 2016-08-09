@@ -38,7 +38,7 @@ public:
     };
 
 public:
-    explicit WsTaskLoop(const String& type, const String& name);
+    explicit WsTaskLoop(const String& type, const String& name, const String& guid = BLANK);
     virtual ~WsTaskLoop();
 
     virtual void postTask(Task* task) override;

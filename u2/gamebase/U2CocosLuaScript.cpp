@@ -25,8 +25,8 @@ U2EG_NAMESPACE_USING
 
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-CocosLuaScript::CocosLuaScript(const String& type, const String& name)
-    : LuaScript(type, name)
+CocosLuaScript::CocosLuaScript(const String& type, const String& name, const String& guid)
+    : LuaScript(type, name, guid)
 {
 
 }

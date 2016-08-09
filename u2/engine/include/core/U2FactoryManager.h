@@ -32,7 +32,7 @@ public:
 
 	void destroyObjectFactory(const String& type);
 
-	Object* createObject(const String& type, const String& name);
+	Object* createObject(const String& type, const String& name, const String& guid);
 
 	void destroyObject(Object* obj);
 

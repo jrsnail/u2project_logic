@@ -26,7 +26,7 @@ public:
      */
     virtual ~TypedObjectManager();
     
-    T* createObject(const String& type, const String& name = BLANK);
+    T* createObject(const String& type, const String& name = BLANK, const String& guid = BLANK);
     
     void destoryObject(T* obj);
     
@@ -66,9 +66,9 @@ TypedObjectManager<T>::~TypedObjectManager()
 }
 //-----------------------------------------------------------------------
 template <class T>
-T* TypedObjectManager<T>::createObject(const String& type, const String& name)
+T* TypedObjectManager<T>::createObject(const String& type, const String& name, const String& guid)
 {
-    T* pObj = dynamic_cast<T*>(ObjectCollection::getSingletonPtr()->createObject(type, name));
+    T* pObj = dynamic_cast<T*>(ObjectCollection::getSingletonPtr()->createObject(type, name, guid));
     if (pObj != nullptr)
     {
         m_TypedMap.insert(std::make_pair(type, pObj));

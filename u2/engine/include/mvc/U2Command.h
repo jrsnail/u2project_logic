@@ -13,7 +13,7 @@ U2EG_NAMESPACE_BEGIN
 class Command : public Object, public Notifier
 {
 public:
-    Command(const String& type, const String& name);
+    Command(const String& type, const String& name = BLANK, const String& guid = BLANK);
     virtual ~Command();
 
     virtual void go(const Notification& notification);
@@ -34,7 +34,7 @@ public:
     */
     virtual ~CommandManager();
 
-    Command* createObject(const String& type, const String& name = BLANK);
+    Command* createObject(const String& type, const String& name = BLANK, const String& guid = BLANK);
 
 public:
     /** Override standard Singleton retrieval.

@@ -19,8 +19,8 @@
 
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-TransMediator::TransMediator(const String& type, const String& name)
-    : u2::Object(type, name)
+TransMediator::TransMediator(const String& type, const String& name, const String& guid)
+    : u2::Object(type, name, guid)
     , m_pFrom(nullptr)
     , m_pParent(nullptr)
     , m_pCur(nullptr)
@@ -324,7 +324,8 @@ void TransMediator::_startupToContext(const u2::Context* context)
 //-----------------------------------------------------------------------
 TransStep* TransMediator::_createVoidStep(const TransStep::Key& key, VoidStep::CallbackFun func)
 {
-    VoidStep* pVoidStep = dynamic_cast<VoidStep*>(FactoryManager::getSingletonPtr()->createObject(GET_OBJECT_TYPE(VoidStep), BLANK));
+    VoidStep* pVoidStep = dynamic_cast<VoidStep*>(
+        FactoryManager::getSingletonPtr()->createObject(GET_OBJECT_TYPE(VoidStep), BLANK, BLANK));
     if (pVoidStep != nullptr)
     {
         pVoidStep->initialize(key, func);
@@ -334,7 +335,8 @@ TransStep* TransMediator::_createVoidStep(const TransStep::Key& key, VoidStep::C
 //-----------------------------------------------------------------------
 TransStep* TransMediator::_createParamStep(const TransStep::Key& key, ParamStep::CallbackFun func)
 {
-    ParamStep* pParamStep = dynamic_cast<ParamStep*>(FactoryManager::getSingletonPtr()->createObject(GET_OBJECT_TYPE(ParamStep), BLANK));
+    ParamStep* pParamStep = dynamic_cast<ParamStep*>(
+        FactoryManager::getSingletonPtr()->createObject(GET_OBJECT_TYPE(ParamStep), BLANK, BLANK));
     if (pParamStep != nullptr)
     {
         pParamStep->initialize(key, func);

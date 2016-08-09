@@ -16,8 +16,8 @@
 U2EG_NAMESPACE_USING
 
 
-View::View(const String& type, const String& name)
-    : Object(type, name)
+View::View(const String& type, const String& name, const String& guid)
+    : Object(type, name, guid)
 {
     
 }

@@ -21,7 +21,7 @@ protected:
     typedef std::map<String, Context*>      ContextMap;
 
 public:
-    Context(const String& type, const String& name);
+    Context(const String& type, const String& name = BLANK, const String& guid = BLANK);
     virtual ~Context();
 
     void initialize(const String& facadeName
@@ -33,7 +33,7 @@ public:
     inline String getViewCompName() const { return m_szViewCompName; };
     inline String getScriptName() const { return m_szScriptName; };
 
-    Context* createChild(const String& type, const String& name
+    Context* createChild(const String& type, const String& name, const String& guid
         , const String& facadeName
         , const String& viewCompClass, const String& viewCompName 
         , const String& uiName);
@@ -82,13 +82,13 @@ public:
     */
     virtual ~ContextManager();
 
-    Context* createObject(const String& type, const String& name
+    Context* createObject(const String& type, const String& name, const String& guid
         , const String& facadeName
         , const String& viewCompClass, const String& viewCompName
         , const String& scriptName);
 
 protected:
-    virtual Context* createObject(const String& type, const String& name);
+    virtual Context* createObject(const String& type, const String& name = BLANK, const String& guid = BLANK);
 
 public:
     /** Override standard Singleton retrieval.

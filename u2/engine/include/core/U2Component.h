@@ -25,13 +25,13 @@ public:
     Component(ResourceManager* creator, const String& type, ResourceHandle handle,
         const String& group, bool isManual = false
         , ManualResourceLoader* loader = 0);
-    Component(const String& type, const String& name);
+    Component(const String& type, const String& name, const u2::String& guid = BLANK);
     virtual ~Component();
 
     virtual void copy(const Component& src);
 
-    virtual Component* cloneFromPrototype(const String& name = BLANK) override;
-    virtual Component* cloneFromInstance(const String& name = BLANK) override;
+    virtual Component* cloneFromPrototype(const String& name = BLANK, const String& guid = BLANK) override;
+    virtual Component* cloneFromInstance(const String& name = BLANK, const String& guid = BLANK) override;
     virtual void resetFromPrototype() override;
     virtual void applyToPrototype() override;
 
@@ -95,7 +95,7 @@ public:
         bool isManual = false, ManualResourceLoader* loader = 0,
         const NameValuePairList* createParams = 0);
 
-    Component* createObject(const String& type, const String& name = BLANK);
+    Component* createObject(const String& type, const String& name = BLANK, const String& guid = BLANK);
 
     void destoryObject(Component* obj);
 
@@ -108,7 +108,7 @@ public:
     Component* retrieveObjectByType(const String& type);
 
 protected:
-    Component* _createObject(const String& type, const String& name);
+    Component* _createObject(const String& type, const String& name = BLANK, const String& guid = BLANK);
 
 public:
     /** Override standard Singleton retrieval.

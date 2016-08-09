@@ -6,8 +6,8 @@
 
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-TimeHReq::TimeHReq(const u2::String& type, const u2::String& name)
-    : HttpRequest(type, name)
+TimeHReq::TimeHReq(const u2::String& type, const u2::String& name, const u2::String& guid)
+    : HttpRequest(type, name, guid)
 {
     setHttpType(HttpRequest::Type::HTTP_POST);
 }
@@ -30,8 +30,8 @@ void TimeHReq::serialize()
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-RegisterHReq::RegisterHReq(const u2::String& type, const u2::String& name)
-    : HttpRequest(type, name)
+RegisterHReq::RegisterHReq(const u2::String& type, const u2::String& name, const u2::String& guid)
+    : HttpRequest(type, name, guid)
 {
     setHttpType(HttpRequest::Type::HTTP_POST);
 }
@@ -64,8 +64,8 @@ void RegisterHReq::serialize()
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-PlayHReq::PlayHReq(const u2::String& type, const u2::String& name)
-    : HttpRequest(type, name)
+PlayHReq::PlayHReq(const u2::String& type, const u2::String& name, const u2::String& guid)
+    : HttpRequest(type, name, guid)
 {
     setHttpType(HttpRequest::Type::HTTP_POST);
 }

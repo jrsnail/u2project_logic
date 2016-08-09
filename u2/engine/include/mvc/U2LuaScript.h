@@ -29,7 +29,7 @@ U2EG_NAMESPACE_BEGIN
 class LuaTask : public Task
 {
 public:
-    LuaTask(const String& type, const String& name);
+    LuaTask(const String& type, const String& name = BLANK, const String& guid = BLANK);
 
     virtual ~LuaTask();
 
@@ -72,7 +72,7 @@ protected:
     };
 
 public:
-    LuaScript(const String& type, const String& name);
+    LuaScript(const String& type, const String& name = BLANK, const String& guid = BLANK);
     virtual ~LuaScript();
 
     void addNotification(const String& notification);
@@ -138,7 +138,7 @@ public:
     */
     virtual ~LuaScriptManager();
 
-    virtual Script* createObject(const String& type, const String& name = BLANK) override;
+    virtual Script* createObject(const String& type, const String& name = BLANK, const String& guid = BLANK) override;
 
     virtual void destoryObject(Script* obj);
 

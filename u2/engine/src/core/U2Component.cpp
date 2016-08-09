@@ -20,9 +20,9 @@ Component::Component(ResourceManager* creator, const String& type, ResourceHandl
     setPrototype(this);
 }
 //-----------------------------------------------------------------------
-Component::Component(const String& type, const String& name)
+Component::Component(const String& type, const String& name, const String& guid)
     : Resource()
-    , Prototype(type, name)
+    , Prototype(type, name, guid)
     , m_pBornGameObj(nullptr)
     , m_pAttachedGameObj(nullptr)
     , m_uState(CS_None)
@@ -44,12 +44,12 @@ void Component::copy(const Component& src)
 
 }
 //-----------------------------------------------------------------------
-Component* Component::cloneFromPrototype(const String& name)
+Component* Component::cloneFromPrototype(const String& name, const String& guid)
 {
     if (hasPrototype())
     {
         Component* pPrototype = retrievePrototype();
-        Component* pComponent = ComponentManager::getSingleton()._createObject(pPrototype->getType(), name);
+        Component* pComponent = ComponentManager::getSingleton()._createObject(pPrototype->getType(), name, guid);
         pComponent->copy(*pPrototype);
         pPrototype->addInstance(pComponent);
         return pComponent;
@@ -61,11 +61,11 @@ Component* Component::cloneFromPrototype(const String& name)
     }
 }
 //-----------------------------------------------------------------------
-Component* Component::cloneFromInstance(const String& name)
+Component* Component::cloneFromInstance(const String& name, const String& guid)
 {
     if (hasPrototype())
     {
-        Component* pComponent = ComponentManager::getSingleton()._createObject(this->getType(), name);
+        Component* pComponent = ComponentManager::getSingleton()._createObject(this->getType(), name, guid);
         pComponent->copy(*this);
         this->addInstance(pComponent);
         return pComponent;
@@ -206,7 +206,7 @@ ComponentPtr ComponentManager::create(const String& name, const String& group,
         createResource(name, group, isManual, loader, createParams));
 }
 //-----------------------------------------------------------------------
-Component* ComponentManager::createObject(const String& type, const String& name)
+Component* ComponentManager::createObject(const String& type, const String& name, const String& guid)
 {
     ResourcePtr resPtr = this->getResourceByName(type);
     if (resPtr)
@@ -214,7 +214,7 @@ Component* ComponentManager::createObject(const String& type, const String& name
         Component* pPrototype = dynamic_cast<Component*>(resPtr.get());
         if (pPrototype)
         {
-            Component* pObj = pPrototype->cloneFromPrototype(name);
+            Component* pObj = pPrototype->cloneFromPrototype(name, guid);
             return pObj;
         }
         else
@@ -264,7 +264,7 @@ Component* ComponentManager::retrieveObjectByType(const String& type)
     return m_InstanceCollection.retrieveObjectByType(type);
 }
 //-----------------------------------------------------------------------
-Component* ComponentManager::_createObject(const String& type, const String& name)
+Component* ComponentManager::_createObject(const String& type, const String& name, const String& guid)
 {
-    return m_InstanceCollection.createObject(type, name);
+    return m_InstanceCollection.createObject(type, name, guid);
 }

@@ -17,7 +17,7 @@ U2EG_NAMESPACE_BEGIN
 class GameObjectSerialize_0_0_1 : public XmlSerialize
 {
 public:
-    GameObjectSerialize_0_0_1(const String& type, const String& name);
+    GameObjectSerialize_0_0_1(const String& type, const String& name, const String& guid = BLANK);
     virtual ~GameObjectSerialize_0_0_1();
 
     virtual bool load(const TiXmlElement* elem, const String& groupName) override;

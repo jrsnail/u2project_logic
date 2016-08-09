@@ -11,8 +11,8 @@ U2EG_NAMESPACE_USING
 
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-ComponentSerialize_0_0_1::ComponentSerialize_0_0_1(const String& type, const String& name)
-    : XmlSerialize(type, name)
+ComponentSerialize_0_0_1::ComponentSerialize_0_0_1(const String& type, const String& name, const String& guid)
+    : XmlSerialize(type, name, guid)
 {
 }
 //-----------------------------------------------------------------------

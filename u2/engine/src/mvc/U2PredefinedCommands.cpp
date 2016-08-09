@@ -18,8 +18,8 @@
 
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-DestoryContextCommand::DestoryContextCommand(const String& type, const String& name)
-    : SimpleCommand(type, name)
+DestoryContextCommand::DestoryContextCommand(const String& type, const String& name, const String& guid)
+    : SimpleCommand(type, name, guid)
 {
 }
 //-----------------------------------------------------------------------
@@ -73,8 +73,8 @@ void DestoryContextCommand::_destroyContext(u2::Context* context)
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-TransCommand::TransCommand(const String& type, const String& name)
-    : SimpleCommand(type, name)
+TransCommand::TransCommand(const String& type, const String& name, const String& guid)
+    : SimpleCommand(type, name, guid)
 {
 }
 //-----------------------------------------------------------------------
@@ -142,8 +142,8 @@ void TransCommand::_createMediator(const u2::Context* from, const u2::Context* p
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-BackKeyCommand::BackKeyCommand(const String& type, const String& name)
-    : SimpleCommand(type, name)
+BackKeyCommand::BackKeyCommand(const String& type, const String& name, const String& guid)
+    : SimpleCommand(type, name, guid)
 {
 }
 //-----------------------------------------------------------------------

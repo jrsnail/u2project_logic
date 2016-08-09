@@ -13,7 +13,7 @@ U2EG_NAMESPACE_BEGIN
 class _U2Export JsonWsTaskLoop : public WsTaskLoop
 {
 public:
-    JsonWsTaskLoop(const String& type, const String& name);
+    JsonWsTaskLoop(const String& type, const String& name, const u2::String& guid = BLANK);
     virtual ~JsonWsTaskLoop();
 
 protected:
@@ -32,7 +32,7 @@ protected:
 class WsCloseRST : public RecvSocketTask
 {
 public:
-    WsCloseRST(const String& type, const String& name);
+    WsCloseRST(const String& type, const String& name, const u2::String& guid = BLANK);
     virtual ~WsCloseRST();
 
     virtual void run() override;
@@ -42,7 +42,7 @@ public:
 class WsErrorRST : public RecvSocketTask
 {
 public:
-    WsErrorRST(const String& type, const String& name);
+    WsErrorRST(const String& type, const String& name, const u2::String& guid = BLANK);
     virtual ~WsErrorRST();
 
     virtual void run() override;
@@ -52,7 +52,7 @@ public:
 class WsOpenRST : public RecvSocketTask
 {
 public:
-    WsOpenRST(const String& type, const String& name);
+    WsOpenRST(const String& type, const String& name, const u2::String& guid = BLANK);
     virtual ~WsOpenRST();
 
     virtual void run() override;
@@ -62,7 +62,7 @@ public:
 class WsHeartBeatSST : public SendSocketTask
 {
 public:
-    WsHeartBeatSST(const String& type, const String& name);
+    WsHeartBeatSST(const String& type, const String& name, const u2::String& guid = BLANK);
     virtual ~WsHeartBeatSST();
 
     virtual void run() override;

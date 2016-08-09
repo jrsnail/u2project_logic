@@ -14,7 +14,7 @@ U2EG_NAMESPACE_BEGIN
 class _U2Export ActiveHttpTaskLoop : public HttpTaskLoop
 {
 public:
-    ActiveHttpTaskLoop(const String& type, const String& name);
+    ActiveHttpTaskLoop(const String& type, const String& name, const u2::String& guid = BLANK);
     virtual ~ActiveHttpTaskLoop();
 
 protected:

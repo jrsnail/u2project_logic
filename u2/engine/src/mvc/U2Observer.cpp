@@ -36,12 +36,12 @@ ObserverManager::~ObserverManager()
 Observer* ObserverManager::createOrReuseObserver(const String& type
     , Observer::NotifyCallbackFun callback, void* target)
 {
-    Observer* pObserver = createOrReuseObject(type);
+    Observer* pObserver = reuseObject(type);
     pObserver->setCallback(callback, target);
     return pObserver;
 }
 //-----------------------------------------------------------------------
-Observer* ObserverManager::createOrReuseObject(const String& type)
+Observer* ObserverManager::reuseObject(const String& type, const String& name, const String& guid)
 {
-    return PoolingObjectManager<Observer>::reuseObjectAsName(type);
+    return PoolingObjectManager<Observer>::reuseObject(type, name, guid);
 }

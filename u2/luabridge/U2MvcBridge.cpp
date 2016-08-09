@@ -36,7 +36,7 @@ int createContext_lua(lua_State* L)
     intptr_t* pPointer = (intptr_t*)lua_newuserdata(L, sizeof(intptr_t));
     // point to u2::Context address
     *pPointer = (intptr_t)u2::ContextManager::getSingletonPtr()->createObject(
-        szType, szName, szFacadeName
+        szType, szName, BLANK, szFacadeName
         , szViewCompType, szViewCompName, szScriptName
         );
 
@@ -71,7 +71,7 @@ int createContextChild_lua(lua_State* L)
         intptr_t* pPointer = (intptr_t*)lua_newuserdata(L, sizeof(intptr_t));
         // point to u2::Context address
         *pPointer = (intptr_t)pParent->createChild(
-            szType, szName, szFacadeName
+            szType, szName, BLANK, szFacadeName
             , szViewCompType, szViewCompName, szScriptName
             );
 

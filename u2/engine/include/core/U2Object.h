@@ -23,16 +23,12 @@ U2EG_NAMESPACE_BEGIN
 class Object
 {
 public:
-    Object(const String& type, const String& name = BLANK);
+    Object(const String& type, const String& name = BLANK, const String& guid = BLANK);
     virtual ~Object();
 
     const String& getType() const { return m_szType; };
     const String& getName() const { return m_szName; };
     const String& getGuid() const { return m_szGuid; };
-
-	/** You should not call this in any way.
-	*/
-	void renameForPooling(const String& name) { m_szName = name; };
 
     virtual void serialize() {};
     virtual void deserialize() {};
@@ -58,7 +54,7 @@ public:
 
     virtual const String& getType() const override = 0;
 
-    virtual Object* createInstance(const String& name) override = 0;
+    virtual Object* createInstance(const String& name, const String& guid) override = 0;
 
     virtual void destroyInstance(Object* ptr) override = 0;
 
@@ -74,7 +70,7 @@ public:
 
     virtual const String& getType() const override;
 
-    virtual Object* createInstance(const String& name) override;
+    virtual Object* createInstance(const String& name, const String& guid) override;
 
     virtual void destroyInstance(Object* ptr) override;
 
@@ -115,9 +111,9 @@ void TemplateObjectFactory<T>::destroyInstance(Object* obj)
 }
 //-----------------------------------------------------------------------
 template <class T>
-Object* TemplateObjectFactory<T>::createInstance(const String& name)
+Object* TemplateObjectFactory<T>::createInstance(const String& name, const String& guid)
 {
-    T* pObj = new T(getType(), name);
+    T* pObj = new T(getType(), name, guid);
     return pObj;
 }
 
@@ -125,8 +121,16 @@ Object* TemplateObjectFactory<T>::createInstance(const String& name)
 class ReusableObject : public Object
 {
 public:
-    ReusableObject(const String& type);
+    ReusableObject(const String& type, const String& name = BLANK, const String& guid = BLANK);
     virtual ~ReusableObject();
+
+    /** You should not call this in any way.
+    */
+    void renameAsName(const String& name) { m_szName = name; };
+
+    /** You should not call this in any way.
+    */
+    void renameAsGuid(const String& guid);
 
 	virtual void preRecycleByPool() { m_bUsing = false; };
     virtual void postReuseFromPool() { m_bUsing = true; };

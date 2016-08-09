@@ -9,8 +9,8 @@ U2EG_NAMESPACE_USING
 
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-SendSocketTask::SendSocketTask(const String& type, const String& name)
-    : Task(type, name)
+SendSocketTask::SendSocketTask(const String& type, const String& name, const u2::String& guid)
+    : Task(type, name, guid)
     , m_bIsBinary(false)
     , m_uIssued(0)
 {
@@ -28,8 +28,8 @@ void SendSocketTask::run()
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-RecvSocketTask::RecvSocketTask(const String& type, const String& name)
-    : Task(type, name)
+RecvSocketTask::RecvSocketTask(const String& type, const String& name, const u2::String& guid)
+    : Task(type, name, guid)
     , m_bIsBinary(false)
 {
 

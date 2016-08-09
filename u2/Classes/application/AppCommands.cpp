@@ -14,8 +14,8 @@
 
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-StartupCommand::StartupCommand(const std::string& type, const std::string& name)
-    : SimpleCommand(type, name)
+StartupCommand::StartupCommand(const String& type, const String& name, const String& guid)
+    : SimpleCommand(type, name, guid)
 {
 }
 //-----------------------------------------------------------------------
@@ -30,8 +30,8 @@ void StartupCommand::go(const Notification& notification)
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-Trans2ShadeCommand::Trans2ShadeCommand(const std::string& type, const std::string& name)
-    : SimpleCommand(type, name)
+Trans2ShadeCommand::Trans2ShadeCommand(const String& type, const String& name, const String& guid)
+    : SimpleCommand(type, name, guid)
 {
 }
 //-----------------------------------------------------------------------
@@ -43,7 +43,7 @@ void Trans2ShadeCommand::go(const Notification& notification)
 {
     // create context tree
     u2::Context* pRoot = ContextManager::getSingletonPtr()->createObject(
-        OT_Context, ON_Context_Root
+        OT_Context, ON_Context_Root, BLANK
         , getFacade().getName()
         , OT_ShadeViewComponent, "ShadeViewComponent"
         , BLANK);
@@ -52,8 +52,8 @@ void Trans2ShadeCommand::go(const Notification& notification)
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-StartupLuaCommand::StartupLuaCommand(const std::string& type, const std::string& name)
-    : SimpleCommand(type, name)
+StartupLuaCommand::StartupLuaCommand(const String& type, const String& name, const String& guid)
+    : SimpleCommand(type, name, guid)
 {
 }
 //-----------------------------------------------------------------------
@@ -90,7 +90,7 @@ void StartupLuaCommand::go(const Notification& notification)
 /*
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-HotUpdateCommand::HotUpdateCommand(const std::string& type, const std::string& name)
+HotUpdateCommand::HotUpdateCommand(const String& type, const String& name)
     : SimpleCommand(type, name)
 {
 }
@@ -101,7 +101,7 @@ HotUpdateCommand::~HotUpdateCommand()
 //-----------------------------------------------------------------------
 void HotUpdateCommand::go(const Notification& notification)
 {
-    typedef std::tuple<std::string>   HotUpdateCommandData;
+    typedef std::tuple<String>   HotUpdateCommandData;
     const HotUpdateCommandData* pData = static_cast<const HotUpdateCommandData*>(notification.getData());
     if (pData == nullptr)
     {
@@ -109,7 +109,7 @@ void HotUpdateCommand::go(const Notification& notification)
     }
     else
     {
-        const std::string& szJson = std::get<0>(*pData);
+        const String& szJson = std::get<0>(*pData);
         _parseServerJson(szJson);
         _parseLocalJson();
         _calUpdateList();
@@ -118,16 +118,16 @@ void HotUpdateCommand::go(const Notification& notification)
     }
 }
 //-----------------------------------------------------------------------
-void HotUpdateCommand::_parseServerJson(const std::string& json)
+void HotUpdateCommand::_parseServerJson(const String& json)
 {
 
 }
 //-----------------------------------------------------------------------
 void HotUpdateCommand::_parseLocalJson()
 {
-    std::string szFolderName;
+    String szFolderName;
     DataPool::getSingletonPtr()->gaveStringData("HotUpdate", "FolderName", szFolderName);
-    std::string szJson;
+    String szJson;
     DataPool::getSingletonPtr()->gaveStringData("HotUpdate", "UpdatingList", szJson);
     // parse json
     m_stUpdatingCollection;
@@ -150,7 +150,7 @@ void HotUpdateCommand::_calUpdateList()
         for (FileList::const_iterator it = fileList.begin();
             it != fileList.end(); it++)
         {
-            const std::string& szKey = it->first;
+            const String& szKey = it->first;
             const StUpdatingFile& stFile = it->second;
 
             FileList::const_iterator itUpdating = m_stUpdatingCollection.updatingList.find(szKey);

@@ -17,8 +17,8 @@
 U2EG_NAMESPACE_USING
 
 
-Controller::Controller(const String& type, const String& name)
-    : Object(type, name)
+Controller::Controller(const String& type, const String& name, const String& guid)
+    : Object(type, name, guid)
     , m_pView(nullptr)
 {
     
@@ -165,9 +165,9 @@ ControllerManager::~ControllerManager()
 {
 }
 //-----------------------------------------------------------------------
-Controller* ControllerManager::createObject(const String& type, const String& name)
+Controller* ControllerManager::createObject(const String& type, const String& name, const String& guid)
 {
-    return SimpleObjectManager<Controller>::createObject(type, name);
+    return SimpleObjectManager<Controller>::createObject(type, name, guid);
 }
 //-----------------------------------------------------------------------
 Controller* ControllerManager::retrieveObjectByName(const String& name)

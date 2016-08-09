@@ -41,17 +41,17 @@ public:
 public:
     GameObject(ResourceManager* creator, const String& type, ResourceHandle handle,
         const String& group, bool isManual = false, ManualResourceLoader* loader = 0);
-    GameObject(const String& type, const String& name);
+    GameObject(const String& type, const String& name = BLANK, const String& guid = BLANK);
     virtual ~GameObject();
 
     virtual void copy(const GameObject& src);
 
-    virtual GameObject* cloneFromPrototype(const String& name = BLANK) override;
-    virtual GameObject* cloneFromInstance(const String& name = BLANK) override;
+    virtual GameObject* cloneFromPrototype(const String& name = BLANK, const String& guid = BLANK) override;
+    virtual GameObject* cloneFromInstance(const String& name = BLANK, const String& guid = BLANK) override;
     virtual void resetFromPrototype() override;
     virtual void applyToPrototype() override;
 
-    u2::Component* createComponent(const String& type, const String& name);
+    u2::Component* createComponent(const String& type, const String& name = BLANK, const String& guid = BLANK);
 
     void destroyComponent(u2::Component* comp);
 
@@ -94,7 +94,7 @@ public:
 
     u2::Component* retrieveComponentByGuid(const String& guid);
 
-    GameObject* createChildGameObject(const String& type, const String& name);
+    GameObject* createChildGameObject(const String& type, const String& name = BLANK, const String& guid = BLANK);
 
     void destroyChildGameObject(GameObject* gameObj);
 
@@ -182,7 +182,7 @@ public:
         bool isManual = false, ManualResourceLoader* loader = 0,
         const NameValuePairList* createParams = 0);
 
-    GameObject* createObject(const String& type, const String& name = BLANK);
+    GameObject* createObject(const String& type, const String& name = BLANK, const String& guid = BLANK);
 
     void destoryObject(GameObject* obj);
 
@@ -206,7 +206,7 @@ public:
     }
 
 protected:
-    GameObject* _createObject(const String& type, const String& name);
+    GameObject* _createObject(const String& type, const String& name = BLANK, const String& guid = BLANK);
 
 public:
     /** Override standard Singleton retrieval.

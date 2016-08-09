@@ -6,8 +6,8 @@ U2EG_NAMESPACE_USING
 
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-Command::Command(const String& type, const String& name)
-    : Object(type, name)
+Command::Command(const String& type, const String& name, const String& guid)
+    : Object(type, name, guid)
 {
 }
 //-----------------------------------------------------------------------
@@ -38,12 +38,12 @@ CommandManager::~CommandManager()
 {
 }
 //-----------------------------------------------------------------------
-Command* CommandManager::createObject(const String& type, const String& name)
+Command* CommandManager::createObject(const String& type, const String& name, const String& guid)
 {
     if (!u2::FactoryManager::getSingletonPtr()->hasObjectFactory(type))
     {
         u2::ObjectFactory* pObjectFactory = new u2::TemplateObjectFactory<u2::Command>(type);
         u2::FactoryManager::getSingletonPtr()->addObjectFactory(pObjectFactory);
     }
-    return TypedObjectManager<Command>::createObject(type, name);
+    return TypedObjectManager<Command>::createObject(type, name, guid);
 }

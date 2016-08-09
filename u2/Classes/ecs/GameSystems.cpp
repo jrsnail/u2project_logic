@@ -9,8 +9,8 @@ U2EG_NAMESPACE_USING
 
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-RenderSystem::RenderSystem(const u2::String& type, const u2::String& name)
-    : System(type, name)
+RenderSystem::RenderSystem(const u2::String& type, const u2::String& name, const u2::String& guid)
+    : System(type, name, guid)
 {
 }
 //-----------------------------------------------------------------------
@@ -119,8 +119,8 @@ void RenderSystem::_resume()
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-InputSystem::InputSystem(const u2::String& type, const u2::String& name)
-    : System(type, name)
+InputSystem::InputSystem(const u2::String& type, const u2::String& name, const u2::String& guid)
+    : System(type, name, guid)
 {
 }
 //-----------------------------------------------------------------------
@@ -226,8 +226,8 @@ void InputSystem::_resume()
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-MoveSystem::MoveSystem(const u2::String& type, const u2::String& name)
-    : System(type, name)
+MoveSystem::MoveSystem(const u2::String& type, const u2::String& name, const u2::String& guid)
+    : System(type, name, guid)
 {
 }
 //-----------------------------------------------------------------------

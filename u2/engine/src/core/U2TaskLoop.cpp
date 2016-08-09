@@ -13,8 +13,8 @@ U2EG_NAMESPACE_USING
 
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
-TaskLoop::TaskLoop(const String& type, const String& name)
-    : Object(type, name)
+TaskLoop::TaskLoop(const String& type, const String& name, const String& guid)
+    : Object(type, name, guid)
     , m_pScheduler(nullptr)
 {
     
@@ -128,7 +128,7 @@ void TaskLoop::postSchedulerTask(const String& schedulerTaskName
 {
     if (m_pScheduler == nullptr)
     {
-        m_pScheduler = SchedulerManager::getSingleton().createObject(GET_OBJECT_TYPE(Scheduler), BLANK, true);
+        m_pScheduler = SchedulerManager::getSingleton().createObject(GET_OBJECT_TYPE(Scheduler), BLANK, BLANK, true);
     }
     m_pScheduler->createObjectWithFunction([=]() {
         //LogManager::getSingleton().stream(LML_TRIVIAL) << "scheduler callback";
@@ -181,9 +181,9 @@ TaskLoopManager::~TaskLoopManager()
 {
 }
 //-----------------------------------------------------------------------
-TaskLoop* TaskLoopManager::createObject(const String& type, const String& name)
+TaskLoop* TaskLoopManager::createObject(const String& type, const String& name, const String& guid)
 {
-    TaskLoop* pTaskLoop = SimpleObjectManager<TaskLoop>::createObject(type, name);
+    TaskLoop* pTaskLoop = SimpleObjectManager<TaskLoop>::createObject(type, name, guid);
     if (pTaskLoop != nullptr)
     {
         pTaskLoop->addTaskLoopListener(this);

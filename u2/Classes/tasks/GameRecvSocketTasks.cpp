@@ -20,8 +20,8 @@ U2EG_NAMESPACE_USING
 
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-GameWsCloseRST::GameWsCloseRST(const u2::String& type, const u2::String& name)
-    : WsCloseRST(type, name)
+GameWsCloseRST::GameWsCloseRST(const u2::String& type, const u2::String& name, const u2::String& guid)
+    : WsCloseRST(type, name, guid)
 {
 
 }
@@ -37,8 +37,8 @@ void GameWsCloseRST::run()
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-GameWsErrorRST::GameWsErrorRST(const u2::String& type, const u2::String& name)
-    : WsErrorRST(type, name)
+GameWsErrorRST::GameWsErrorRST(const u2::String& type, const u2::String& name, const u2::String& guid)
+    : WsErrorRST(type, name, guid)
 {
 
 }
@@ -54,8 +54,8 @@ void GameWsErrorRST::run()
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-GameWsOpenRST::GameWsOpenRST(const u2::String& type, const u2::String& name)
-    : WsOpenRST(type, name)
+GameWsOpenRST::GameWsOpenRST(const u2::String& type, const u2::String& name, const u2::String& guid)
+    : WsOpenRST(type, name, guid)
 {
 
 }
@@ -81,8 +81,8 @@ void GameWsOpenRST::run()
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-SnapshotRST::SnapshotRST(const String& type, const String& name)
-    : RecvSocketTask(type, name)
+SnapshotRST::SnapshotRST(const String& type, const String& name, const u2::String& guid)
+    : RecvSocketTask(type, name, guid)
     , m_nCode(0)
     , m_ulTimestamp(0L)
 {

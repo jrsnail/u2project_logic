@@ -10,8 +10,8 @@ U2EG_NAMESPACE_USING
 
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-LogicTaskLoop::LogicTaskLoop(const String& type, const String& name)
-    : TaskLoop(type, name)
+LogicTaskLoop::LogicTaskLoop(const String& type, const String& name, const String& guid)
+    : TaskLoop(type, name, guid)
 {
 }
 //-----------------------------------------------------------------------

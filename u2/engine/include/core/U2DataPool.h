@@ -19,7 +19,7 @@ class Task;
 class DataPool : public Object
 {
 public:
-    DataPool(const String& type, const String& name = BLANK);
+    DataPool(const String& type, const String& name = BLANK, const String& guid = BLANK);
     virtual ~DataPool();
 
     bool saveFloatData(const String& key, float value);

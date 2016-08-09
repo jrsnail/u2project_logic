@@ -56,7 +56,7 @@ public:
 	* @throws Error Error if instance for this Multiton key has already been constructed
 	*
 	*/
-    explicit Facade(const String& type, const String& name);
+    explicit Facade(const String& type, const String& name, const String& guid = BLANK);
 
 	/**
 	* Initialize the Multiton <code>Facade</code> instance.
@@ -375,7 +375,7 @@ public:
     */
     virtual ~FacadeManager();
 
-    virtual Facade* createObject(const String& type, const String& name = BLANK);
+    virtual Facade* createObject(const String& type, const String& name = BLANK, const String& guid = BLANK);
 
 public:
     /** Override standard Singleton retrieval.

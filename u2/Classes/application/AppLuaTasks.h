@@ -11,7 +11,7 @@ U2EG_NAMESPACE_BEGIN
 class CreateLuaScriptLuaTask : public LuaTask
 {
 public:
-    CreateLuaScriptLuaTask(const std::string& type, const std::string& name);
+    CreateLuaScriptLuaTask(const String& type, const String& name = BLANK, const String& guid = BLANK);
 
     virtual ~CreateLuaScriptLuaTask();
 
@@ -22,7 +22,7 @@ public:
 class SetViewCompUiNameLuaTask : public LuaTask
 {
 public:
-    SetViewCompUiNameLuaTask(const std::string& type, const std::string& name);
+    SetViewCompUiNameLuaTask(const String& type, const String& name = BLANK, const String& guid = BLANK);
 
     virtual ~SetViewCompUiNameLuaTask();
 
@@ -33,7 +33,7 @@ public:
 class SetViewCompEnterActionLuaTask : public LuaTask
 {
 public:
-    SetViewCompEnterActionLuaTask(const std::string& type, const std::string& name);
+    SetViewCompEnterActionLuaTask(const String& type, const String& name = BLANK, const String& guid = BLANK);
 
     virtual ~SetViewCompEnterActionLuaTask();
 
@@ -44,7 +44,7 @@ public:
 class SetViewCompExitActionLuaTask : public LuaTask
 {
 public:
-    SetViewCompExitActionLuaTask(const std::string& type, const std::string& name);
+    SetViewCompExitActionLuaTask(const String& type, const String& name = BLANK, const String& guid = BLANK);
 
     virtual ~SetViewCompExitActionLuaTask();
 
@@ -55,7 +55,7 @@ public:
 class CenterViewCompLuaTask : public LuaTask
 {
 public:
-    CenterViewCompLuaTask(const std::string& type, const std::string& name);
+    CenterViewCompLuaTask(const String& type, const String& name = BLANK, const String& guid = BLANK);
 
     virtual ~CenterViewCompLuaTask();
 
@@ -65,7 +65,7 @@ public:
 class PreloadLuaTask : public LuaTask
 {
 public:
-    PreloadLuaTask(const std::string& type, const std::string& name);
+    PreloadLuaTask(const String& type, const String& name = BLANK, const String& guid = BLANK);
 
     virtual ~PreloadLuaTask();
 

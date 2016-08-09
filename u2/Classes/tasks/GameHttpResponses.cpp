@@ -18,8 +18,8 @@
 
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-TimeHRsp::TimeHRsp(const u2::String& type, const u2::String& name)
-    : HttpResponse(type, name)
+TimeHRsp::TimeHRsp(const u2::String& type, const u2::String& name, const u2::String& guid)
+    : HttpResponse(type, name, guid)
     , m_ulServerBaseTime(0L)
 {
 }
@@ -43,8 +43,8 @@ void TimeHRsp::run()
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-RegisterHRsp::RegisterHRsp(const u2::String& type, const u2::String& name)
-    : HttpResponse(type, name)
+RegisterHRsp::RegisterHRsp(const u2::String& type, const u2::String& name, const u2::String& guid)
+    : HttpResponse(type, name, guid)
     , m_bDeserializeSucceed(false)
     , m_nCode(0)
     , m_ulSelfPlayerGuid(0L)
@@ -108,8 +108,8 @@ void RegisterHRsp::run()
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-PlayHRsp::PlayHRsp(const u2::String& type, const u2::String& name)
-    : HttpResponse(type, name)
+PlayHRsp::PlayHRsp(const u2::String& type, const u2::String& name, const u2::String& guid)
+    : HttpResponse(type, name, guid)
     , m_bDeserializeSucceed(false)
     , m_nCode(0)
     , m_pSceneSnapshot(nullptr)

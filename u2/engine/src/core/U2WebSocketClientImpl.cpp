@@ -11,8 +11,8 @@ U2EG_NAMESPACE_USING
 
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-JsonWsTaskLoop::JsonWsTaskLoop(const String& type, const String& name)
-    : WsTaskLoop(type, name)
+JsonWsTaskLoop::JsonWsTaskLoop(const String& type, const String& name, const u2::String& guid)
+    : WsTaskLoop(type, name, guid)
 {
     CREATE_FACTORY(WsCloseRST);
     CREATE_FACTORY(WsErrorRST);
@@ -80,8 +80,8 @@ RecvSocketTask* JsonWsTaskLoop::_splitRecvTask(vector<u2char>::type& buffer, boo
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-WsCloseRST::WsCloseRST(const String& type, const String& name)
-    : RecvSocketTask(type, name)
+WsCloseRST::WsCloseRST(const String& type, const String& name, const u2::String& guid)
+    : RecvSocketTask(type, name, guid)
 {
 
 }
@@ -97,8 +97,8 @@ void WsCloseRST::run()
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-WsErrorRST::WsErrorRST(const String& type, const String& name)
-    : RecvSocketTask(type, name)
+WsErrorRST::WsErrorRST(const String& type, const String& name, const u2::String& guid)
+    : RecvSocketTask(type, name, guid)
 {
 
 }
@@ -114,8 +114,8 @@ void WsErrorRST::run()
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-WsOpenRST::WsOpenRST(const String& type, const String& name)
-    : RecvSocketTask(type, name)
+WsOpenRST::WsOpenRST(const String& type, const String& name, const u2::String& guid)
+    : RecvSocketTask(type, name, guid)
 {
 
 }
@@ -131,8 +131,8 @@ void WsOpenRST::run()
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-WsHeartBeatSST::WsHeartBeatSST(const String& type, const String& name)
-    : SendSocketTask(type, name)
+WsHeartBeatSST::WsHeartBeatSST(const String& type, const String& name, const u2::String& guid)
+    : SendSocketTask(type, name, guid)
 {
 
 }

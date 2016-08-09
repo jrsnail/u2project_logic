@@ -12,15 +12,15 @@ class TiXmlElement;
 U2EG_NAMESPACE_USING
 
 
-class SpriteComponent : public Component
+class SpriteComponent : public u2::Component
 {
 public:
     SpriteComponent(ResourceManager* creator, const u2::String& type, ResourceHandle handle,
         const u2::String& group, bool isManual = false, ManualResourceLoader* loader = 0);
-    SpriteComponent(const u2::String& type, const u2::String& name);
+    SpriteComponent(const u2::String& type, const u2::String& name, const u2::String& guid = BLANK);
     virtual ~SpriteComponent();
 
-    virtual void copy(const Component& src) override;
+    virtual void copy(const u2::Component& src) override;
 
     virtual bool _loadFromXml(const TiXmlElement* compElem, u2::String& error) override;
 
@@ -30,15 +30,15 @@ public:
 };
 
 
-class PositionComponent : public Component
+class PositionComponent : public u2::Component
 {
 public:
     PositionComponent(ResourceManager* creator, const u2::String& type, ResourceHandle handle,
         const u2::String& group, bool isManual = false, ManualResourceLoader* loader = 0);
-    PositionComponent(const u2::String& type, const u2::String& name);
+    PositionComponent(const u2::String& type, const u2::String& name, const u2::String& guid = BLANK);
     virtual ~PositionComponent();
 
-    virtual void copy(const Component& src) override;
+    virtual void copy(const u2::Component& src) override;
 
     virtual bool _loadFromXml(const TiXmlElement* compElem, u2::String& error) override;
 
@@ -47,15 +47,15 @@ public:
 };
 
 
-class VelocityComponent : public Component
+class VelocityComponent : public u2::Component
 {
 public:
     VelocityComponent(ResourceManager* creator, const u2::String& type, ResourceHandle handle,
         const u2::String& group, bool isManual = false, ManualResourceLoader* loader = 0);
-    VelocityComponent(const u2::String& type, const u2::String& name);
+    VelocityComponent(const u2::String& type, const u2::String& name, const u2::String& guid = BLANK);
     virtual ~VelocityComponent();
 
-    virtual void copy(const Component& src) override;
+    virtual void copy(const u2::Component& src) override;
 
     virtual bool _loadFromXml(const TiXmlElement* compElem, u2::String& error) override;
 
@@ -64,15 +64,15 @@ public:
 };
 
 
-class SpeedDirComponent : public Component
+class SpeedDirComponent : public u2::Component
 {
 public:
     SpeedDirComponent(ResourceManager* creator, const u2::String& type, ResourceHandle handle,
         const u2::String& group, bool isManual = false, ManualResourceLoader* loader = 0);
-    SpeedDirComponent(const u2::String& type, const u2::String& name);
+    SpeedDirComponent(const u2::String& type, const u2::String& name, const u2::String& guid = BLANK);
     virtual ~SpeedDirComponent();
 
-    virtual void copy(const Component& src) override;
+    virtual void copy(const u2::Component& src) override;
 
     virtual bool _loadFromXml(const TiXmlElement* compElem, u2::String& error) override;
 
@@ -81,15 +81,15 @@ public:
 };
 
 
-class SpeedComponent : public Component
+class SpeedComponent : public u2::Component
 {
 public:
     SpeedComponent(ResourceManager* creator, const u2::String& type, ResourceHandle handle,
         const u2::String& group, bool isManual = false, ManualResourceLoader* loader = 0);
-    SpeedComponent(const u2::String& type, const u2::String& name);
+    SpeedComponent(const u2::String& type, const u2::String& name, const u2::String& guid = BLANK);
     virtual ~SpeedComponent();
 
-    virtual void copy(const Component& src) override;
+    virtual void copy(const u2::Component& src) override;
 
     virtual bool _loadFromXml(const TiXmlElement* compElem, u2::String& error) override;
 
@@ -100,15 +100,15 @@ public:
 };
 
 
-class HpComponent : public Component
+class HpComponent : public u2::Component
 {
 public:
     HpComponent(ResourceManager* creator, const u2::String& type, ResourceHandle handle,
         const u2::String& group, bool isManual = false, ManualResourceLoader* loader = 0);
-    HpComponent(const u2::String& type, const u2::String& name);
+    HpComponent(const u2::String& type, const u2::String& name, const u2::String& guid = BLANK);
     virtual ~HpComponent();
 
-    virtual void copy(const Component& src) override;
+    virtual void copy(const u2::Component& src) override;
 
     virtual bool _loadFromXml(const TiXmlElement* compElem, u2::String& error) override;
 
@@ -119,15 +119,15 @@ protected:
 };
 
 
-class BaseHpComponent : public Component
+class BaseHpComponent : public u2::Component
 {
 public:
     BaseHpComponent(ResourceManager* creator, const u2::String& type, ResourceHandle handle,
         const u2::String& group, bool isManual = false, ManualResourceLoader* loader = 0);
-    BaseHpComponent(const u2::String& type, const u2::String& name);
+    BaseHpComponent(const u2::String& type, const u2::String& name, const u2::String& guid = BLANK);
     virtual ~BaseHpComponent();
 
-    virtual void copy(const Component& src) override;
+    virtual void copy(const u2::Component& src) override;
 
     virtual bool _loadFromXml(const TiXmlElement* compElem, u2::String& error) override;
 
@@ -138,15 +138,15 @@ protected:
 };
 
 
-class DeltaHpComponent : public Component
+class DeltaHpComponent : public u2::Component
 {
 public:
     DeltaHpComponent(ResourceManager* creator, const u2::String& type, ResourceHandle handle,
         const u2::String& group, bool isManual = false, ManualResourceLoader* loader = 0);
-    DeltaHpComponent(const u2::String& type, const u2::String& name);
+    DeltaHpComponent(const u2::String& type, const u2::String& name, const u2::String& guid = BLANK);
     virtual ~DeltaHpComponent();
 
-    virtual void copy(const Component& src) override;
+    virtual void copy(const u2::Component& src) override;
 
     virtual bool _loadFromXml(const TiXmlElement* compElem, u2::String& error) override;
 
@@ -157,15 +157,15 @@ protected:
 };
 
 
-class JoystickComponent : public Component
+class JoystickComponent : public u2::Component
 {
 public:
     JoystickComponent(ResourceManager* creator, const u2::String& type, ResourceHandle handle,
         const u2::String& group, bool isManual = false, ManualResourceLoader* loader = 0);
-    JoystickComponent(const u2::String& type, const u2::String& name);
+    JoystickComponent(const u2::String& type, const u2::String& name, const u2::String& guid = BLANK);
     virtual ~JoystickComponent();
 
-    virtual void copy(const Component& src) override;
+    virtual void copy(const u2::Component& src) override;
 
     virtual bool _loadFromXml(const TiXmlElement* compElem, u2::String& error) override;
 

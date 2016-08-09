@@ -25,8 +25,8 @@ U2EG_NAMESPACE_USING
 
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-LuaTask::LuaTask(const String& type, const String& name)
-: Task(type, name)
+LuaTask::LuaTask(const String& type, const String& name, const String& guid)
+: Task(type, name, guid)
 {
 }
 //-----------------------------------------------------------------------
@@ -76,8 +76,8 @@ const String& LuaTask::getField(const String& key) const
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-LuaScript::LuaScript(const String& type, const String& name)
-    : Script(type, name)
+LuaScript::LuaScript(const String& type, const String& name, const String& guid)
+    : Script(type, name, guid)
     , m_nIndexOnStack(0)
     , m_eState(LSS_NOTLOADED)
     , m_fWaitTimestamp(0.0f)
@@ -469,12 +469,12 @@ LuaScriptManager::~LuaScriptManager()
     }
 }
 //-----------------------------------------------------------------------
-Script* LuaScriptManager::createObject(const String& type, const String& name)
+Script* LuaScriptManager::createObject(const String& type, const String& name, const String& guid)
 {
     // As simple object manager, we index object with name which should be an unique key
     assert(retrieveObjectByName(name) == nullptr);
     
-    LuaScript* pObj = dynamic_cast<LuaScript*>(ObjectCollection::getSingletonPtr()->createObject(type, name));
+    LuaScript* pObj = dynamic_cast<LuaScript*>(ObjectCollection::getSingletonPtr()->createObject(type, name, guid));
     if (pObj != nullptr)
     {
         pObj->initialize(m_pMainThread);

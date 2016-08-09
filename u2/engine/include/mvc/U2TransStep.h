@@ -33,7 +33,7 @@ public:
     };
 
 public:
-    TransStep(const String& type, const String& name = BLANK);
+    TransStep(const String& type, const String& name = BLANK, const String& guid = BLANK);
     virtual ~TransStep();
 
     void _initialize(const Key& key);
@@ -51,7 +51,7 @@ public:
     typedef std::function<void()>           CallbackFun;
 
 public:
-    VoidStep(const String& type, const String& name = BLANK);
+    VoidStep(const String& type, const String& name = BLANK, const String& guid = BLANK);
     virtual ~VoidStep();
 
     void initialize(const TransStep::Key& key, CallbackFun func);
@@ -71,7 +71,7 @@ public:
     typedef std::function<void(void*)>      CallbackFun;
 
 public:
-    ParamStep(const String& type, const String& name = BLANK);
+    ParamStep(const String& type, const String& name = BLANK, const String& guid = BLANK);
     virtual ~ParamStep();
 
     void initialize(const TransStep::Key& key, CallbackFun func);

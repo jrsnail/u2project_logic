@@ -16,7 +16,7 @@ class GameMovableSnapshot;
 class GameWsCloseRST : public WsCloseRST
 {
 public:
-    GameWsCloseRST(const u2::String& type, const u2::String& name);
+    GameWsCloseRST(const u2::String& type, const u2::String& name, const u2::String& guid = BLANK);
     virtual ~GameWsCloseRST();
 
     virtual void run() override;
@@ -26,7 +26,7 @@ public:
 class GameWsErrorRST : public WsErrorRST
 {
 public:
-    GameWsErrorRST(const u2::String& type, const u2::String& name);
+    GameWsErrorRST(const u2::String& type, const u2::String& name, const u2::String& guid = BLANK);
     virtual ~GameWsErrorRST();
 
     virtual void run() override;
@@ -36,7 +36,7 @@ public:
 class GameWsOpenRST : public WsOpenRST
 {
 public:
-    GameWsOpenRST(const u2::String& type, const u2::String& name);
+    GameWsOpenRST(const u2::String& type, const u2::String& name, const u2::String& guid = BLANK);
     virtual ~GameWsOpenRST();
 
     virtual void run() override;
@@ -45,7 +45,7 @@ public:
 class SnapshotRST : public RecvSocketTask
 {
 public:
-    SnapshotRST(const String& type, const String& name);
+    SnapshotRST(const String& type, const String& name, const u2::String& guid = BLANK);
     virtual ~SnapshotRST();
 
     virtual void deserialize() override;

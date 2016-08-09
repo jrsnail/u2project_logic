@@ -6,7 +6,7 @@
 
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-Trans2BattleCommand::Trans2BattleCommand(const std::string& type, const std::string& name)
+Trans2BattleCommand::Trans2BattleCommand(const String& type, const String& name, const String& guid)
     : SimpleCommand(type, name)
 {
 }
@@ -20,7 +20,7 @@ void Trans2BattleCommand::go(const Notification& notification)
     // create context tree
     u2::Context* pRoot = ContextManager::getSingleton().retrieveObjectByName(ON_Context_Root);
     u2::Context* pJoystick = pRoot->createChild(
-        OT_Context, "ON_Context_Joystick"
+        OT_Context, "ON_Context_Joystick", BLANK
         , getFacade().getName()
         , OT_JoystickViewComponent, "JoystickViewComponent"
         , BLANK);

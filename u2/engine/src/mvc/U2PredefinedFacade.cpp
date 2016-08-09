@@ -13,12 +13,15 @@
 #include "U2PredefinedPrerequisites.h"
 
 
+U2EG_NAMESPACE_USING
+
+
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
 PredefinedFacade* PredefinedFacade::ms_pSingleton = nullptr;
 //-----------------------------------------------------------------------
-PredefinedFacade::PredefinedFacade(const String& type, const String& name)
-    : Facade(type, name)
+PredefinedFacade::PredefinedFacade(const String& type, const String& name, const u2::String& guid)
+    : Facade(type, name, guid)
 {
 	if (ms_pSingleton != nullptr)
 	{

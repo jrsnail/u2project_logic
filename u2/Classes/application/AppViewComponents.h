@@ -19,7 +19,7 @@ U2EG_NAMESPACE_USING
 class ShadeViewComponent : public CocosViewComponent
 {
 public:
-    ShadeViewComponent(const std::string& type, const std::string& name);
+    ShadeViewComponent(const String& type, const String& name, const String& guid = BLANK);
 
     virtual ~ShadeViewComponent(void);
 

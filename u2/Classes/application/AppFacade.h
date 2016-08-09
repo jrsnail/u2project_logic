@@ -18,7 +18,7 @@ U2EG_NAMESPACE_USING
 class AppFacade : public Facade
 {
 public:
-    AppFacade(const std::string& type, const std::string& name);
+    AppFacade(const u2::String& type, const u2::String& name, const u2::String& guid);
 
     virtual ~AppFacade(void);
 

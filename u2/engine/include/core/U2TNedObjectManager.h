@@ -28,7 +28,7 @@ public:
      */
     virtual ~TNedObjectManager();
     
-    T* createObject(const String& type, const String& name = BLANK);
+    T* createObject(const String& type, const String& name = BLANK, const String& guid = BLANK);
     
     void destoryObject(T* obj);
     
@@ -70,7 +70,7 @@ TNedObjectManager<T>::~TNedObjectManager()
 }
 //-----------------------------------------------------------------------
 template <class T>
-T* TNedObjectManager<T>::createObject(const String& type, const String& name)
+T* TNedObjectManager<T>::createObject(const String& type, const String& name, const String& guid)
 {
     T* pObj = nullptr;
     
@@ -79,7 +79,7 @@ T* TNedObjectManager<T>::createObject(const String& type, const String& name)
     // inner named object map index object by unique name key
     if (it == namedMap.end())
     {
-        pObj = dynamic_cast<T*>(ObjectCollection::getSingleton().createObject(type, name));
+        pObj = dynamic_cast<T*>(ObjectCollection::getSingleton().createObject(type, name, guid));
         if (pObj != nullptr)
         {
             namedMap[name] = pObj;

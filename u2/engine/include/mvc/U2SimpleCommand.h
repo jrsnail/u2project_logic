@@ -19,7 +19,7 @@ U2EG_NAMESPACE_BEGIN
 class SimpleCommand : public Command
 {
 public:
-    SimpleCommand(const String& type, const String& name);
+    SimpleCommand(const String& type, const String& name = BLANK, const String& guid = BLANK);
     virtual ~SimpleCommand();
 
     virtual void go(const Notification& notification) override;

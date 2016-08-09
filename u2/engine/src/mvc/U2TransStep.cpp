@@ -37,8 +37,8 @@ bool TransStep::Key::operator== (const Key &that) const
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-TransStep::TransStep(const String& type, const String& name) 
-: Object(type, name)
+TransStep::TransStep(const String& type, const String& name, const String& guid)
+: Object(type, name, guid)
 {
 
 }
@@ -59,8 +59,8 @@ bool TransStep::isThisStep(const Key& key)
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-VoidStep::VoidStep(const String& type, const String& name)
-    : TransStep(type, name)
+VoidStep::VoidStep(const String& type, const String& name, const String& guid)
+    : TransStep(type, name, guid)
 {
 
 }
@@ -90,8 +90,8 @@ void VoidStep::call()
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-ParamStep::ParamStep(const String& type, const String& name)
-    : TransStep(type, name)
+ParamStep::ParamStep(const String& type, const String& name, const String& guid)
+    : TransStep(type, name, guid)
 {
 
 }

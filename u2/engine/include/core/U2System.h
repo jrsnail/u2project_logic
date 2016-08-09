@@ -16,7 +16,7 @@ U2EG_NAMESPACE_BEGIN
 class System : public Object
 {
 public:
-    System(const String& type, const String& name);
+    System(const String& type, const String& name = BLANK, const String& guid = BLANK);
     virtual ~System();
 
     void initialize(size_t priority);
@@ -47,7 +47,7 @@ public:
     */
     virtual ~SystemManager();
 
-    virtual System* createObject(const String& type, const String& name, size_t priority);
+    virtual System* createObject(const String& type, const String& name, const String& guid, size_t priority);
 
     virtual void destoryObject(System* obj);
 
@@ -58,7 +58,7 @@ public:
     void resume();
 
 protected:
-    virtual System* createObject(const String& type, const String& name = BLANK);
+    virtual System* createObject(const String& type, const String& name = BLANK, const String& guid = BLANK);
 
 public:
     /** Override standard Singleton retrieval.

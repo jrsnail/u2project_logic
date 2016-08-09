@@ -27,7 +27,7 @@ public:
     typedef std::list<String>		NotificationNames;
     
 public:
-    Script(const String& type, const String& name);
+    Script(const String& type, const String& name = BLANK, const String& guid = BLANK);
     virtual ~Script();
 
     virtual void runFile(const String& fileName) = 0;
@@ -77,7 +77,7 @@ public:
     */
     virtual ~ScriptManager();
 
-    virtual Script* createObject(const String& type, const String& name = BLANK);
+    virtual Script* createObject(const String& type, const String& name = BLANK, const String& guid = BLANK);
 
 public:
     /** Override standard Singleton retrieval.

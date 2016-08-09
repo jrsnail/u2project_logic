@@ -48,7 +48,7 @@ public:
     };
 
 public:
-    ViewComponent(const String& type, const String& name);
+    ViewComponent(const String& type, const String& name = BLANK, const String& guid = BLANK);
     virtual ~ViewComponent(void);
 
     inline void initialize(const String& uiName)

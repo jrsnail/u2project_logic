@@ -50,7 +50,7 @@ public:
     * @throws Error Error if instance for this Multiton key has already been constructed
     *
     */
-    explicit Controller(const String& type, const String& name);
+    explicit Controller(const String& type, const String& name = BLANK, const String& guid = BLANK);
 
 public:
     /**
@@ -175,7 +175,7 @@ public:
     */
     virtual ~ControllerManager();
 
-    Controller* createObject(const String& type, const String& name);
+    Controller* createObject(const String& type, const String& name = BLANK, const String& guid = BLANK);
 
     Controller* retrieveObjectByName(const String& name);
 

@@ -15,7 +15,7 @@ class GameMovableSnapshot;
 class TimeHRsp : public HttpResponse
 {
 public:
-    TimeHRsp(const u2::String& type, const u2::String& name);
+    TimeHRsp(const u2::String& type, const u2::String& name, const u2::String& guid = BLANK);
     virtual ~TimeHRsp();
 
     virtual void deserialize() override;
@@ -30,7 +30,7 @@ private:
 class RegisterHRsp : public HttpResponse
 {
 public:
-    RegisterHRsp(const u2::String& type, const u2::String& name);
+    RegisterHRsp(const u2::String& type, const u2::String& name, const u2::String& guid = BLANK);
     virtual ~RegisterHRsp();
 
     virtual void deserialize() override;
@@ -48,7 +48,7 @@ private:
 class PlayHRsp : public HttpResponse
 {
 public:
-    PlayHRsp(const u2::String& type, const u2::String& name);
+    PlayHRsp(const u2::String& type, const u2::String& name, const u2::String& guid = BLANK);
     virtual ~PlayHRsp();
 
     virtual void deserialize() override;

@@ -32,7 +32,7 @@ private:
     Herald& operator=(Herald const&);
 
 public:
-    explicit Herald(const String& type, const String& name);
+    explicit Herald(const String& type, const String& name = BLANK, const String& guid = BLANK);
     virtual ~Herald(void);
 
     virtual void initializeHerald(void);
