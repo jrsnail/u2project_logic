@@ -9,6 +9,7 @@ void initFactroy()
 {
     // data pool
     CREATE_FACTORY(DataPool);
+    CREATE_FACTORY(SnapshotDataPool);
 
     // task loop
     CREATE_FACTORY(ActiveHttpTaskLoop);

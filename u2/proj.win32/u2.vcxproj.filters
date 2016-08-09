@@ -555,6 +555,21 @@
     <ClCompile Include="..\Classes\tasks\GameHttpResponses.cpp">
       <Filter>src\tasks</Filter>
     </ClCompile>
+    <ClCompile Include="..\engine\src\core\U2Root.cpp">
+      <Filter>engine\src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\U2UrlUtils.cpp">
+      <Filter>engine\src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tasks\GameUrlMaker.cpp">
+      <Filter>src\tasks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\GameDataPool.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\core\U2SnapshotDataPool.cpp">
+      <Filter>engine\src\core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -1093,6 +1108,21 @@
     </ClInclude>
     <ClInclude Include="..\Classes\tasks\GameHttpResponses.h">
       <Filter>src\tasks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2Root.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2UrlUtils.h">
+      <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\tasks\GameUrlMaker.h">
+      <Filter>src\tasks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GameDataPool.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\core\U2SnapshotDataPool.h">
+      <Filter>engine\include\core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

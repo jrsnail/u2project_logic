@@ -394,6 +394,7 @@ void HttpTaskLoop::processTask(HttpRequest* request, char* responseMessage)
     {
         return;
     }
+    request->serialize();
 
     HttpResponse* response =
         (HttpResponse*)TaskManager::getSingleton().createObject(request->getHttpResponse(), BLANK);

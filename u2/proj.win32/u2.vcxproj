@@ -157,10 +157,12 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\ecs\GameComponentManager.cpp" />
     <ClCompile Include="..\Classes\ecs\GameComponents.cpp" />
     <ClCompile Include="..\Classes\ecs\GameSystems.cpp" />
+    <ClCompile Include="..\Classes\GameDataPool.cpp" />
     <ClCompile Include="..\Classes\tasks\GameHttpRequests.cpp" />
     <ClCompile Include="..\Classes\tasks\GameHttpResponses.cpp" />
     <ClCompile Include="..\Classes\tasks\GameRecvSocketTasks.cpp" />
     <ClCompile Include="..\Classes\tasks\GameSendSocketTasks.cpp" />
+    <ClCompile Include="..\Classes\tasks\GameUrlMaker.cpp" />
     <ClCompile Include="..\Classes\tasks\GameWsClientImpl.cpp" />
     <ClCompile Include="..\engine\src\core\sserver\U2SServerMsgCenter.cpp" />
     <ClCompile Include="..\engine\src\core\streams\U2CodeCvt.cpp" />
@@ -210,9 +212,11 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\engine\src\core\U2Resource.cpp" />
     <ClCompile Include="..\engine\src\core\U2ResourceGroupManager.cpp" />
     <ClCompile Include="..\engine\src\core\U2ResourceManager.cpp" />
+    <ClCompile Include="..\engine\src\core\U2Root.cpp" />
     <ClCompile Include="..\engine\src\core\U2Scheduler.cpp" />
     <ClCompile Include="..\engine\src\core\U2SearchOps.cpp" />
     <ClCompile Include="..\engine\src\core\U2SimpleObjectManager.cpp" />
+    <ClCompile Include="..\engine\src\core\U2SnapshotDataPool.cpp" />
     <ClCompile Include="..\engine\src\core\U2SocketTask.cpp" />
     <ClCompile Include="..\engine\src\core\U2StringInterface.cpp" />
     <ClCompile Include="..\engine\src\core\U2StringUtil.cpp" />
@@ -221,6 +225,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\engine\src\core\U2TaskLoop.cpp" />
     <ClCompile Include="..\engine\src\core\U2TNedObjectManager.cpp" />
     <ClCompile Include="..\engine\src\core\U2TypedObjectManager.cpp" />
+    <ClCompile Include="..\engine\src\core\U2UrlUtils.cpp" />
     <ClCompile Include="..\engine\src\core\U2Version.cpp" />
     <ClCompile Include="..\engine\src\core\U2WebSocketClient.cpp" />
     <ClCompile Include="..\engine\src\core\U2WebSocketClientImpl.cpp" />
@@ -313,10 +318,12 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\ecs\GameComponentManager.h" />
     <ClInclude Include="..\Classes\ecs\GameComponents.h" />
     <ClInclude Include="..\Classes\ecs\GameSystems.h" />
+    <ClInclude Include="..\Classes\GameDataPool.h" />
     <ClInclude Include="..\Classes\tasks\GameHttpRequests.h" />
     <ClInclude Include="..\Classes\tasks\GameHttpResponses.h" />
     <ClInclude Include="..\Classes\tasks\GameRecvSocketTasks.h" />
     <ClInclude Include="..\Classes\tasks\GameSendSocketTasks.h" />
+    <ClInclude Include="..\Classes\tasks\GameUrlMaker.h" />
     <ClInclude Include="..\Classes\tasks\GameWsClientImpl.h" />
     <ClInclude Include="..\engine\include\core\sserver\U2SServerMsgCenter.h" />
     <ClInclude Include="..\engine\include\core\streams\U2CodeCvt.h" />
@@ -384,11 +391,13 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\engine\include\core\U2Resource.h" />
     <ClInclude Include="..\engine\include\core\U2ResourceGroupManager.h" />
     <ClInclude Include="..\engine\include\core\U2ResourceManager.h" />
+    <ClInclude Include="..\engine\include\core\U2Root.h" />
     <ClInclude Include="..\engine\include\core\U2Scheduler.h" />
     <ClInclude Include="..\engine\include\core\U2ScriptLoader.h" />
     <ClInclude Include="..\engine\include\core\U2SearchOps.h" />
     <ClInclude Include="..\engine\include\core\U2SimpleObjectManager.h" />
     <ClInclude Include="..\engine\include\core\U2Singleton.h" />
+    <ClInclude Include="..\engine\include\core\U2SnapshotDataPool.h" />
     <ClInclude Include="..\engine\include\core\U2SocketTask.h" />
     <ClInclude Include="..\engine\include\core\U2StdHeader.h" />
     <ClInclude Include="..\engine\include\core\U2STLRedefined.h" />
@@ -400,6 +409,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\engine\include\core\U2Timer.h" />
     <ClInclude Include="..\engine\include\core\U2TNedObjectManager.h" />
     <ClInclude Include="..\engine\include\core\U2TypedObjectManager.h" />
+    <ClInclude Include="..\engine\include\core\U2UrlUtils.h" />
     <ClInclude Include="..\engine\include\core\U2ValueList.h" />
     <ClInclude Include="..\engine\include\core\U2Version.h" />
     <ClInclude Include="..\engine\include\core\U2WebSocketClient.h" />

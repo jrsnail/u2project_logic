@@ -12,10 +12,38 @@ U2EG_NAMESPACE_USING
 class TimeHReq : public HttpRequest
 {
 public:
-    TimeHReq(const String& type, const String& name);
+    TimeHReq(const u2::String& type, const u2::String& name);
     virtual ~TimeHReq();
 
-    virtual const String& getHttpResponse() override;
+    virtual const u2::String& getHttpResponse() override;
+
+    virtual void serialize() override;
+
+private:
+};
+
+
+class RegisterHReq : public HttpRequest
+{
+public:
+    RegisterHReq(const u2::String& type, const u2::String& name);
+    virtual ~RegisterHReq();
+
+    virtual const u2::String& getHttpResponse() override;
+
+    virtual void serialize() override;
+
+private:
+};
+
+
+class PlayHReq : public HttpRequest
+{
+public:
+    PlayHReq(const u2::String& type, const u2::String& name);
+    virtual ~PlayHReq();
+
+    virtual const u2::String& getHttpResponse() override;
 
     virtual void serialize() override;
 

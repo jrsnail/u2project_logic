@@ -58,14 +58,17 @@ void MoveSST::serialize()
     Json::Value rootJsonValue;
     String szSelfRoomId;
     bool bSuc = DATAPOOL(ON_DataPool_Memory)->loadMemoryStringData("SelfRoomId", szSelfRoomId);
-    String szSelfPlayerId;
-    bSuc = DATAPOOL(ON_DataPool_Memory)->loadMemoryStringData("SelfGameObjGuid", szSelfPlayerId);
+    String szSelfPlayerGuid;
+    bSuc = DATAPOOL(ON_DataPool_Memory)->loadMemoryStringData("SelfPlayerGuid", szSelfPlayerGuid);
     rootJsonValue["roomId"] = szSelfRoomId;
-    rootJsonValue["userId"] = szSelfPlayerId;
+    rootJsonValue["userId"] = szSelfPlayerGuid;
     rootJsonValue["attUserId"] = StringUtil::parseUnsignedInt64(m_szAttackedPlayerId);
     rootJsonValue["x"] = m_v2Position.x;
     rootJsonValue["y"] = m_v2Position.y;
     rootJsonValue["vx"] = m_v2Velocity.x;
     rootJsonValue["vy"] = m_v2Velocity.y;
     rootJsonValue["timestamp"] = m_ulTimestamp;
+    String szJsonStr = rootJsonValue.toStyledString();
+
+    setData(vector<u2char>::type(szJsonStr.begin(), szJsonStr.end()));
 }

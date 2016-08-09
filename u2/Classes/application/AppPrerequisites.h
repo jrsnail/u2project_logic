@@ -62,4 +62,8 @@ extern const char* OT_PreloadLuaTask;
 // c to lua task
 static const char* OT_C2LTask_PreloadEnd = "OT_C2LTask_PreloadEnd";
 
+// data key
+static const char* ON_ServerBaseTime = "ON_ServerBaseTime";
+static const char* ON_ClientBaseTime = "ON_ClientBaseTime";
+
 #endif /* defined(__ApplicationPrerequisites__) */

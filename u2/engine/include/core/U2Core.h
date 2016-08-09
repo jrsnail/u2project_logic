@@ -23,6 +23,7 @@
 #include "U2Exception.h"
 #include "U2FrameListenerCollection.h"
 #include "U2StringUtil.h"
+#include "U2Timer.h"
 #include "U2Version.h"
 #include "U2Stream.h"
 #include "U2StringStream.h"
@@ -36,6 +37,7 @@
 #include "U2DataFilterStream.h"
 #include "U2StreamQueue.h"
 #include "U2DataPool.h"
+#include "U2SnapshotDataPool.h"
 #include "U2Component.h"
 #include "U2GameObject.h"
 #include "U2System.h"
@@ -43,8 +45,10 @@
 #include "U2WebSocketClient.h"
 #include "U2WebSocketClientImpl.h"
 #include "U2SocketTask.h"
+#include "U2UrlUtils.h"
 #include "U2HttpClient.h"
 #include "U2HttpClientImpl.h"
+#include "U2Root.h"
 #include "U2PredefinedPrerequisites.h"
 
 

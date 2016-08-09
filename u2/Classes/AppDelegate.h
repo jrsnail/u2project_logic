@@ -15,6 +15,7 @@ namespace u2
     class LogManager;
     class ComponentManager;
     class GameObjectManager;
+    class Root;
 }
 
 
@@ -58,6 +59,7 @@ protected:
     virtual void onError(cocos2d::network::WebSocket* ws, const cocos2d::network::WebSocket::ErrorCode& error);
 
 protected:
+    u2::Root*                       m_pRoot;
 	u2::FrameListenerCollection*	m_pFrameListenerCollection;
 	u2::LogManager*					m_pLogManager;
     u2::ComponentManager*		    m_pComponentManager;

@@ -4,9 +4,13 @@
 
 #include "U2Core.h"
 #include <json/json.h>
+#include "GameDataPool.h"
 
 
 U2EG_NAMESPACE_USING
+
+
+class GameMovableSnapshot;
 
 
 class GameWsCloseRST : public WsCloseRST
@@ -41,33 +45,6 @@ public:
 class SnapshotRST : public RecvSocketTask
 {
 public:
-    struct PlayerSnapshot
-    {
-        PlayerSnapshot()
-            : ulTimestamp(0)
-            , nCurHp(0)
-            , uCurSpeed(0)
-            , uAtkDistance(0)
-            , bAlive(true)
-            , v2Velocity(cocos2d::Vec2::ZERO)
-            , v2Position(cocos2d::Vec2::ZERO)
-        {
-
-        }
-
-        u2::String      szPlayerId;
-        u2::String      szGameObjGuid;
-        u2::String      szPlayerName;
-        u2uint64        ulTimestamp;
-        u2int32         nCurHp;
-        u2uint32        uCurSpeed;
-        u2uint32        uAtkDistance;
-        bool            bAlive;
-        cocos2d::Vec2   v2Velocity;
-        cocos2d::Vec2   v2Position;
-    };
-
-public:
     SnapshotRST(const String& type, const String& name);
     virtual ~SnapshotRST();
 
@@ -75,13 +52,13 @@ public:
     virtual void run() override;
 
 private:
-    bool _deserializeHero(Json::Value& jsonValue, PlayerSnapshot& playerSnapshot);
+    bool _deserializeHero(Json::Value& jsonValue, GameMovableSnapshot* gameMovableSnapshot);
 
 private:
     u2int32     m_nCode;
     u2::String  m_szMsg;
     u2uint64    m_ulTimestamp;
-    vector<PlayerSnapshot*>::type   m_PlayerSnapshots;
+    SceneSnapshot*  m_pSceneSnapshot;
 };
 
 

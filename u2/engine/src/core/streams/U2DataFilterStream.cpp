@@ -223,7 +223,7 @@ u2::String DataFilterInStream::readUTFString()
         memset(c, 0, 6);
 
         c[0] = readInt8();
-        u2int32 nByteCount = CodeCvt::utf8_charlen((const char*)c);
+        u2int32 nByteCount = CodeCvt::utf8_charlen((const char*)&c);
         for (u2int32 j = 1; j < nByteCount; j++)
         {
             c[j] = readInt8();
@@ -237,16 +237,22 @@ u2::String DataFilterInStream::readUTFString()
 
     return str;
 #else
+//     u2::String str;
+//     for (u2uint32 i = 0; i < usLen; i++)
+//     {
+//         u2char c = (u2char)readInt8();
+//         str += c;
+//         u2int32 nByteCount = CodeCvt::utf8_charlen((const char*)&c);
+//         for (u2int32 j = 1; j < nByteCount; j++)
+//         {
+//             str += readInt8();
+//         }
+//     }
+//     return str;
     u2::String str;
     for (u2uint32 i = 0; i < usLen; i++)
     {
-        u2char c = (u2char)readInt8();
-        str += c;
-        u2int32 nByteCount = CodeCvt::utf8_charlen((const char*)c);
-        for (u2int32 j = 1; j < nByteCount; j++)
-        {
-            str += readInt8();
-        }
+        str += (u2char)readInt8();
     }
     return str;
 #endif
@@ -349,10 +355,8 @@ void DataFilterOutStream::writeUTFString(u2::String val)
     m_pOut->write((const u2byte*)c, len);
     U2_FREE(c, MEMCATEGORY_GENERAL);
 #else
-    u2::u2wchar* wc = static_cast<u2::u2wchar*>(U2_MALLOC(sizeof(u2::Char) * val.size(), MEMCATEGORY_GENERAL));
-    int len = CodeCvt::mbstowcs(wc, val.c_str(), val.size());
+    size_t len = val.size();
     writeUint16(len);
-    m_pOut->write((const u2byte*)&val, val.size());
-    U2_FREE(wc, MEMCATEGORY_GENERAL);
+    m_pOut->write((const u2byte*)(val.c_str()), len);
 #endif
 }

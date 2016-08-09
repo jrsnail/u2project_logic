@@ -118,6 +118,10 @@ static void initGameFactories()
     CREATE_FACTORY(GameWsHeartBeatSST);
     CREATE_FACTORY(TimeHReq);
     CREATE_FACTORY(TimeHRsp);
+    CREATE_FACTORY(RegisterHReq);
+    CREATE_FACTORY(RegisterHRsp);
+    CREATE_FACTORY(PlayHReq);
+    CREATE_FACTORY(PlayHRsp);
 }
 
 
@@ -309,6 +313,8 @@ bool AppDelegate::applicationDidFinishLaunching()
 
 
     {
+        m_pRoot = U2_NEW u2::Root();
+
         //------------------------------- init u2 ----------------------------------------
         initFactroy();
         initGameFactories();
@@ -556,6 +562,10 @@ bool AppDelegate::applicationDidFinishLaunching()
         pHttpTaskLoop->run();
         HttpRequest* pHttpReq = static_cast<HttpRequest*>(
             TaskManager::getSingleton().createObject(GET_OBJECT_TYPE(TimeHReq))
+            );
+        pHttpTaskLoop->postTask(pHttpReq);
+        pHttpReq = static_cast<HttpRequest*>(
+            TaskManager::getSingleton().createObject(GET_OBJECT_TYPE(RegisterHReq))
             );
         pHttpTaskLoop->postTask(pHttpReq);
 

@@ -10,8 +10,10 @@ U2EG_NAMESPACE_USING
     if (!JsonValue.isMember(member))                                    \
     {                                                                   \
         LogManager::getSingleton().stream(LML_CRITICAL)                 \
-            << "[task error]: SnapshotRST parse failed, as no member"   \
-            << member;                                                  \
+            << "[task error]: "                                         \
+            << "Parse failed, as no member "                            \
+            << member                                                   \
+            << ". [ " << __FUNCTION__ << ", " << __LINE__ << " ]";      \
         break;                                                          \
     }
 
@@ -74,7 +76,7 @@ void GameWsOpenRST::run()
     }
     else
     {
-        pWsTaskLoop->startHeartBeat();
+        //pWsTaskLoop->startHeartBeat();
     }
 }
 //-----------------------------------------------------------------------
@@ -88,12 +90,6 @@ SnapshotRST::SnapshotRST(const String& type, const String& name)
 //-----------------------------------------------------------------------
 SnapshotRST::~SnapshotRST()
 {
-    for (vector<PlayerSnapshot*>::iterator it = m_PlayerSnapshots.begin(); 
-    it != m_PlayerSnapshots.end(); it++)
-    {
-        U2_FREE(*it, MEMCATEGORY_GENERAL);
-    }
-    m_PlayerSnapshots.clear();
 }
 //-----------------------------------------------------------------------
 void SnapshotRST::deserialize()
@@ -123,6 +119,8 @@ void SnapshotRST::deserialize()
         CHECK_JSON_MEMBER(rootJsonVal, "data");
         Json::Value dataJsonVal = rootJsonVal["data"];
 
+        m_pSceneSnapshot = U2_NEW SceneSnapshot;
+
         CHECK_JSON_MEMBER(dataJsonVal, "timestamp");
         m_ulTimestamp = dataJsonVal["timestamp"].asUInt64();
 
@@ -131,14 +129,14 @@ void SnapshotRST::deserialize()
 
         for (Json::ArrayIndex i = 0; i < herosJsonVal.size(); i++)
         {
-            PlayerSnapshot* pPlayerSnapshot = U2_ALLOC_T(PlayerSnapshot, sizeof(PlayerSnapshot), MEMCATEGORY_GENERAL);
-            if (_deserializeHero(herosJsonVal[i], *pPlayerSnapshot))
+            GameMovableSnapshot* pPlayerSnapshot = U2_NEW GameMovableSnapshot;
+            if (_deserializeHero(herosJsonVal[i], pPlayerSnapshot))
             {
-                m_PlayerSnapshots.push_back(pPlayerSnapshot);
+                m_pSceneSnapshot->addMovableSnapshot(pPlayerSnapshot);
             }
             else
             {
-                U2_FREE(pPlayerSnapshot, MEMCATEGORY_GENERAL);
+                U2_DELETE(pPlayerSnapshot);
                 m_bDeserializeSucceed = false;
             }
         }
@@ -149,48 +147,48 @@ void SnapshotRST::deserialize()
     m_bDeserializeSucceed = false;
 }
 //-----------------------------------------------------------------------
-bool SnapshotRST::_deserializeHero(Json::Value& jsonValue, PlayerSnapshot& playerSnapshot)
+bool SnapshotRST::_deserializeHero(Json::Value& jsonValue, GameMovableSnapshot* gameMovableSnapshot)
 {
-    do 
+    do
     {
         CHECK_JSON_MEMBER(jsonValue, "userId");
         u2uint64 ulPlayerId = jsonValue["userId"].asUInt64();
-        playerSnapshot.szPlayerId = StringUtil::toString(ulPlayerId);
+        gameMovableSnapshot->szPlayerId = StringUtil::toString(ulPlayerId);
 
         CHECK_JSON_MEMBER(jsonValue, "heroId");
         u2uint32 ulGameObjId = jsonValue["heroId"].asUInt();
-        playerSnapshot.szGameObjGuid = StringUtil::toString(ulGameObjId);
+        gameMovableSnapshot->szGameObjGuid = StringUtil::toString(ulGameObjId);
 
         CHECK_JSON_MEMBER(jsonValue, "nickName");
-        playerSnapshot.szPlayerName = jsonValue["nickName"].asString();
+        gameMovableSnapshot->szPlayerName = jsonValue["nickName"].asString();
 
         CHECK_JSON_MEMBER(jsonValue, "hp");
-        playerSnapshot.nCurHp = jsonValue["hp"].asInt();
+        gameMovableSnapshot->nCurHp = jsonValue["hp"].asInt();
 
         CHECK_JSON_MEMBER(jsonValue, "speed");
-        playerSnapshot.uCurSpeed = jsonValue["speed"].asUInt();
+        gameMovableSnapshot->uCurSpeed = jsonValue["speed"].asUInt();
 
         CHECK_JSON_MEMBER(jsonValue, "effDistance");
-        playerSnapshot.uAtkDistance = jsonValue["effDistance"].asUInt();
+        gameMovableSnapshot->uAtkDistance = jsonValue["effDistance"].asUInt();
 
         CHECK_JSON_MEMBER(jsonValue, "alive");
-        playerSnapshot.bAlive = jsonValue["alive"].asBool();
+        gameMovableSnapshot->bAlive = jsonValue["alive"].asBool();
 
         CHECK_JSON_MEMBER(jsonValue, "point");
         Json::Value pointJsonVal = jsonValue["point"];
 
         CHECK_JSON_MEMBER(pointJsonVal, "timestamp");
-        playerSnapshot.ulTimestamp = pointJsonVal["timestamp"].asUInt64();
+        gameMovableSnapshot->ulTimestamp = pointJsonVal["timestamp"].asUInt64();
 
         CHECK_JSON_MEMBER(pointJsonVal, "x");
         CHECK_JSON_MEMBER(pointJsonVal, "y");
-        playerSnapshot.v2Position.x = pointJsonVal["x"].asFloat();
-        playerSnapshot.v2Position.y = pointJsonVal["y"].asFloat();
+        gameMovableSnapshot->v2Position.x = pointJsonVal["x"].asFloat();
+        gameMovableSnapshot->v2Position.y = pointJsonVal["y"].asFloat();
 
         CHECK_JSON_MEMBER(pointJsonVal, "vx");
         CHECK_JSON_MEMBER(pointJsonVal, "vy");
-        playerSnapshot.v2Velocity.x = pointJsonVal["vx"].asFloat();
-        playerSnapshot.v2Velocity.y = pointJsonVal["vy"].asFloat();
+        gameMovableSnapshot->v2Velocity.x = pointJsonVal["vx"].asFloat();
+        gameMovableSnapshot->v2Velocity.y = pointJsonVal["vy"].asFloat();
 
         return true;
     } while (0);
