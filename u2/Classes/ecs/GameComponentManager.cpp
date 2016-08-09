@@ -74,6 +74,11 @@ Resource* GameComponentManager::createImpl(const u2::String& name, ResourceHandl
         return U2_NEW JoystickComponent(this, name, handle, group
             , isManual, loader);
     }
+    else if ("component_scale" == name)
+    {
+        return U2_NEW ScaleComponent(this, name, handle, group
+            , isManual, loader);
+    }
     else
     {
         assert(0);

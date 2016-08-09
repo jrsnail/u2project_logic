@@ -65,6 +65,9 @@ void RenderSystem::_exit()
 //-----------------------------------------------------------------------
 void RenderSystem::_execute(GameObject* gameObj, u2real dt)
 {
+    // root game object
+    bool bRootGameObj = (gameObj->retrieveParentGameObject() == nullptr);
+
     GameObject::ComponentMapIterator it
         = gameObj->retrieveComponentsByType("component_sprite");
     while (it.hasMoreElements())
@@ -89,8 +92,23 @@ void RenderSystem::_execute(GameObject* gameObj, u2real dt)
             pSpriteComp->pSprite = cocos2d::CCSprite::create(pSpriteComp->szFilename);
             pSpriteComp->setState(Component::CS_Active);
 
+            // set init position
             pSpriteComp->pSprite->setPosition(pPositionComp->v2Pos);
 
+            // set init scale
+            ScaleComponent* pScaleComp = dynamic_cast<ScaleComponent*>(
+                gameObj->retrieveComponentByType("component_scale"));
+            if (pScaleComp == nullptr)
+            {
+                assert(0);
+            }
+            else
+            {
+                pSpriteComp->pSprite->setScaleX(pScaleComp->v2Scale.x);
+                pSpriteComp->pSprite->setScaleY(pScaleComp->v2Scale.y);
+            }
+
+            // attach to scene
             cocos2d::Scene* pScene = cocos2d::Director::getInstance()->getRunningScene();
             if (pScene == nullptr)
             {
@@ -323,6 +341,99 @@ void MoveSystem::_pause()
 }
 //-----------------------------------------------------------------------
 void MoveSystem::_resume()
+{
+
+}
+//-----------------------------------------------------------------------
+//-----------------------------------------------------------------------
+ScaleSystem::ScaleSystem(const u2::String& type, const u2::String& name, const u2::String& guid)
+    : System(type, name, guid)
+{
+}
+//-----------------------------------------------------------------------
+ScaleSystem::~ScaleSystem()
+{
+}
+//-----------------------------------------------------------------------
+void ScaleSystem::enter()
+{
+
+}
+//-----------------------------------------------------------------------
+void ScaleSystem::exit()
+{
+
+}
+//-----------------------------------------------------------------------
+void ScaleSystem::execute(u2real dt)
+{
+    GameObjectManager::CompRefMapIterator it
+        = GameObjectManager::getSingleton().retrieveAllGameObjectsByCompType("component_scale");
+    while (it.hasMoreElements())
+    {
+        GameObjectManager::StGameObjRef stGameObjRef = it.getNext();
+        if (!stGameObjRef.pGameObj->isPrototype())
+        {
+            _execute(stGameObjRef.pGameObj, dt);
+        }
+    }
+}
+//-----------------------------------------------------------------------
+void ScaleSystem::pause()
+{
+
+}
+//-----------------------------------------------------------------------
+void ScaleSystem::resume()
+{
+
+}
+//-----------------------------------------------------------------------
+void ScaleSystem::_enter()
+{
+
+}
+//-----------------------------------------------------------------------
+void ScaleSystem::_exit()
+{
+
+}
+//-----------------------------------------------------------------------
+void ScaleSystem::_execute(GameObject* gameObj, u2real dt)
+{
+    ScaleComponent* pScaleComp = dynamic_cast<ScaleComponent*>(
+        gameObj->retrieveComponentByType("component_scale"));
+    if (pScaleComp == nullptr)
+    {
+        assert(0);
+        return;
+    }
+
+    GameObject::ComponentMapIterator it
+        = gameObj->retrieveComponentsByType("component_sprite");
+    while (it.hasMoreElements())
+    {
+        SpriteComponent* pSpriteComp = dynamic_cast<SpriteComponent*>(it.getNext());
+        if (pSpriteComp == nullptr)
+        {
+            assert(0);
+            continue;
+        }
+
+        if (pSpriteComp->pSprite != nullptr)
+        {
+            pSpriteComp->pSprite->setScaleX(pScaleComp->v2Scale.x);
+            pSpriteComp->pSprite->setScaleY(pScaleComp->v2Scale.y);
+        }
+    }
+}
+//-----------------------------------------------------------------------
+void ScaleSystem::_pause()
+{
+
+}
+//-----------------------------------------------------------------------
+void ScaleSystem::_resume()
 {
 
 }

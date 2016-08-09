@@ -102,11 +102,13 @@ static void initGameFactories()
     CREATE_FACTORY_WITH_TYPE(BaseHpComponent, "component_base_hp");
     CREATE_FACTORY_WITH_TYPE(DeltaHpComponent, "component_delta_hp");
     CREATE_FACTORY_WITH_TYPE(JoystickComponent, "component_joystick");
+    CREATE_FACTORY_WITH_TYPE(ScaleComponent, "component_scale");
 
     // system
     CREATE_FACTORY_WITH_TYPE(RenderSystem, "system_render");
     CREATE_FACTORY_WITH_TYPE(InputSystem, "system_input");
     CREATE_FACTORY_WITH_TYPE(MoveSystem, "system_move");
+    CREATE_FACTORY_WITH_TYPE(ScaleSystem, "system_scale");
 
     // task loop
     CREATE_FACTORY(GameWsTaskLoop);
@@ -125,11 +127,11 @@ static void initGameFactories()
 }
 
 
-static cocos2d::Size winResolutionSize = cocos2d::Size(640, 1136);
-static cocos2d::Size designResolutionSize = cocos2d::Size(640, 1136);
-static cocos2d::Size smallResolutionSize = cocos2d::Size(320, 480);
-static cocos2d::Size mediumResolutionSize = cocos2d::Size(768, 1024);
-static cocos2d::Size largeResolutionSize = cocos2d::Size(1536, 2048);
+static cocos2d::Size winResolutionSize = cocos2d::Size(1136, 640);
+static cocos2d::Size designResolutionSize = cocos2d::Size(1136, 640);
+static cocos2d::Size smallResolutionSize = cocos2d::Size(480, 320);
+static cocos2d::Size mediumResolutionSize = cocos2d::Size(1024, 768);
+static cocos2d::Size largeResolutionSize = cocos2d::Size(2048, 1536);
 
 AppDelegate::AppDelegate() 
 	: m_pLogManager(nullptr)
@@ -548,6 +550,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 
         SystemManager::getSingleton().createObject("system_input", "system_input", BLANK, 9980);
         SystemManager::getSingleton().createObject("system_move", "system_move", BLANK, 9990);
+        SystemManager::getSingleton().createObject("system_scale", "system_scale", BLANK, 9995);
         SystemManager::getSingleton().createObject("system_render", "system_render", BLANK, 10000);
 
         SystemManager::getSingleton().enter();

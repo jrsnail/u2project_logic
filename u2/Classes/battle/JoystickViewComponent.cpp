@@ -24,7 +24,7 @@ JoystickViewComponent::~JoystickViewComponent(void)
 void JoystickViewComponent::onEntered()
 {
     CocosViewComponent::onEntered();
-    initWithCenter(cocos2d::Vec2(300, 300), false);
+    initWithCenter(cocos2d::Vec2(300, 300), true);
 }
 //-----------------------------------------------------------------------
 void JoystickViewComponent::onWillExit()

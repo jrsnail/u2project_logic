@@ -14,8 +14,11 @@
 	</Component>
 	<Component type = "component_speed">
 		<Speed value = "10" />
-		<MaxSpeed value = "20" />
+		<MaxSpeed value = "10" />
 		<MinSpeed value = "0" />
+	</Component>
+	<Component type = "component_scale">
+		<Scale value = "1.0 1.0" />
 	</Component>
 	<Component type = "component_hp">
 		<Hp value = "0" />

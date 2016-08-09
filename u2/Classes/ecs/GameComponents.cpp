@@ -585,3 +585,60 @@ bool JoystickComponent::_loadFromXml(const TiXmlElement* compElem, u2::String& e
 {
     return true;
 }
+//-----------------------------------------------------------------------
+//-----------------------------------------------------------------------
+ScaleComponent::ScaleComponent(ResourceManager* creator, const u2::String& type, ResourceHandle handle,
+    const u2::String& group, bool isManual, ManualResourceLoader* loader)
+    : u2::Component(creator, type, handle, group, isManual, loader)
+    , v2Scale(1.0f, 1.0f)
+{
+}
+//-----------------------------------------------------------------------
+ScaleComponent::ScaleComponent(const u2::String& type, const u2::String& name, const u2::String& guid)
+    : u2::Component(type, name, guid)
+{
+
+}
+//-----------------------------------------------------------------------
+ScaleComponent::~ScaleComponent()
+{
+}
+//-----------------------------------------------------------------------
+void ScaleComponent::copy(const u2::Component& src)
+{
+    u2::Component::copy(src);
+
+    const ScaleComponent& srcComp = dynamic_cast<const ScaleComponent&>(src);
+    v2Scale = srcComp.v2Scale;
+}
+//-----------------------------------------------------------------------
+bool ScaleComponent::_loadFromXml(const TiXmlElement* compElem, u2::String& error)
+{
+    const TiXmlElement* pCompElem = compElem;
+    u2::String& szError = error;
+
+    do
+    {
+        const char* pszCompType = pCompElem->Attribute("type");
+        GET_ERROR_LINE_AND_BREAK(pszCompType, szError);
+
+        if (isPrototype())
+        {
+        }
+        else
+        {
+            const char* pszCompName = pCompElem->Attribute("name");
+            GET_ERROR_LINE_AND_BREAK(pszCompName, szError);
+        }
+
+        // parse every attribute
+        const TiXmlElement* pPositionElem = pCompElem->FirstChildElement("Scale");
+        GET_ERROR_LINE_AND_BREAK(pPositionElem, szError);
+        const char* pszValue = pPositionElem->Attribute("value");
+        GET_ERROR_LINE_AND_BREAK(pszValue, szError);
+        v2Scale = StringUtil::parseVector2(pszValue);
+
+    } while (0);
+
+    return szError == BLANK;
+}

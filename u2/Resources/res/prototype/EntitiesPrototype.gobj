@@ -57,8 +57,8 @@
 			<Dir value = "0 0" />
 		</Component>
 		<Component type = "component_speed" name = "speed">
-			<Speed value = "10" />
-			<MaxSpeed value = "20" />
+			<Speed value = "5" />
+			<MaxSpeed value = "10" />
 			<MinSpeed value = "0" />
 		</Component>
 		<Component type = "component_hp" name = "hp">
@@ -70,6 +70,9 @@
 			<BaseHp value = "100" />
 			<BaseMaxHp value = "200" />
 			<BaseMinHp value = "0" />
+		</Component>
+		<Component type = "component_scale" name = "scale">
+			<Scale value = "0.2 0.2" />
 		</Component>
 	</GameObject>
 </PrototypeGameObjects>
