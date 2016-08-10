@@ -19,15 +19,18 @@ public:
         , bAlive(true)
         , v2Velocity(cocos2d::Vec2::ZERO)
         , v2Position(cocos2d::Vec2::ZERO)
+        , uCalCounter(0)
     {
 
     }
 
     u2::String      szGameObjGuid;
+    u2::String      szGameObjType;
     u2uint64        ulTimestamp;
     bool            bAlive;
     cocos2d::Vec2   v2Velocity;
     cocos2d::Vec2   v2Position;
+    u2uint32        uCalCounter;
 };
 
 
@@ -47,7 +50,7 @@ public:
 
     typedef VectorIterator<MovableSnapshotList>          MovableSnapshotListIterator;
     typedef ConstVectorIterator<MovableSnapshotList>     ConstMovableSnapshotListIterator;
-    MovableSnapshotListIterator retrieveAllMovableSnapshots(const String& type)
+    MovableSnapshotListIterator retrieveAllMovableSnapshots()
     {
         return MovableSnapshotListIterator(
             movableSnapshotList.begin(), movableSnapshotList.end());
@@ -55,6 +58,24 @@ public:
 
     u2uint64        ulTimestamp;
     MovableSnapshotList movableSnapshotList;
+};
+
+
+class ControlSnapshot : public GeneralAllocatedObject
+{
+public:
+    ControlSnapshot()
+        : ulTimestamp(0)
+        , v2Velocity(cocos2d::Vec2::ZERO)
+    {
+
+    }
+
+    u2::String      szPlayerGuid;
+    u2::String      szGameObjGuid;
+    u2::String      szGameObjType;
+    u2uint64        ulTimestamp;
+    cocos2d::Vec2   v2Velocity;
 };
 
 

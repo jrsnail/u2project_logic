@@ -299,14 +299,6 @@ void MoveSystem::_exit()
 //-----------------------------------------------------------------------
 void MoveSystem::_execute(GameObject* gameObj, u2real dt)
 {
-    VelocityComponent* pVelocityComp = dynamic_cast<VelocityComponent*>(
-        gameObj->retrieveComponentByType("component_velocity"));
-    if (pVelocityComp == nullptr)
-    {
-        assert(0);
-        return;
-    }
-    
     SpeedDirComponent* pSpeedDirComp = dynamic_cast<SpeedDirComponent*>(
         gameObj->retrieveComponentByType("component_speed_dir"));
     if (pSpeedDirComp == nullptr)
@@ -323,6 +315,14 @@ void MoveSystem::_execute(GameObject* gameObj, u2real dt)
         return;
     }
 
+    VelocityComponent* pVelocityComp = dynamic_cast<VelocityComponent*>(
+        gameObj->retrieveComponentByType("component_velocity"));
+    if (pVelocityComp == nullptr)
+    {
+        assert(0);
+        return;
+    }
+    
     PositionComponent* pPositionComp = dynamic_cast<PositionComponent*>(
         gameObj->retrieveComponentByType("component_position"));
     if (pPositionComp == nullptr)
@@ -434,6 +434,101 @@ void ScaleSystem::_pause()
 }
 //-----------------------------------------------------------------------
 void ScaleSystem::_resume()
+{
+
+}
+//-----------------------------------------------------------------------
+//-----------------------------------------------------------------------
+PredictSelfSystem::PredictSelfSystem(const u2::String& type, const u2::String& name, const u2::String& guid)
+    : System(type, name, guid)
+{
+}
+//-----------------------------------------------------------------------
+PredictSelfSystem::~PredictSelfSystem()
+{
+}
+//-----------------------------------------------------------------------
+void PredictSelfSystem::enter()
+{
+
+}
+//-----------------------------------------------------------------------
+void PredictSelfSystem::exit()
+{
+
+}
+//-----------------------------------------------------------------------
+void PredictSelfSystem::execute(u2real dt)
+{
+    GameObjectManager::CompRefMapIterator it
+        = GameObjectManager::getSingleton().retrieveAllGameObjectsByCompType("component_predict_self");
+    while (it.hasMoreElements())
+    {
+        GameObjectManager::StGameObjRef stGameObjRef = it.getNext();
+        if (!stGameObjRef.pGameObj->isPrototype())
+        {
+            _execute(stGameObjRef.pGameObj, dt);
+        }
+    }
+}
+//-----------------------------------------------------------------------
+void PredictSelfSystem::pause()
+{
+
+}
+//-----------------------------------------------------------------------
+void PredictSelfSystem::resume()
+{
+
+}
+//-----------------------------------------------------------------------
+void PredictSelfSystem::_enter()
+{
+
+}
+//-----------------------------------------------------------------------
+void PredictSelfSystem::_exit()
+{
+
+}
+//-----------------------------------------------------------------------
+void PredictSelfSystem::_execute(GameObject* gameObj, u2real dt)
+{
+    PredictSelfComponent* pPredictSelfComp = dynamic_cast<PredictSelfComponent*>(
+        gameObj->retrieveComponentByType("component_predict_self"));
+    if (pPredictSelfComp == nullptr)
+    {
+        assert(0);
+        return;
+    }
+
+
+    cocos2d::Vec2 v2Dir = cocos2d::Vec2::ZERO;
+    bool bSuc = DATAPOOL(ON_DataPool_Memory)->loadMemoryVec2Data("joystick_dir", v2Dir);
+    if (!bSuc)
+    {
+        //assert(0);
+    }
+
+    float fSpeedRate = 0.0f;
+    bSuc = DATAPOOL(ON_DataPool_Memory)->loadMemoryFloatData("joystick_speed_rate", fSpeedRate);
+    if (!bSuc)
+    {
+        //assert(0);
+    }
+
+    GameControlSnapshot snapshot;
+    snapshot.v2Velocity = v2Dir * fSpeedRate;
+
+    pPredictSelfComp->m_ControlSnapshotList.push_back(snapshot);
+}
+//-----------------------------------------------------------------------
+void PredictSelfSystem::_pause()
+{
+
+}
+//-----------------------------------------------------------------------
+void PredictSelfSystem::_resume()
 {
 
 }

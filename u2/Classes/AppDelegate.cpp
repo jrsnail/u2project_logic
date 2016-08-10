@@ -545,8 +545,8 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     {
         //------------------------------- Test ECS ----------------------------------------
-        GameObject* pSelf = GameObjectManager::getSingleton().createObject("aircraft", "self_aircraft");
-        pSelf->addComponent(ComponentManager::getSingleton().createObject("component_joystick"));
+//         GameObject* pSelf = GameObjectManager::getSingleton().createObject("aircraft", "self_aircraft");
+//         pSelf->addComponent(ComponentManager::getSingleton().createObject("component_joystick"));
 
         SystemManager::getSingleton().createObject("system_input", "system_input", BLANK, 9980);
         SystemManager::getSingleton().createObject("system_move", "system_move", BLANK, 9990);

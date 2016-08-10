@@ -3,6 +3,7 @@
 #include "application/AppPrerequisites.h"
 #include "GameDataPool.h"
 #include "GameHttpRequests.h"
+#include "ecs/GameComponents.h"
 
 
 #define CHECK_JSON_MEMBER(JsonValue, member)                            \
@@ -187,6 +188,8 @@ bool PlayHRsp::_deserializeHero(Json::Value& jsonValue, GameMovableSnapshot* gam
 {
     do
     {
+        gameMovableSnapshot->szGameObjType = "aircraft";
+
         CHECK_JSON_MEMBER(jsonValue, "userId");
         u2uint64 ulPlayerId = jsonValue["userId"].asUInt64();
         gameMovableSnapshot->szPlayerId = StringUtil::toString(ulPlayerId);
@@ -199,7 +202,7 @@ bool PlayHRsp::_deserializeHero(Json::Value& jsonValue, GameMovableSnapshot* gam
         gameMovableSnapshot->szPlayerName = jsonValue["nickName"].asString();
 
         CHECK_JSON_MEMBER(jsonValue, "hp");
-        gameMovableSnapshot->nCurHp = jsonValue["hp"].asInt();
+        gameMovableSnapshot->uCurHp = jsonValue["hp"].asInt();
 
         CHECK_JSON_MEMBER(jsonValue, "speed");
         gameMovableSnapshot->uCurSpeed = jsonValue["speed"].asUInt();
@@ -237,7 +240,94 @@ void PlayHRsp::run()
     deserialize();
     if (m_nCode == 0)
     {
+        // create every game object
+        SceneSnapshot::MovableSnapshotListIterator it = m_pSceneSnapshot->retrieveAllMovableSnapshots();
+        while (it.hasMoreElements())
+        {
+            GameMovableSnapshot* pMovableSs = static_cast<GameMovableSnapshot*>(it.getNext());
+            if (pMovableSs == nullptr)
+            {
+                assert(0);
+            }
+            else
+            {
+                // the first cal
+                pMovableSs->uCalCounter = 1;
 
+                // create game object
+                GameObject* pGameObj = GameObjectManager::getSingleton().createObject(
+                    pMovableSs->szGameObjType, pMovableSs->szPlayerId, pMovableSs->szGameObjGuid);
+
+                // position component
+                PositionComponent* pPositionComp = dynamic_cast<PositionComponent*>(
+                    pGameObj->retrieveComponentByType("component_position"));
+                if (pPositionComp == nullptr)
+                {
+                    assert(0);
+                }
+                else
+                {
+                    pPositionComp->v2Pos = pMovableSs->v2Position;
+                }
+
+                // velocity component
+                VelocityComponent* pVelocityComp = dynamic_cast<VelocityComponent*>(
+                    pGameObj->retrieveComponentByType("component_velocity"));
+                if (pVelocityComp == nullptr)
+                {
+                    assert(0);
+                }
+                else
+                {
+                    pVelocityComp->v2Velocity = pMovableSs->v2Velocity;
+                }
+
+                // speed component
+                SpeedComponent* pSpeedComp = dynamic_cast<SpeedComponent*>(
+                    pGameObj->retrieveComponentByType("component_speed"));
+                if (pSpeedComp == nullptr)
+                {
+                    assert(0);
+                }
+                else
+                {
+                    pSpeedComp->fSpeed = pMovableSs->v2Velocity.getLength();
+                }
+
+                // speed direction component
+                SpeedDirComponent* pSpeedDirComp = dynamic_cast<SpeedDirComponent*>(
+                    pGameObj->retrieveComponentByType("component_speed_dir"));
+                if (pSpeedDirComp == nullptr)
+                {
+                    assert(0);
+                }
+                else
+                {
+                    pSpeedDirComp->v2Dir = pMovableSs->v2Velocity;
+                    pSpeedDirComp->v2Dir.normalize();
+                }
+
+                // hp component
+                HpComponent* pHpComp = dynamic_cast<HpComponent*>(
+                    pGameObj->retrieveComponentByType("component_hp"));
+                if (pHpComp == nullptr)
+                {
+                    assert(0);
+                }
+                else
+                {
+                    pHpComp->uHp = pMovableSs->uCurHp;
+                }
+
+                // joystick component
+                String szSelfPlayerGuid;
+                bool bSuc = DATAPOOL(ON_DataPool_Memory)->loadMemoryStringData("SelfPlayerGuid", szSelfPlayerGuid);
+                if (szSelfPlayerGuid == pMovableSs->szPlayerId)
+                {
+                    pGameObj->addComponent(ComponentManager::getSingleton().createObject("component_joystick"));
+                }
+            }
+        }
     }
     else
     {

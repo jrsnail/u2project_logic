@@ -13,7 +13,7 @@ class GameMovableSnapshot : public MovableSnapshot
 public:
     GameMovableSnapshot()
         : MovableSnapshot()
-        , nCurHp(0)
+        , uCurHp(0)
         , uCurSpeed(0)
         , uAtkDistance(0)
     {
@@ -22,9 +22,23 @@ public:
 
     u2::String      szPlayerId;
     u2::String      szPlayerName;
-    u2int32         nCurHp;
+    u2uint32        uCurHp;
     u2uint32        uCurSpeed;
     u2uint32        uAtkDistance;
+};
+
+
+class GameControlSnapshot : public ControlSnapshot
+{
+public:
+    GameControlSnapshot()
+        : ControlSnapshot()
+    {
+
+    }
+
+    u2::String      szRoomGuid;
+    u2::String      szAttackedPlayerGuid;
 };
 
 

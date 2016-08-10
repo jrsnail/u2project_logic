@@ -318,9 +318,9 @@ bool SpeedComponent::_loadFromXml(const TiXmlElement* compElem, u2::String& erro
 HpComponent::HpComponent(ResourceManager* creator, const u2::String& type, ResourceHandle handle,
     const u2::String& group, bool isManual, ManualResourceLoader* loader)
     : u2::Component(creator, type, handle, group, isManual, loader)
-    , m_uHp(0)
-    , m_uMaxHp(0)
-    , m_uMinHp(0)
+    , uHp(0)
+    , uMaxHp(0)
+    , uMinHp(0)
 {
 }
 //-----------------------------------------------------------------------
@@ -339,9 +339,9 @@ void HpComponent::copy(const u2::Component& src)
     u2::Component::copy(src);
 
     const HpComponent& srcComp = dynamic_cast<const HpComponent&>(src);
-    m_uHp = srcComp.m_uHp;
-    m_uMaxHp = srcComp.m_uMaxHp;
-    m_uMinHp = srcComp.m_uMinHp;
+    uHp = srcComp.uHp;
+    uMaxHp = srcComp.uMaxHp;
+    uMinHp = srcComp.uMinHp;
 }
 //-----------------------------------------------------------------------
 bool HpComponent::_loadFromXml(const TiXmlElement* compElem, u2::String& error)
@@ -369,7 +369,7 @@ bool HpComponent::_loadFromXml(const TiXmlElement* compElem, u2::String& error)
             GET_ERROR_LINE_AND_BREAK(pElem, szError);
             const char* pszValue = pElem->Attribute("value");
             GET_ERROR_LINE_AND_BREAK(pszValue, szError);
-            m_uHp = StringUtil::parseUnsignedInt(pszValue);
+            uHp = StringUtil::parseUnsignedInt(pszValue);
         }
 
         {
@@ -378,7 +378,7 @@ bool HpComponent::_loadFromXml(const TiXmlElement* compElem, u2::String& error)
             GET_ERROR_LINE_AND_BREAK(pMaxElem, szError);
             const char* pszValue = pMaxElem->Attribute("value");
             GET_ERROR_LINE_AND_BREAK(pszValue, szError);
-            m_uMaxHp = StringUtil::parseUnsignedInt(pszValue);
+            uMaxHp = StringUtil::parseUnsignedInt(pszValue);
         }
 
         {
@@ -387,7 +387,7 @@ bool HpComponent::_loadFromXml(const TiXmlElement* compElem, u2::String& error)
             GET_ERROR_LINE_AND_BREAK(pMinElem, szError);
             const char* pszValue = pMinElem->Attribute("value");
             GET_ERROR_LINE_AND_BREAK(pszValue, szError);
-            m_uMinHp = StringUtil::parseUnsignedInt(pszValue);
+            uMinHp = StringUtil::parseUnsignedInt(pszValue);
         }
 
     } while (0);
@@ -399,9 +399,9 @@ bool HpComponent::_loadFromXml(const TiXmlElement* compElem, u2::String& error)
 BaseHpComponent::BaseHpComponent(ResourceManager* creator, const u2::String& type, ResourceHandle handle,
     const u2::String& group, bool isManual, ManualResourceLoader* loader)
     : u2::Component(creator, type, handle, group, isManual, loader)
-    , m_uBaseHp(0)
-    , m_uBaseMaxHp(0)
-    , m_uBaseMinHp(0)
+    , uBaseHp(0)
+    , uBaseMaxHp(0)
+    , uBaseMinHp(0)
 {
 }
 //-----------------------------------------------------------------------
@@ -420,9 +420,9 @@ void BaseHpComponent::copy(const u2::Component& src)
     u2::Component::copy(src);
 
     const BaseHpComponent& srcComp = dynamic_cast<const BaseHpComponent&>(src);
-    m_uBaseHp = srcComp.m_uBaseHp;
-    m_uBaseMaxHp = srcComp.m_uBaseMaxHp;
-    m_uBaseMinHp = srcComp.m_uBaseMinHp;
+    uBaseHp = srcComp.uBaseHp;
+    uBaseMaxHp = srcComp.uBaseMaxHp;
+    uBaseMinHp = srcComp.uBaseMinHp;
 }
 //-----------------------------------------------------------------------
 bool BaseHpComponent::_loadFromXml(const TiXmlElement* compElem, u2::String& error)
@@ -450,7 +450,7 @@ bool BaseHpComponent::_loadFromXml(const TiXmlElement* compElem, u2::String& err
             GET_ERROR_LINE_AND_BREAK(pElem, szError);
             const char* pszValue = pElem->Attribute("value");
             GET_ERROR_LINE_AND_BREAK(pszValue, szError);
-            m_uBaseHp = StringUtil::parseUnsignedInt(pszValue);
+            uBaseHp = StringUtil::parseUnsignedInt(pszValue);
         }
 
         {
@@ -459,7 +459,7 @@ bool BaseHpComponent::_loadFromXml(const TiXmlElement* compElem, u2::String& err
             GET_ERROR_LINE_AND_BREAK(pMaxElem, szError);
             const char* pszValue = pMaxElem->Attribute("value");
             GET_ERROR_LINE_AND_BREAK(pszValue, szError);
-            m_uBaseMaxHp = StringUtil::parseUnsignedInt(pszValue);
+            uBaseMaxHp = StringUtil::parseUnsignedInt(pszValue);
         }
 
         {
@@ -468,7 +468,7 @@ bool BaseHpComponent::_loadFromXml(const TiXmlElement* compElem, u2::String& err
             GET_ERROR_LINE_AND_BREAK(pMinElem, szError);
             const char* pszValue = pMinElem->Attribute("value");
             GET_ERROR_LINE_AND_BREAK(pszValue, szError);
-            m_uBaseMinHp = StringUtil::parseUnsignedInt(pszValue);
+            uBaseMinHp = StringUtil::parseUnsignedInt(pszValue);
         }
 
     } while (0);
@@ -480,9 +480,9 @@ bool BaseHpComponent::_loadFromXml(const TiXmlElement* compElem, u2::String& err
 DeltaHpComponent::DeltaHpComponent(ResourceManager* creator, const u2::String& type, ResourceHandle handle,
     const u2::String& group, bool isManual, ManualResourceLoader* loader)
     : u2::Component(creator, type, handle, group, isManual, loader)
-    , m_nDeltaHp(0)
-    , m_nDeltaMaxHp(0)
-    , m_nDeltaMinHp(0)
+    , nDeltaHp(0)
+    , nDeltaMaxHp(0)
+    , nDeltaMinHp(0)
 {
 }
 //-----------------------------------------------------------------------
@@ -501,9 +501,9 @@ void DeltaHpComponent::copy(const u2::Component& src)
     u2::Component::copy(src);
 
     const DeltaHpComponent& srcComp = dynamic_cast<const DeltaHpComponent&>(src);
-    m_nDeltaHp = srcComp.m_nDeltaHp;
-    m_nDeltaMaxHp = srcComp.m_nDeltaMaxHp;
-    m_nDeltaMinHp = srcComp.m_nDeltaMinHp;
+    nDeltaHp = srcComp.nDeltaHp;
+    nDeltaMaxHp = srcComp.nDeltaMaxHp;
+    nDeltaMinHp = srcComp.nDeltaMinHp;
 }
 //-----------------------------------------------------------------------
 bool DeltaHpComponent::_loadFromXml(const TiXmlElement* compElem, u2::String& error)
@@ -531,7 +531,7 @@ bool DeltaHpComponent::_loadFromXml(const TiXmlElement* compElem, u2::String& er
             GET_ERROR_LINE_AND_BREAK(pElem, szError);
             const char* pszValue = pElem->Attribute("value");
             GET_ERROR_LINE_AND_BREAK(pszValue, szError);
-            m_nDeltaHp = StringUtil::parseInt(pszValue);
+            nDeltaHp = StringUtil::parseInt(pszValue);
         }
 
         {
@@ -540,7 +540,7 @@ bool DeltaHpComponent::_loadFromXml(const TiXmlElement* compElem, u2::String& er
             GET_ERROR_LINE_AND_BREAK(pMaxElem, szError);
             const char* pszValue = pMaxElem->Attribute("value");
             GET_ERROR_LINE_AND_BREAK(pszValue, szError);
-            m_nDeltaMaxHp = StringUtil::parseInt(pszValue);
+            nDeltaMaxHp = StringUtil::parseInt(pszValue);
         }
 
         {
@@ -549,7 +549,7 @@ bool DeltaHpComponent::_loadFromXml(const TiXmlElement* compElem, u2::String& er
             GET_ERROR_LINE_AND_BREAK(pMinElem, szError);
             const char* pszValue = pMinElem->Attribute("value");
             GET_ERROR_LINE_AND_BREAK(pszValue, szError);
-            m_nDeltaMinHp = StringUtil::parseInt(pszValue);
+            nDeltaMinHp = StringUtil::parseInt(pszValue);
         }
 
     } while (0);
@@ -637,6 +637,55 @@ bool ScaleComponent::_loadFromXml(const TiXmlElement* compElem, u2::String& erro
         const char* pszValue = pPositionElem->Attribute("value");
         GET_ERROR_LINE_AND_BREAK(pszValue, szError);
         v2Scale = StringUtil::parseVector2(pszValue);
+
+    } while (0);
+
+    return szError == BLANK;
+}
+//-----------------------------------------------------------------------
+//-----------------------------------------------------------------------
+PredictSelfComponent::PredictSelfComponent(ResourceManager* creator, const u2::String& type, ResourceHandle handle,
+    const u2::String& group, bool isManual, ManualResourceLoader* loader)
+    : u2::Component(creator, type, handle, group, isManual, loader)
+{
+}
+//-----------------------------------------------------------------------
+PredictSelfComponent::PredictSelfComponent(const u2::String& type, const u2::String& name, const u2::String& guid)
+    : u2::Component(type, name, guid)
+{
+
+}
+//-----------------------------------------------------------------------
+PredictSelfComponent::~PredictSelfComponent()
+{
+}
+//-----------------------------------------------------------------------
+void PredictSelfComponent::copy(const u2::Component& src)
+{
+    u2::Component::copy(src);
+
+    const PredictSelfComponent& srcComp = dynamic_cast<const PredictSelfComponent&>(src);
+    m_ControlSnapshotList = srcComp.m_ControlSnapshotList;
+}
+//-----------------------------------------------------------------------
+bool PredictSelfComponent::_loadFromXml(const TiXmlElement* compElem, u2::String& error)
+{
+    const TiXmlElement* pCompElem = compElem;
+    u2::String& szError = error;
+
+    do
+    {
+        const char* pszCompType = pCompElem->Attribute("type");
+        GET_ERROR_LINE_AND_BREAK(pszCompType, szError);
+
+        if (isPrototype())
+        {
+        }
+        else
+        {
+            const char* pszCompName = pCompElem->Attribute("name");
+            GET_ERROR_LINE_AND_BREAK(pszCompName, szError);
+        }
 
     } while (0);
 

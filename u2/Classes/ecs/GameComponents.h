@@ -4,12 +4,14 @@
 
 #include "U2Core.h"
 #include "cocos2d.h"
+#include "GameDataPool.h"
 
 
 class TiXmlElement;
 
 
 U2EG_NAMESPACE_USING
+
 
 
 class SpriteComponent : public u2::Component
@@ -112,10 +114,10 @@ public:
 
     virtual bool _loadFromXml(const TiXmlElement* compElem, u2::String& error) override;
 
-protected:
-    u2uint32   m_uHp;
-    u2uint32   m_uMaxHp;
-    u2uint32   m_uMinHp;
+public:
+    u2uint32   uHp;
+    u2uint32   uMaxHp;
+    u2uint32   uMinHp;
 };
 
 
@@ -131,10 +133,10 @@ public:
 
     virtual bool _loadFromXml(const TiXmlElement* compElem, u2::String& error) override;
 
-protected:
-    u2uint32   m_uBaseHp;
-    u2uint32   m_uBaseMaxHp;
-    u2uint32   m_uBaseMinHp;
+public:
+    u2uint32   uBaseHp;
+    u2uint32   uBaseMaxHp;
+    u2uint32   uBaseMinHp;
 };
 
 
@@ -150,10 +152,10 @@ public:
 
     virtual bool _loadFromXml(const TiXmlElement* compElem, u2::String& error) override;
 
-protected:
-    u2int32   m_nDeltaHp;
-    u2int32   m_nDeltaMaxHp;
-    u2int32   m_nDeltaMinHp;
+public:
+    u2int32   nDeltaHp;
+    u2int32   nDeltaMaxHp;
+    u2int32   nDeltaMinHp;
 };
 
 
@@ -187,6 +189,24 @@ public:
 
 public:
     cocos2d::Vec2   v2Scale;
+};
+
+
+class PredictSelfComponent : public u2::Component
+{
+public:
+    PredictSelfComponent(ResourceManager* creator, const u2::String& type, ResourceHandle handle,
+        const u2::String& group, bool isManual = false, ManualResourceLoader* loader = 0);
+    PredictSelfComponent(const u2::String& type, const u2::String& name, const u2::String& guid = BLANK);
+    virtual ~PredictSelfComponent();
+
+    virtual void copy(const u2::Component& src) override;
+
+    virtual bool _loadFromXml(const TiXmlElement* compElem, u2::String& error) override;
+
+public:
+    typedef list<GameControlSnapshot>::type    ControlSnapshotList;
+    ControlSnapshotList  m_ControlSnapshotList;
 };
 
 

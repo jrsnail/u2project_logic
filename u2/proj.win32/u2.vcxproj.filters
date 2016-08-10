@@ -570,6 +570,9 @@
     <ClCompile Include="..\engine\src\core\U2SnapshotDataPool.cpp">
       <Filter>engine\src\core</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\ecs\GameEntityCollection.cpp">
+      <Filter>src\ecs</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -1123,6 +1126,9 @@
     </ClInclude>
     <ClInclude Include="..\engine\include\core\U2SnapshotDataPool.h">
       <Filter>engine\include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ecs\GameEntityCollection.h">
+      <Filter>src\ecs</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
