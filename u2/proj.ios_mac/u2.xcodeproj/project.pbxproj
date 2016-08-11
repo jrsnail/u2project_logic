@@ -16,6 +16,10 @@
 		3EACC99019EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
 		46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8419C43A87006E1F66 /* AppDelegate.cpp */; };
 		46880B8919C43A87006E1F66 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8419C43A87006E1F66 /* AppDelegate.cpp */; };
+		4C18CFF71D5C40BA00982384 /* SnapshotReq.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4C18CFF31D5C40BA00982384 /* SnapshotReq.pb.cc */; };
+		4C18CFF81D5C40BA00982384 /* SnapshotReq.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4C18CFF31D5C40BA00982384 /* SnapshotReq.pb.cc */; };
+		4C18CFF91D5C40BA00982384 /* SnapshotRsp.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4C18CFF51D5C40BA00982384 /* SnapshotRsp.pb.cc */; };
+		4C18CFFA1D5C40BA00982384 /* SnapshotRsp.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4C18CFF51D5C40BA00982384 /* SnapshotRsp.pb.cc */; };
 		4C1EE4BA1CD1B74E00CD21F1 /* U2FileSystemLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4C1EE4B41CD1B74E00CD21F1 /* U2FileSystemLayer.mm */; };
 		4C1EE4BD1CD1B74E00CD21F1 /* macUtils.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4C1EE4B61CD1B74E00CD21F1 /* macUtils.mm */; };
 		4C1EE4BF1CD1B74E00CD21F1 /* U2FileSystemLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C1EE4B71CD1B74E00CD21F1 /* U2FileSystemLayer.cpp */; };
@@ -440,6 +444,10 @@
 		3EACC98E19EE6D4300EB3C5E /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; path = res; sourceTree = "<group>"; };
 		46880B8419C43A87006E1F66 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		46880B8519C43A87006E1F66 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		4C18CFF31D5C40BA00982384 /* SnapshotReq.pb.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SnapshotReq.pb.cc; sourceTree = "<group>"; };
+		4C18CFF41D5C40BA00982384 /* SnapshotReq.pb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SnapshotReq.pb.h; sourceTree = "<group>"; };
+		4C18CFF51D5C40BA00982384 /* SnapshotRsp.pb.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SnapshotRsp.pb.cc; sourceTree = "<group>"; };
+		4C18CFF61D5C40BA00982384 /* SnapshotRsp.pb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SnapshotRsp.pb.h; sourceTree = "<group>"; };
 		4C1EE4B41CD1B74E00CD21F1 /* U2FileSystemLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = U2FileSystemLayer.mm; sourceTree = "<group>"; };
 		4C1EE4B61CD1B74E00CD21F1 /* macUtils.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = macUtils.mm; sourceTree = "<group>"; };
 		4C1EE4B71CD1B74E00CD21F1 /* U2FileSystemLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = U2FileSystemLayer.cpp; sourceTree = "<group>"; };
@@ -1024,6 +1032,17 @@
 			path = ../Classes;
 			sourceTree = "<group>";
 		};
+		4C18CFF21D5C40BA00982384 /* pb */ = {
+			isa = PBXGroup;
+			children = (
+				4C18CFF31D5C40BA00982384 /* SnapshotReq.pb.cc */,
+				4C18CFF41D5C40BA00982384 /* SnapshotReq.pb.h */,
+				4C18CFF51D5C40BA00982384 /* SnapshotRsp.pb.cc */,
+				4C18CFF61D5C40BA00982384 /* SnapshotRsp.pb.h */,
+			);
+			path = pb;
+			sourceTree = "<group>";
+		};
 		4C1EE4B21CD1B74E00CD21F1 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
@@ -1446,6 +1465,7 @@
 		4CD7EAB91D4C52CB000FA6B0 /* tasks */ = {
 			isa = PBXGroup;
 			children = (
+				4C18CFF21D5C40BA00982384 /* pb */,
 				4CD7EABA1D4C52CB000FA6B0 /* GameHttpRequests.cpp */,
 				4CD7EABB1D4C52CB000FA6B0 /* GameHttpRequests.h */,
 				4CD7EABC1D4C52CB000FA6B0 /* GameHttpResponses.cpp */,
@@ -1855,12 +1875,14 @@
 				4CD7ED5D1D4CAF99000FA6B0 /* U2CodeCvt.cpp in Sources */,
 				4C68AC661C8930FC007BA5BD /* U2ViewComponent.cpp in Sources */,
 				4CD7EAD81D4C52CB000FA6B0 /* GameWsClientImpl.cpp in Sources */,
+				4C18CFF91D5C40BA00982384 /* SnapshotRsp.pb.cc in Sources */,
 				4CA4AAA71CC0EB20007B5F39 /* U2Exception.cpp in Sources */,
 				4CD7EACF1D4C52CB000FA6B0 /* GameComponents.cpp in Sources */,
 				4C1EE4D91CD1C17D00CD21F1 /* U2StringInterface.cpp in Sources */,
 				4CD7EB301D4C53AA000FA6B0 /* U2Core.cpp in Sources */,
 				4CD7EB341D4C53AA000FA6B0 /* U2GameObjectSerialize.cpp in Sources */,
 				4CD7EAC91D4C52CB000FA6B0 /* AppPrerequisites.cpp in Sources */,
+				4C18CFF71D5C40BA00982384 /* SnapshotReq.pb.cc in Sources */,
 				4CD7ECD91D4C9CF3000FA6B0 /* U2ConstantBridge.cpp in Sources */,
 				4CD7EB311D4C53AA000FA6B0 /* U2DataPool.cpp in Sources */,
 				4C68AC541C8930FC007BA5BD /* U2PredefinedCommands.cpp in Sources */,
@@ -2028,6 +2050,7 @@
 				4C68AC391C8930FC007BA5BD /* U2Prerequisites.cpp in Sources */,
 				4CD7ECA41D4C61C1000FA6B0 /* U2Prototype.cpp in Sources */,
 				4C1EE4D41CD1C17D00CD21F1 /* U2Resource.cpp in Sources */,
+				4C18CFFA1D5C40BA00982384 /* SnapshotRsp.pb.cc in Sources */,
 				4C1EE4D61CD1C17D00CD21F1 /* U2ResourceGroupManager.cpp in Sources */,
 				4CD7ED6A1D4CAF99000FA6B0 /* U2PipedStream.cpp in Sources */,
 				4C1EE4D81CD1C17D00CD21F1 /* U2ResourceManager.cpp in Sources */,
@@ -2081,6 +2104,7 @@
 				4CD7ECBE1D4C61C1000FA6B0 /* AppViewComponents.cpp in Sources */,
 				4CD7EC901D4C6172000FA6B0 /* U2GameObject.cpp in Sources */,
 				4CD7EC911D4C6172000FA6B0 /* U2GameObjectSerialize.cpp in Sources */,
+				4C18CFF81D5C40BA00982384 /* SnapshotReq.pb.cc in Sources */,
 				4CD7ED241D4C9D66000FA6B0 /* lobject.c in Sources */,
 				4CD7ED2C1D4C9D66000FA6B0 /* lstate.c in Sources */,
 				4CD7EC931D4C6172000FA6B0 /* GameHttpRequests.cpp in Sources */,
@@ -2184,6 +2208,7 @@
 					"$(SRCROOT)/../engine/include/mvc",
 					"$(SRCROOT)/../gamebase",
 					"$(SRCROOT)/../../Dependenices/include",
+					"$(SRCROOT)/../../Dependenices/include/protobuf",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = ios/Info.plist;
@@ -2191,12 +2216,14 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(SRCROOT)/../../Dependenices/libs/zzip/iOS/Release$(EFFECTIVE_PLATFORM_NAME)",
 					"$(SRCROOT)/../../Dependenices/libs/curl/iOS/Release$(EFFECTIVE_PLATFORM_NAME)",
+					"$(SRCROOT)/../../Dependenices/libs/protobuf/iOS/Release$(EFFECTIVE_PLATFORM_NAME)",
 				);
 				OTHER_LDFLAGS = (
 					"$(_COCOS_LIB_IOS_BEGIN)",
 					"$(_COCOS_LIB_IOS_END)",
 					"-lz",
 					"-lcurl",
+					"-lprotobuf-lite",
 				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2234,6 +2261,7 @@
 					"$(SRCROOT)/../engine/include/mvc",
 					"$(SRCROOT)/../gamebase",
 					"$(SRCROOT)/../../Dependenices/include",
+					"$(SRCROOT)/../../Dependenices/include/protobuf",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = ios/Info.plist;
@@ -2241,12 +2269,14 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(SRCROOT)/../../Dependenices/libs/zzip/iOS/Release$(EFFECTIVE_PLATFORM_NAME)",
 					"$(SRCROOT)/../../Dependenices/libs/curl/iOS/Release$(EFFECTIVE_PLATFORM_NAME)",
+					"$(SRCROOT)/../../Dependenices/libs/protobuf/iOS/Release$(EFFECTIVE_PLATFORM_NAME)",
 				);
 				OTHER_LDFLAGS = (
 					"$(_COCOS_LIB_IOS_BEGIN)",
 					"$(_COCOS_LIB_IOS_END)",
 					"-lz",
 					"-lcurl",
+					"-lprotobuf-lite",
 				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2285,16 +2315,19 @@
 					"$(SRCROOT)/../engine/include/mvc",
 					"$(SRCROOT)/../gamebase",
 					"$(SRCROOT)/../../Dependenices/include",
+					"$(SRCROOT)/../../Dependenices/include/protobuf",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = mac/Info.plist;
 				LIBRARY_SEARCH_PATHS = (
 					"$(SRCROOT)/../../Dependenices/libs/zzip/OSX",
 					"$(SRCROOT)/../../Dependenices/libs/curl/OSX",
+					"$(SRCROOT)/../../Dependenices/libs/protobuf/OSX",
 				);
 				OTHER_LDFLAGS = (
 					"$(_COCOS_LIB_MAC_BEGIN)",
 					"$(_COCOS_LIB_MAC_END)",
+					"-lprotobuf-lite",
 				);
 				USER_HEADER_SEARCH_PATHS = "$(_COCOS_HEADER_MAC_BEGIN) $(_COCOS_HEADER_MAC_END)";
 			};
@@ -2328,16 +2361,19 @@
 					"$(SRCROOT)/../engine/include/mvc",
 					"$(SRCROOT)/../gamebase",
 					"$(SRCROOT)/../../Dependenices/include",
+					"$(SRCROOT)/../../Dependenices/include/protobuf",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = mac/Info.plist;
 				LIBRARY_SEARCH_PATHS = (
 					"$(SRCROOT)/../../Dependenices/libs/zzip/OSX",
 					"$(SRCROOT)/../../Dependenices/libs/curl/OSX",
+					"$(SRCROOT)/../../Dependenices/libs/protobuf/OSX",
 				);
 				OTHER_LDFLAGS = (
 					"$(_COCOS_LIB_MAC_BEGIN)",
 					"$(_COCOS_LIB_MAC_END)",
+					"-lprotobuf-lite",
 				);
 				USER_HEADER_SEARCH_PATHS = "$(_COCOS_HEADER_MAC_BEGIN) $(_COCOS_HEADER_MAC_END)";
 			};
