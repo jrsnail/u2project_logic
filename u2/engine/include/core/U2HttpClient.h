@@ -168,7 +168,13 @@ public:
 
     virtual void resume() override;
 
+    virtual bool isRunning() override;
+
+    virtual bool isPausing() override;
+
     virtual String getThreadId() override;
+
+    virtual void join() override;
 
     /**
     * Set the timeout value for connecting.

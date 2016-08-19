@@ -46,10 +46,6 @@ void PostTaskAndReplyRelay::runReplyAndSelfDestruct()
 template<> TaskManager* Singleton<TaskManager>::msSingleton = 0;
 TaskManager* TaskManager::getSingletonPtr(void)
 {
-    if (msSingleton == nullptr)
-    {
-        msSingleton = new TaskManager;
-    }
     return msSingleton;
 }
 TaskManager& TaskManager::getSingleton(void)

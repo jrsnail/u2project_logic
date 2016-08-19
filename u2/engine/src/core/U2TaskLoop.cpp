@@ -4,8 +4,6 @@
 #include "U2Exception.h"
 #include "U2Task.h"
 #include "U2Scheduler.h"
-#include "U2LogicClient.h"
-#include "U2WebSocketClientImpl.h"
 
 
 U2EG_NAMESPACE_USING
@@ -29,13 +27,7 @@ TaskLoop::~TaskLoop()
         m_pScheduler = nullptr;
     }
 
-    // copy, avaid to interrupt iterator
-    TaskLoopListenerList v = m_TaskLoopListeners;
-    for (TaskLoopListenerList::iterator it = v.begin(); it != v.end(); it++)
-    {
-        (*it)->preDestroyCurrentTaskLoop(this);
-    }
-    m_TaskLoopListeners.clear();
+    _preDestroyCurrentTaskLoop();
 
     m_TaskListeners.clear();
 }
@@ -79,41 +71,6 @@ void TaskLoop::removeTaskListener(TaskListener* listener)
     if (it != m_TaskListeners.end())
     {
         m_TaskListeners.erase(it);
-    }
-}
-//-----------------------------------------------------------------------
-void TaskLoop::run()
-{
-    
-}
-//-----------------------------------------------------------------------
-void TaskLoop::quit()
-{
-    // copy, avaid to interrupt iterator
-    TaskLoopListenerList v = m_TaskLoopListeners;
-    for (TaskLoopListenerList::iterator it = v.begin(); it != v.end(); it++)
-    {
-        (*it)->preQuitCurrentTaskLoop(this);
-    }
-}
-//---------------------------------------------------------------------
-void TaskLoop::pause()
-{
-    // copy, avaid to interrupt iterator
-    TaskLoopListenerList v = m_TaskLoopListeners;
-    for (TaskLoopListenerList::iterator it = v.begin(); it != v.end(); it++)
-    {
-        (*it)->prePauseCurrentTaskLoop(this);
-    }
-}
-//---------------------------------------------------------------------
-void TaskLoop::resume()
-{
-    // copy, avaid to interrupt iterator
-    TaskLoopListenerList v = m_TaskLoopListeners;
-    for (TaskLoopListenerList::iterator it = v.begin(); it != v.end(); it++)
-    {
-        (*it)->postResumeCurrentTaskLoop(this);
     }
 }
 //---------------------------------------------------------------------
@@ -161,6 +118,47 @@ void TaskLoop::_postRunCurrentTaskLoop()
     }
 }
 //-----------------------------------------------------------------------
+void TaskLoop::_postQuitCurrentTaskLoop()
+{
+    // copy, avaid to interrupt iterator
+    TaskLoopListenerList v = m_TaskLoopListeners;
+    for (TaskLoopListenerList::iterator it = v.begin(); it != v.end(); it++)
+    {
+        (*it)->postQuitCurrentTaskLoop(this);
+    }
+}
+//-----------------------------------------------------------------------
+void TaskLoop::_prePauseCurrentTaskLoop()
+{
+    // copy, avaid to interrupt iterator
+    TaskLoopListenerList v = m_TaskLoopListeners;
+    for (TaskLoopListenerList::iterator it = v.begin(); it != v.end(); it++)
+    {
+        (*it)->prePauseCurrentTaskLoop(this);
+    }
+}
+//-----------------------------------------------------------------------
+void TaskLoop::_postResumeCurrentTaskLoop()
+{
+    // copy, avaid to interrupt iterator
+    TaskLoopListenerList v = m_TaskLoopListeners;
+    for (TaskLoopListenerList::iterator it = v.begin(); it != v.end(); it++)
+    {
+        (*it)->postResumeCurrentTaskLoop(this);
+    }
+}
+//-----------------------------------------------------------------------
+void TaskLoop::_preDestroyCurrentTaskLoop()
+{
+    // copy, avaid to interrupt iterator
+    TaskLoopListenerList v = m_TaskLoopListeners;
+    for (TaskLoopListenerList::iterator it = v.begin(); it != v.end(); it++)
+    {
+        (*it)->preDestroyCurrentTaskLoop(this);
+    }
+    m_TaskLoopListeners.clear();
+}
+//-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
 map<String, TaskLoop* >::type TaskLoopManager::ms_TaskLoops;
 //-----------------------------------------------------------------------
@@ -181,6 +179,7 @@ TaskLoopManager::TaskLoopManager()
 //-----------------------------------------------------------------------
 TaskLoopManager::~TaskLoopManager()
 {
+    quitAll();
 }
 //-----------------------------------------------------------------------
 TaskLoop* TaskLoopManager::createObject(const String& type, const String& name, const String& guid)
@@ -222,6 +221,76 @@ TaskLoop* TaskLoopManager::current()
     return it->second;
 }
 //---------------------------------------------------------------------
+void TaskLoopManager::quitAll()
+{
+    ObjectMapIterator it = TaskLoopManager::getSingleton().retrieveAllObjects();
+    while (it.hasMoreElements())
+    {
+        TaskLoop* pTaskLoop = it.getNext();
+        if (pTaskLoop != nullptr)
+        {
+            if (pTaskLoop->isRunning())
+            {
+                pTaskLoop->quit();
+                pTaskLoop->join();
+            }
+        }
+    }
+    ms_TaskLoops.clear();
+}
+//---------------------------------------------------------------------
+void TaskLoopManager::runAll()
+{
+    ObjectMapIterator it = TaskLoopManager::getSingleton().retrieveAllObjects();
+    while (it.hasMoreElements())
+    {
+        TaskLoop* pTaskLoop = it.getNext();
+        if (pTaskLoop != nullptr)
+        {
+            if (!pTaskLoop->isRunning())
+            {
+                pTaskLoop->run();
+            }
+        }
+    }
+}
+//---------------------------------------------------------------------
+void TaskLoopManager::pauseAll()
+{
+    ObjectMapIterator it = TaskLoopManager::getSingleton().retrieveAllObjects();
+    while (it.hasMoreElements())
+    {
+        TaskLoop* pTaskLoop = it.getNext();
+        if (pTaskLoop != nullptr)
+        {
+            if (pTaskLoop->isRunning() && !pTaskLoop->isPausing())
+            {
+                pTaskLoop->pause();
+            }
+        }
+    }
+}
+//---------------------------------------------------------------------
+void TaskLoopManager::resumeAll()
+{
+    ObjectMapIterator it = TaskLoopManager::getSingleton().retrieveAllObjects();
+    while (it.hasMoreElements())
+    {
+        TaskLoop* pTaskLoop = it.getNext();
+        if (pTaskLoop != nullptr)
+        {
+            if (!pTaskLoop->isRunning())
+            {
+                pTaskLoop->run();
+            }
+            else if (pTaskLoop->isPausing())
+            {
+                pTaskLoop->resume();
+            }
+        }
+    }
+}
+//---------------------------------------------------------------------
 void TaskLoopManager::postRunCurrentTaskLoop(TaskLoop* loop)
 {
     String szId = loop->getThreadId();
@@ -232,22 +301,14 @@ void TaskLoopManager::postRunCurrentTaskLoop(TaskLoop* loop)
     }
     else
     {
-        assert(0);
+        // The thread id had existed when resume from pause state
+        //assert(0);
     }
 }
 //---------------------------------------------------------------------
-void TaskLoopManager::preQuitCurrentTaskLoop(TaskLoop* loop)
+void TaskLoopManager::postQuitCurrentTaskLoop(TaskLoop* loop)
 {
-    String szId = loop->getThreadId();
-    TaskLoopMap::iterator it = ms_TaskLoops.find(szId);
-    if (it == ms_TaskLoops.end())
-    {
-        assert(0);
-    }
-    else
-    {
-        ms_TaskLoops.erase(it);
-    }
+    
 }
 //---------------------------------------------------------------------
 void TaskLoopManager::prePauseCurrentTaskLoop(TaskLoop* loop)
@@ -262,5 +323,16 @@ void TaskLoopManager::postResumeCurrentTaskLoop(TaskLoop* loop)
 //---------------------------------------------------------------------
 void TaskLoopManager::preDestroyCurrentTaskLoop(TaskLoop* loop)
 {
-
+    /*
+    String szId = loop->getThreadId();
+    TaskLoopMap::iterator it = ms_TaskLoops.find(szId);
+    if (it == ms_TaskLoops.end())
+    {
+        assert(0);
+    }
+    else
+    {
+        ms_TaskLoops.erase(it);
+    }
+     */
 }

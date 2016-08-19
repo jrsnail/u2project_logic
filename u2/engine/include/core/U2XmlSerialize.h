@@ -30,7 +30,7 @@ U2EG_NAMESPACE_BEGIN
     }
 
 
-class XmlSerialize : public Object
+class XmlSerialize : public Object, public GeneralAllocatedObject
 {
 public:
     XmlSerialize(const String& type, const String& name, const String& guid = BLANK);

@@ -16,7 +16,7 @@
 U2EG_NAMESPACE_BEGIN
 
 
-class TransStep : public Object
+class TransStep : public Object, public GeneralAllocatedObject
 {
 public:
     class Key

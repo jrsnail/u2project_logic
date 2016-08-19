@@ -3,8 +3,6 @@
 #include <websocket/libwebsockets.h>
 #include "U2LogManager.h"
 #include "U2Exception.h"
-#include "U2DataPool.h"
-#include "U2PredefinedPrerequisites.h"
 #include "U2Scheduler.h"
 
 
@@ -63,35 +61,53 @@ void WsTaskLoop::postTaskAndReply(Task* task, Task* reply)
 //-----------------------------------------------------------------------
 void WsTaskLoop::run()
 {
-    TaskLoop::run();
-    
-    U2_LOCK_MUTEX(m_KeepRunningMutex);
+    U2_LOCK_MUTEX_NAMED(m_KeepRunningMutex, runningLck);
     m_bKeepRunning = true;
+    
+    U2_LOCK_MUTEX_NAMED(m_PausingMutex, pausingLck);
+    m_bPausing = false;
 
     m_thread = std::move(std::thread(std::bind(&WsTaskLoop::_runInternal, this)));
-    m_thread.detach();
 }
 //-----------------------------------------------------------------------
 void WsTaskLoop::quit()
 {
-    U2_LOCK_MUTEX(m_KeepRunningMutex);
+    U2_LOCK_MUTEX_NAMED(m_KeepRunningMutex, runningLck);
     m_bKeepRunning = false;
 
-    TaskLoop::quit();
+    U2_LOCK_MUTEX_NAMED(m_PausingMutex, pausingLck);
+    m_bPausing = true;
+}
+//-----------------------------------------------------------------------
+void WsTaskLoop::join()
+{
+    if (m_thread.joinable())
+    {
+        m_thread.join();
+    }
 }
 //-----------------------------------------------------------------------
 void WsTaskLoop::pause()
 {
-    U2_LOCK_MUTEX(m_PausingMutex);
-    m_bPausing = true;
-    TaskLoop::pause();
+    quit();
+    join();
 }
 //-----------------------------------------------------------------------
 void WsTaskLoop::resume()
 {
+    run();
+}
+//-----------------------------------------------------------------------
+bool WsTaskLoop::isRunning()
+{
+    U2_LOCK_MUTEX(m_KeepRunningMutex);
+    return m_bKeepRunning;
+}
+//-----------------------------------------------------------------------
+bool WsTaskLoop::isPausing()
+{
     U2_LOCK_MUTEX(m_PausingMutex);
-    m_bPausing = false;
-    TaskLoop::resume();
+    return m_bPausing;
 }
 //-----------------------------------------------------------------------
 String WsTaskLoop::getThreadId()
@@ -122,20 +138,11 @@ void WsTaskLoop::_runInternal()
             }
         }
 
-        /* how to ?
-        {
-            U2_LOCK_MUTEX(m_PausingMutex);
-            if (m_bPausing)
-            {
-                U2_THREAD_SLEEP(1000);
-                continue;
-            }
-        }
-        */
-
         if (m_eState == State::CLOSED || m_eState == State::CLOSING)
         {
             libwebsocket_context_destroy(m_pWsContext);
+            m_pWsContext = nullptr;
+            m_pWebSocket = nullptr;
 
             size_t protocolCount = 0;
             if (m_Protocols.size() > 0)
@@ -165,6 +172,8 @@ void WsTaskLoop::_runInternal()
         // Sleep 1 ms
         U2_THREAD_SLEEP(1);
     }
+
+    _postQuitCurrentTaskLoop();
 }
 //---------------------------------------------------------------------
 void WsTaskLoop::_addToIncomingQueue(Task* task)
@@ -479,17 +488,6 @@ void WsTaskLoop::_onSend(struct libwebsocket_context *ctx, struct libwebsocket *
                 break;
             }
         }
-
-        /* how to ?
-        {
-            U2_LOCK_MUTEX(m_PausingMutex);
-            if (m_bPausing)
-            {
-                U2_THREAD_SLEEP(1000);
-                continue;
-            }
-        }
-        */
 
         Task* pTask = m_WorkingQueue.front();
         if (pTask == nullptr)

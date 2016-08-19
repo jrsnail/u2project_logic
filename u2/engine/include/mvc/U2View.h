@@ -39,7 +39,7 @@ class Observer;
 * @see Patterns/Observer/Observer.hpp PureMVC::Patterns::Observer
 * @see Patterns/Observer/Notification.hpp PureMVC::Patterns::Notification
 */
-class View : public Object
+class View : public Object, public GeneralAllocatedObject
 {
 protected:
     typedef std::map<String, ViewComponent*>       ViewCompMap;

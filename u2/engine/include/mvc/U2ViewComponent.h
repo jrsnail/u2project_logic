@@ -19,7 +19,7 @@
 U2EG_NAMESPACE_BEGIN
 
 
-class ViewComponent : public u2::Object, public Notifier
+class ViewComponent : public u2::Object, public Notifier, public GeneralAllocatedObject
 {
 public:
     typedef std::list<String>		NotificationNames;

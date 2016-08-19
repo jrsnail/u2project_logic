@@ -120,16 +120,13 @@ GameRoot::~GameRoot()
 //-----------------------------------------------------------------------
 void GameRoot::_initialize()
 {
-    initGameFactories();
-    initFactroy();
-
     // Create log manager and default log file if there is no log manager yet
     if (u2::LogManager::getSingletonPtr() == nullptr)
     {
         m_pLogManager = U2_NEW u2::LogManager();
         m_pLogManager->createLog("u2.log", true, true);
 #if U2_DEBUG_MODE == 1
-//        m_pLogManager->setLogDetail(LoggingLevel::LL_BOREME);
+        m_pLogManager->setLogDetail(LoggingLevel::LL_BOREME);
 #endif
     }
 
@@ -137,6 +134,15 @@ void GameRoot::_initialize()
     AndroidLogListener* mAndroidLogger = U2_NEW AndroidLogListener();
     m_pLogManager->getDefaultLog()->addListener(mAndroidLogger);
 #endif
+
+    // factory
+    if (u2::FactoryManager::getSingletonPtr() == nullptr)
+    {
+        m_pFactoryManager = U2_NEW FactoryManager;
+    }
+
+    initGameFactories();
+    initFactroy();
 
     // archive
     m_pArchiveManager = U2_NEW ArchiveManager;
@@ -224,6 +230,10 @@ void GameRoot::_initialize()
     }
 
     // task manager
+    if (TaskManager::getSingletonPtr() == nullptr)
+    {
+        m_pTaskManager = U2_NEW TaskManager;
+    }
     if (TaskLoopManager::getSingletonPtr() == nullptr)
     {
         m_pTaskLoopManager = U2_NEW TaskLoopManager;
@@ -233,6 +243,7 @@ void GameRoot::_initialize()
     _loadResources();
 
 
+    
 
 
     // Logic task loop
@@ -299,14 +310,18 @@ void GameRoot::exit()
 
     // Optional:  Delete all global objects allocated by libprotobuf.
     google::protobuf::ShutdownProtobufLibrary();
+
+    Root::exit();
 }
 //-----------------------------------------------------------------------
 void GameRoot::pause()
 {
     SystemManager::getSingleton().pause();
+    Root::pause();
 }
 //-----------------------------------------------------------------------
 void GameRoot::resume()
 {
     SystemManager::getSingleton().resume();
+    Root::resume();
 }

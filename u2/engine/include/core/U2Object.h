@@ -49,7 +49,7 @@ protected:
 };
 
 
-class ObjectFactory : public FactoryObj< Object >
+class ObjectFactory : public FactoryObj< Object >, public GeneralAllocatedObject
 {
 public:
     virtual ~ObjectFactory() {}
@@ -108,14 +108,14 @@ void TemplateObjectFactory<T>::destroyInstance(Object* obj)
 {
     if (obj != nullptr)
     {
-        delete obj;
+        U2_DELETE obj;
     }
 }
 //-----------------------------------------------------------------------
 template <class T>
 Object* TemplateObjectFactory<T>::createInstance(const String& name, const String& guid)
 {
-    T* pObj = new T(getType(), name, guid);
+    T* pObj = U2_NEW T(getType(), name, guid);
     return pObj;
 }
 

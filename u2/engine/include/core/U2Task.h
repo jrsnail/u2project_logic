@@ -63,15 +63,10 @@ protected:
 
 
 class _U2Export TaskManager : public SimpleObjectManager<Task>, public Singleton < TaskManager >
+    , public GeneralAllocatedObject
 {
-protected:
-    /** Default constructor - should never get called by a client app.
-    */
-    TaskManager();
-
 public:
-    /** Default destructor.
-    */
+    TaskManager();
     virtual ~TaskManager();
 
     virtual Task* createObject(const String& type, const String& name = BLANK, const String& guid = BLANK);

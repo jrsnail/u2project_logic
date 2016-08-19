@@ -13,7 +13,7 @@ U2EG_NAMESPACE_BEGIN
 
 
 
-class System : public Object
+class System : public Object, public GeneralAllocatedObject
 {
 public:
     System(const String& type, const String& name = BLANK, const String& guid = BLANK);

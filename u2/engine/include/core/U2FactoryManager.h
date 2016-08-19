@@ -14,16 +14,11 @@ class Object;
 class ObjectFactory;
 
 
-class FactoryManager : public Singleton<FactoryManager>
+class FactoryManager : public Singleton<FactoryManager>, public GeneralAllocatedObject
 {
-protected:
-    /** Default constructor - should never get called by a client app.
-    */
+public:
     FactoryManager();
 
-public:
-    /** Default destructor.
-    */
     virtual ~FactoryManager();
 
 	void addObjectFactory(ObjectFactory* factory);
@@ -79,24 +74,24 @@ protected:
 
 
 
-#define CREATE_FACTORY(T)                                                           \
-	if (!u2::FactoryManager::getSingleton().hasObjectFactory(GET_OBJECT_TYPE(T)))   \
-	{                                                                               \
-		u2::ObjectFactory* pObjectFactory = new u2::TemplateObjectFactory < T > ;   \
-		u2::FactoryManager::getSingleton().addObjectFactory(pObjectFactory);        \
+#define CREATE_FACTORY(T)                                                               \
+	if (!u2::FactoryManager::getSingleton().hasObjectFactory(GET_OBJECT_TYPE(T)))       \
+	{                                                                                   \
+		u2::ObjectFactory* pObjectFactory = U2_NEW u2::TemplateObjectFactory < T > ;    \
+		u2::FactoryManager::getSingleton().addObjectFactory(pObjectFactory);            \
 	}
 
-#define DESTROY_FACTORY(T)                                                          \
+#define DESTROY_FACTORY(T)                                                              \
 	u2::FactoryManager::getSingleton().destroyObjectFactory(GET_OBJECT_TYPE(T));
 
-#define CREATE_FACTORY_WITH_TYPE(T, TypeStr)                                        \
-	if (!u2::FactoryManager::getSingleton().hasObjectFactory(TypeStr))              \
-	{                                                                               \
-		u2::ObjectFactory* pObjectFactory = new u2::TemplateObjectFactory < T > (TypeStr);   \
-		u2::FactoryManager::getSingleton().addObjectFactory(pObjectFactory);        \
+#define CREATE_FACTORY_WITH_TYPE(T, TypeStr)                                            \
+	if (!u2::FactoryManager::getSingleton().hasObjectFactory(TypeStr))                  \
+	{                                                                                   \
+		u2::ObjectFactory* pObjectFactory = U2_NEW u2::TemplateObjectFactory < T > (TypeStr);   \
+		u2::FactoryManager::getSingleton().addObjectFactory(pObjectFactory);            \
 	}
 
-#define DESTROY_FACTORY_WITH_TYPE(TypeStr)                                          \
+#define DESTROY_FACTORY_WITH_TYPE(TypeStr)                                              \
 	u2::FactoryManager::getSingleton().destroyObjectFactory(TypeStr);
 
 

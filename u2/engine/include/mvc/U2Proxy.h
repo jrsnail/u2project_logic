@@ -36,7 +36,7 @@ U2EG_NAMESPACE_BEGIN
 *
 * @see Core/Model.hpp PureMVC::Core::Model
 */
-class  Proxy : public Object, public Notifier
+class  Proxy : public Object, public Notifier, public GeneralAllocatedObject
 {
 public:
     /**

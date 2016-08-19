@@ -2,6 +2,9 @@
 
 #include "U2FrameListenerCollection.h"
 #include "U2GameObject.h"
+#include "U2LogManager.h"
+#include "U2Root.h"
+#include "U2Timer.h"
 
 
 U2EG_NAMESPACE_USING

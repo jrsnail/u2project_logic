@@ -19,7 +19,7 @@ class Context;
 class ContextProxy;
 
 
-class ContextQueue : public Object
+class ContextQueue : public Object, public GeneralAllocatedObject
 {
 protected:
     typedef std::list<u2::Context*>         Queue;

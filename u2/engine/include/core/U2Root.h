@@ -21,7 +21,9 @@ class GameObjectManager;
 class DataPoolManager;
 class ScriptManager;
 class FrameListenerCollection;
+class TaskManager;
 class TaskLoopManager;
+class FactoryManager;
 
 
 class Root : public Singleton < Root >, public GeneralAllocatedObject
@@ -78,6 +80,7 @@ public:
 
 protected:
     LogManager*					m_pLogManager;
+    FactoryManager*             m_pFactoryManager;
     ArchiveManager*             m_pArchiveManager;
     ResourceGroupManager*       m_pResourceGroupManager;
     ComponentManager*		    m_pComponentManager;
@@ -88,6 +91,7 @@ protected:
     DataPoolManager*            m_pDataPoolManager;
     ScriptManager*              m_pScriptManager;
     FrameListenerCollection*    m_pFrameListenerCollection;
+    TaskManager*                m_pTaskManager;
     TaskLoopManager*            m_pTaskLoopManager;
 };
 

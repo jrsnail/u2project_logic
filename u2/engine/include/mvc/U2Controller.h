@@ -20,7 +20,7 @@ U2EG_NAMESPACE_BEGIN
 class Command;
 class View;
 
-class Controller : public Object
+class Controller : public Object, public GeneralAllocatedObject
 {
 public:
     //typedef std::list<String>                   NotificationNames;

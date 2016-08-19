@@ -1,8 +1,7 @@
 ﻿#include "U2WebSocketClientImpl.h"
 
-#include <rapidjson/document.h>
+//#include <rapidjson/document.h>
 #include "U2LogManager.h"
-#include "U2PredefinedPrerequisites.h"
 
 
 
@@ -50,7 +49,7 @@ inline const String& JsonWsTaskLoop::_getWsHeartBeatSendTask()
 //-----------------------------------------------------------------------
 inline const String& JsonWsTaskLoop::_getRecvTaskLoop()
 {
-    static u2::String szTaskLoop = ON_Logic_TaskLoop;
+    static u2::String szTaskLoop = "ON_Logic_TaskLoop";
     return szTaskLoop;
 }
 //-----------------------------------------------------------------------
@@ -58,6 +57,7 @@ RecvSocketTask* JsonWsTaskLoop::_splitRecvTask(vector<u2char>::type& buffer, boo
 {
     std::string szJson(buffer.begin(), buffer.end());
 
+    /*
     rapidjson::Document document;
     document.Parse(szJson.c_str());
 
@@ -81,6 +81,7 @@ RecvSocketTask* JsonWsTaskLoop::_splitRecvTask(vector<u2char>::type& buffer, boo
         return pTask;
 
     } while (0);
+    */
 
     LogManager::getSingleton().stream(LML_CRITICAL)
         << "Damaged recv task: "

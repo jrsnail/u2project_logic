@@ -60,6 +60,7 @@ protected:
 /** This is a single thread scheduler, do not use it in multi thread at any time.
 */
 class Scheduler : public SimpleObjectManager<SchedulerTask>, public Object
+    , public GeneralAllocatedObject
 {
 public:
     /**
@@ -195,10 +196,10 @@ public:
 };
 
 
+U2EG_NAMESPACE_END
+
 
 #include "U2HeaderSuffix.h"
-
-U2EG_NAMESPACE_END
 
 
 #endif // __U2Scheduler_H__

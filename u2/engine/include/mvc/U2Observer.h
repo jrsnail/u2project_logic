@@ -36,7 +36,7 @@ U2EG_NAMESPACE_BEGIN
 * @see Core/View.hpp View
 * @see Patterns/IObserver/Notification.hpp Notification
 */
-class Observer : public ReusableObject
+class Observer : public ReusableObject, public GeneralAllocatedObject
 {
 public:
     typedef std::function<void(const Notification&)>        NotifyCallbackFun;

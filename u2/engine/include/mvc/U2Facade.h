@@ -36,7 +36,7 @@ class Herald;
 * @see Core/View.hpp PureMVC::Core::View
 * @see Core/Controller.hpp PureMVC::Core::Controller
 */
-class Facade : public Object, public Notifier
+class Facade : public Object, public Notifier, public GeneralAllocatedObject
 {
 private:
 	Facade(Facade const&);

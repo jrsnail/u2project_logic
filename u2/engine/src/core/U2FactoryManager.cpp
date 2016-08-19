@@ -18,10 +18,6 @@ U2EG_NAMESPACE_USING
 template<> FactoryManager* Singleton<FactoryManager>::msSingleton = 0;
 FactoryManager* FactoryManager::getSingletonPtr(void)
 {
-	if (msSingleton == nullptr)
-	{
-		msSingleton = new FactoryManager;
-	}
 	return msSingleton;
 }
 FactoryManager& FactoryManager::getSingleton(void)
@@ -42,6 +38,10 @@ FactoryManager::~FactoryManager()
 		{
 			mObjectFactories.erase(fit);
 		}
+        else
+        {
+            break;
+        }
 	} while (true);
 
 	mObjectFactories.clear();

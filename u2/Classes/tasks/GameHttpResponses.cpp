@@ -264,9 +264,9 @@ bool PlayHRsp::_deserializeHero(const rapidjson::Value& jsonValue, GameMovableSn
         CHECK_RAPIDJSON_VALIDITY(jsonValue["userId"].IsUint64());
         gameMovableSnapshot->szPlayerId = StringUtil::toString(jsonValue["userId"].GetUint64());
 
-        CHECK_RAPIDJSON_MEMBER(jsonValue, "heroId");
-        CHECK_RAPIDJSON_VALIDITY(jsonValue["heroId"].IsUint());
-        gameMovableSnapshot->szGameObjGuid = StringUtil::toString(jsonValue["heroId"].GetUint());
+        CHECK_RAPIDJSON_MEMBER(jsonValue, "entityId");
+        CHECK_RAPIDJSON_VALIDITY(jsonValue["entityId"].IsUint());
+        gameMovableSnapshot->szGameObjGuid = StringUtil::toString(jsonValue["entityId"].GetUint());
 
         CHECK_RAPIDJSON_MEMBER(jsonValue, "nickName");
         CHECK_RAPIDJSON_VALIDITY(jsonValue["nickName"].IsString());

@@ -27,6 +27,9 @@
 #include "U2Script.h"
 #include "U2LuaScript.h"
 #include "U2FrameListenerCollection.h"
+#include "U2Task.h"
+#include "U2TaskLoop.h"
+#include "U2FactoryManager.h"
 #include "U2PredefinedPrerequisites.h"
 
 
@@ -62,15 +65,16 @@ Root::~Root()
     U2_DELETE m_pDataPoolManager;
     U2_DELETE m_pScriptManager;
     U2_DELETE m_pFrameListenerCollection;
+    U2_DELETE m_pTaskManager;
     U2_DELETE m_pTaskLoopManager;
     U2_DELETE m_pArchiveManager;
     U2_DELETE m_pResourceGroupManager;
+    U2_DELETE m_pFactoryManager;
+    U2_DELETE m_pLogManager;
 }
 //-----------------------------------------------------------------------
 void Root::_initialize()
 {
-    initFactroy();
-
     // Create log manager and default log file if there is no log manager yet
     if (u2::LogManager::getSingletonPtr() == nullptr)
     {
@@ -85,6 +89,12 @@ void Root::_initialize()
     AndroidLogListener* mAndroidLogger = U2_NEW AndroidLogListener();
     m_pLogManager->getDefaultLog()->addListener(mAndroidLogger);
 #endif
+
+    // factory
+    if (u2::FactoryManager::getSingletonPtr() == nullptr)
+    {
+        m_pFactoryManager = U2_NEW FactoryManager;
+    }
 
     // archive
     m_pArchiveManager = U2_NEW ArchiveManager;
@@ -172,6 +182,10 @@ void Root::_initialize()
     }
 
     // task manager
+    if (TaskManager::getSingletonPtr() == nullptr)
+    {
+        m_pTaskManager = U2_NEW TaskManager;
+    }
     if (TaskLoopManager::getSingletonPtr() == nullptr)
     {
         m_pTaskLoopManager = U2_NEW TaskLoopManager;
@@ -179,6 +193,8 @@ void Root::_initialize()
 
     // load resources
     _loadResources();
+
+    initFactroy();
 }
 //-----------------------------------------------------------------------
 void Root::_loadResources()
@@ -241,15 +257,15 @@ void Root::enter()
 //-----------------------------------------------------------------------
 void Root::exit()
 {
-
+    TaskLoopManager::getSingleton().quitAll();
 }
 //-----------------------------------------------------------------------
 void Root::pause()
 {
-
+    TaskLoopManager::getSingleton().pauseAll();
 }
 //-----------------------------------------------------------------------
 void Root::resume()
 {
-
+    TaskLoopManager::getSingleton().resumeAll();
 }

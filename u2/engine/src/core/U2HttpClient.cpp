@@ -4,10 +4,9 @@
 #include "U2LogManager.h"
 #include "U2Exception.h"
 #include "U2FrameListenerCollection.h"
-#include "U2StreamQueue.h"
-#include "U2DataFilterStream.h"
-#include "U2StringStream.h"
-#include "cocos2d.h"
+// #include "U2StreamQueue.h"
+// #include "U2DataFilterStream.h"
+// #include "U2StringStream.h"
 
 
 U2EG_NAMESPACE_USING
@@ -347,35 +346,54 @@ void HttpTaskLoop::postTaskAndReply(Task* task, Task* reply)
 //-----------------------------------------------------------------------
 void HttpTaskLoop::run()
 {
-    TaskLoop::run();
-    
-    U2_LOCK_MUTEX(m_KeepRunningMutex);
+    U2_LOCK_MUTEX_NAMED(m_KeepRunningMutex, runningLck);
     m_bKeepRunning = true;
 
+    U2_LOCK_MUTEX_NAMED(m_PausingMutex, pausingLck);
+    m_bPausing = false;
+
     m_thread = std::move(std::thread(std::bind(&HttpTaskLoop::_runInternal, this)));
-    m_thread.detach();
+}
+//-----------------------------------------------------------------------
+void HttpTaskLoop::join()
+{
+    if (m_thread.joinable())
+    {
+        m_thread.join();
+    }
 }
 //-----------------------------------------------------------------------
 void HttpTaskLoop::quit()
 {
-    U2_LOCK_MUTEX(m_KeepRunningMutex);
+    U2_LOCK_MUTEX_NAMED(m_KeepRunningMutex, runningLck);
     m_bKeepRunning = false;
 
-    TaskLoop::quit();
+    U2_LOCK_MUTEX_NAMED(m_PausingMutex, pausingLck);
+    m_bPausing = true;
 }
 //-----------------------------------------------------------------------
 void HttpTaskLoop::pause()
 {
-    U2_LOCK_MUTEX(m_PausingMutex);
-    m_bPausing = true;
-    TaskLoop::pause();
+    // in this case, we just quit directly, we do not keep link on pause state
+    quit();
+    join();
 }
 //-----------------------------------------------------------------------
 void HttpTaskLoop::resume()
 {
+    run();
+}
+//-----------------------------------------------------------------------
+bool HttpTaskLoop::isRunning()
+{
+    U2_LOCK_MUTEX(m_KeepRunningMutex);
+    return m_bKeepRunning;
+}
+//-----------------------------------------------------------------------
+bool HttpTaskLoop::isPausing()
+{
     U2_LOCK_MUTEX(m_PausingMutex);
-    m_bPausing = false;
-    TaskLoop::resume();
+    return m_bPausing;
 }
 //-----------------------------------------------------------------------
 String HttpTaskLoop::getThreadId()
@@ -526,7 +544,7 @@ void HttpTaskLoop::enableCookies(const String& cookieFile)
     }
     else
     {
-        m_szCookieFilename = (cocos2d::FileUtils::getInstance()->getWritablePath() + "cookieFile.txt");
+        //m_szCookieFilename = (cocos2d::FileUtils::getInstance()->getWritablePath() + "cookieFile.txt");
     }
 }
 //-----------------------------------------------------------------------

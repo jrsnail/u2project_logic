@@ -96,7 +96,7 @@ protected:
 };
 
 
-class _U2Export Chunk : public Object
+class _U2Export Chunk : public Object, public GeneralAllocatedObject
 {
 public:
     enum eDownloadState
@@ -181,6 +181,12 @@ public:
     virtual void pause() override;
 
     virtual void resume() override;
+
+    virtual void join() override;
+
+    virtual bool isRunning() override;
+
+    virtual bool isPausing() override;
 
     virtual String getThreadId() override;
 
@@ -267,7 +273,6 @@ protected:
     void _saveAllRequests();
 
 protected:
-    std::thread     m_thread;
     /** when detach, thread.get_id() will return back 0,
         so we should record it here.
     */

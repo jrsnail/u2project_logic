@@ -3,6 +3,9 @@
 #include "U2LogManager.h"
 #include "U2Exception.h"
 #include "U2FrameListenerCollection.h"
+#include "U2Root.h"
+#include "U2System.h"
+#include "U2Timer.h"
 
 
 U2EG_NAMESPACE_USING
@@ -12,6 +15,8 @@ U2EG_NAMESPACE_USING
 //-----------------------------------------------------------------------
 LogicTaskLoop::LogicTaskLoop(const String& type, const String& name, const String& guid)
     : TaskLoop(type, name, guid)
+    , m_bKeepRunning(true)
+    , m_bPausing(false)
 {
 }
 //-----------------------------------------------------------------------
@@ -31,8 +36,12 @@ void LogicTaskLoop::postTaskAndReply(Task* task, Task* reply)
 //-----------------------------------------------------------------------
 void LogicTaskLoop::run()
 {
-    TaskLoop::run();
-    
+    U2_LOCK_MUTEX_NAMED(m_KeepRunningMutex, runningLck);
+    m_bKeepRunning = true;
+
+    U2_LOCK_MUTEX_NAMED(m_PausingMutex, pausingLck);
+    m_bPausing = false;
+
     FrameListenerCollection::getSingleton().addFrameListener(this
         , std::bind(&LogicTaskLoop::_onUpdate, this, std::placeholders::_1));
     
@@ -41,17 +50,38 @@ void LogicTaskLoop::run()
 //-----------------------------------------------------------------------
 void LogicTaskLoop::quit()
 {
-    TaskLoop::quit();
+    U2_LOCK_MUTEX_NAMED(m_KeepRunningMutex, runningLck);
+    m_bKeepRunning = false;
+
+    U2_LOCK_MUTEX_NAMED(m_PausingMutex, pausingLck);
+    m_bPausing = true;
+
+    FrameListenerCollection::getSingleton().removeFrameListener(this);
+
+    _postQuitCurrentTaskLoop();
 }
 //-----------------------------------------------------------------------
 void LogicTaskLoop::pause()
 {
-    TaskLoop::pause();
+    quit();
+    join();
 }
 //-----------------------------------------------------------------------
 void LogicTaskLoop::resume()
 {
-    TaskLoop::resume();
+    run();
+}
+//-----------------------------------------------------------------------
+bool LogicTaskLoop::isRunning()
+{
+    U2_LOCK_MUTEX(m_KeepRunningMutex);
+    return m_bKeepRunning;
+}
+//-----------------------------------------------------------------------
+bool LogicTaskLoop::isPausing()
+{
+    U2_LOCK_MUTEX(m_PausingMutex);
+    return m_bPausing;
 }
 //-----------------------------------------------------------------------
 String LogicTaskLoop::getThreadId()
