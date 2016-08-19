@@ -2,6 +2,7 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
+$(call import-add-path,$(LOCAL_PATH)/../../../../Dependenices/libs)
 $(call import-add-path,$(LOCAL_PATH)/../../../cocos2d)
 $(call import-add-path,$(LOCAL_PATH)/../../../cocos2d/external)
 $(call import-add-path,$(LOCAL_PATH)/../../../cocos2d/cocos)
@@ -73,7 +74,7 @@ LOCAL_SRC_FILES += $(FILE_LIST:$(LOCAL_PATH)/%=%)
 
 
 LOCAL_STATIC_LIBRARIES := cocos2dx_static
-LOCAL_STATIC_LIBRARIES += u2_zzip_static\
+LOCAL_STATIC_LIBRARIES += u2_zzip_static
 LOCAL_STATIC_LIBRARIES += u2_curl_static
 LOCAL_STATIC_LIBRARIES += u2_ssl_static
 LOCAL_STATIC_LIBRARIES += u2_crypto_static
@@ -89,9 +90,9 @@ LOCAL_LDLIBS += -latomic
 
 include $(BUILD_SHARED_LIBRARY)
 
-$(call import-module,$(LOCAL_PATH)/../../../../Dependenices/libs/zzip/Android)
-$(call import-module,$(LOCAL_PATH)/../../../../Dependenices/libs/curl/Android)
-$(call import-module,.)
+$(call import-module, zzip/Android)
+$(call import-module, curl/Android)
+$(call import-module, websocket/Android)
 
 
 # _COCOS_LIB_IMPORT_ANDROID_BEGIN
