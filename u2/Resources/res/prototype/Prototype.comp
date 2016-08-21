@@ -41,4 +41,5 @@
 	</Component>
 	<Component type = "component_predict_other">
 	</Component>
+	
 </PrototypeComponents>
