@@ -53,8 +53,8 @@ const u2::String& RegisterHReq::getHttpResponse()
 void RegisterHReq::serialize()
 {
     Json::Value rootJsonValue;
-    rootJsonValue["hardid"] = "test_abc";
-    rootJsonValue["nickName"] = "test_nickname";
+    rootJsonValue["hardid"] = "test_abc" + String(__TIME__);
+    rootJsonValue["nickName"] = "test_nickname" + String(__TIME__);
     rootJsonValue["icon"] = 1;
     String szContentJsonStr = rootJsonValue.toStyledString();
 
