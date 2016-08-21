@@ -57,8 +57,8 @@ private:
 private:
     u2int32     m_nCode;
     u2::String  m_szMsg;
-    u2uint64    m_ulTimestamp;
-    SceneSnapshot*  m_pSceneSnapshot;
+    u2::String  m_szVersion;
+    SnapshotDataPool::FrameSnapshot m_FrameSnapshot;
 };
 
 

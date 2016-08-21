@@ -2,6 +2,7 @@
 
 #include "GameHttpResponses.h"
 #include "GameUrlMaker.h"
+#include "application/AppPrerequisites.h"
 
 
 //-----------------------------------------------------------------------
@@ -27,6 +28,9 @@ void TimeHReq::serialize()
     GameUrlMaker urlMaker;
     urlMaker.setPath("watch.jsp");
     setUrl(urlMaker.generate());
+
+    u2uint64 ulLocalTime = Root::getSingleton().getTimer()->getMilliseconds();
+    DATAPOOL(ON_DataPool_Memory)->saveMemoryUint64Data(ON_NetworkTimeStart, ulLocalTime);
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------

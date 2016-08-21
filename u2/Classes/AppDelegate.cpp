@@ -48,6 +48,7 @@
 #include "tasks/GameSendSocketTasks.h"
 #include "tasks/GameHttpRequests.h"
 #include "tasks/GameHttpResponses.h"
+#include "ecs/GameScene.h"
 
 
 
@@ -110,6 +111,10 @@ static void initGameFactories()
     CREATE_FACTORY_WITH_TYPE(MoveSystem, "system_move");
     CREATE_FACTORY_WITH_TYPE(ScaleSystem, "system_scale");
 
+    // snapshot
+    CREATE_FACTORY(GameMovableSnapshot);
+    CREATE_FACTORY(GameControlSnapshot);
+
     // task loop
     CREATE_FACTORY(GameWsTaskLoop);
 
@@ -124,6 +129,8 @@ static void initGameFactories()
     CREATE_FACTORY(RegisterHRsp);
     CREATE_FACTORY(PlayHReq);
     CREATE_FACTORY(PlayHRsp);
+    CREATE_FACTORY(MoveSST);
+    CREATE_FACTORY(SnapshotRST);
 }
 
 
@@ -573,14 +580,16 @@ bool AppDelegate::applicationDidFinishLaunching()
         pHttpTaskLoop->postTask(pHttpReq);
 
         // websocket
-        WsTaskLoop* pWsTaskLoop = dynamic_cast<WsTaskLoop*>(
-            TaskLoopManager::getSingleton().createObject(GET_OBJECT_TYPE(GameWsTaskLoop), "websocket")
-            );
-        pWsTaskLoop->setUrl("ws://echo.websocket.org");
-        pWsTaskLoop->run();
+//         WsTaskLoop* pWsTaskLoop = dynamic_cast<WsTaskLoop*>(
+//             TaskLoopManager::getSingleton().createObject(GET_OBJECT_TYPE(GameWsTaskLoop), "websocket")
+//             );
+//         pWsTaskLoop->setUrl("ws://echo.websocket.org");
+//         pWsTaskLoop->run();
 //         cocos2d::network::WebSocket* _wsiSendText = new network::WebSocket();
 //         _wsiSendText->init(*this, "ws://echo.websocket.org");
     }
+
+    m_pGameScene = U2_NEW GameScene;
 
     
     return true;

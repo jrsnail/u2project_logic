@@ -19,6 +19,8 @@ namespace u2
 }
 
 
+class GameScene;
+
 
 /**
 @brief    The cocos2d Application.
@@ -64,6 +66,7 @@ protected:
 	u2::LogManager*					m_pLogManager;
     u2::ComponentManager*		    m_pComponentManager;
     u2::GameObjectManager*          m_pGameObjectManager;
+    GameScene*                      m_pGameScene;
 };
 
 #endif // _APP_DELEGATE_H_

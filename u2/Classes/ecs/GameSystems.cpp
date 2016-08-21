@@ -1,6 +1,7 @@
 ﻿#include "GameSystems.h"
 
 #include "GameComponents.h"
+#include "application/AppPrerequisites.h"
 
 
 
@@ -517,10 +518,121 @@ void PredictSelfSystem::_execute(GameObject* gameObj, u2real dt)
         //assert(0);
     }
 
-    GameControlSnapshot snapshot;
-    snapshot.v2Velocity = v2Dir * fSpeedRate;
+    
 
-    pPredictSelfComp->m_ControlSnapshotList.push_back(snapshot);
+
+
+    SpeedDirComponent* pSpeedDirComp = dynamic_cast<SpeedDirComponent*>(
+        gameObj->retrieveComponentByType("component_speed_dir"));
+    if (pSpeedDirComp == nullptr)
+    {
+        assert(0);
+        return;
+    }
+    else
+    {
+        pSpeedDirComp->v2Dir = v2Dir;
+    }
+
+    SpeedComponent* pSpeedComp = dynamic_cast<SpeedComponent*>(
+        gameObj->retrieveComponentByType("component_speed"));
+    if (pSpeedComp == nullptr)
+    {
+        assert(0);
+        return;
+    }
+    else
+    {
+        pSpeedComp->fSpeed = (pSpeedComp->fMaxSpeed - pSpeedComp->fMinSpeed) * fSpeedRate;
+    }
+
+    VelocityComponent* pVelocityComp = dynamic_cast<VelocityComponent*>(
+        gameObj->retrieveComponentByType("component_velocity"));
+    if (pVelocityComp == nullptr)
+    {
+        assert(0);
+        return;
+    }
+
+    PositionComponent* pPositionComp = dynamic_cast<PositionComponent*>(
+        gameObj->retrieveComponentByType("component_position"));
+    if (pPositionComp == nullptr)
+    {
+        assert(0);
+        return;
+    }
+
+    pVelocityComp->v2Velocity = pSpeedDirComp->v2Dir * pSpeedComp->fSpeed;
+
+
+    // save control snapshot
+    GameControlSnapshot* pSnapshot = dynamic_cast<GameControlSnapshot*>(
+        ControlSnapshotManager::getSingleton().reuseObject(GET_OBJECT_TYPE(GameControlSnapshot)));
+    pSnapshot->v2Velocity = v2Dir * fSpeedRate;
+    u2uint64 ulServerStartRoomTime = 0;
+    bSuc = DATAPOOL(ON_DataPool_Memory)->loadMemoryUint64Data(ON_ServerStartRoomTime, ulServerStartRoomTime);
+    pSnapshot->ulTimestampOnRequest = ulServerStartRoomTime + Root::getSingleton().getTimer()->getMilliseconds();
+    SNAPSHOTDATAPOOL()->pushbackControlSnapshot(pSnapshot);
+
+    // verify predict result
+    cocos2d::Vec2 v2ServerPos = cocos2d::Vec2::ZERO;
+    bool bDo = false;
+    SnapshotDataPool::MoveableSnapshotMap& moveableSnapshotMap 
+        = SNAPSHOTDATAPOOL()->retrieveAllMoveableSnapshotsByGameObjGuid(gameObj->getGuid());
+    for (SnapshotDataPool::MoveableSnapshotMap::iterator it = moveableSnapshotMap.begin(); 
+    it != moveableSnapshotMap.end(); it++)
+    {
+        MovableSnapshot* pMovableSnapshot = it->second;
+        if (pMovableSnapshot == nullptr)
+        {
+            assert(0);
+        }
+        else
+        {
+            ControlSnapshot* pControlSnapshot 
+                = SNAPSHOTDATAPOOL()->retrieveControlSnapshotOnTimestamp(pMovableSnapshot->ulTimestampOnRequest);
+            if (pControlSnapshot == nullptr)
+            {
+                assert(0);
+            }
+            else
+            {
+                v2ServerPos = pMovableSnapshot->v2Position;
+                SNAPSHOTDATAPOOL()->eraseControlSnapshotBeforeTimestamp(pMovableSnapshot->ulTimestampOnRequest);
+                bDo = true;
+            }
+        }
+    }
+    SNAPSHOTDATAPOOL()->eraseMovableSnapshotByGameObjGuid(gameObj->getGuid());
+
+    // if there are movable snapshot, then re-predict self position from snapshot verified position
+    if (bDo)
+    {
+        cocos2d::Vec2 v2RecalPos = cocos2d::Vec2::ZERO;
+        const SnapshotDataPool::ControlSnapshotMap& controlSnapshotMap
+            = SNAPSHOTDATAPOOL()->retrieveAllControlSnapshots();
+        for (SnapshotDataPool::ControlSnapshotMap::const_iterator it = controlSnapshotMap.begin(); 
+        it != controlSnapshotMap.end(); it++)
+        {
+            v2RecalPos = pPositionComp->v2Pos + pVelocityComp->v2Velocity;
+        }
+
+        cocos2d::Vec2 v2DeltaPos = pPositionComp->v2Pos - v2RecalPos;
+        // if deviation greater than threshold
+//         if (std::fabs(v2DeltaPos.x) > 5.0f || std::fabs(v2DeltaPos.y) > 5.0f)
+//         {
+//         }
+//         // if deviation less than or equal to threshold
+//         else
+//         {
+            pPositionComp->v2Pos = v2RecalPos;
+//         }
+    }
+    // if no movable snapshot, then just predict self position of this frame
+    else
+    {
+        pPositionComp->v2Pos = pPositionComp->v2Pos + pVelocityComp->v2Velocity;
+    }
 }
 //-----------------------------------------------------------------------
 void PredictSelfSystem::_pause()
@@ -529,6 +641,105 @@ void PredictSelfSystem::_pause()
 }
 //-----------------------------------------------------------------------
 void PredictSelfSystem::_resume()
+{
+
+}
+//-----------------------------------------------------------------------
+//-----------------------------------------------------------------------
+PredictOtherSystem::PredictOtherSystem(const u2::String& type, const u2::String& name, const u2::String& guid)
+    : System(type, name, guid)
+{
+}
+//-----------------------------------------------------------------------
+PredictOtherSystem::~PredictOtherSystem()
+{
+}
+//-----------------------------------------------------------------------
+void PredictOtherSystem::enter()
+{
+
+}
+//-----------------------------------------------------------------------
+void PredictOtherSystem::exit()
+{
+
+}
+//-----------------------------------------------------------------------
+void PredictOtherSystem::execute(u2real dt)
+{
+    GameObjectManager::CompRefMapIterator it
+        = GameObjectManager::getSingleton().retrieveAllGameObjectsByCompType("component_predict_other");
+    while (it.hasMoreElements())
+    {
+        GameObjectManager::StGameObjRef stGameObjRef = it.getNext();
+        if (!stGameObjRef.pGameObj->isPrototype())
+        {
+            _execute(stGameObjRef.pGameObj, dt);
+        }
+    }
+}
+//-----------------------------------------------------------------------
+void PredictOtherSystem::pause()
+{
+
+}
+//-----------------------------------------------------------------------
+void PredictOtherSystem::resume()
+{
+
+}
+//-----------------------------------------------------------------------
+void PredictOtherSystem::_enter()
+{
+
+}
+//-----------------------------------------------------------------------
+void PredictOtherSystem::_exit()
+{
+
+}
+//-----------------------------------------------------------------------
+void PredictOtherSystem::_execute(GameObject* gameObj, u2real dt)
+{
+    PredictOtherComponent* pPredictOtherComp = dynamic_cast<PredictOtherComponent*>(
+        gameObj->retrieveComponentByType("component_predict_other"));
+    if (pPredictOtherComp == nullptr)
+    {
+        assert(0);
+        return;
+    }
+
+    PositionComponent* pPositionComp = dynamic_cast<PositionComponent*>(
+        gameObj->retrieveComponentByType("component_position"));
+    if (pPositionComp == nullptr)
+    {
+        assert(0);
+        return;
+    }
+
+    SnapshotDataPool::MoveableSnapshotMap& moveableSnapshotMap
+        = SNAPSHOTDATAPOOL()->retrieveAllMoveableSnapshotsByGameObjGuid(gameObj->getGuid());
+    for (SnapshotDataPool::MoveableSnapshotMap::iterator it = moveableSnapshotMap.begin();
+    it != moveableSnapshotMap.end(); it++)
+    {
+        MovableSnapshot* pMovableSnapshot = it->second;
+        if (pMovableSnapshot == nullptr)
+        {
+            assert(0);
+        }
+        else
+        {
+            pPositionComp->v2Pos = pMovableSnapshot->v2Position;
+        }
+    }
+}
+//-----------------------------------------------------------------------
+void PredictOtherSystem::_pause()
+{
+
+}
+//-----------------------------------------------------------------------
+void PredictOtherSystem::_resume()
 {
 
 }

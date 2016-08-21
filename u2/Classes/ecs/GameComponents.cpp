@@ -665,10 +665,57 @@ void PredictSelfComponent::copy(const u2::Component& src)
     u2::Component::copy(src);
 
     const PredictSelfComponent& srcComp = dynamic_cast<const PredictSelfComponent&>(src);
-    m_ControlSnapshotList = srcComp.m_ControlSnapshotList;
 }
 //-----------------------------------------------------------------------
 bool PredictSelfComponent::_loadFromXml(const TiXmlElement* compElem, u2::String& error)
+{
+    const TiXmlElement* pCompElem = compElem;
+    u2::String& szError = error;
+
+    do
+    {
+        const char* pszCompType = pCompElem->Attribute("type");
+        GET_ERROR_LINE_AND_BREAK(pszCompType, szError);
+
+        if (isPrototype())
+        {
+        }
+        else
+        {
+            const char* pszCompName = pCompElem->Attribute("name");
+            GET_ERROR_LINE_AND_BREAK(pszCompName, szError);
+        }
+
+    } while (0);
+
+    return szError == BLANK;
+}
+//-----------------------------------------------------------------------
+//-----------------------------------------------------------------------
+PredictOtherComponent::PredictOtherComponent(ResourceManager* creator, const u2::String& type, ResourceHandle handle,
+    const u2::String& group, bool isManual, ManualResourceLoader* loader)
+    : u2::Component(creator, type, handle, group, isManual, loader)
+{
+}
+//-----------------------------------------------------------------------
+PredictOtherComponent::PredictOtherComponent(const u2::String& type, const u2::String& name, const u2::String& guid)
+    : u2::Component(type, name, guid)
+{
+
+}
+//-----------------------------------------------------------------------
+PredictOtherComponent::~PredictOtherComponent()
+{
+}
+//-----------------------------------------------------------------------
+void PredictOtherComponent::copy(const u2::Component& src)
+{
+    u2::Component::copy(src);
+
+    const PredictOtherComponent& srcComp = dynamic_cast<const PredictOtherComponent&>(src);
+}
+//-----------------------------------------------------------------------
+bool PredictOtherComponent::_loadFromXml(const TiXmlElement* compElem, u2::String& error)
 {
     const TiXmlElement* pCompElem = compElem;
     u2::String& szError = error;

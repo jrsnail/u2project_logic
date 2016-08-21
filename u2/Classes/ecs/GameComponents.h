@@ -205,8 +205,22 @@ public:
     virtual bool _loadFromXml(const TiXmlElement* compElem, u2::String& error) override;
 
 public:
-    typedef list<GameControlSnapshot>::type    ControlSnapshotList;
-    ControlSnapshotList  m_ControlSnapshotList;
+};
+
+
+class PredictOtherComponent : public u2::Component
+{
+public:
+    PredictOtherComponent(ResourceManager* creator, const u2::String& type, ResourceHandle handle,
+        const u2::String& group, bool isManual = false, ManualResourceLoader* loader = 0);
+    PredictOtherComponent(const u2::String& type, const u2::String& name, const u2::String& guid = BLANK);
+    virtual ~PredictOtherComponent();
+
+    virtual void copy(const u2::Component& src) override;
+
+    virtual bool _loadFromXml(const TiXmlElement* compElem, u2::String& error) override;
+
+public:
 };
 
 

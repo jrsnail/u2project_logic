@@ -2,6 +2,8 @@
 
 #include "GameWsClientImpl.h"
 #include "ecs/GameComponents.h"
+#include "ecs/GameScene.h"
+#include "GameSendSocketTasks.h"
 
 
 U2EG_NAMESPACE_USING
@@ -34,7 +36,7 @@ GameWsCloseRST::~GameWsCloseRST()
 //-----------------------------------------------------------------------
 void GameWsCloseRST::run()
 {
-
+    GameScene::getSingleton().end();
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
@@ -51,7 +53,7 @@ GameWsErrorRST::~GameWsErrorRST()
 //-----------------------------------------------------------------------
 void GameWsErrorRST::run()
 {
-
+    GameScene::getSingleton().end();
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
@@ -78,6 +80,7 @@ void GameWsOpenRST::run()
     else
     {
         //pWsTaskLoop->startHeartBeat();
+        GameScene::getSingleton().start();
     }
 }
 //-----------------------------------------------------------------------
@@ -85,7 +88,6 @@ void GameWsOpenRST::run()
 SnapshotRST::SnapshotRST(const String& type, const String& name, const u2::String& guid)
     : RecvSocketTask(type, name, guid)
     , m_nCode(0)
-    , m_ulTimestamp(0L)
 {
 }
 //-----------------------------------------------------------------------
@@ -108,8 +110,11 @@ void SnapshotRST::deserialize()
             break;
         }
 
-        CHECK_JSON_MEMBER(rootJsonVal, "TaskId");
-        std::string szMsgId = rootJsonVal["TaskId"].asString();
+        CHECK_JSON_MEMBER(rootJsonVal, "taskId");
+        std::string szMsgId = rootJsonVal["taskId"].asString();
+
+        CHECK_JSON_MEMBER(rootJsonVal, "version");
+        m_szVersion = rootJsonVal["version"].asString();
 
         CHECK_JSON_MEMBER(rootJsonVal, "code");
         m_nCode = rootJsonVal["code"].asInt();
@@ -120,24 +125,19 @@ void SnapshotRST::deserialize()
         CHECK_JSON_MEMBER(rootJsonVal, "data");
         Json::Value dataJsonVal = rootJsonVal["data"];
 
-        m_pSceneSnapshot = U2_NEW SceneSnapshot;
-
-        CHECK_JSON_MEMBER(dataJsonVal, "timestamp");
-        m_ulTimestamp = dataJsonVal["timestamp"].asUInt64();
-
-        CHECK_JSON_MEMBER(dataJsonVal, "heros");
-        Json::Value herosJsonVal = dataJsonVal["heros"];
-
-        for (Json::ArrayIndex i = 0; i < herosJsonVal.size(); i++)
+        Json::Value::Members dataJsnoMembers(dataJsonVal.getMemberNames());
+        for (Json::Value::Members::iterator it = dataJsnoMembers.begin(); it != dataJsnoMembers.end(); ++it)
         {
-            GameMovableSnapshot* pPlayerSnapshot = U2_NEW GameMovableSnapshot;
-            if (_deserializeHero(herosJsonVal[i], pPlayerSnapshot))
+            const String &key = *it;
+            GameMovableSnapshot* pPlayerSnapshot = dynamic_cast<GameMovableSnapshot*>(
+                MovableSnapshotManager::getSingleton().reuseObject(GET_OBJECT_TYPE(GameMovableSnapshot)));
+            if (_deserializeHero(dataJsonVal[key], pPlayerSnapshot))
             {
-                m_pSceneSnapshot->addMovableSnapshot(pPlayerSnapshot);
+                m_FrameSnapshot[pPlayerSnapshot->szGameObjGuid] = pPlayerSnapshot;
             }
             else
             {
-                U2_DELETE(pPlayerSnapshot);
+                MovableSnapshotManager::getSingleton().recycleObject(pPlayerSnapshot);
                 m_bDeserializeSucceed = false;
             }
         }
@@ -159,6 +159,9 @@ bool SnapshotRST::_deserializeHero(Json::Value& jsonValue, GameMovableSnapshot* 
         CHECK_JSON_MEMBER(jsonValue, "heroId");
         u2uint32 ulGameObjId = jsonValue["heroId"].asUInt();
         gameMovableSnapshot->szGameObjGuid = StringUtil::toString(ulGameObjId);
+
+        CHECK_JSON_MEMBER(jsonValue, "type");
+        gameMovableSnapshot->szGameObjType = jsonValue["type"].asString();
 
         CHECK_JSON_MEMBER(jsonValue, "nickName");
         gameMovableSnapshot->szPlayerName = jsonValue["nickName"].asString();
@@ -199,97 +202,110 @@ bool SnapshotRST::_deserializeHero(Json::Value& jsonValue, GameMovableSnapshot* 
 //-----------------------------------------------------------------------
 void SnapshotRST::run()
 {
-    /*
     deserialize();
     if (m_nCode == 0)
     {
+        bool bIsCreated = false;
+        bool bSuc = DATAPOOL("Memory")->loadMemoryBoolData("IsCreatedScene", bIsCreated);
         // create every game object
-        SceneSnapshot::MovableSnapshotListIterator it = m_pSceneSnapshot->retrieveAllMovableSnapshots();
-        while (it.hasMoreElements())
+        if (!bIsCreated)
         {
-            GameMovableSnapshot* pMovableSs = static_cast<GameMovableSnapshot*>(it.getNext());
-            if (pMovableSs == nullptr)
+            bIsCreated = true;
+            bSuc = DATAPOOL("Memory")->saveMemoryBoolData("IsCreatedScene", bIsCreated);
+
+            for (SnapshotDataPool::FrameSnapshot::iterator it = m_FrameSnapshot.begin();
+            it != m_FrameSnapshot.end(); it++)
             {
-                assert(0);
+                GameMovableSnapshot* pMovableSs = dynamic_cast<GameMovableSnapshot*>(it->second);
+                if (pMovableSs == nullptr)
+                {
+                    assert(0);
+                    continue;
+                }
+                else
+                {
+                    // the first cal
+                    pMovableSs->uCalCounter = 1;
+
+                    // create game object
+                    GameObject* pGameObj = GameObjectManager::getSingleton().createObject(
+                        pMovableSs->szGameObjType, pMovableSs->szPlayerId, pMovableSs->szGameObjGuid);
+
+                    // position component
+                    PositionComponent* pPositionComp = dynamic_cast<PositionComponent*>(
+                        pGameObj->retrieveComponentByType("component_position"));
+                    if (pPositionComp == nullptr)
+                    {
+                        assert(0);
+                    }
+                    else
+                    {
+                        pPositionComp->v2Pos = pMovableSs->v2Position;
+                    }
+
+                    // velocity component
+                    VelocityComponent* pVelocityComp = dynamic_cast<VelocityComponent*>(
+                        pGameObj->retrieveComponentByType("component_velocity"));
+                    if (pVelocityComp == nullptr)
+                    {
+                        assert(0);
+                    }
+                    else
+                    {
+                        pVelocityComp->v2Velocity = pMovableSs->v2Velocity;
+                    }
+
+                    // speed component
+                    SpeedComponent* pSpeedComp = dynamic_cast<SpeedComponent*>(
+                        pGameObj->retrieveComponentByType("component_speed"));
+                    if (pSpeedComp == nullptr)
+                    {
+                        assert(0);
+                    }
+                    else
+                    {
+                        pSpeedComp->fSpeed = pMovableSs->v2Velocity.getLength();
+                    }
+
+                    // speed direction component
+                    SpeedDirComponent* pSpeedDirComp = dynamic_cast<SpeedDirComponent*>(
+                        pGameObj->retrieveComponentByType("component_speed_dir"));
+                    if (pSpeedDirComp == nullptr)
+                    {
+                        assert(0);
+                    }
+                    else
+                    {
+                        pSpeedDirComp->v2Dir = pMovableSs->v2Velocity;
+                        pSpeedDirComp->v2Dir.normalize();
+                    }
+
+                    // hp component
+                    HpComponent* pHpComp = dynamic_cast<HpComponent*>(
+                        pGameObj->retrieveComponentByType("component_hp"));
+                    if (pHpComp == nullptr)
+                    {
+                        assert(0);
+                    }
+                    else
+                    {
+                        pHpComp->uHp = pMovableSs->uCurHp;
+                    }
+
+                    // joystick component
+                    String szSelfPlayerGuid;
+                    bool bSuc = DATAPOOL(ON_DataPool_Memory)->loadMemoryStringData("SelfPlayerGuid", szSelfPlayerGuid);
+                    if (szSelfPlayerGuid == pMovableSs->szPlayerId)
+                    {
+                        pGameObj->addComponent(ComponentManager::getSingleton().createObject("component_joystick"));
+                    }
+                }
             }
-            else
-            {
-                // the first cal
-                pMovableSs->uCalCounter = 0;
-
-                // create game object
-                GameObject* pGameObj = GameObjectManager::getSingleton().createObject(
-                    pMovableSs->szGameObjType, pMovableSs->szPlayerId, pMovableSs->szGameObjGuid);
-
-                // position component
-                PositionComponent* pPositionComp = dynamic_cast<PositionComponent*>(
-                    pGameObj->retrieveComponentByType("component_position"));
-                if (pPositionComp == nullptr)
-                {
-                    assert(0);
-                }
-                else
-                {
-                    pPositionComp->v2Pos = pMovableSs->v2Position;
-                }
-
-                // velocity component
-                VelocityComponent* pVelocityComp = dynamic_cast<VelocityComponent*>(
-                    pGameObj->retrieveComponentByType("component_velocity"));
-                if (pVelocityComp == nullptr)
-                {
-                    assert(0);
-                }
-                else
-                {
-                    pVelocityComp->v2Velocity = pMovableSs->v2Velocity;
-                }
-
-                // speed component
-                SpeedComponent* pSpeedComp = dynamic_cast<SpeedComponent*>(
-                    pGameObj->retrieveComponentByType("component_speed"));
-                if (pSpeedComp == nullptr)
-                {
-                    assert(0);
-                }
-                else
-                {
-                    pSpeedComp->fSpeed = pMovableSs->v2Velocity.getLength();
-                }
-
-                // speed direction component
-                SpeedDirComponent* pSpeedDirComp = dynamic_cast<SpeedDirComponent*>(
-                    pGameObj->retrieveComponentByType("component_speed_dir"));
-                if (pSpeedDirComp == nullptr)
-                {
-                    assert(0);
-                }
-                else
-                {
-                    pSpeedDirComp->v2Dir = pMovableSs->v2Velocity;
-                    pSpeedDirComp->v2Dir.normalize();
-                }
-
-                // hp component
-                HpComponent* pHpComp = dynamic_cast<HpComponent*>(
-                    pGameObj->retrieveComponentByType("component_hp"));
-                if (pHpComp == nullptr)
-                {
-                    assert(0);
-                }
-                else
-                {
-                    pHpComp->uHp = pMovableSs->uCurHp;
-                }
-
-                // joystick component
-                String szSelfPlayerGuid;
-                bool bSuc = DATAPOOL(ON_DataPool_Memory)->loadMemoryStringData("SelfPlayerGuid", szSelfPlayerGuid);
-                if (szSelfPlayerGuid == pMovableSs->szPlayerId)
-                {
-                    pGameObj->addComponent(ComponentManager::getSingleton().createObject("component_joystick"));
-                }
-            }
+        }
+        // add scene snapshot
+        else
+        {
+            SNAPSHOTDATAPOOL()->addFrameSnapshot(&m_FrameSnapshot);
         }
     }
     else
@@ -299,5 +315,4 @@ void SnapshotRST::run()
             << ", " << m_szMsg
             << "[ " << __FUNCTION__ << ", " << __LINE__ << " ]";
     }
-    */
 }

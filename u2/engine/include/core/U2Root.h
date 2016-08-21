@@ -11,6 +11,8 @@ U2EG_NAMESPACE_BEGIN
 
 
 class Timer;
+class MovableSnapshotManager;
+class ControlSnapshotManager;
 
 
 class Root : public Singleton < Root >, public GeneralAllocatedObject
@@ -58,6 +60,8 @@ public:
 
 protected:
     Timer*              m_pTimer;
+    MovableSnapshotManager*     m_pMovableSnapshotManager;
+    ControlSnapshotManager*     m_pControlSnapshotManager;
 };
 
 

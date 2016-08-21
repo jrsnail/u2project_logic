@@ -22,7 +22,7 @@ public:
 class MoveSST : public SendSocketTask
 {
 public:
-    MoveSST(const String& type, const String& name, const u2::String& guid = BLANK);
+    MoveSST(const u2::String& type, const u2::String& name, const u2::String& guid = BLANK);
     virtual ~MoveSST();
 
     virtual void serialize() override;
@@ -30,13 +30,13 @@ public:
     void setTimestamp(u2uint64 timestamp);
     void setSelfPosition(const cocos2d::Vec2& pos);
     void setSelfVelocity(const cocos2d::Vec2& v);
-    void setAttackedPlayerId(const u2::String& id);
+    void setAttackedGameObjGuid(const u2::String& id);
 
 private:
     cocos2d::Vec2   m_v2Velocity;
     cocos2d::Vec2   m_v2Position;
     u2uint64        m_ulTimestamp;
-    u2::String          m_szAttackedPlayerId;
+    u2::String      m_szAttackedGameObjGuid;
 };
 
 

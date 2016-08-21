@@ -1,6 +1,7 @@
 #include "U2Timer.h"
 
 #include "U2Bitwise.h"
+#include <sys/timeb.h>
 
 
 U2EG_NAMESPACE_USING
@@ -198,4 +199,19 @@ u2uint64 Timer::getMicrosecondsCPU()
 {
     clock_t newClock = clock();
     return (u2uint64)( (float)( newClock - mZeroClock ) / ( (float)CLOCKS_PER_SEC / 1000000.0 ) ) ;
+}
+//-------------------------------------------------------------------------
+u2uint64 Timer::getGreenwishMilliseconds()
+{
+    struct timeb tp;
+    ftime(&tp);
+    short aa = tp.timezone * 60 * 1000;
+    return tp.time * 1000 + tp.millitm;
+}
+//-------------------------------------------------------------------------
+u2uint64 Timer::getGreenwishMicroseconds()
+{
+    struct timeb tp;
+    ftime(&tp);
+    return tp.time * 1000000 + tp.millitm * 1000;
 }

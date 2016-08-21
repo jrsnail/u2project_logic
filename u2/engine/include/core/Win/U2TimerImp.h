@@ -74,6 +74,9 @@ public:
 
     /** Returns microseconds since initialisation or last reset, only CPU time measured */
     u2uint64 getMicrosecondsCPU();
+
+    u2uint64 getGreenwishMilliseconds();
+    u2uint64 getGreenwishMicroseconds();
 };
 
 

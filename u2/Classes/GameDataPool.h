@@ -11,8 +11,8 @@ U2EG_NAMESPACE_USING
 class GameMovableSnapshot : public MovableSnapshot
 {
 public:
-    GameMovableSnapshot()
-        : MovableSnapshot()
+    GameMovableSnapshot(const String& type, const String& name = BLANK, const String& guid = BLANK)
+        : MovableSnapshot(type, name, guid)
         , uCurHp(0)
         , uCurSpeed(0)
         , uAtkDistance(0)
@@ -31,8 +31,8 @@ public:
 class GameControlSnapshot : public ControlSnapshot
 {
 public:
-    GameControlSnapshot()
-        : ControlSnapshot()
+    GameControlSnapshot(const String& type, const String& name = BLANK, const String& guid = BLANK)
+        : ControlSnapshot(type, name, guid)
     {
 
     }

@@ -206,6 +206,22 @@ bool DataPool::saveMemoryStringData(const String& key, const String& value)
     return true;
 }
 //-----------------------------------------------------------------------
+bool DataPool::saveMemoryBoolData(const String& key, bool value)
+{
+    U2_LOCK_MUTEX(m_MemoryMapMutex);
+    vector<u2char>::type& vec = m_MemoryMap[key];
+
+    // clear old data first
+    vec.clear();
+
+    OutStreamQueue<DataFilterOutStream> out;
+    out.push<VariableMemOutStream>("aaa", &vec);
+    out.push<DataFilterOutStream>("bbb");
+    out->writeBool(value);
+    out->close();
+    return true;
+}
+//-----------------------------------------------------------------------
 bool DataPool::saveMemoryUint64Data(const String& key, u2uint64 value)
 {
     U2_LOCK_MUTEX(m_MemoryMapMutex);
@@ -270,6 +286,23 @@ bool DataPool::loadMemoryStringData(const String& key, String& value)
     in.push<VariableMemInStream>("aaa", &vec);
     in.push<DataFilterInStream>("bbb");
     value = in->readUTFString();
+    return true;
+}
+//-----------------------------------------------------------------------
+bool DataPool::loadMemoryBoolData(const String& key, bool& value)
+{
+    U2_LOCK_MUTEX(m_MemoryMapMutex);
+    MemoryMap::iterator it = m_MemoryMap.find(key);
+    if (it == m_MemoryMap.end())
+    {
+        return false;
+    }
+    vector<u2char>::type& vec = m_MemoryMap[key];
+
+    InStreamQueue<DataFilterInStream> in;
+    in.push<VariableMemInStream>("aaa", &vec);
+    in.push<DataFilterInStream>("bbb");
+    value = in->readBool();
     return true;
 }
 //-----------------------------------------------------------------------

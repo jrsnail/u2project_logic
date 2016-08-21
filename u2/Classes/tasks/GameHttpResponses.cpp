@@ -4,6 +4,7 @@
 #include "GameDataPool.h"
 #include "GameHttpRequests.h"
 #include "ecs/GameComponents.h"
+#include "tasks/GameWsClientImpl.h"
 
 
 #define CHECK_JSON_MEMBER(JsonValue, member)                            \
@@ -38,9 +39,15 @@ void TimeHRsp::deserialize()
 void TimeHRsp::run()
 {
     deserialize();
-    DATAPOOL(ON_DataPool_Memory)->saveMemoryUint64Data(ON_ServerBaseTime, m_ulServerBaseTime);
-    u2uint64 ulLocalTime = Root::getSingleton().getTimer()->getMicroseconds();
-    DATAPOOL(ON_DataPool_Memory)->saveMemoryUint64Data(ON_ClientBaseTime, ulLocalTime);
+//     DATAPOOL(ON_DataPool_Memory)->saveMemoryUint64Data(ON_ServerBaseTime, m_ulServerBaseTime);
+//     u2uint64 ulLocalTime = Root::getSingleton().getTimer()->getMilliseconds();
+//     DATAPOOL(ON_DataPool_Memory)->saveMemoryUint64Data(ON_ClientBaseTime, ulLocalTime);
+//     DATAPOOL(ON_DataPool_Memory)->saveMemoryUint64Data(ON_DeltaBaseTime, ulLocalTime - m_ulServerBaseTime);
+
+    u2uint64 ulStartTime = 0L;
+    DATAPOOL(ON_DataPool_Memory)->loadMemoryUint64Data(ON_NetworkTimeStart, ulStartTime);
+    u2uint64 ulEndTime = Root::getSingleton().getTimer()->getMilliseconds();
+    DATAPOOL(ON_DataPool_Memory)->saveMemoryUint64Data(ON_TripLatency, (ulEndTime - ulStartTime) / 2);
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
@@ -113,8 +120,10 @@ PlayHRsp::PlayHRsp(const u2::String& type, const u2::String& name, const u2::Str
     : HttpResponse(type, name, guid)
     , m_bDeserializeSucceed(false)
     , m_nCode(0)
-    , m_pSceneSnapshot(nullptr)
     , m_nRoomState(0)
+    , m_ulTimestamp(0L)
+    , m_ulCreateRoomTimestamp(0L)
+    , m_ulStartRoomTimestamp(0L)
 {
 }
 //-----------------------------------------------------------------------
@@ -146,24 +155,23 @@ void PlayHRsp::deserialize()
         CHECK_JSON_MEMBER(rootJsonVal, "data");
         Json::Value dataJsonVal = rootJsonVal["data"];
 
-        m_pSceneSnapshot = U2_NEW SceneSnapshot;
-
         CHECK_JSON_MEMBER(dataJsonVal, "timestamp");
-        m_pSceneSnapshot->ulTimestamp = dataJsonVal["timestamp"].asUInt64();
+        m_ulTimestamp = dataJsonVal["timestamp"].asUInt64();
 
         CHECK_JSON_MEMBER(dataJsonVal, "heros");
         Json::Value herosJsonVal = dataJsonVal["heros"];
 
         for (Json::ArrayIndex i = 0; i < herosJsonVal.size(); i++)
         {
-            GameMovableSnapshot* pPlayerSnapshot = U2_NEW GameMovableSnapshot;
+            GameMovableSnapshot* pPlayerSnapshot = dynamic_cast<GameMovableSnapshot*>(
+                MovableSnapshotManager::getSingleton().reuseObject(GET_OBJECT_TYPE(GameMovableSnapshot)));
             if (_deserializeHero(herosJsonVal[i], pPlayerSnapshot))
             {
-                m_pSceneSnapshot->addMovableSnapshot(pPlayerSnapshot);
+                m_FrameSnapshot[pPlayerSnapshot->szGameObjGuid] = pPlayerSnapshot;
             }
             else
             {
-                U2_DELETE(pPlayerSnapshot);
+                MovableSnapshotManager::getSingleton().recycleObject(pPlayerSnapshot);
                 m_bDeserializeSucceed = false;
             }
         }
@@ -176,6 +184,12 @@ void PlayHRsp::deserialize()
 
         CHECK_JSON_MEMBER(roomJsonVal, "state");
         m_nRoomState = roomJsonVal["state"].asInt();
+
+        CHECK_JSON_MEMBER(roomJsonVal, "createTime");
+        m_ulCreateRoomTimestamp = roomJsonVal["createTime"].asUInt64();
+
+        CHECK_JSON_MEMBER(roomJsonVal, "beginTime");
+        m_ulStartRoomTimestamp = roomJsonVal["beginTime"].asUInt64();
         
 
         m_bDeserializeSucceed = true;
@@ -240,94 +254,52 @@ void PlayHRsp::run()
     deserialize();
     if (m_nCode == 0)
     {
-        // create every game object
-        SceneSnapshot::MovableSnapshotListIterator it = m_pSceneSnapshot->retrieveAllMovableSnapshots();
-        while (it.hasMoreElements())
+        // save room start time
+        DATAPOOL(ON_DataPool_Memory)->saveMemoryUint64Data(ON_ServerStartRoomTime, m_ulStartRoomTimestamp);
+        Root::getSingleton().getTimer()->reset();
+
+        // load self player id
+        String szSelfPlayerGuid;
+        bool bSuc = DATAPOOL(ON_DataPool_Memory)->loadMemoryStringData("SelfPlayerGuid", szSelfPlayerGuid);
+
+        // find self game object guid
+        bool bFound = false;
+        for (SnapshotDataPool::FrameSnapshot::iterator it = m_FrameSnapshot.begin(); 
+        it != m_FrameSnapshot.end(); it++)
         {
-            GameMovableSnapshot* pMovableSs = static_cast<GameMovableSnapshot*>(it.getNext());
-            if (pMovableSs == nullptr)
+            GameMovableSnapshot* pMovableSnapshot = dynamic_cast<GameMovableSnapshot*>(it->second);
+            if (pMovableSnapshot == nullptr)
             {
                 assert(0);
             }
             else
             {
-                // the first cal
-                pMovableSs->uCalCounter = 1;
-
-                // create game object
-                GameObject* pGameObj = GameObjectManager::getSingleton().createObject(
-                    pMovableSs->szGameObjType, pMovableSs->szPlayerId, pMovableSs->szGameObjGuid);
-
-                // position component
-                PositionComponent* pPositionComp = dynamic_cast<PositionComponent*>(
-                    pGameObj->retrieveComponentByType("component_position"));
-                if (pPositionComp == nullptr)
+                if (pMovableSnapshot->szPlayerId == szSelfPlayerGuid)
                 {
-                    assert(0);
-                }
-                else
-                {
-                    pPositionComp->v2Pos = pMovableSs->v2Position;
-                }
-
-                // velocity component
-                VelocityComponent* pVelocityComp = dynamic_cast<VelocityComponent*>(
-                    pGameObj->retrieveComponentByType("component_velocity"));
-                if (pVelocityComp == nullptr)
-                {
-                    assert(0);
-                }
-                else
-                {
-                    pVelocityComp->v2Velocity = pMovableSs->v2Velocity;
-                }
-
-                // speed component
-                SpeedComponent* pSpeedComp = dynamic_cast<SpeedComponent*>(
-                    pGameObj->retrieveComponentByType("component_speed"));
-                if (pSpeedComp == nullptr)
-                {
-                    assert(0);
-                }
-                else
-                {
-                    pSpeedComp->fSpeed = pMovableSs->v2Velocity.getLength();
-                }
-
-                // speed direction component
-                SpeedDirComponent* pSpeedDirComp = dynamic_cast<SpeedDirComponent*>(
-                    pGameObj->retrieveComponentByType("component_speed_dir"));
-                if (pSpeedDirComp == nullptr)
-                {
-                    assert(0);
-                }
-                else
-                {
-                    pSpeedDirComp->v2Dir = pMovableSs->v2Velocity;
-                    pSpeedDirComp->v2Dir.normalize();
-                }
-
-                // hp component
-                HpComponent* pHpComp = dynamic_cast<HpComponent*>(
-                    pGameObj->retrieveComponentByType("component_hp"));
-                if (pHpComp == nullptr)
-                {
-                    assert(0);
-                }
-                else
-                {
-                    pHpComp->uHp = pMovableSs->uCurHp;
-                }
-
-                // joystick component
-                String szSelfPlayerGuid;
-                bool bSuc = DATAPOOL(ON_DataPool_Memory)->loadMemoryStringData("SelfPlayerGuid", szSelfPlayerGuid);
-                if (szSelfPlayerGuid == pMovableSs->szPlayerId)
-                {
-                    pGameObj->addComponent(ComponentManager::getSingleton().createObject("component_joystick"));
+                    bSuc = DATAPOOL(ON_DataPool_Memory)->saveMemoryStringData("SelfGameObjGuid"
+                        , pMovableSnapshot->szGameObjGuid);
+                    bFound = true;
+                    break;
                 }
             }
         }
+
+        if (bFound)
+        {
+            // create websocket connection
+            WsTaskLoop* pWsTaskLoop = dynamic_cast<WsTaskLoop*>(
+                TaskLoopManager::getSingleton().createObject(GET_OBJECT_TYPE(GameWsTaskLoop), "websocket")
+                );
+            //pWsTaskLoop->setUrl("ws://echo.websocket.org");
+            pWsTaskLoop->setUrl("ws://10.60.81.51:9008");
+            pWsTaskLoop->run();
+        }
+        else
+        {
+            assert(0);
+        }
+
+
     }
     else
     {

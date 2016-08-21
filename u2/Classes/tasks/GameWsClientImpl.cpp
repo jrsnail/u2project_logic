@@ -59,7 +59,7 @@ RecvSocketTask* GameWsTaskLoop::_splitRecvTask(vector<u2char>::type& buffer, boo
     Json::Value rootJsonVal;
     if (reader.parse(szJson, rootJsonVal))
     {
-        std::string szMsgId = rootJsonVal["TaskId"].asString();
+        std::string szMsgId = rootJsonVal["taskId"].asString();
 
         RecvSocketTask* pTask = dynamic_cast<RecvSocketTask*>(
             TaskManager::getSingleton().createObject(szMsgId));

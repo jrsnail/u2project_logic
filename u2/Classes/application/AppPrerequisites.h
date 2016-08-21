@@ -63,7 +63,8 @@ extern const char* OT_PreloadLuaTask;
 static const char* OT_C2LTask_PreloadEnd = "OT_C2LTask_PreloadEnd";
 
 // data key
-static const char* ON_ServerBaseTime = "ON_ServerBaseTime";
-static const char* ON_ClientBaseTime = "ON_ClientBaseTime";
+static const char* ON_TripLatency = "ON_TripLatency";
+static const char* ON_NetworkTimeStart = "ON_NetworkTimeStart";
+static const char* ON_ServerStartRoomTime = "ON_ServerStartRoomTime";
 
 #endif /* defined(__ApplicationPrerequisites__) */
