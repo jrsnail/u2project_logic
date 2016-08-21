@@ -503,6 +503,19 @@ void GameObjectManager::destoryObject(GameObject* obj)
     }
     else
     {
+        for (CompRefMap::iterator it = m_CompRefMap.begin();
+        it != m_CompRefMap.end(); it++)
+        {
+            StGameObjRef& stGameObjRef = it->second;
+            if (stGameObjRef.pGameObj == obj)
+            {
+                CompRefMap::iterator tempIt = it;
+                tempIt--;
+                m_CompRefMap.erase(it);
+                it = tempIt;
+            }
+        }
+
         obj->removeListener(this);
         m_InstanceCollection.destoryObject(obj);
     }

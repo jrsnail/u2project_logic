@@ -137,6 +137,7 @@ void PlayHRsp::deserialize()
     do
     {
         std::string szJson(m_Data.begin(), m_Data.end());
+        LogManager::getSingleton().stream(LML_TRIVIAL) << "PlayHRsp: " << szJson;
 
         Json::Reader reader;
         Json::Value rootJsonVal;

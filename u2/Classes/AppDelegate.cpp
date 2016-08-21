@@ -104,12 +104,16 @@ static void initGameFactories()
     CREATE_FACTORY_WITH_TYPE(DeltaHpComponent, "component_delta_hp");
     CREATE_FACTORY_WITH_TYPE(JoystickComponent, "component_joystick");
     CREATE_FACTORY_WITH_TYPE(ScaleComponent, "component_scale");
+    CREATE_FACTORY_WITH_TYPE(PredictSelfComponent, "component_predict_self");
+    CREATE_FACTORY_WITH_TYPE(PredictOtherComponent, "component_predict_other");
 
     // system
     CREATE_FACTORY_WITH_TYPE(RenderSystem, "system_render");
     CREATE_FACTORY_WITH_TYPE(InputSystem, "system_input");
     CREATE_FACTORY_WITH_TYPE(MoveSystem, "system_move");
     CREATE_FACTORY_WITH_TYPE(ScaleSystem, "system_scale");
+    CREATE_FACTORY_WITH_TYPE(PredictSelfSystem, "system_predict_self");
+    CREATE_FACTORY_WITH_TYPE(PredictOtherSystem, "system_predict_other");
 
     // snapshot
     CREATE_FACTORY(GameMovableSnapshot);
@@ -556,7 +560,9 @@ bool AppDelegate::applicationDidFinishLaunching()
 //          pSelf->addComponent(ComponentManager::getSingleton().createObject("component_joystick"));
 
         SystemManager::getSingleton().createObject("system_input", "system_input", BLANK, 9980);
-        SystemManager::getSingleton().createObject("system_move", "system_move", BLANK, 9990);
+        //SystemManager::getSingleton().createObject("system_move", "system_move", BLANK, 9990);
+        SystemManager::getSingleton().createObject("system_predict_self", "system_predict_self", BLANK, 9990);
+        SystemManager::getSingleton().createObject("system_predict_other", "system_predict_other", BLANK, 9991);
         SystemManager::getSingleton().createObject("system_scale", "system_scale", BLANK, 9995);
         SystemManager::getSingleton().createObject("system_render", "system_render", BLANK, 10000);
 

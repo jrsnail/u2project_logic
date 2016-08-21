@@ -59,7 +59,7 @@ public:
     {
         assert(instance != nullptr);
         assert(this->getType() == instance->getType());
-        assert(!instance->hasPrototype());
+        assert(instance->hasPrototype());
         if (hasPrototype())
         {
             if (isPrototype())

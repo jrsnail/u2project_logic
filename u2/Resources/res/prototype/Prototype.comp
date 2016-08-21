@@ -37,4 +37,8 @@
 	</Component>
 	<Component type = "component_joystick">
 	</Component>
+	<Component type = "component_predict_self">
+	</Component>
+	<Component type = "component_predict_other">
+	</Component>
 </PrototypeComponents>

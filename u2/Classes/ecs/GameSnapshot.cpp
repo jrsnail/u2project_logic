@@ -156,6 +156,10 @@ void GameScene::_initGameObj(GameObject* gameObj, MovableSnapshot* movableSnapsh
     bool bSuc = DATAPOOL(ON_DataPool_Memory)->loadMemoryStringData("SelfPlayerGuid", szSelfPlayerGuid);
     if (szSelfPlayerGuid == pMovableSs->szPlayerId)
     {
-        gameObj->addComponent(ComponentManager::getSingleton().createObject("component_joystick"));
+        gameObj->addComponent(ComponentManager::getSingleton().createObject("component_predict_self"));
+    }
+    else
+    {
+        gameObj->addComponent(ComponentManager::getSingleton().createObject("component_predict_other"));
     }
 }

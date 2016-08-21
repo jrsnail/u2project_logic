@@ -604,7 +604,6 @@ void PredictSelfSystem::_execute(GameObject* gameObj, u2real dt)
             }
         }
     }
-    Scene::getSingleton().eraseMovableSnapshotByGameObjGuid(gameObj->getGuid());
 
     // if there are movable snapshot, then re-predict self position from snapshot verified position
     if (bDo)

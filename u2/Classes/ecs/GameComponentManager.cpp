@@ -79,6 +79,16 @@ Resource* GameComponentManager::createImpl(const u2::String& name, ResourceHandl
         return U2_NEW ScaleComponent(this, name, handle, group
             , isManual, loader);
     }
+    else if ("component_predict_self" == name)
+    {
+        return U2_NEW PredictSelfComponent(this, name, handle, group
+            , isManual, loader);
+    }
+    else if ("component_predict_other" == name)
+    {
+        return U2_NEW PredictOtherComponent(this, name, handle, group
+            , isManual, loader);
+    }
     else
     {
         assert(0);

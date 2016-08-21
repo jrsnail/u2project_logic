@@ -82,10 +82,6 @@ void Scene::addFrameSnapshot(FrameSnapshot* frame)
     for (FrameSnapshot::iterator it = frame->begin(); it != frame->end(); it++)
     {
         GameObjMoveableSnapshotMap::iterator iii = m_Scene.find(it->first);
-        if (iii == m_Scene.end())
-        {
-            int a = 0;
-        }
         MoveableSnapshotMap& movableSnapshots = m_Scene[it->first];
 
         MovableSnapshot* pMovableSnapshot = it->second;
@@ -221,8 +217,8 @@ GameObject* Scene::createGameObject(const String& type, const String& name, cons
 //-----------------------------------------------------------------------
 void Scene::destroyGameObject(GameObject* gameObj)
 {
-    GameObjectManager::getSingleton().destoryObject(gameObj);
     m_GameObjectMap.erase(gameObj->getGuid());
+    GameObjectManager::getSingleton().destoryObject(gameObj);
 }
 //-----------------------------------------------------------------------
 void Scene::start()
