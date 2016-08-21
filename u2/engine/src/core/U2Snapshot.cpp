@@ -81,6 +81,11 @@ void Scene::addFrameSnapshot(FrameSnapshot* frame)
     // insert new data
     for (FrameSnapshot::iterator it = frame->begin(); it != frame->end(); it++)
     {
+        GameObjMoveableSnapshotMap::iterator iii = m_Scene.find(it->first);
+        if (iii == m_Scene.end())
+        {
+            int a = 0;
+        }
         MoveableSnapshotMap& movableSnapshots = m_Scene[it->first];
 
         MovableSnapshot* pMovableSnapshot = it->second;

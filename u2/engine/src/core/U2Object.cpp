@@ -58,12 +58,23 @@ ReusableObject::~ReusableObject()
 {
 }
 //-----------------------------------------------------------------------
+void ReusableObject::renameAsName(const String& name)
+{ 
+    if (name != BLANK)
+    {
+        m_szName = name;
+    }
+}
+//-----------------------------------------------------------------------
 void ReusableObject::renameAsGuid(const String& guid)
 {
-    // with user defined guid, it could not start with "Auto_"
-    if (StringUtil::startsWith(guid, "Auto_"))
+    if (guid != BLANK)
     {
-        assert(0);
+        // with user defined guid, it could not start with "Auto_"
+        if (StringUtil::startsWith(guid, "Auto_"))
+        {
+            assert(0);
+        }
+        m_szGuid = guid;
     }
-    m_szGuid = guid;
 }

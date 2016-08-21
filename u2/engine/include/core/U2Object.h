@@ -126,7 +126,7 @@ public:
 
     /** You should not call this in any way.
     */
-    void renameAsName(const String& name) { m_szName = name; };
+    void renameAsName(const String& name);
 
     /** You should not call this in any way.
     */

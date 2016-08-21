@@ -107,6 +107,7 @@ void MoveSST::serialize()
     rootJsonValue["roomId"] = szSelfRoomId;
     rootJsonValue["heroId"] = szSelfGameObjGuid;
     rootJsonValue["attHeroId"] = 0;
+    rootJsonValue["accSpeed"] = 0;
     rootJsonValue["x"] = m_v2Position.x;
     rootJsonValue["y"] = m_v2Position.y;
     rootJsonValue["vx"] = m_v2Velocity.x;
