@@ -43,7 +43,7 @@
 			</Component>
 		</GameObject>
 	</GameObject>
-	<GameObject type = "aircraft" guid = "prototype_entity_aircraft_002" name = "aircraft">
+	<GameObject type = "0" guid = "prototype_entity_aircraft_002" name = "aircraft">
 		<Component type = "component_sprite" name = "spr_aircraft">
 			<Filename value = "Arrow.png" />
 		</Component>

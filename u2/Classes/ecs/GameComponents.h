@@ -4,7 +4,6 @@
 
 #include "U2Core.h"
 #include "cocos2d.h"
-#include "GameDataPool.h"
 
 
 class TiXmlElement;

@@ -48,7 +48,7 @@
 #include "tasks/GameSendSocketTasks.h"
 #include "tasks/GameHttpRequests.h"
 #include "tasks/GameHttpResponses.h"
-#include "ecs/GameScene.h"
+#include "ecs/GameSnapshot.h"
 
 
 
@@ -130,7 +130,7 @@ static void initGameFactories()
     CREATE_FACTORY(PlayHReq);
     CREATE_FACTORY(PlayHRsp);
     CREATE_FACTORY(MoveSST);
-    CREATE_FACTORY(SnapshotRST);
+    CREATE_FACTORY_WITH_TYPE(SnapshotRST, "plane");
 }
 
 
@@ -552,8 +552,8 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     {
         //------------------------------- Test ECS ----------------------------------------
-         GameObject* pSelf = GameObjectManager::getSingleton().createObject("aircraft", "self_aircraft");
-         pSelf->addComponent(ComponentManager::getSingleton().createObject("component_joystick"));
+//          GameObject* pSelf = GameObjectManager::getSingleton().createObject("aircraft", "self_aircraft");
+//          pSelf->addComponent(ComponentManager::getSingleton().createObject("component_joystick"));
 
         SystemManager::getSingleton().createObject("system_input", "system_input", BLANK, 9980);
         SystemManager::getSingleton().createObject("system_move", "system_move", BLANK, 9990);

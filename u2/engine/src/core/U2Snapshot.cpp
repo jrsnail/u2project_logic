@@ -1,6 +1,7 @@
-﻿#include "U2SnapshotDataPool.h"
+﻿#include "U2Snapshot.h"
 
 #include "U2FrameListenerCollection.h"
+#include "U2GameObject.h"
 
 
 U2EG_NAMESPACE_USING
@@ -258,7 +259,16 @@ void Scene::_updateGameObjWithSnapshot()
         {
             MoveableSnapshotMap& moveableSnapshotMap = it->second;
             MovableSnapshot* pMovableSnapshot = moveableSnapshotMap.begin()->second;
-            createGameObject(pMovableSnapshot->szGameObjType, BLANK, pMovableSnapshot->szGameObjGuid);
+            GameObject* pGameObj = createGameObject(
+                pMovableSnapshot->szGameObjType, BLANK, pMovableSnapshot->szGameObjGuid);
+            if (pGameObj == nullptr)
+            {
+                assert(0);
+            }
+            else
+            {
+                _initGameObj(pGameObj, pMovableSnapshot);
+            }
         }
     }
 }

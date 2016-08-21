@@ -1,5 +1,5 @@
-﻿#ifndef __GameDataPool__
-#define __GameDataPool__
+﻿#ifndef __GameSnapshot__
+#define __GameSnapshot__
 
 
 #include "U2Core.h"
@@ -42,5 +42,29 @@ public:
 };
 
 
+class GameScene : public Scene
+{
+public:
+    GameScene();
 
-#endif /* defined(__GameDataPool__) */
+    virtual ~GameScene();
+
+    virtual void start();
+
+    virtual void end();
+
+    void connect();
+
+    void disconnect();
+
+protected:
+    virtual void _updateGameObjWithSnapshot() override;
+    virtual void _onUpdate(float dt) override;
+    virtual void _initGameObj(GameObject* gameObj, MovableSnapshot* movableSnapshot) override;
+
+protected:
+    WsTaskLoop* m_pWsTaskLoop;
+};
+
+
+#endif /* defined(__GameSnapshot__) */

@@ -106,7 +106,7 @@ void MoveSST::serialize()
     Json::Value rootJsonValue;
     rootJsonValue["roomId"] = szSelfRoomId;
     rootJsonValue["heroId"] = szSelfGameObjGuid;
-    rootJsonValue["attHeroId"] = StringUtil::parseUnsignedInt64(m_szAttackedGameObjGuid);
+    rootJsonValue["attHeroId"] = 0;
     rootJsonValue["x"] = m_v2Position.x;
     rootJsonValue["y"] = m_v2Position.y;
     rootJsonValue["vx"] = m_v2Velocity.x;
@@ -115,6 +115,7 @@ void MoveSST::serialize()
     rootJsonValue["taskId"] = "plane";
     rootJsonValue["version"] = "1.0.0";
     String szJsonStr = rootJsonValue.toStyledString();
+    LogManager::getSingleton().stream(LML_TRIVIAL) << "MoveSST: " << szJsonStr;
 
     setData(vector<u2char>::type(szJsonStr.begin(), szJsonStr.end()));
 }

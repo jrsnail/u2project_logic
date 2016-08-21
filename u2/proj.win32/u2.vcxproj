@@ -156,9 +156,8 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\battle\JoystickViewComponent.cpp" />
     <ClCompile Include="..\Classes\ecs\GameComponentManager.cpp" />
     <ClCompile Include="..\Classes\ecs\GameComponents.cpp" />
-    <ClCompile Include="..\Classes\ecs\GameScene.cpp" />
+    <ClCompile Include="..\Classes\ecs\GameSnapshot.cpp" />
     <ClCompile Include="..\Classes\ecs\GameSystems.cpp" />
-    <ClCompile Include="..\Classes\GameDataPool.cpp" />
     <ClCompile Include="..\Classes\tasks\GameHttpRequests.cpp" />
     <ClCompile Include="..\Classes\tasks\GameHttpResponses.cpp" />
     <ClCompile Include="..\Classes\tasks\GameRecvSocketTasks.cpp" />
@@ -216,6 +215,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\engine\src\core\U2Scheduler.cpp" />
     <ClCompile Include="..\engine\src\core\U2SearchOps.cpp" />
     <ClCompile Include="..\engine\src\core\U2SimpleObjectManager.cpp" />
+    <ClCompile Include="..\engine\src\core\U2Snapshot.cpp" />
     <ClCompile Include="..\engine\src\core\U2SocketTask.cpp" />
     <ClCompile Include="..\engine\src\core\U2StringInterface.cpp" />
     <ClCompile Include="..\engine\src\core\U2StringUtil.cpp" />
@@ -316,9 +316,8 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\battle\JoystickViewComponent.h" />
     <ClInclude Include="..\Classes\ecs\GameComponentManager.h" />
     <ClInclude Include="..\Classes\ecs\GameComponents.h" />
-    <ClInclude Include="..\Classes\ecs\GameScene.h" />
+    <ClInclude Include="..\Classes\ecs\GameSnapshot.h" />
     <ClInclude Include="..\Classes\ecs\GameSystems.h" />
-    <ClInclude Include="..\Classes\GameDataPool.h" />
     <ClInclude Include="..\Classes\tasks\GameHttpRequests.h" />
     <ClInclude Include="..\Classes\tasks\GameHttpResponses.h" />
     <ClInclude Include="..\Classes\tasks\GameRecvSocketTasks.h" />
@@ -396,6 +395,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\engine\include\core\U2SearchOps.h" />
     <ClInclude Include="..\engine\include\core\U2SimpleObjectManager.h" />
     <ClInclude Include="..\engine\include\core\U2Singleton.h" />
+    <ClInclude Include="..\engine\include\core\U2Snapshot.h" />
     <ClInclude Include="..\engine\include\core\U2SocketTask.h" />
     <ClInclude Include="..\engine\include\core\U2StdHeader.h" />
     <ClInclude Include="..\engine\include\core\U2STLRedefined.h" />

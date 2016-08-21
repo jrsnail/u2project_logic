@@ -1,10 +1,11 @@
 ﻿#include "GameHttpResponses.h"
 
 #include "application/AppPrerequisites.h"
-#include "GameDataPool.h"
 #include "GameHttpRequests.h"
 #include "ecs/GameComponents.h"
+#include "ecs/GameSnapshot.h"
 #include "tasks/GameWsClientImpl.h"
+
 
 
 #define CHECK_JSON_MEMBER(JsonValue, member)                            \
@@ -202,15 +203,14 @@ bool PlayHRsp::_deserializeHero(Json::Value& jsonValue, GameMovableSnapshot* gam
 {
     do
     {
-        gameMovableSnapshot->szGameObjType = "aircraft";
+        CHECK_JSON_MEMBER(jsonValue, "type");
+        gameMovableSnapshot->szGameObjType = jsonValue["type"].asString();
 
         CHECK_JSON_MEMBER(jsonValue, "userId");
-        u2uint64 ulPlayerId = jsonValue["userId"].asUInt64();
-        gameMovableSnapshot->szPlayerId = StringUtil::toString(ulPlayerId);
+        gameMovableSnapshot->szPlayerId = jsonValue["userId"].asString();
 
         CHECK_JSON_MEMBER(jsonValue, "heroId");
-        u2uint32 ulGameObjId = jsonValue["heroId"].asUInt();
-        gameMovableSnapshot->szGameObjGuid = StringUtil::toString(ulGameObjId);
+        gameMovableSnapshot->szGameObjGuid = jsonValue["heroId"].asString();
 
         CHECK_JSON_MEMBER(jsonValue, "nickName");
         gameMovableSnapshot->szPlayerName = jsonValue["nickName"].asString();
@@ -254,6 +254,10 @@ void PlayHRsp::run()
     deserialize();
     if (m_nCode == 0)
     {
+        // save room id
+        DATAPOOL(ON_DataPool_Memory)->saveMemoryStringData("SelfRoomId", m_szRoomGuid);
+        Root::getSingleton().getTimer()->reset();
+
         // save room start time
         DATAPOOL(ON_DataPool_Memory)->saveMemoryUint64Data(ON_ServerStartRoomTime, m_ulStartRoomTimestamp);
         Root::getSingleton().getTimer()->reset();
@@ -264,7 +268,7 @@ void PlayHRsp::run()
 
         // find self game object guid
         bool bFound = false;
-        for (SnapshotDataPool::FrameSnapshot::iterator it = m_FrameSnapshot.begin(); 
+        for (Scene::FrameSnapshot::iterator it = m_FrameSnapshot.begin(); 
         it != m_FrameSnapshot.end(); it++)
         {
             GameMovableSnapshot* pMovableSnapshot = dynamic_cast<GameMovableSnapshot*>(it->second);
@@ -284,15 +288,12 @@ void PlayHRsp::run()
             }
         }
 
+        // add frame snapshot
+        Scene::getSingleton().addFrameSnapshot(&m_FrameSnapshot);
+
         if (bFound)
         {
-            // create websocket connection
-            WsTaskLoop* pWsTaskLoop = dynamic_cast<WsTaskLoop*>(
-                TaskLoopManager::getSingleton().createObject(GET_OBJECT_TYPE(GameWsTaskLoop), "websocket")
-                );
-            //pWsTaskLoop->setUrl("ws://echo.websocket.org");
-            pWsTaskLoop->setUrl("ws://10.60.81.51:9008");
-            pWsTaskLoop->run();
+            ((GameScene*)Scene::getSingletonPtr())->connect();
         }
         else
         {

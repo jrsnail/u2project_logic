@@ -555,10 +555,10 @@
     <ClCompile Include="..\Classes\tasks\GameUrlMaker.cpp">
       <Filter>src\tasks</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\GameDataPool.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="..\engine\src\core\U2Snapshot.cpp">
+      <Filter>engine\src\core</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\ecs\GameScene.cpp">
+    <ClCompile Include="..\Classes\ecs\GameSnapshot.cpp">
       <Filter>src\ecs</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1106,10 +1106,10 @@
     <ClInclude Include="..\Classes\tasks\GameUrlMaker.h">
       <Filter>src\tasks</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\GameDataPool.h">
-      <Filter>src</Filter>
+    <ClInclude Include="..\engine\include\core\U2Snapshot.h">
+      <Filter>engine\include\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\ecs\GameScene.h">
+    <ClInclude Include="..\Classes\ecs\GameSnapshot.h">
       <Filter>src\ecs</Filter>
     </ClInclude>
   </ItemGroup>

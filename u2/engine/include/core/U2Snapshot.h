@@ -1,15 +1,18 @@
-﻿#ifndef __U2SnapshotDataPool__
-#define __U2SnapshotDataPool__
+﻿#ifndef __U2Snapshot__
+#define __U2Snapshot__
 
 
 #include "U2Prerequisites.h"
 #include "U2STLRedefined.h"
-#include "U2DataPool.h"
 #include "U2PoolingObjectManager.h"
+#include "cocos2d.h"
 #include "U2HeaderPrefix.h"
 
 
 U2EG_NAMESPACE_BEGIN
+
+
+class GameObject;
 
 
 class MovableSnapshot : public ReusableObject
@@ -290,8 +293,9 @@ public:
     void destroyGameObject(GameObject* gameObj);
 
 protected:
-    virtual void _updateGameObj();
+    virtual void _updateGameObjWithSnapshot();
     virtual void _onUpdate(float dt);
+    virtual void _initGameObj(GameObject* gameObj, MovableSnapshot* movableSnapshot) = 0;
 
 public:
     /** Override standard Singleton retrieval.
@@ -342,4 +346,4 @@ U2EG_NAMESPACE_END
 #include "U2HeaderSuffix.h"
 
 
-#endif /* defined(__U2SnapshotDataPool__) */
+#endif /* defined(__U2Snapshot__) */

@@ -63,7 +63,7 @@ private:
     u2int32     m_nCode;
     u2::String  m_szMsg;
     u2uint64    m_ulTimestamp;
-    SnapshotDataPool::FrameSnapshot m_FrameSnapshot;
+    Scene::FrameSnapshot m_FrameSnapshot;
     u2::String  m_szRoomGuid;
     u2int32     m_nRoomState;
     u2uint64    m_ulCreateRoomTimestamp;

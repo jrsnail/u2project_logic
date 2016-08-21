@@ -2,6 +2,7 @@
 
 #include "GameComponents.h"
 #include "application/AppPrerequisites.h"
+#include "ecs/GameSnapshot.h"
 
 
 
@@ -572,14 +573,14 @@ void PredictSelfSystem::_execute(GameObject* gameObj, u2real dt)
     u2uint64 ulServerStartRoomTime = 0;
     bSuc = DATAPOOL(ON_DataPool_Memory)->loadMemoryUint64Data(ON_ServerStartRoomTime, ulServerStartRoomTime);
     pSnapshot->ulTimestampOnRequest = ulServerStartRoomTime + Root::getSingleton().getTimer()->getMilliseconds();
-    SNAPSHOTDATAPOOL()->pushbackControlSnapshot(pSnapshot);
+    Scene::getSingleton().pushbackControlSnapshot(pSnapshot);
 
     // verify predict result
     cocos2d::Vec2 v2ServerPos = cocos2d::Vec2::ZERO;
     bool bDo = false;
-    SnapshotDataPool::MoveableSnapshotMap& moveableSnapshotMap 
-        = SNAPSHOTDATAPOOL()->retrieveAllMoveableSnapshotsByGameObjGuid(gameObj->getGuid());
-    for (SnapshotDataPool::MoveableSnapshotMap::iterator it = moveableSnapshotMap.begin(); 
+    Scene::MoveableSnapshotMap& moveableSnapshotMap 
+        = Scene::getSingleton().retrieveAllMoveableSnapshotsByGameObjGuid(gameObj->getGuid());
+    for (Scene::MoveableSnapshotMap::iterator it = moveableSnapshotMap.begin(); 
     it != moveableSnapshotMap.end(); it++)
     {
         MovableSnapshot* pMovableSnapshot = it->second;
@@ -590,7 +591,7 @@ void PredictSelfSystem::_execute(GameObject* gameObj, u2real dt)
         else
         {
             ControlSnapshot* pControlSnapshot 
-                = SNAPSHOTDATAPOOL()->retrieveControlSnapshotOnTimestamp(pMovableSnapshot->ulTimestampOnRequest);
+                = Scene::getSingleton().retrieveControlSnapshotOnTimestamp(pMovableSnapshot->ulTimestampOnRequest);
             if (pControlSnapshot == nullptr)
             {
                 assert(0);
@@ -598,20 +599,20 @@ void PredictSelfSystem::_execute(GameObject* gameObj, u2real dt)
             else
             {
                 v2ServerPos = pMovableSnapshot->v2Position;
-                SNAPSHOTDATAPOOL()->eraseControlSnapshotBeforeTimestamp(pMovableSnapshot->ulTimestampOnRequest);
+                Scene::getSingleton().eraseControlSnapshotBeforeTimestamp(pMovableSnapshot->ulTimestampOnRequest);
                 bDo = true;
             }
         }
     }
-    SNAPSHOTDATAPOOL()->eraseMovableSnapshotByGameObjGuid(gameObj->getGuid());
+    Scene::getSingleton().eraseMovableSnapshotByGameObjGuid(gameObj->getGuid());
 
     // if there are movable snapshot, then re-predict self position from snapshot verified position
     if (bDo)
     {
         cocos2d::Vec2 v2RecalPos = cocos2d::Vec2::ZERO;
-        const SnapshotDataPool::ControlSnapshotMap& controlSnapshotMap
-            = SNAPSHOTDATAPOOL()->retrieveAllControlSnapshots();
-        for (SnapshotDataPool::ControlSnapshotMap::const_iterator it = controlSnapshotMap.begin(); 
+        const Scene::ControlSnapshotMap& controlSnapshotMap
+            = Scene::getSingleton().retrieveAllControlSnapshots();
+        for (Scene::ControlSnapshotMap::const_iterator it = controlSnapshotMap.begin(); 
         it != controlSnapshotMap.end(); it++)
         {
             v2RecalPos = pPositionComp->v2Pos + pVelocityComp->v2Velocity;
@@ -717,9 +718,9 @@ void PredictOtherSystem::_execute(GameObject* gameObj, u2real dt)
         return;
     }
 
-    SnapshotDataPool::MoveableSnapshotMap& moveableSnapshotMap
-        = SNAPSHOTDATAPOOL()->retrieveAllMoveableSnapshotsByGameObjGuid(gameObj->getGuid());
-    for (SnapshotDataPool::MoveableSnapshotMap::iterator it = moveableSnapshotMap.begin();
+    Scene::MoveableSnapshotMap& moveableSnapshotMap
+        = Scene::getSingleton().retrieveAllMoveableSnapshotsByGameObjGuid(gameObj->getGuid());
+    for (Scene::MoveableSnapshotMap::iterator it = moveableSnapshotMap.begin();
     it != moveableSnapshotMap.end(); it++)
     {
         MovableSnapshot* pMovableSnapshot = it->second;

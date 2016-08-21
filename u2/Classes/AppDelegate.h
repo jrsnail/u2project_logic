@@ -16,10 +16,9 @@ namespace u2
     class ComponentManager;
     class GameObjectManager;
     class Root;
+    class Scene;
 }
 
-
-class GameScene;
 
 
 /**
@@ -66,7 +65,7 @@ protected:
 	u2::LogManager*					m_pLogManager;
     u2::ComponentManager*		    m_pComponentManager;
     u2::GameObjectManager*          m_pGameObjectManager;
-    GameScene*                      m_pGameScene;
+    u2::Scene*                      m_pGameScene;
 };
 
 #endif // _APP_DELEGATE_H_

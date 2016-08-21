@@ -2,7 +2,7 @@
 
 #include "GameWsClientImpl.h"
 #include "ecs/GameComponents.h"
-#include "ecs/GameScene.h"
+#include "ecs/GameSnapshot.h"
 #include "GameSendSocketTasks.h"
 
 
@@ -100,6 +100,7 @@ void SnapshotRST::deserialize()
     do 
     {
         std::string szJson(m_Data.begin(), m_Data.end());
+        LogManager::getSingleton().stream(LML_TRIVIAL) << "SnapshotRST: " << szJson;
 
         Json::Reader reader;
         Json::Value rootJsonVal;
@@ -117,29 +118,49 @@ void SnapshotRST::deserialize()
         m_szVersion = rootJsonVal["version"].asString();
 
         CHECK_JSON_MEMBER(rootJsonVal, "code");
-        m_nCode = rootJsonVal["code"].asInt();
+        String szCode = rootJsonVal["code"].asString();
+        m_nCode = StringUtil::parseInt(szCode);
 
-        CHECK_JSON_MEMBER(rootJsonVal, "message");
-        m_szMsg = rootJsonVal["message"].asString();
-
-        CHECK_JSON_MEMBER(rootJsonVal, "data");
-        Json::Value dataJsonVal = rootJsonVal["data"];
-
-        Json::Value::Members dataJsnoMembers(dataJsonVal.getMemberNames());
-        for (Json::Value::Members::iterator it = dataJsnoMembers.begin(); it != dataJsnoMembers.end(); ++it)
+        if (m_nCode == 0)
         {
-            const String &key = *it;
-            GameMovableSnapshot* pPlayerSnapshot = dynamic_cast<GameMovableSnapshot*>(
-                MovableSnapshotManager::getSingleton().reuseObject(GET_OBJECT_TYPE(GameMovableSnapshot)));
-            if (_deserializeHero(dataJsonVal[key], pPlayerSnapshot))
+            CHECK_JSON_MEMBER(rootJsonVal, "data");
+            Json::Value dataJsonVal = rootJsonVal["data"];
+
+            Json::Value::Members dataJsnoMembers(dataJsonVal.getMemberNames());
+            for (Json::Value::Members::iterator it = dataJsnoMembers.begin(); it != dataJsnoMembers.end(); ++it)
             {
-                m_FrameSnapshot[pPlayerSnapshot->szGameObjGuid] = pPlayerSnapshot;
+                const String &key = *it;
+                GameMovableSnapshot* pPlayerSnapshot = dynamic_cast<GameMovableSnapshot*>(
+                    MovableSnapshotManager::getSingleton().reuseObject(GET_OBJECT_TYPE(GameMovableSnapshot)));
+
+                Json::Reader reader;
+                Json::Value memberJsonVal;
+                if (!reader.parse(dataJsonVal[key].asString(), memberJsonVal))
+                {
+                    LogManager::getSingleton().stream(LML_CRITICAL)
+                        << "[task error]: SnapshotRST parse member failed!";
+                    break;
+                }
+
+                if (_deserializeHero(memberJsonVal, pPlayerSnapshot))
+                {
+                    m_FrameSnapshot[pPlayerSnapshot->szGameObjGuid] = pPlayerSnapshot;
+                }
+                else
+                {
+                    MovableSnapshotManager::getSingleton().recycleObject(pPlayerSnapshot);
+                    m_bDeserializeSucceed = false;
+                }
             }
-            else
-            {
-                MovableSnapshotManager::getSingleton().recycleObject(pPlayerSnapshot);
-                m_bDeserializeSucceed = false;
-            }
+        }
+        else
+        {
+            assert(0);
+            LogManager::getSingleton().stream(LML_CRITICAL)
+                << "[task error]: code = "
+                << m_nCode
+                << ", json = "
+                << szJson;
         }
 
         m_bDeserializeSucceed = true;
@@ -205,6 +226,7 @@ void SnapshotRST::run()
     deserialize();
     if (m_nCode == 0)
     {
+        /*
         bool bIsCreated = false;
         bool bSuc = DATAPOOL("Memory")->loadMemoryBoolData("IsCreatedScene", bIsCreated);
         // create every game object
@@ -213,7 +235,7 @@ void SnapshotRST::run()
             bIsCreated = true;
             bSuc = DATAPOOL("Memory")->saveMemoryBoolData("IsCreatedScene", bIsCreated);
 
-            for (SnapshotDataPool::FrameSnapshot::iterator it = m_FrameSnapshot.begin();
+            for (Scene::FrameSnapshot::iterator it = m_FrameSnapshot.begin();
             it != m_FrameSnapshot.end(); it++)
             {
                 GameMovableSnapshot* pMovableSs = dynamic_cast<GameMovableSnapshot*>(it->second);
@@ -305,8 +327,10 @@ void SnapshotRST::run()
         // add scene snapshot
         else
         {
-            SNAPSHOTDATAPOOL()->addFrameSnapshot(&m_FrameSnapshot);
+            Scene::getSingleton().addFrameSnapshot(&m_FrameSnapshot);
         }
+        */
+        Scene::getSingleton().addFrameSnapshot(&m_FrameSnapshot);
     }
     else
     {

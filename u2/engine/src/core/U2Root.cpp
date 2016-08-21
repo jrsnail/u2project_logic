@@ -1,7 +1,7 @@
 #include "U2Root.h"
 
 #include "U2Timer.h"
-#include "U2SnapshotDataPool.h";
+#include "U2Snapshot.h"
 
 
 

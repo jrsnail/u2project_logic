@@ -37,7 +37,6 @@
 #include "U2DataFilterStream.h"
 #include "U2StreamQueue.h"
 #include "U2DataPool.h"
-#include "U2SnapshotDataPool.h"
 #include "U2Component.h"
 #include "U2GameObject.h"
 #include "U2System.h"
@@ -49,6 +48,7 @@
 #include "U2HttpClient.h"
 #include "U2HttpClientImpl.h"
 #include "U2Root.h"
+#include "U2Snapshot.h"
 #include "U2PredefinedPrerequisites.h"
 
 

@@ -4,7 +4,6 @@
 
 #include "U2Core.h"
 #include <json/json.h>
-#include "GameDataPool.h"
 
 
 U2EG_NAMESPACE_USING
@@ -58,7 +57,7 @@ private:
     u2int32     m_nCode;
     u2::String  m_szMsg;
     u2::String  m_szVersion;
-    SnapshotDataPool::FrameSnapshot m_FrameSnapshot;
+    Scene::FrameSnapshot m_FrameSnapshot;
 };
 
 
