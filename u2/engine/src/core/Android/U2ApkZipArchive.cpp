@@ -18,7 +18,7 @@ const String& ApkZipArchiveFactory::getType() const
 	return name;
 }
 //-----------------------------------------------------------------------
-Object* ApkZipArchiveFactory::createInstance(const String& name)
+Object* ApkZipArchiveFactory::createInstance(const String& name, const String& guid = BLANK)
 {
 	String apkName = name;
 	if (apkName.size() > 0 && apkName[0] == '/')
@@ -30,5 +30,5 @@ Object* ApkZipArchiveFactory::createInstance(const String& name)
 		EmbeddedZipArchiveFactory::addEmbbeddedFile(apkName, (const u2::u2uint8*)AAsset_getBuffer(asset), AAsset_getLength(asset), 0);
 	}
 
-	return EmbeddedZipArchiveFactory::createInstance(apkName);
+	return EmbeddedZipArchiveFactory::createInstance(apkName, guid);
 }

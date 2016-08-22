@@ -24,7 +24,7 @@ public:
 
 	virtual const String& getType() const override;
 
-	virtual Object* createInstance(const String& name) override;
+	virtual Object* createInstance(const String& name, const String& guid) override;
 
 protected:
 	AAssetManager* mAssetMgr;

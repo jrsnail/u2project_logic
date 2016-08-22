@@ -31,8 +31,8 @@ void ParseFolder(AAssetManager* AssetMgr, String Folder)
 	mFiles.insert(std::make_pair(Folder, mFilenames));
 }
 //-----------------------------------------------------------------------
-ApkFileSystemArchive::ApkFileSystemArchive(const String& type, const String& name)
-    : Archive(type, name)
+ApkFileSystemArchive::ApkFileSystemArchive(const String& type, const String& name, const String& guid)
+    : Archive(type, name, guid)
 	, mAssetMgr(nullptr)
 {
     
@@ -211,9 +211,10 @@ ApkFileSystemArchiveFactory::ApkFileSystemArchiveFactory(AAssetManager* AssetMgr
 
 }
 //-----------------------------------------------------------------------
-Object* ApkFileSystemArchiveFactory::createInstance(const String& name)
+Object* ApkFileSystemArchiveFactory::createInstance(const String& name, const String& guid)
 {
-	ApkFileSystemArchive* pObj = static_cast<ApkFileSystemArchive*>(TemplateObjectFactory<ApkFileSystemArchive>::createInstance(name));
+	ApkFileSystemArchive* pObj = static_cast<ApkFileSystemArchive*>(
+        TemplateObjectFactory<ApkFileSystemArchive>::createInstance(name, guid));
 	if (pObj != nullptr)
 	{
 		pObj->initializeAAsset(mAssetMgr);

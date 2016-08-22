@@ -23,7 +23,7 @@ U2EG_NAMESPACE_BEGIN
 class _U2Export ApkFileSystemArchive : public Archive 
 {
 public:
-    ApkFileSystemArchive(const String& type, const String& name);
+    ApkFileSystemArchive(const String& type, const String& name, const String& guid = BLANK);
     ~ApkFileSystemArchive();
 
 	void initializeAAsset(AAssetManager* AssetMgr);
@@ -85,7 +85,7 @@ public:
 	
 	virtual const String& getType() const override;
 
-	virtual Object* createInstance(const String& name) override;
+	virtual Object* createInstance(const String& name, const String& guid) override;
 
 protected:
 	AAssetManager* mAssetMgr;

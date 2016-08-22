@@ -53,17 +53,3 @@ u2uint64 Timer::getMicrosecondsCPU()
     clock_t newClock = clock();
     return (u2uint64)((float)(newClock - zeroClock) / ((float)CLOCKS_PER_SEC / 1000000.0)) ;
 }
-//-------------------------------------------------------------------------
-u2uint64 Timer::getGreenwishMilliseconds()
-{
-    struct timeval now;
-    gettimeofday(&now, NULL);
-    return now.tv_sec * 1000 + now.tv_usec / 1000;
-}
-//-------------------------------------------------------------------------
-u2uint64 Timer::getGreenwishMicroseconds()
-{
-    struct timeval now;
-    gettimeofday(&now, NULL);
-    return now.tv_sec * 1000000 + now.tv_usec;
-}

@@ -22,9 +22,15 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../Classes \
                     $(LOCAL_PATH)/../../../engine/include/core/streams \
                     $(LOCAL_PATH)/../../../engine/include/core/threading \
                     $(LOCAL_PATH)/../../../engine/include/mvc \
-                    $(LOCAL_PATH)/../../../gamebase
+					$(LOCAL_PATH)/../../../engine/include/lua \
+					$(LOCAL_PATH)/../../../engine/include/json \
+					$(LOCAL_PATH)/../../../engine/include/xml \
+                    $(LOCAL_PATH)/../../../gamebase \
+					$(LOCAL_PATH)/../../../luabridge
 					
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/../../../../Dependenices/include
+
+#LOCAL_C_INCLUDES += $(LOCAL_PATH)/../../../cocos2d/cocos
 
 
 # 遍历目录及子目录的函数
@@ -45,7 +51,11 @@ ALLFILES += $(wildcard $(LOCAL_PATH)/../../../engine/src/core/streams/*)
 ALLFILES += $(wildcard $(LOCAL_PATH)/../../../engine/src/core/threading/*)
 ALLFILES += $(wildcard $(LOCAL_PATH)/../../../engine/src/core/Android/*)
 ALLFILES += $(wildcard $(LOCAL_PATH)/../../../engine/src/mvc/*)
+ALLFILES += $(wildcard $(LOCAL_PATH)/../../../engine/src/lua/*)
+ALLFILES += $(wildcard $(LOCAL_PATH)/../../../engine/src/json/*)
+ALLFILES += $(wildcard $(LOCAL_PATH)/../../../engine/src/xml/*)
 ALLFILES += $(call walk, $(LOCAL_PATH)/../../../gamebase)
+ALLFILES += $(call walk, $(LOCAL_PATH)/../../../luabridge)
 
 FILE_LIST := hellocpp/main.cpp
 # 从所有文件中提取出所有.cpp文件
@@ -62,7 +72,11 @@ LOCAL_SRC_FILES += $(FILE_LIST:$(LOCAL_PATH)/%=%)
 
 
 LOCAL_STATIC_LIBRARIES := cocos2dx_static
-LOCAL_STATIC_LIBRARIES += u2_zzip_static 
+LOCAL_STATIC_LIBRARIES += u2_zzip_static\
+LOCAL_STATIC_LIBRARIES += u2_curl_static
+LOCAL_STATIC_LIBRARIES += u2_ssl_static
+LOCAL_STATIC_LIBRARIES += u2_crypto_static
+
 
 
 LOCAL_LDLIBS += -latomic
@@ -75,6 +89,7 @@ LOCAL_LDLIBS += -latomic
 include $(BUILD_SHARED_LIBRARY)
 
 $(call import-module,$(LOCAL_PATH)/../../../../Dependenices/libs/zzip/Android)
+$(call import-module,$(LOCAL_PATH)/../../../../Dependenices/libs/curl/Android)
 $(call import-module,.)
 
 
