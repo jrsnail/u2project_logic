@@ -122,7 +122,7 @@ PlayHRsp::PlayHRsp(const u2::String& type, const u2::String& name, const u2::Str
     , m_bDeserializeSucceed(false)
     , m_nCode(0)
     , m_nRoomState(0)
-    , m_ulTimestamp(0L)
+    , m_ulEnterRoomTimestamp(0L)
     , m_ulCreateRoomTimestamp(0L)
     , m_ulStartRoomTimestamp(0L)
 {
@@ -157,8 +157,8 @@ void PlayHRsp::deserialize()
         CHECK_JSON_MEMBER(rootJsonVal, "data");
         Json::Value dataJsonVal = rootJsonVal["data"];
 
-        CHECK_JSON_MEMBER(dataJsonVal, "timestamp");
-        m_ulTimestamp = dataJsonVal["timestamp"].asUInt64();
+        CHECK_JSON_MEMBER(dataJsonVal, "enterRoomTime");
+        m_ulEnterRoomTimestamp = dataJsonVal["enterRoomTime"].asUInt64();
 
         CHECK_JSON_MEMBER(dataJsonVal, "heros");
         Json::Value herosJsonVal = dataJsonVal["heros"];
@@ -259,9 +259,14 @@ void PlayHRsp::run()
         DATAPOOL(ON_DataPool_Memory)->saveMemoryStringData("SelfRoomId", m_szRoomGuid);
         Root::getSingleton().getTimer()->reset();
 
-        // save room start time
-        DATAPOOL(ON_DataPool_Memory)->saveMemoryUint64Data(ON_ServerStartRoomTime, m_ulStartRoomTimestamp);
+        // save time elapse between enter room time and start room time on server
+        DATAPOOL(ON_DataPool_Memory)->saveMemoryUint64Data(ON_ServerTimeElapse_EnterRoom
+            , m_ulEnterRoomTimestamp - m_ulStartRoomTimestamp);
         Root::getSingleton().getTimer()->reset();
+
+        // save locale time of enter room
+        DATAPOOL(ON_DataPool_Memory)->saveMemoryUint64Data(ON_LocaleTime_EnterRoom
+            , Root::getSingleton().getTimer()->getMilliseconds());
 
         // load self player id
         String szSelfPlayerGuid;

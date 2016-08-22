@@ -100,4 +100,6 @@ void PlayHReq::serialize()
     urlMaker.addParam("user", szSelfPlayerGuid);
     urlMaker.addParam("checkout", "");
     setUrl(urlMaker.generate());
+
+    u2::LogManager::getSingleton().stream(LML_TRIVIAL) << "PlayHReq: " << m_szUrl;
 }

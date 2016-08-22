@@ -98,9 +98,15 @@ void MoveSST::serialize()
     }
 
     // timestamp
-    u2uint64 ulServerStartRoomTime = 0;
-    bSuc = DATAPOOL(ON_DataPool_Memory)->loadMemoryUint64Data(ON_ServerStartRoomTime, ulServerStartRoomTime);
-    m_ulTimestamp = ulServerStartRoomTime + Root::getSingleton().getTimer()->getMilliseconds();
+    u2uint64 ulServerTimeElapseEnterRoom = 0;
+    bSuc = DATAPOOL(ON_DataPool_Memory)->loadMemoryUint64Data(ON_ServerTimeElapse_EnterRoom, ulServerTimeElapseEnterRoom);
+    u2uint64 ulLocalTimeEnterRoom = 0;
+    bSuc = DATAPOOL(ON_DataPool_Memory)->loadMemoryUint64Data(ON_LocaleTime_EnterRoom, ulLocalTimeEnterRoom);
+    u2uint64 ulTripLantency = 0;
+    bSuc = DATAPOOL(ON_DataPool_Memory)->loadMemoryUint64Data(ON_TripLatency, ulTripLantency);
+    m_ulTimestamp 
+        = (Root::getSingleton().getTimer()->getMilliseconds() - ulLocalTimeEnterRoom) 
+        + ulServerTimeElapseEnterRoom;
 
     // create json data
     Json::Value rootJsonValue;

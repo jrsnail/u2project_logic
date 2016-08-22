@@ -65,6 +65,7 @@ static const char* OT_C2LTask_PreloadEnd = "OT_C2LTask_PreloadEnd";
 // data key
 static const char* ON_TripLatency = "ON_TripLatency";
 static const char* ON_NetworkTimeStart = "ON_NetworkTimeStart";
-static const char* ON_ServerStartRoomTime = "ON_ServerStartRoomTime";
+static const char* ON_ServerTimeElapse_EnterRoom = "ON_ServerTimeElapse_EnterRoom";
+static const char* ON_LocaleTime_EnterRoom = "ON_LocaleTime_EnterRoom";
 
 #endif /* defined(__ApplicationPrerequisites__) */

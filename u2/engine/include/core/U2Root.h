@@ -10,9 +10,12 @@
 U2EG_NAMESPACE_BEGIN
 
 
+class LogManager;
 class Timer;
 class MovableSnapshotManager;
 class ControlSnapshotManager;
+class ComponentManager;
+class GameObjectManager;
 
 
 class Root : public Singleton < Root >, public GeneralAllocatedObject
@@ -59,7 +62,10 @@ public:
     static Root* getSingletonPtr(void);
 
 protected:
-    Timer*              m_pTimer;
+    LogManager*					m_pLogManager;
+    ComponentManager*		    m_pComponentManager;
+    GameObjectManager*          m_pGameObjectManager;
+    Timer*                      m_pTimer;
     MovableSnapshotManager*     m_pMovableSnapshotManager;
     ControlSnapshotManager*     m_pControlSnapshotManager;
 };

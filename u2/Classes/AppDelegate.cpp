@@ -349,7 +349,6 @@ bool AppDelegate::applicationDidFinishLaunching()
 
         // data pool
         DataPoolManager::getSingleton().createObject(GET_OBJECT_TYPE(DataPool), ON_DataPool_Memory);
-        DataPoolManager::getSingleton().createObject(GET_OBJECT_TYPE(DataPool), ON_DataPool_Task);
 
         // frame listener
         m_pFrameListenerCollection = new CocosFrameListenerCollection;

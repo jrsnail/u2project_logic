@@ -569,10 +569,19 @@ void PredictSelfSystem::_execute(GameObject* gameObj, u2real dt)
     // save control snapshot
     GameControlSnapshot* pSnapshot = dynamic_cast<GameControlSnapshot*>(
         ControlSnapshotManager::getSingleton().reuseObject(GET_OBJECT_TYPE(GameControlSnapshot)));
+    
+    // timestamp
+    u2uint64 ulServerTimeElapseEnterRoom = 0;
+    bSuc = DATAPOOL(ON_DataPool_Memory)->loadMemoryUint64Data(ON_ServerTimeElapse_EnterRoom, ulServerTimeElapseEnterRoom);
+    u2uint64 ulLocalTimeEnterRoom = 0;
+    bSuc = DATAPOOL(ON_DataPool_Memory)->loadMemoryUint64Data(ON_LocaleTime_EnterRoom, ulLocalTimeEnterRoom);
+    u2uint64 ulTripLantency = 0;
+    bSuc = DATAPOOL(ON_DataPool_Memory)->loadMemoryUint64Data(ON_TripLatency, ulTripLantency);
+    pSnapshot->ulTimestampOnRequest
+        = (Root::getSingleton().getTimer()->getMilliseconds() - ulLocalTimeEnterRoom)
+        + ulServerTimeElapseEnterRoom;
+
     pSnapshot->v2Velocity = v2Dir * fSpeedRate;
-    u2uint64 ulServerStartRoomTime = 0;
-    bSuc = DATAPOOL(ON_DataPool_Memory)->loadMemoryUint64Data(ON_ServerStartRoomTime, ulServerStartRoomTime);
-    pSnapshot->ulTimestampOnRequest = ulServerStartRoomTime + Root::getSingleton().getTimer()->getMilliseconds();
     Scene::getSingleton().pushbackControlSnapshot(pSnapshot);
 
     // verify predict result
