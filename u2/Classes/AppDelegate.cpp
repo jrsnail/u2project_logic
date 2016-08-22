@@ -405,7 +405,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 			"FileSystem", macResourcePath(), true);
 #elif U2_PLATFORM == U2_PLATFORM_ANDROID
 		Archive* pConfigArchive = ArchiveManager::getSingleton().createObject(
-			"ApkFileSystem", ".", true);
+			"ApkFileSystem", "/", true);
 #else
 		Archive* pConfigArchive = ArchiveManager::getSingleton().createObject(
 			"FileSystem", ".", true);

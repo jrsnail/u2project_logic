@@ -3,6 +3,7 @@
 #include "U2Exception.h"
 #include "U2StringUtil.h"
 #include "U2MemoryStream.h"
+#include "U2LogManager.h"
 
 
 U2EG_NAMESPACE_USING
@@ -12,7 +13,7 @@ U2EG_NAMESPACE_USING
 //-----------------------------------------------------------------------
 static map<String, vector< String >::type >::type mFiles;
 //-----------------------------------------------------------------------
-bool IsFolderParsed(String Folder) 
+static bool IsFolderParsed(String Folder)
 {
 	bool parsed = false;
 	map<String, vector< String >::type >::iterator iter = mFiles.find(Folder);
@@ -20,7 +21,7 @@ bool IsFolderParsed(String Folder)
 	return parsed;
 }
 //-----------------------------------------------------------------------
-void ParseFolder(AAssetManager* AssetMgr, String Folder) 
+static void ParseFolder(AAssetManager* AssetMgr, String Folder)
 {
 	vector<String>::type mFilenames;
 	AAssetDir* dir = AAssetManager_openDir(AssetMgr, Folder.c_str());
@@ -49,6 +50,18 @@ ApkFileSystemArchive::~ApkFileSystemArchive()
 void ApkFileSystemArchive::initializeAAsset(AAssetManager* AssetMgr)
 {
 	mAssetMgr = AssetMgr;
+
+    if (m_szName.size() > 0 && m_szName[0] == '/')
+        m_szName.erase(m_szName.begin());
+
+    mPathPreFix = m_szName;
+    if (mPathPreFix.size() > 0)
+        mPathPreFix += "/";
+
+    if (!IsFolderParsed(m_szName))
+    {
+        ParseFolder(mAssetMgr, m_szName);
+    }
 }
 //-----------------------------------------------------------------------
 bool ApkFileSystemArchive::isCaseSensitive(void) const
