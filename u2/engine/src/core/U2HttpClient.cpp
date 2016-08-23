@@ -3,7 +3,6 @@
 #include <curl/curl.h>
 #include "U2LogManager.h"
 #include "U2Exception.h"
-#include "U2FrameListenerCollection.h"
 // #include "U2StreamQueue.h"
 // #include "U2DataFilterStream.h"
 // #include "U2StringStream.h"
@@ -36,42 +35,42 @@ HttpRequest::~HttpRequest()
 {
 }
 //-----------------------------------------------------------------------
-inline void HttpRequest::setUrl(const String& url)
+void HttpRequest::setUrl(const String& url)
 {
     m_szUrl = url;
 }
 //-----------------------------------------------------------------------
-inline const String& HttpRequest::getUrl() const
+const String& HttpRequest::getUrl() const
 {
     return m_szUrl;
 }
 //-----------------------------------------------------------------------
-inline void HttpRequest::setHttpType(const HttpRequest::Type& type)
+void HttpRequest::setHttpType(const HttpRequest::Type& type)
 {
     m_eType = type;
 }
 //-----------------------------------------------------------------------
-inline const HttpRequest::Type HttpRequest::getHttpType() const
+const HttpRequest::Type HttpRequest::getHttpType() const
 {
     return m_eType;
 }
 //-----------------------------------------------------------------------
-inline void HttpRequest::setRetry(size_t retry)
+void HttpRequest::setRetry(size_t retry)
 {
     m_nRetry = retry;
 }
 //-----------------------------------------------------------------------
-inline size_t HttpRequest::getRetry() const
+size_t HttpRequest::getRetry() const
 {
     return m_nRetry;
 }
 //-----------------------------------------------------------------------
-inline void HttpRequest::setHttpHeaders(const vector<String>::type& headers)
+void HttpRequest::setHttpHeaders(const vector<String>::type& headers)
 {
     m_Headers = headers;
 }
 //-----------------------------------------------------------------------
-inline const vector<String>::type& HttpRequest::getHttpHeaders() const
+const vector<String>::type& HttpRequest::getHttpHeaders() const
 {
     return m_Headers;
 }
@@ -147,43 +146,43 @@ HttpResponse::~HttpResponse()
 //     m_szErrorBuffer = BLANK;
 // }
 //-----------------------------------------------------------------------
-inline void HttpResponse::setHttpHeader(const vector<u2char>::type& data)
+void HttpResponse::setHttpHeader(const vector<u2char>::type& data)
 {
     m_Headers = data;
 }
 //-----------------------------------------------------------------------
-inline vector<u2char>::type* HttpResponse::getHttpHeader()
+vector<u2char>::type* HttpResponse::getHttpHeader()
 {
     return &m_Headers;
 }
 //-----------------------------------------------------------------------
-inline void HttpResponse::setResultCode(long value)
+void HttpResponse::setResultCode(long value)
 {
     m_lResultCode = value;
 }
 //-----------------------------------------------------------------------
-inline u2int64 HttpResponse::getResultCode()
+u2int64 HttpResponse::getResultCode()
 {
     return m_lResultCode;
 }
 //-----------------------------------------------------------------------
-inline void HttpResponse::setErrorBuffer(const char* value)
+void HttpResponse::setErrorBuffer(const char* value)
 {
     m_szErrorBuffer.clear();
     m_szErrorBuffer.assign(value);
 }
 //-----------------------------------------------------------------------
-inline const String& HttpResponse::getErrorBuffer()
+const String& HttpResponse::getErrorBuffer()
 {
     return m_szErrorBuffer;
 }
 //-----------------------------------------------------------------------
-inline void HttpResponse::setSucceed(bool succeed)
+void HttpResponse::setSucceed(bool succeed)
 {
     m_bSucceed = succeed;
 }
 //-----------------------------------------------------------------------
-inline bool HttpResponse::isSucceed() const
+bool HttpResponse::isSucceed() const
 {
     return m_bSucceed;
 }

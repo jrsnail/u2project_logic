@@ -37,7 +37,7 @@ public:
     void setData(const vector<u2char>::type& data);
     const vector<u2char>::type& getData() const;
     vector<u2char>::type& getData();
-    size_t getDataSize();
+    size_t getDataSize() const;
 
 protected:
     String                  m_szType;       //< 子类类型
