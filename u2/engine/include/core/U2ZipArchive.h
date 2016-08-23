@@ -90,6 +90,7 @@ protected:
 
 
 class ZipArchiveFactory : public TemplateObjectFactory < ZipArchive >
+    , public GeneralAllocatedObject
 {
 public:
 	virtual const String& getType() const override;
@@ -97,6 +98,7 @@ public:
 
 
 class EmbeddedZipArchiveFactory : public TemplateObjectFactory < ZipArchive >
+    , public GeneralAllocatedObject
 {
 public:
 	EmbeddedZipArchiveFactory();

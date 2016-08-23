@@ -407,10 +407,6 @@ bool GameObject::_loadFromXml(const TiXmlElement* gameObjElem, String& error)
 template<> GameObjectManager* Singleton<GameObjectManager>::msSingleton = 0;
 GameObjectManager* GameObjectManager::getSingletonPtr(void)
 {
-    if (msSingleton == nullptr)
-    {
-        msSingleton = new GameObjectManager;
-    }
     return msSingleton;
 }
 GameObjectManager& GameObjectManager::getSingleton(void)

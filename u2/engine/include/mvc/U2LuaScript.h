@@ -127,7 +127,7 @@ protected:
 };
 
 
-class LuaScriptManager : public ScriptManager
+class LuaScriptManager : public ScriptManager, public GeneralAllocatedObject
 {
 public:
     /** Default constructor - should never get called by a client app.

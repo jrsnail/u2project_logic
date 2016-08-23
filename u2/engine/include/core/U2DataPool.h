@@ -91,7 +91,7 @@ protected:
 };
 
 
-class DataPoolManager : public Singleton < DataPoolManager >, public SimpleObjectManager<DataPool>
+class DataPoolManager : public Singleton < DataPoolManager >, public SimpleObjectManager<DataPool>, public GeneralAllocatedObject
 {
 public:
     DataPoolManager();

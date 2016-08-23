@@ -49,11 +49,6 @@ WsTaskLoop::WsTaskLoop(const String& type, const String& name, const String& gui
 //-----------------------------------------------------------------------
 WsTaskLoop::~WsTaskLoop()
 {
-    for (size_t i = 0; m_aWsProtocols[i].callback != nullptr; ++i)
-    {
-        U2_FREE(m_aWsProtocols[i].name, MEMCATEGORY_GENERAL);
-    }
-    U2_FREE(m_aWsProtocols, MEMCATEGORY_GENERAL);
 }
 //-----------------------------------------------------------------------
 void WsTaskLoop::postTask(Task* task)
@@ -156,6 +151,7 @@ void WsTaskLoop::_runInternal()
                 U2_FREE((m_aWsProtocols + i)->name, MEMCATEGORY_GENERAL);
             }
             U2_DELETE_ARRAY_T(m_aWsProtocols, libwebsocket_protocols, protocolCount + 1, MEMCATEGORY_GENERAL);
+            m_aWsProtocols = nullptr;
 
             // exit the loop.
             break;
@@ -338,11 +334,7 @@ void WsTaskLoop::_connect()
         {
             m_eState = State::CLOSING;
             Task* pTask = TaskManager::getSingleton().createObject(_getWsErrorRecvTask());
-            DataPool* pDataPool = DataPoolManager::getSingleton().retrieveObjectByName(ON_DataPool_Task);
-            if (pDataPool)
-            {
-                pDataPool->pushTask("MainTaskLoop", pTask);
-            }
+            _dispatchRecvTask(pTask);
         }
 
     }
@@ -365,6 +357,7 @@ int WsTaskLoop::onSocketCallback(struct libwebsocket_context *ctx,
             if (reason == LWS_CALLBACK_CLIENT_CONNECTION_ERROR
                 || (reason == LWS_CALLBACK_PROTOCOL_DESTROY && m_eState == State::CONNECTING)
                 || (reason == LWS_CALLBACK_DEL_POLL_FD && m_eState == State::CONNECTING)
+                || (reason == LWS_CALLBACK_DEL_POLL_FD && m_eState == State::OPEN)
                 )
             {
                 pTask = TaskManager::getSingleton().createObject(_getWsErrorRecvTask());
@@ -375,7 +368,13 @@ int WsTaskLoop::onSocketCallback(struct libwebsocket_context *ctx,
                 pTask = TaskManager::getSingleton().createObject(_getWsCloseRecvTask());
             }
 
-            _dispatchRecvTask(pTask);
+            if (pTask == nullptr)
+            {
+            }
+            else
+            {
+                _dispatchRecvTask(pTask);
+            }
             break;
         }
         case LWS_CALLBACK_CLIENT_ESTABLISHED:

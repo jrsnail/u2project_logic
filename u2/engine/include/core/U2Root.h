@@ -11,11 +11,17 @@ U2EG_NAMESPACE_BEGIN
 
 
 class LogManager;
+class ArchiveManager;
+class ResourceGroupManager;
 class Timer;
 class MovableSnapshotManager;
 class ControlSnapshotManager;
 class ComponentManager;
 class GameObjectManager;
+class DataPoolManager;
+class ScriptManager;
+class FrameListenerCollection;
+class TaskLoopManager;
 
 
 class Root : public Singleton < Root >, public GeneralAllocatedObject
@@ -25,6 +31,15 @@ public:
     virtual ~Root();
 
     Timer* getTimer();
+
+    virtual void enter();
+    virtual void exit();
+    virtual void pause();
+    virtual void resume();
+
+protected:
+    virtual void _initialize();
+    void _loadResources();
 
 public:
     /** Override standard Singleton retrieval.
@@ -63,11 +78,17 @@ public:
 
 protected:
     LogManager*					m_pLogManager;
+    ArchiveManager*             m_pArchiveManager;
+    ResourceGroupManager*       m_pResourceGroupManager;
     ComponentManager*		    m_pComponentManager;
     GameObjectManager*          m_pGameObjectManager;
     Timer*                      m_pTimer;
     MovableSnapshotManager*     m_pMovableSnapshotManager;
     ControlSnapshotManager*     m_pControlSnapshotManager;
+    DataPoolManager*            m_pDataPoolManager;
+    ScriptManager*              m_pScriptManager;
+    FrameListenerCollection*    m_pFrameListenerCollection;
+    TaskLoopManager*            m_pTaskLoopManager;
 };
 
 

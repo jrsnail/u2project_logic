@@ -67,6 +67,11 @@ Scene::~Scene()
 //-----------------------------------------------------------------------
 void Scene::addFrameSnapshot(FrameSnapshot* frame)
 {
+    if (frame == nullptr)
+    {
+        return;
+    }
+
     // remove redundant data
     for (GameObjMoveableSnapshotMap::iterator it = m_Scene.begin(); 
     it != m_Scene.end(); it++)
@@ -113,6 +118,25 @@ void Scene::eraseMovableSnapshotByGameObjGuid(const String& guid)
         movableSnapshots.clear();
 
         m_Scene.erase(it);
+    }
+}
+//-----------------------------------------------------------------------
+void Scene::clearMovableSnapshotByGameObjGuid(const String& guid)
+{
+    GameObjMoveableSnapshotMap::iterator it = m_Scene.find(guid);
+    if (it == m_Scene.end())
+    {
+
+    }
+    else
+    {
+        MoveableSnapshotMap& movableSnapshots = m_Scene[guid];
+        for (MoveableSnapshotMap::iterator itMovable = movableSnapshots.begin();
+        itMovable != movableSnapshots.end(); itMovable++)
+        {
+            MovableSnapshotManager::getSingleton().recycleObject(itMovable->second);
+        }
+        movableSnapshots.clear();
     }
 }
 //-----------------------------------------------------------------------

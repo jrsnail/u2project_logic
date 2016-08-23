@@ -36,6 +36,22 @@
 #include "U2FilterStream.h"
 #include "U2DataFilterStream.h"
 #include "U2StreamQueue.h"
+#include "U2Archive.h"
+#include "U2FileSystemArchive.h"
+#include "U2ZipArchive.h"
+#if U2_PLATFORM == U2_PLATFORM_ANDROID
+#	include <android/asset_manager.h>
+#	include <android/asset_manager_jni.h>
+#	include "U2ApkFileSystemArchive.h"
+#	include "U2ApkZipArchive.h"
+#	include "U2AndroidLogListener.h"
+#endif
+#if U2_PLATFORM == U2_PLATFORM_APPLE_IOS
+#	include "iosUtils.h"
+#endif
+#if U2_PLATFORM == U2_PLATFORM_APPLE
+#	include "macUtils.h"
+#endif
 #include "U2DataPool.h"
 #include "U2Component.h"
 #include "U2GameObject.h"
@@ -47,6 +63,7 @@
 #include "U2UrlUtils.h"
 #include "U2HttpClient.h"
 #include "U2HttpClientImpl.h"
+#include "U2LogicClient.h"
 #include "U2Root.h"
 #include "U2Snapshot.h"
 #include "U2PredefinedPrerequisites.h"

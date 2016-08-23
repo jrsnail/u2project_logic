@@ -158,6 +158,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\ecs\GameComponents.cpp" />
     <ClCompile Include="..\Classes\ecs\GameSnapshot.cpp" />
     <ClCompile Include="..\Classes\ecs\GameSystems.cpp" />
+    <ClCompile Include="..\Classes\GameRoot.cpp" />
     <ClCompile Include="..\Classes\tasks\GameHttpRequests.cpp" />
     <ClCompile Include="..\Classes\tasks\GameHttpResponses.cpp" />
     <ClCompile Include="..\Classes\tasks\GameRecvSocketTasks.cpp" />
@@ -318,6 +319,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\ecs\GameComponents.h" />
     <ClInclude Include="..\Classes\ecs\GameSnapshot.h" />
     <ClInclude Include="..\Classes\ecs\GameSystems.h" />
+    <ClInclude Include="..\Classes\GameRoot.h" />
     <ClInclude Include="..\Classes\tasks\GameHttpRequests.h" />
     <ClInclude Include="..\Classes\tasks\GameHttpResponses.h" />
     <ClInclude Include="..\Classes\tasks\GameRecvSocketTasks.h" />

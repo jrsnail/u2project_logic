@@ -1,12 +1,4 @@
-﻿//
-//  CRemoteMsgManager.cpp
-//  myGame
-//
-//  Created by jiang on 13-7-23.
-//
-//
-
-#include "U2FrameListenerCollection.h"
+﻿#include "U2FrameListenerCollection.h"
 
 
 U2EG_NAMESPACE_USING
@@ -18,10 +10,6 @@ template<> FrameListenerCollection* Singleton<FrameListenerCollection>::msSingle
 //-----------------------------------------------------------------------
 FrameListenerCollection* FrameListenerCollection::getSingletonPtr(void)
 {
-    if (msSingleton == nullptr)
-    {
-        assert(0);
-    }
     return msSingleton;
 }
 //-----------------------------------------------------------------------

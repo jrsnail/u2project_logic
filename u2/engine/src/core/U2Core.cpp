@@ -13,6 +13,7 @@ void initFactroy()
     // task loop
     CREATE_FACTORY(ActiveHttpTaskLoop);
     CREATE_FACTORY(JsonWsTaskLoop);
+    CREATE_FACTORY(LogicTaskLoop);
 
     // task
 }

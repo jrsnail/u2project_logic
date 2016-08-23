@@ -15,40 +15,10 @@
 #include "U2ResourceGroupManager.h"
 #include "U2FileSystemLayer.h"
 #include "U2FileSystemArchive.h"
-#if U2_PLATFORM == U2_PLATFORM_ANDROID
-#	include "CCFileUtils-android.h"
-#	include <android/asset_manager.h>
-#	include <android/asset_manager_jni.h>
-#	include "U2ApkFileSystemArchive.h"
-#	include "U2ApkZipArchive.h"
-#	include "U2AndroidLogListener.h"
-#endif
-#if U2_PLATFORM == U2_PLATFORM_APPLE_IOS
-#	include "iosUtils.h"
-#endif
-#if U2_PLATFORM == U2_PLATFORM_APPLE
-#	include "macUtils.h"
-#endif
-#include "U2LogicClient.h"
-#include "ecs/GameComponentManager.h"
-#include "cocos2d.h"
-//#include "network/WebSocket.h" 
-#include "tasks/GameWsClientImpl.h"
 
-#include "application/AppPrerequisites.h"
-#include "application/AppCommands.h"
-#include "application/AppViewComponents.h"
-#include "application/AppLuaTasks.h"
-#include "battle/BattleCommands.h"
-#include "battle/JoystickViewComponent.h"
-#include "ecs/GameComponents.h"
-#include "ecs/GameSystems.h"
-#include "tasks/GameWsClientImpl.h"
-#include "tasks/GameRecvSocketTasks.h"
-#include "tasks/GameSendSocketTasks.h"
-#include "tasks/GameHttpRequests.h"
-#include "tasks/GameHttpResponses.h"
-#include "ecs/GameSnapshot.h"
+#include "U2LogicClient.h"
+#include "cocos2d.h"
+#include "GameRoot.h"
 
 
 
@@ -56,86 +26,7 @@
 USING_NS_CC;
 
 
-static void initGameFactories()
-{
-    // proxy factory
-    // command factory
-    CREATE_FACTORY(StartupCommand);
-    CREATE_FACTORY(Trans2ShadeCommand);
-    CREATE_FACTORY(StartupLuaCommand);
-    CREATE_FACTORY(Trans2BattleCommand);
 
-    // lua script factory
-    CREATE_FACTORY(CocosLuaScript);
-
-    // lua 2 c task
-    CREATE_FACTORY(CreateLuaScriptLuaTask);
-    CREATE_FACTORY(SetViewCompUiNameLuaTask);
-    CREATE_FACTORY(SetViewCompEnterActionLuaTask);
-    CREATE_FACTORY(SetViewCompExitActionLuaTask);
-    CREATE_FACTORY(CenterViewCompLuaTask);
-    CREATE_FACTORY(PreloadLuaTask);
-
-    // c 2 lua task
-    CREATE_LUATASK_FACTORY(OT_C2LTask_ViewCompCreated);
-    CREATE_LUATASK_FACTORY(OT_C2LTask_ButtonCliecked);
-    CREATE_LUATASK_FACTORY(OT_C2LTask_TouchesBegan);
-    CREATE_LUATASK_FACTORY(OT_C2LTask_TouchesMoved);
-    CREATE_LUATASK_FACTORY(OT_C2LTask_TouchesEnded);
-    CREATE_LUATASK_FACTORY(OT_C2LTask_TouchesCancelled);
-    CREATE_LUATASK_FACTORY(OT_C2LTask_KeyPressed);
-    CREATE_LUATASK_FACTORY(OT_C2LTask_KeyReleased);
-    CREATE_LUATASK_FACTORY(OT_C2LTask_PreloadEnd);
-    CREATE_LUATASK_FACTORY("Test_L2CType");
-
-    // view component factory
-    CREATE_FACTORY(CocosViewComponent);
-    CREATE_FACTORY(ShadeViewComponent);
-    CREATE_FACTORY(JoystickViewComponent);
-
-    // component
-    CREATE_FACTORY_WITH_TYPE(SpriteComponent, "component_sprite");
-    CREATE_FACTORY_WITH_TYPE(PositionComponent, "component_position");
-    CREATE_FACTORY_WITH_TYPE(VelocityComponent, "component_velocity");
-    CREATE_FACTORY_WITH_TYPE(SpeedDirComponent, "component_speed_dir");
-    CREATE_FACTORY_WITH_TYPE(SpeedComponent, "component_speed");
-    CREATE_FACTORY_WITH_TYPE(HpComponent, "component_hp");
-    CREATE_FACTORY_WITH_TYPE(BaseHpComponent, "component_base_hp");
-    CREATE_FACTORY_WITH_TYPE(DeltaHpComponent, "component_delta_hp");
-    CREATE_FACTORY_WITH_TYPE(JoystickComponent, "component_joystick");
-    CREATE_FACTORY_WITH_TYPE(ScaleComponent, "component_scale");
-    CREATE_FACTORY_WITH_TYPE(PredictSelfComponent, "component_predict_self");
-    CREATE_FACTORY_WITH_TYPE(PredictOtherComponent, "component_predict_other");
-
-    // system
-    CREATE_FACTORY_WITH_TYPE(RenderSystem, "system_render");
-    CREATE_FACTORY_WITH_TYPE(InputSystem, "system_input");
-    CREATE_FACTORY_WITH_TYPE(MoveSystem, "system_move");
-    CREATE_FACTORY_WITH_TYPE(ScaleSystem, "system_scale");
-    CREATE_FACTORY_WITH_TYPE(PredictSelfSystem, "system_predict_self");
-    CREATE_FACTORY_WITH_TYPE(PredictOtherSystem, "system_predict_other");
-
-    // snapshot
-    CREATE_FACTORY(GameMovableSnapshot);
-    CREATE_FACTORY(GameControlSnapshot);
-
-    // task loop
-    CREATE_FACTORY(GameWsTaskLoop);
-
-    // tasks
-    CREATE_FACTORY(GameWsCloseRST);
-    CREATE_FACTORY(GameWsErrorRST);
-    CREATE_FACTORY(GameWsOpenRST);
-    CREATE_FACTORY(GameWsHeartBeatSST);
-    CREATE_FACTORY(TimeHReq);
-    CREATE_FACTORY(TimeHRsp);
-    CREATE_FACTORY(RegisterHReq);
-    CREATE_FACTORY(RegisterHRsp);
-    CREATE_FACTORY(PlayHReq);
-    CREATE_FACTORY(PlayHRsp);
-    CREATE_FACTORY(MoveSST);
-    CREATE_FACTORY_WITH_TYPE(SnapshotRST, "plane");
-}
 
 
 static cocos2d::Size winResolutionSize = cocos2d::Size(1136, 640);
@@ -145,7 +36,6 @@ static cocos2d::Size mediumResolutionSize = cocos2d::Size(1024, 768);
 static cocos2d::Size largeResolutionSize = cocos2d::Size(2048, 1536);
 
 AppDelegate::AppDelegate() 
-	: m_pLogManager(nullptr)
 {
 
 }
@@ -326,124 +216,10 @@ bool AppDelegate::applicationDidFinishLaunching()
 
 
     {
-        m_pRoot = U2_NEW u2::Root();
-
         //------------------------------- init u2 ----------------------------------------
-        initFactroy();
-        initGameFactories();
-
-        // Create log manager and default log file if there is no log manager yet
-        if (u2::LogManager::getSingletonPtr() == nullptr)
-        {
-            m_pLogManager = U2_NEW u2::LogManager();
-            m_pLogManager->createLog("u2.log", true, true);
-#if U2_DEBUG_MODE == 1
-            m_pLogManager->setLogDetail(LoggingLevel::LL_BOREME);
-#endif
-        }
-
-#if U2_PLATFORM == U2_PLATFORM_ANDROID
-        AndroidLogListener* mAndroidLogger = U2_NEW AndroidLogListener();
-        m_pLogManager->getDefaultLog()->addListener(mAndroidLogger);
-#endif
-
-        // data pool
-        DataPoolManager::getSingleton().createObject(GET_OBJECT_TYPE(DataPool), ON_DataPool_Memory);
-
-        // frame listener
-        m_pFrameListenerCollection = new CocosFrameListenerCollection;
-        // script manager
-        u2::ScriptManager* pScriptManager = new u2::LuaScriptManager;
-        // component manager
-        m_pComponentManager = new GameComponentManager;
-        // game object manager
-        m_pGameObjectManager = new u2::GameObjectManager;
-
-
-        // Logic task loop
-        LogicTaskLoop* pLogicTaskLoop = dynamic_cast<LogicTaskLoop*>(
-            TaskLoopManager::getSingleton().createObject(GET_OBJECT_TYPE(LogicTaskLoop), ON_Logic_TaskLoop)
-            );
-        pLogicTaskLoop->run();
-
-        // facade
-        Facade::createFacade<PredefinedFacade>(ON_Facade_Predefined);
-        AppFacade* pAppFacade = Facade::createFacade<AppFacade>(ON_Facade_App);
-        if (pAppFacade != nullptr)
-        {
-            pAppFacade->startup();
-        }
+        m_pRoot = U2_NEW GameRoot;
+        m_pRoot->enter();
     }
-	
-
-
-	
-
-	{
-		//------------------------------- Test Resource ----------------------------------------
-#if U2_PLATFORM == U2_PLATFORM_ANDROID
-		//AAssetManager* pAssetMgr = AAssetManager_fromJava(env, assetManager);
-		AAssetManager* pAssetMgr = FileUtilsAndroid::getAssetManager();
-		if (pAssetMgr)
-		{
-			if (!u2::FactoryManager::getSingleton().hasObjectFactory("ApkFileSystem"))
-			{
-				u2::ObjectFactory* pObjectFactory = new ApkFileSystemArchiveFactory(pAssetMgr);
-				u2::FactoryManager::getSingleton().addObjectFactory(pObjectFactory);
-			}
-			if (!u2::FactoryManager::getSingleton().hasObjectFactory("ApkZip"))
-			{
-				u2::ObjectFactory* pObjectFactory = new ApkZipArchiveFactory(pAssetMgr);
-				u2::FactoryManager::getSingleton().addObjectFactory(pObjectFactory);
-			}
-		}
-#endif
-
-#if U2_PLATFORM == U2_PLATFORM_APPLE || U2_PLATFORM == U2_PLATFORM_APPLE_IOS
-		Archive* pConfigArchive = ArchiveManager::getSingleton().createObject(
-			"FileSystem", macResourcePath(), true);
-#elif U2_PLATFORM == U2_PLATFORM_ANDROID
-		Archive* pConfigArchive = ArchiveManager::getSingleton().createObject(
-			"ApkFileSystem", "/", true);
-#else
-		Archive* pConfigArchive = ArchiveManager::getSingleton().createObject(
-			"FileSystem", ".", true);
-// 		Archive* pConfigArchive = ArchiveManager::getSingleton().createObject(
-// 			"Zip", "./Test.zip", true);
-#endif
-		InStreamPtr stream = pConfigArchive->openForRead("resources.cfg");
-
-		u2::String secName, typeName, archName;
-		ConfigFile cf;
-		cf.load(stream);
-
-		u2::ConfigFile::SectionIterator seci = cf.getSectionIterator();
-		while (seci.hasMoreElements())
-		{
-			secName = seci.peekNextKey();
-			ConfigFile::SettingsMultiMap *settings = seci.getNext();
-			ConfigFile::SettingsMultiMap::iterator i;
-			for (i = settings->begin(); i != settings->end(); ++i)
-			{
-				typeName = i->first;
-				archName = i->second;
-#if U2_PLATFORM == U2_PLATFORM_APPLE || U2_PLATFORM == U2_PLATFORM_APPLE_IOS
-				// OS X does not set the working directory relative to the app,
-				// In order to make things portable on OS X we need to provide
-				// the loading with it's own bundle path location
-				if (!StringUtil::startsWith(archName, "/", false)) // only adjust relative dirs
-                    archName = u2::String(macResourcePath() + "/" + archName);
-#endif
-				ResourceGroupManager::getSingleton().addResourceLocation(archName, typeName, secName);
-				u2::LogManager::getSingleton().stream(u2::LML_NORMAL) 
-					<< "archName:" << archName 
-					<< ", typeName:" << typeName 
-					<< ", secName:" << secName << "\n";
-			}
-		}
-
-        ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
-	}
 	
 
 
@@ -553,48 +329,8 @@ bool AppDelegate::applicationDidFinishLaunching()
 		*/
 	}
 
-    {
-        //------------------------------- Test ECS ----------------------------------------
-//          GameObject* pSelf = GameObjectManager::getSingleton().createObject("aircraft", "self_aircraft");
-//          pSelf->addComponent(ComponentManager::getSingleton().createObject("component_joystick"));
 
-        SystemManager::getSingleton().createObject("system_input", "system_input", BLANK, 9980);
-        //SystemManager::getSingleton().createObject("system_move", "system_move", BLANK, 9990);
-        SystemManager::getSingleton().createObject("system_predict_self", "system_predict_self", BLANK, 9990);
-        SystemManager::getSingleton().createObject("system_predict_other", "system_predict_other", BLANK, 9991);
-        SystemManager::getSingleton().createObject("system_scale", "system_scale", BLANK, 9995);
-        SystemManager::getSingleton().createObject("system_render", "system_render", BLANK, 10000);
-
-        SystemManager::getSingleton().enter();
-    }
-
-    {
-        //------------------------------- Test Net ----------------------------------------
-        // http
-        HttpTaskLoop* pHttpTaskLoop = dynamic_cast<HttpTaskLoop*>(
-            TaskLoopManager::getSingleton().createObject(GET_OBJECT_TYPE(ActiveHttpTaskLoop), "http")
-            );
-        pHttpTaskLoop->run();
-        HttpRequest* pHttpReq = static_cast<HttpRequest*>(
-            TaskManager::getSingleton().createObject(GET_OBJECT_TYPE(TimeHReq))
-            );
-        pHttpTaskLoop->postTask(pHttpReq);
-        pHttpReq = static_cast<HttpRequest*>(
-            TaskManager::getSingleton().createObject(GET_OBJECT_TYPE(RegisterHReq))
-            );
-        pHttpTaskLoop->postTask(pHttpReq);
-
-        // websocket
-//         WsTaskLoop* pWsTaskLoop = dynamic_cast<WsTaskLoop*>(
-//             TaskLoopManager::getSingleton().createObject(GET_OBJECT_TYPE(GameWsTaskLoop), "websocket")
-//             );
-//         pWsTaskLoop->setUrl("ws://echo.websocket.org");
-//         pWsTaskLoop->run();
-//         cocos2d::network::WebSocket* _wsiSendText = new network::WebSocket();
-//         _wsiSendText->init(*this, "ws://echo.websocket.org");
-    }
-
-    m_pGameScene = U2_NEW GameScene;
+    
 
     
     return true;
@@ -607,7 +343,7 @@ void AppDelegate::applicationDidEnterBackground() {
     // if you use SimpleAudioEngine, it must be pause
     // SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
 
-    SystemManager::getSingleton().pause();
+    m_pRoot->pause();
 }
 
 // this function will be called when the app is active again
@@ -617,24 +353,5 @@ void AppDelegate::applicationWillEnterForeground() {
     // if you use SimpleAudioEngine, it must resume here
     // SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
 
-    SystemManager::getSingleton().resume();
-}
-
-
-
-void AppDelegate::onOpen(cocos2d::network::WebSocket* ws)
-{
-    int a = 0;
-}
-void AppDelegate::onMessage(cocos2d::network::WebSocket* ws, const cocos2d::network::WebSocket::Data& data)
-{
-    int a = 0;
-}
-void AppDelegate::onClose(cocos2d::network::WebSocket* ws)
-{
-    int a = 0;
-}
-void AppDelegate::onError(cocos2d::network::WebSocket* ws, const cocos2d::network::WebSocket::ErrorCode& error)
-{
-    int a = 0;
+    m_pRoot->resume();
 }

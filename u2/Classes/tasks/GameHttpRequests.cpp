@@ -55,6 +55,8 @@ void RegisterHReq::serialize()
     Json::Value rootJsonValue;
     rootJsonValue["hardid"] = "test_abc" + String(__TIME__);
     rootJsonValue["nickName"] = "test_nickname" + String(__TIME__);
+//     rootJsonValue["hardid"] = StringUtil::toString(Root::getSingleton().getTimer()->getMicroseconds());
+//     rootJsonValue["nickName"] = "test_nickname" + StringUtil::toString(Root::getSingleton().getTimer()->getMicroseconds());
     rootJsonValue["icon"] = 1;
     String szContentJsonStr = rootJsonValue.toStyledString();
 

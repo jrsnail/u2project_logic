@@ -15,10 +15,6 @@ U2EG_NAMESPACE_USING
 template<> ResourceGroupManager* Singleton<ResourceGroupManager>::msSingleton = 0;
 ResourceGroupManager* ResourceGroupManager::getSingletonPtr(void)
 {
-	if (msSingleton == nullptr)
-	{
-		msSingleton = U2_NEW ResourceGroupManager;
-	}
 	return msSingleton;
 }
 ResourceGroupManager& ResourceGroupManager::getSingleton(void)

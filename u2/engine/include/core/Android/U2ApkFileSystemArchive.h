@@ -79,6 +79,7 @@ protected:
 
 
 class ApkFileSystemArchiveFactory : public TemplateObjectFactory < ApkFileSystemArchive >
+    , public GeneralAllocatedObject
 {
 public:
 	ApkFileSystemArchiveFactory(AAssetManager* AssetMgr);

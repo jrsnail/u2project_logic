@@ -182,6 +182,7 @@ protected:
 class TaskLoopManager : public TaskLoop::TaskLoopListener
     , public Singleton < TaskLoopManager >
     , public SimpleObjectManager<TaskLoop>
+    , public GeneralAllocatedObject
 {
 public:
     TaskLoopManager();
@@ -237,7 +238,7 @@ public:
     static TaskLoopManager* getSingletonPtr(void);
 
 protected:
-    typedef map<String, std::shared_ptr<TaskLoop> >::type   TaskLoopMap;
+    typedef map<String, TaskLoop* >::type   TaskLoopMap;
     static TaskLoopMap      ms_TaskLoops;
 };
 

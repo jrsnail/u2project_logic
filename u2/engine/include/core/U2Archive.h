@@ -197,16 +197,12 @@ public:
 };
 
 
-class _U2Export ArchiveManager : public SimpleObjectManager<Archive>, public Singleton < ArchiveManager >
+class _U2Export ArchiveManager : public SimpleObjectManager<Archive>
+    , public Singleton < ArchiveManager >
+    , public GeneralAllocatedObject
 {
-protected:
-	/** Default constructor - should never get called by a client app.
-	*/
-	ArchiveManager();
-
 public:
-	/** Default destructor.
-	*/
+	ArchiveManager();
 	virtual ~ArchiveManager();
 
 	Archive* createObject(const String& type, const String& name, bool readOnly);

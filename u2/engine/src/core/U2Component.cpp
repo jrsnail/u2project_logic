@@ -148,10 +148,6 @@ size_t Component::getState() const
 template<> ComponentManager* Singleton<ComponentManager>::msSingleton = 0;
 ComponentManager* ComponentManager::getSingletonPtr(void)
 {
-    if (msSingleton == nullptr)
-    {
-        msSingleton = new ComponentManager;
-    }
     return msSingleton;
 }
 ComponentManager& ComponentManager::getSingleton(void)

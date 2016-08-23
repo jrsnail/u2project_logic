@@ -386,10 +386,6 @@ void DataPool::popTask(const String& taskLoopName)
 template<> DataPoolManager* Singleton<DataPoolManager>::msSingleton = 0;
 DataPoolManager* DataPoolManager::getSingletonPtr(void)
 {
-    if (msSingleton == nullptr)
-    {
-        msSingleton = new DataPoolManager;
-    }
     return msSingleton;
 }
 DataPoolManager& DataPoolManager::getSingleton(void)

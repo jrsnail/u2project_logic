@@ -272,6 +272,8 @@ public:
 
     void eraseMovableSnapshotByGameObjGuid(const String& guid);
 
+    void clearMovableSnapshotByGameObjGuid(const String& guid);
+
     const MoveableSnapshotMap& retrieveAllMoveableSnapshotsByGameObjGuid(const String& guid) const;
 
     MoveableSnapshotMap& retrieveAllMoveableSnapshotsByGameObjGuid(const String& guid);

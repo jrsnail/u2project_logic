@@ -32,10 +32,6 @@ void Archive::remove(const String&)
 template<> ArchiveManager* Singleton<ArchiveManager>::msSingleton = 0;
 ArchiveManager* ArchiveManager::getSingletonPtr(void)
 {
-	if (msSingleton == nullptr)
-	{
-		msSingleton = new ArchiveManager;
-	}
 	return msSingleton;
 }
 ArchiveManager& ArchiveManager::getSingleton(void)
@@ -45,41 +41,10 @@ ArchiveManager& ArchiveManager::getSingleton(void)
 //-----------------------------------------------------------------------
 ArchiveManager::ArchiveManager()
 {
-	if (!u2::FactoryManager::getSingleton().hasObjectFactory("FileSystem"))
-	{
-		u2::ObjectFactory* pObjectFactory = new FileSystemArchiveFactory;
-		u2::FactoryManager::getSingleton().addObjectFactory(pObjectFactory);
-	}
-	if (!u2::FactoryManager::getSingleton().hasObjectFactory("Zip"))
-	{
-		u2::ObjectFactory* pObjectFactory = new ZipArchiveFactory;
-		u2::FactoryManager::getSingleton().addObjectFactory(pObjectFactory);
-	}
-	if (!u2::FactoryManager::getSingleton().hasObjectFactory("EmbeddedZip"))
-	{
-		u2::ObjectFactory* pObjectFactory = new EmbeddedZipArchiveFactory;
-		u2::FactoryManager::getSingleton().addObjectFactory(pObjectFactory);
-	}
-
-// #if U2_PLATFORM == U2_PLATFORM_ANDROID
-// 	if (!u2::FactoryManager::getSingleton().hasObjectFactory("ApkFileSystem"))
-// 	{
-// 		u2::ObjectFactory* pObjectFactory = new ApkFileSystemArchiveFactory;
-// 		u2::FactoryManager::getSingleton().addObjectFactory(pObjectFactory);
-// 	}
-// 	if (!u2::FactoryManager::getSingleton().hasObjectFactory("ApkZip"))
-// 	{
-// 		u2::ObjectFactory* pObjectFactory = new ApkZipArchiveFactory;
-// 		u2::FactoryManager::getSingleton().addObjectFactory(pObjectFactory);
-// 	}
-// #endif
 }
 //-----------------------------------------------------------------------
 ArchiveManager::~ArchiveManager()
 {
-	DESTROY_FACTORY(FileSystemArchive);
-	DESTROY_FACTORY(ZipArchive);
-	DESTROY_FACTORY("EmbeddedZip");
 }
 //-----------------------------------------------------------------------
 Archive* ArchiveManager::createObject(const String& type, const String& name, bool readOnly)

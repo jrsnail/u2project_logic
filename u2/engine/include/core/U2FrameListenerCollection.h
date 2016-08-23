@@ -15,7 +15,7 @@
 U2EG_NAMESPACE_BEGIN
 
 
-class FrameListenerCollection : public Singleton<FrameListenerCollection>
+class FrameListenerCollection : public Singleton<FrameListenerCollection>, public GeneralAllocatedObject
 {
 protected:
     typedef std::function<void(float)>      Func;
@@ -23,14 +23,9 @@ protected:
     typedef ConstMapIterator<FuncMap>       ConstFuncMapIterator;
     typedef MapIterator<FuncMap>            FuncMapIterator;
 
-protected:
-    /** Default constructor - should never get called by a client app.
-    */
+public:
     FrameListenerCollection();
 
-public:
-    /** Default destructor.
-    */
     virtual ~FrameListenerCollection();
 
     virtual void registerFrameListener() {};

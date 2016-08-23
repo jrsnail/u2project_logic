@@ -160,15 +160,11 @@ void TaskLoop::_postRunCurrentTaskLoop()
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
-map<String, std::shared_ptr<TaskLoop> >::type TaskLoopManager::ms_TaskLoops;
+map<String, TaskLoop* >::type TaskLoopManager::ms_TaskLoops;
 //-----------------------------------------------------------------------
 template<> TaskLoopManager* Singleton<TaskLoopManager>::msSingleton = 0;
 TaskLoopManager* TaskLoopManager::getSingletonPtr(void)
 {
-    if (msSingleton == nullptr)
-    {
-        msSingleton = new TaskLoopManager;
-    }
     return msSingleton;
 }
 TaskLoopManager& TaskLoopManager::getSingleton(void)
@@ -178,8 +174,7 @@ TaskLoopManager& TaskLoopManager::getSingleton(void)
 //-----------------------------------------------------------------------
 TaskLoopManager::TaskLoopManager()
 {
-    CREATE_FACTORY(LogicTaskLoop);
-    CREATE_FACTORY(JsonWsTaskLoop);
+    
 }
 //-----------------------------------------------------------------------
 TaskLoopManager::~TaskLoopManager()
@@ -222,7 +217,7 @@ TaskLoop* TaskLoopManager::current()
     String&& szTid = stream.str();
     TaskLoopMap::iterator it = ms_TaskLoops.find(szTid);
     assert(it != ms_TaskLoops.end());
-    return it->second.get();
+    return it->second;
 }
 //---------------------------------------------------------------------
 void TaskLoopManager::postRunCurrentTaskLoop(TaskLoop* loop)
@@ -231,7 +226,7 @@ void TaskLoopManager::postRunCurrentTaskLoop(TaskLoop* loop)
     TaskLoopMap::iterator it = ms_TaskLoops.find(szId);
     if (it == ms_TaskLoops.end())
     {
-        ms_TaskLoops[szId] = std::shared_ptr<TaskLoop>(loop);
+        ms_TaskLoops[szId] = loop;
     }
     else
     {

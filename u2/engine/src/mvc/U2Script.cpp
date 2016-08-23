@@ -44,7 +44,6 @@ inline void Script::onRemove(void)
 template<> ScriptManager* Singleton<ScriptManager>::msSingleton = 0;
 ScriptManager* ScriptManager::getSingletonPtr(void)
 {
-    assert(msSingleton != nullptr);
     return msSingleton;
 }
 //-----------------------------------------------------------------------
