@@ -14,8 +14,8 @@ public:
     GameMovableSnapshot(const String& type, const String& name = BLANK, const String& guid = BLANK)
         : MovableSnapshot(type, name, guid)
         , uCurHp(0)
-        , uCurSpeed(0)
-        , uAtkDistance(0)
+        , rCurSpeed(0)
+        , rAtkDistance(0)
     {
 
     }
@@ -23,8 +23,8 @@ public:
     u2::String      szPlayerId;
     u2::String      szPlayerName;
     u2uint32        uCurHp;
-    u2uint32        uCurSpeed;
-    u2uint32        uAtkDistance;
+    u2real          rCurSpeed;
+    u2real          rAtkDistance;
 };
 
 

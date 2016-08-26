@@ -1,5 +1,7 @@
 ﻿#include "GameHttpRequests.h"
 
+#include <rapidjson/stringbuffer.h>  
+#include <rapidjson/writer.h>
 #include "GameHttpResponses.h"
 #include "GameUrlMaker.h"
 #include "application/AppPrerequisites.h"
@@ -52,13 +54,20 @@ const u2::String& RegisterHReq::getHttpResponse()
 //-----------------------------------------------------------------------
 void RegisterHReq::serialize()
 {
-    Json::Value rootJsonValue;
-    rootJsonValue["hardid"] = "test_abc" + String(__TIME__);
-    rootJsonValue["nickName"] = "test_nickname" + String(__TIME__);
-//     rootJsonValue["hardid"] = StringUtil::toString(Root::getSingleton().getTimer()->getMicroseconds());
-//     rootJsonValue["nickName"] = "test_nickname" + StringUtil::toString(Root::getSingleton().getTimer()->getMicroseconds());
-    rootJsonValue["icon"] = 1;
-    String szContentJsonStr = rootJsonValue.toStyledString();
+    rapidjson::Document document;
+    document.SetObject();
+
+    document.AddMember("hardid"
+        , rapidjson::Value(String("test_abc" + String(__TIME__)).c_str(), document.GetAllocator()).Move()
+        , document.GetAllocator());
+    document.AddMember("nickName"
+        , rapidjson::Value(String("test_nickname" + String(__TIME__)).c_str(), document.GetAllocator()).Move()
+        , document.GetAllocator());
+    document.AddMember("icon", 1, document.GetAllocator());
+    rapidjson::StringBuffer buffer;
+    rapidjson::Writer< rapidjson::StringBuffer > writer(buffer);
+    document.Accept(writer);
+    String szContentJsonStr = buffer.GetString();
 
     GameUrlMaker urlMaker;
     urlMaker.setPath("plane/operation");
@@ -88,11 +97,19 @@ const u2::String& PlayHReq::getHttpResponse()
 //-----------------------------------------------------------------------
 void PlayHReq::serialize()
 {
-    Json::Value rootJsonValue;
+    rapidjson::Document document;
+    document.SetObject();
+
     String szSelfPlayerGuid;
     bool bSuc = DATAPOOL(ON_DataPool_Memory)->loadMemoryStringData("SelfPlayerGuid", szSelfPlayerGuid);
-    rootJsonValue["userId"] = szSelfPlayerGuid;
-    String szContentJsonStr = rootJsonValue.toStyledString();
+    document.AddMember("userId"
+        , rapidjson::Value(szSelfPlayerGuid.c_str(), document.GetAllocator()).Move()
+        , document.GetAllocator());
+    rapidjson::StringBuffer buffer;
+    rapidjson::Writer< rapidjson::StringBuffer > writer(buffer);
+    document.Accept(writer);
+    String szContentJsonStr = buffer.GetString();
+
 
     GameUrlMaker urlMaker;
     urlMaker.setPath("plane/operation");

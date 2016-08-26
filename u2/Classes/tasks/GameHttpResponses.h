@@ -3,7 +3,7 @@
 
 
 #include "U2Core.h"
-#include <json/json.h>
+#include <rapidjson/document.h>
 
 
 U2EG_NAMESPACE_USING
@@ -56,7 +56,7 @@ public:
     virtual void run() override;
 
 private:
-    bool _deserializeHero(Json::Value& jsonValue, GameMovableSnapshot* gameMovableSnapshot);
+    bool _deserializeHero(const rapidjson::Value& jsonValue, GameMovableSnapshot* gameMovableSnapshot);
 
 private:
     bool m_bDeserializeSucceed;

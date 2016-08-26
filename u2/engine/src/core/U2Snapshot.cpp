@@ -86,13 +86,24 @@ void Scene::addFrameSnapshot(FrameSnapshot* frame)
     // insert new data
     for (FrameSnapshot::iterator it = frame->begin(); it != frame->end(); it++)
     {
-        GameObjMoveableSnapshotMap::iterator iii = m_Scene.find(it->first);
         MoveableSnapshotMap& movableSnapshots = m_Scene[it->first];
 
         MovableSnapshot* pMovableSnapshot = it->second;
-        movableSnapshots.insert(std::make_pair(pMovableSnapshot->ulTimestamp, pMovableSnapshot));
+        MoveableSnapshotMap::iterator itMovable = movableSnapshots.find(pMovableSnapshot->ulTimestamp);
+        if (itMovable == movableSnapshots.end())
+        {
+            movableSnapshots.insert(std::make_pair(pMovableSnapshot->ulTimestamp, pMovableSnapshot));
+        }
+        else
+        {
+            //assert(0);
+            MovableSnapshotManager::getSingleton().recycleObject(pMovableSnapshot);
+            continue;
+        }
+        
         if (movableSnapshots.size() > 2)
         {
+            
             MoveableSnapshotMap::iterator it2 = movableSnapshots.begin();
             MovableSnapshotManager::getSingleton().recycleObject(it2->second);
             movableSnapshots.erase(it2);

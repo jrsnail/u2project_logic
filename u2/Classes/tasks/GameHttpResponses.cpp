@@ -1,5 +1,6 @@
 ﻿#include "GameHttpResponses.h"
 
+#include <rapidjson/error/en.h>
 #include "application/AppPrerequisites.h"
 #include "GameHttpRequests.h"
 #include "ecs/GameComponents.h"
@@ -8,16 +9,34 @@
 
 
 
-#define CHECK_JSON_MEMBER(JsonValue, member)                            \
-    if (!JsonValue.isMember(member))                                    \
+#define CHECK_RAPIDJSON_MEMBER(JsonValue, member)                       \
+    if (!JsonValue.HasMember(member))                                   \
     {                                                                   \
+        assert(0);                                                      \
         LogManager::getSingleton().stream(LML_CRITICAL)                 \
             << "[task error]: "                                         \
             << "Parse failed, as no member "                            \
             << member                                                   \
-            << ". [ " << __FUNCTION__ << ", " << __LINE__ << " ]";      \
+            << ". [ " << __FILE__                                       \
+            << ", " << __FUNCTION__                                     \
+            << ", " << __LINE__ << " ]";                                \
         break;                                                          \
     }
+
+#define CHECK_RAPIDJSON_VALIDITY(result)                                \
+    if (!result)                                                        \
+    {                                                                   \
+        assert(0);                                                      \
+        LogManager::getSingleton().stream(LML_CRITICAL)                 \
+            << "[task error]: "                                         \
+            << "Parse failed, invalid json object. "                    \
+            << "[ " << __FILE__                                         \
+            << ", " << __FUNCTION__                                     \
+            << ", " << __LINE__                                         \
+            << " ]";                                                    \
+        break;                                                          \
+    }
+
 
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
@@ -40,10 +59,6 @@ void TimeHRsp::deserialize()
 void TimeHRsp::run()
 {
     deserialize();
-//     DATAPOOL(ON_DataPool_Memory)->saveMemoryUint64Data(ON_ServerBaseTime, m_ulServerBaseTime);
-//     u2uint64 ulLocalTime = Root::getSingleton().getTimer()->getMilliseconds();
-//     DATAPOOL(ON_DataPool_Memory)->saveMemoryUint64Data(ON_ClientBaseTime, ulLocalTime);
-//     DATAPOOL(ON_DataPool_Memory)->saveMemoryUint64Data(ON_DeltaBaseTime, ulLocalTime - m_ulServerBaseTime);
 
     u2uint64 ulStartTime = 0L;
     DATAPOOL(ON_DataPool_Memory)->loadMemoryUint64Data(ON_NetworkTimeStart, ulStartTime);
@@ -70,23 +85,33 @@ void RegisterHRsp::deserialize()
     {
         std::string szJson(m_Data.begin(), m_Data.end());
 
-        Json::Reader reader;
-        Json::Value rootJsonVal;
-        if (!reader.parse(szJson, rootJsonVal))
+        rapidjson::Document document;
+        document.Parse(szJson.c_str());
+
+        if (document.HasParseError())
         {
             LogManager::getSingleton().stream(LML_CRITICAL)
-                << "[task error]: RegisterHRsp parse failed!";
+                << "[task error]: Parse failed, "
+                << "error = " << document.GetParseError()
+                << ", offset = " << document.GetErrorOffset()
+                << ", info = " << rapidjson::GetParseError_En(document.GetParseError())
+                << ", json = " << szJson;
             break;
         }
 
-        CHECK_JSON_MEMBER(rootJsonVal, "code");
-        m_nCode = rootJsonVal["code"].asInt();
+        CHECK_RAPIDJSON_VALIDITY(document.IsObject());
 
-        CHECK_JSON_MEMBER(rootJsonVal, "message");
-        m_szMsg = rootJsonVal["message"].asString();
+        CHECK_RAPIDJSON_MEMBER(document, "code");
+        CHECK_RAPIDJSON_VALIDITY(document["code"].IsInt());
+        m_nCode = document["code"].GetInt();
 
-        CHECK_JSON_MEMBER(rootJsonVal, "data");
-        m_ulSelfPlayerGuid = rootJsonVal["data"].asUInt64();
+        CHECK_RAPIDJSON_MEMBER(document, "message");
+        CHECK_RAPIDJSON_VALIDITY(document["message"].IsString());
+        m_szMsg = document["message"].GetString();
+
+        CHECK_RAPIDJSON_MEMBER(document, "data");
+        CHECK_RAPIDJSON_VALIDITY(document["data"].IsUint64());
+        m_ulSelfPlayerGuid = document["data"].IsUint64();
 
         m_bDeserializeSucceed = true;
     } while (0);
@@ -139,31 +164,43 @@ void PlayHRsp::deserialize()
         std::string szJson(m_Data.begin(), m_Data.end());
         LogManager::getSingleton().stream(LML_TRIVIAL) << "PlayHRsp: " << szJson;
 
-        Json::Reader reader;
-        Json::Value rootJsonVal;
-        if (!reader.parse(szJson, rootJsonVal))
+        rapidjson::Document document;
+        document.Parse(szJson.c_str());
+
+        if (document.HasParseError())
         {
             LogManager::getSingleton().stream(LML_CRITICAL)
-                << "[task error]: PlayHRsp parse failed!";
+                << "[task error]: Parse failed, "
+                << "error = " << document.GetParseError() 
+                << ", offset = " << document.GetErrorOffset() 
+                << ", info = " << rapidjson::GetParseError_En(document.GetParseError())
+                << ", json = " << szJson;
             break;
         }
 
-        CHECK_JSON_MEMBER(rootJsonVal, "code");
-        m_nCode = rootJsonVal["code"].asInt();
+        CHECK_RAPIDJSON_VALIDITY(document.IsObject());
 
-        CHECK_JSON_MEMBER(rootJsonVal, "message");
-        m_szMsg = rootJsonVal["message"].asString();
+        CHECK_RAPIDJSON_MEMBER(document, "code");
+        CHECK_RAPIDJSON_VALIDITY(document["code"].IsInt());
+        m_nCode = document["code"].GetInt();
 
-        CHECK_JSON_MEMBER(rootJsonVal, "data");
-        Json::Value dataJsonVal = rootJsonVal["data"];
+        CHECK_RAPIDJSON_MEMBER(document, "message");
+        CHECK_RAPIDJSON_VALIDITY(document["message"].IsString());
+        m_szMsg = document["message"].GetString();
 
-        CHECK_JSON_MEMBER(dataJsonVal, "enterRoomTime");
-        m_ulEnterRoomTimestamp = dataJsonVal["enterRoomTime"].asUInt64();
+        CHECK_RAPIDJSON_MEMBER(document, "data");
+        CHECK_RAPIDJSON_VALIDITY(document["data"].IsObject());
+        const rapidjson::Value& dataJsonVal = document["data"];
 
-        CHECK_JSON_MEMBER(dataJsonVal, "heros");
-        Json::Value herosJsonVal = dataJsonVal["heros"];
+        CHECK_RAPIDJSON_MEMBER(dataJsonVal, "enterRoomTime");
+        CHECK_RAPIDJSON_VALIDITY(dataJsonVal["enterRoomTime"].IsUint64());
+        m_ulEnterRoomTimestamp = dataJsonVal["enterRoomTime"].GetUint64();
 
-        for (Json::ArrayIndex i = 0; i < herosJsonVal.size(); i++)
+        CHECK_RAPIDJSON_MEMBER(dataJsonVal, "heros");
+        CHECK_RAPIDJSON_VALIDITY(dataJsonVal["heros"].IsArray());
+        const rapidjson::Value& herosJsonVal = dataJsonVal["heros"];
+
+        for (rapidjson::SizeType i = 0; i < herosJsonVal.Size(); i++)
         {
             GameMovableSnapshot* pPlayerSnapshot = dynamic_cast<GameMovableSnapshot*>(
                 MovableSnapshotManager::getSingleton().reuseObject(GET_OBJECT_TYPE(GameMovableSnapshot)));
@@ -178,21 +215,26 @@ void PlayHRsp::deserialize()
             }
         }
 
-        CHECK_JSON_MEMBER(dataJsonVal, "room");
-        Json::Value roomJsonVal = dataJsonVal["room"];
+        CHECK_RAPIDJSON_MEMBER(dataJsonVal, "room");
+        CHECK_RAPIDJSON_VALIDITY(dataJsonVal["room"].IsObject());
+        const rapidjson::Value& roomJsonVal = dataJsonVal["room"];
 
-        CHECK_JSON_MEMBER(roomJsonVal, "roomId");
-        m_szRoomGuid = roomJsonVal["roomId"].asString();
+        CHECK_RAPIDJSON_MEMBER(roomJsonVal, "roomId");
+        CHECK_RAPIDJSON_VALIDITY(roomJsonVal["roomId"].IsUint());
+        m_szRoomGuid = StringUtil::toString(roomJsonVal["roomId"].GetUint());
 
-        CHECK_JSON_MEMBER(roomJsonVal, "state");
-        m_nRoomState = roomJsonVal["state"].asInt();
+        CHECK_RAPIDJSON_MEMBER(roomJsonVal, "state");
+        CHECK_RAPIDJSON_VALIDITY(roomJsonVal["state"].IsInt());
+        m_nRoomState = roomJsonVal["state"].GetInt();
 
-        CHECK_JSON_MEMBER(roomJsonVal, "createTime");
-        m_ulCreateRoomTimestamp = roomJsonVal["createTime"].asUInt64();
+        CHECK_RAPIDJSON_MEMBER(roomJsonVal, "createTime");
+        CHECK_RAPIDJSON_VALIDITY(roomJsonVal["createTime"].IsUint64());
+        m_ulCreateRoomTimestamp = roomJsonVal["createTime"].GetUint64();
 
-        CHECK_JSON_MEMBER(roomJsonVal, "beginTime");
-        m_ulStartRoomTimestamp = roomJsonVal["beginTime"].asUInt64();
-        
+        CHECK_RAPIDJSON_MEMBER(roomJsonVal, "beginTime");
+        CHECK_RAPIDJSON_VALIDITY(roomJsonVal["beginTime"].IsUint64());
+        m_ulStartRoomTimestamp = roomJsonVal["beginTime"].GetUint64();
+
 
         m_bDeserializeSucceed = true;
     } while (0);
@@ -200,49 +242,63 @@ void PlayHRsp::deserialize()
     m_bDeserializeSucceed = false;
 }
 //-----------------------------------------------------------------------
-bool PlayHRsp::_deserializeHero(Json::Value& jsonValue, GameMovableSnapshot* gameMovableSnapshot)
+bool PlayHRsp::_deserializeHero(const rapidjson::Value& jsonValue, GameMovableSnapshot* gameMovableSnapshot)
 {
     do
     {
-        CHECK_JSON_MEMBER(jsonValue, "type");
-        gameMovableSnapshot->szGameObjType = jsonValue["type"].asString();
+        CHECK_RAPIDJSON_MEMBER(jsonValue, "type");
+        CHECK_RAPIDJSON_VALIDITY(jsonValue["type"].IsInt());
+        gameMovableSnapshot->szGameObjType = StringUtil::toString(jsonValue["type"].GetInt());
 
-        CHECK_JSON_MEMBER(jsonValue, "userId");
-        gameMovableSnapshot->szPlayerId = jsonValue["userId"].asString();
+        CHECK_RAPIDJSON_MEMBER(jsonValue, "userId");
+        CHECK_RAPIDJSON_VALIDITY(jsonValue["userId"].IsUint64());
+        gameMovableSnapshot->szPlayerId = StringUtil::toString(jsonValue["userId"].GetUint64());
 
-        CHECK_JSON_MEMBER(jsonValue, "heroId");
-        gameMovableSnapshot->szGameObjGuid = jsonValue["heroId"].asString();
+        CHECK_RAPIDJSON_MEMBER(jsonValue, "heroId");
+        CHECK_RAPIDJSON_VALIDITY(jsonValue["heroId"].IsUint());
+        gameMovableSnapshot->szGameObjGuid = StringUtil::toString(jsonValue["heroId"].GetUint());
 
-        CHECK_JSON_MEMBER(jsonValue, "nickName");
-        gameMovableSnapshot->szPlayerName = jsonValue["nickName"].asString();
+        CHECK_RAPIDJSON_MEMBER(jsonValue, "nickName");
+        CHECK_RAPIDJSON_VALIDITY(jsonValue["nickName"].IsString());
+        gameMovableSnapshot->szPlayerName = jsonValue["nickName"].GetString();
 
-        CHECK_JSON_MEMBER(jsonValue, "hp");
-        gameMovableSnapshot->uCurHp = jsonValue["hp"].asInt();
+        CHECK_RAPIDJSON_MEMBER(jsonValue, "hp");
+        CHECK_RAPIDJSON_VALIDITY(jsonValue["hp"].IsInt());
+        gameMovableSnapshot->uCurHp = jsonValue["hp"].GetInt();
 
-        CHECK_JSON_MEMBER(jsonValue, "speed");
-        gameMovableSnapshot->uCurSpeed = jsonValue["speed"].asUInt();
+        CHECK_RAPIDJSON_MEMBER(jsonValue, "speed");
+        CHECK_RAPIDJSON_VALIDITY(jsonValue["speed"].IsNumber());
+        gameMovableSnapshot->rCurSpeed = jsonValue["speed"].GetDouble();
 
-        CHECK_JSON_MEMBER(jsonValue, "effDistance");
-        gameMovableSnapshot->uAtkDistance = jsonValue["effDistance"].asUInt();
+        CHECK_RAPIDJSON_MEMBER(jsonValue, "effDistance");
+        CHECK_RAPIDJSON_VALIDITY(jsonValue["effDistance"].IsNumber());
+        gameMovableSnapshot->rAtkDistance = jsonValue["effDistance"].GetDouble();
 
-        CHECK_JSON_MEMBER(jsonValue, "alive");
-        gameMovableSnapshot->bAlive = jsonValue["alive"].asBool();
+        CHECK_RAPIDJSON_MEMBER(jsonValue, "alive");
+        CHECK_RAPIDJSON_VALIDITY(jsonValue["alive"].IsBool());
+        gameMovableSnapshot->bAlive = jsonValue["alive"].GetBool();
 
-        CHECK_JSON_MEMBER(jsonValue, "point");
-        Json::Value pointJsonVal = jsonValue["point"];
+        CHECK_RAPIDJSON_MEMBER(jsonValue, "point");
+        CHECK_RAPIDJSON_VALIDITY(jsonValue["point"].IsObject());
+        const rapidjson::Value& pointJsonVal = jsonValue["point"];
 
-        CHECK_JSON_MEMBER(pointJsonVal, "timestamp");
-        gameMovableSnapshot->ulTimestamp = pointJsonVal["timestamp"].asUInt64();
+        CHECK_RAPIDJSON_MEMBER(pointJsonVal, "timestamp");
+        CHECK_RAPIDJSON_VALIDITY(pointJsonVal["timestamp"].IsUint64());
+        gameMovableSnapshot->ulTimestamp = pointJsonVal["timestamp"].GetUint64();
 
-        CHECK_JSON_MEMBER(pointJsonVal, "x");
-        CHECK_JSON_MEMBER(pointJsonVal, "y");
-        gameMovableSnapshot->v2Position.x = pointJsonVal["x"].asFloat();
-        gameMovableSnapshot->v2Position.y = pointJsonVal["y"].asFloat();
+        CHECK_RAPIDJSON_MEMBER(pointJsonVal, "x");
+        CHECK_RAPIDJSON_MEMBER(pointJsonVal, "y");
+        CHECK_RAPIDJSON_VALIDITY(pointJsonVal["x"].IsNumber());
+        CHECK_RAPIDJSON_VALIDITY(pointJsonVal["y"].IsNumber());
+        gameMovableSnapshot->v2Position.x = pointJsonVal["x"].GetDouble();
+        gameMovableSnapshot->v2Position.y = pointJsonVal["y"].GetDouble();
 
-        CHECK_JSON_MEMBER(pointJsonVal, "vx");
-        CHECK_JSON_MEMBER(pointJsonVal, "vy");
-        gameMovableSnapshot->v2Velocity.x = pointJsonVal["vx"].asFloat();
-        gameMovableSnapshot->v2Velocity.y = pointJsonVal["vy"].asFloat();
+        CHECK_RAPIDJSON_MEMBER(pointJsonVal, "vx");
+        CHECK_RAPIDJSON_MEMBER(pointJsonVal, "vy");
+        CHECK_RAPIDJSON_VALIDITY(pointJsonVal["vx"].IsNumber());
+        CHECK_RAPIDJSON_VALIDITY(pointJsonVal["vy"].IsNumber());
+        gameMovableSnapshot->v2Velocity.x = pointJsonVal["vx"].GetDouble();
+        gameMovableSnapshot->v2Velocity.y = pointJsonVal["vy"].GetDouble();
 
         return true;
     } while (0);

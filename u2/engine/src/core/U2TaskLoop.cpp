@@ -147,6 +147,8 @@ void TaskLoop::_runTask(Task* task)
     {
         (*it)->DidProcessTask();
     }
+
+    TaskManager::getSingleton().destoryObject(task);
 }
 //-----------------------------------------------------------------------
 void TaskLoop::_postRunCurrentTaskLoop()

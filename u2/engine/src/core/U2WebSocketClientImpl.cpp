@@ -1,6 +1,6 @@
 ﻿#include "U2WebSocketClientImpl.h"
 
-#include <json/json.h>
+#include <rapidjson/document.h>
 #include "U2LogManager.h"
 #include "U2PredefinedPrerequisites.h"
 
@@ -58,25 +58,34 @@ RecvSocketTask* JsonWsTaskLoop::_splitRecvTask(vector<u2char>::type& buffer, boo
 {
     std::string szJson(buffer.begin(), buffer.end());
 
-    Json::Reader reader;
-    Json::Value rootJsonVal;
-    if (reader.parse(szJson, rootJsonVal))
+    rapidjson::Document document;
+    document.Parse(szJson.c_str());
+
+    do
     {
-        std::string szMsgId = rootJsonVal["TaskId"].asString();
+        if (!document.IsObject())
+        {
+            break;
+        }
+
+        if (!document.HasMember("TaskId"))
+        {
+            break;
+        }
+        std::string szMsgId = document["TaskId"].GetString();
 
         RecvSocketTask* pTask = dynamic_cast<RecvSocketTask*>(
             TaskManager::getSingleton().createObject(szMsgId));
         pTask->setBinary(binary);
         pTask->setData(buffer);
         return pTask;
-    }
-    else
-    {
-        LogManager::getSingleton().stream(LML_CRITICAL) 
-            << "Damaged recv task: " 
-            << szJson;
-        return nullptr;
-    }
+
+    } while (0);
+
+    LogManager::getSingleton().stream(LML_CRITICAL)
+        << "Damaged recv task: "
+        << szJson;
+    return nullptr;
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------

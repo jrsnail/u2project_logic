@@ -3,7 +3,6 @@
 
 
 #include "U2Core.h"
-#include <json/json.h>
 
 
 U2EG_NAMESPACE_USING

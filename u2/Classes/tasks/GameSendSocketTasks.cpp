@@ -1,5 +1,8 @@
 ﻿#include "GameSendSocketTasks.h"
 
+#include <rapidjson/document.h>
+#include <rapidjson/stringbuffer.h>  
+#include <rapidjson/writer.h>
 #include "ecs/GameComponents.h"
 #include "application/AppPrerequisites.h"
 
@@ -108,20 +111,29 @@ void MoveSST::serialize()
         = (Root::getSingleton().getTimer()->getMilliseconds() - ulLocalTimeEnterRoom) 
         + ulServerTimeElapseEnterRoom;
 
+
     // create json data
-    Json::Value rootJsonValue;
-    rootJsonValue["roomId"] = szSelfRoomId;
-    rootJsonValue["heroId"] = szSelfGameObjGuid;
-    rootJsonValue["attHeroId"] = 0;
-    rootJsonValue["accSpeed"] = 0;
-    rootJsonValue["x"] = m_v2Position.x;
-    rootJsonValue["y"] = m_v2Position.y;
-    rootJsonValue["vx"] = m_v2Velocity.x;
-    rootJsonValue["vy"] = m_v2Velocity.y;
-    rootJsonValue["timestamp"] = m_ulTimestamp;
-    rootJsonValue["taskId"] = "plane";
-    rootJsonValue["version"] = "1.0.0";
-    String szJsonStr = rootJsonValue.toStyledString();
+    rapidjson::Document document;
+    document.SetObject();
+    document.AddMember("roomId"
+        , rapidjson::Value(szSelfRoomId.c_str(), document.GetAllocator()).Move()
+        , document.GetAllocator());
+    document.AddMember("heroId"
+        , rapidjson::Value(szSelfGameObjGuid.c_str(), document.GetAllocator()).Move()
+        , document.GetAllocator());
+    document.AddMember("attHeroId", 0, document.GetAllocator());
+    document.AddMember("accSpeed", 0, document.GetAllocator());
+    document.AddMember("x", m_v2Position.x, document.GetAllocator());
+    document.AddMember("y", m_v2Position.y, document.GetAllocator());
+    document.AddMember("vx", m_v2Velocity.x, document.GetAllocator());
+    document.AddMember("vy", m_v2Velocity.y, document.GetAllocator());
+    document.AddMember("timestamp", m_ulTimestamp, document.GetAllocator());
+    document.AddMember("taskId", "plane", document.GetAllocator());
+    document.AddMember("version", "1.0.0", document.GetAllocator());
+    rapidjson::StringBuffer buffer;
+    rapidjson::Writer< rapidjson::StringBuffer > writer(buffer);
+    document.Accept(writer);
+    String szJsonStr = buffer.GetString();
     LogManager::getSingleton().stream(LML_TRIVIAL) << "MoveSST: " << szJsonStr;
 
     setData(vector<u2char>::type(szJsonStr.begin(), szJsonStr.end()));

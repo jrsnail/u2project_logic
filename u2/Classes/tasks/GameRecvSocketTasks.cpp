@@ -9,14 +9,31 @@
 U2EG_NAMESPACE_USING
 
 
-#define CHECK_JSON_MEMBER(JsonValue, member)                            \
-    if (!JsonValue.isMember(member))                                    \
+#define CHECK_RAPIDJSON_MEMBER(JsonValue, member)                       \
+    if (!JsonValue.HasMember(member))                                   \
     {                                                                   \
+        assert(0);                                                      \
         LogManager::getSingleton().stream(LML_CRITICAL)                 \
             << "[task error]: "                                         \
             << "Parse failed, as no member "                            \
             << member                                                   \
-            << ". [ " << __FUNCTION__ << ", " << __LINE__ << " ]";      \
+            << ". [ " << __FILE__                                       \
+            << ", " << __FUNCTION__                                     \
+            << ", " << __LINE__ << " ]";                                \
+        break;                                                          \
+    }
+
+#define CHECK_RAPIDJSON_VALIDITY(result)                                \
+    if (!result)                                                        \
+    {                                                                   \
+        assert(0);                                                      \
+        LogManager::getSingleton().stream(LML_CRITICAL)                 \
+            << "[task error]: "                                         \
+            << "Parse failed, invalid json object. "                    \
+            << "[ " << __FILE__                                         \
+            << ", " << __FUNCTION__                                     \
+            << ", " << __LINE__                                         \
+            << " ]";                                                    \
         break;                                                          \
     }
 
@@ -99,53 +116,47 @@ void SnapshotRST::deserialize()
 {
     do 
     {
-//         u2::Timer timer;
-//         u2uint64 ulTestStart = timer.getMilliseconds();
-        
         std::string szJson(m_Data.begin(), m_Data.end());
-        LogManager::getSingleton().stream(LML_TRIVIAL) << "SnapshotRST: " << szJson;
+        //LogManager::getSingleton().stream(LML_TRIVIAL) << "SnapshotRST: " << szJson;
 
-        Json::Reader reader;
-        Json::Value rootJsonVal;
-        if (!reader.parse(szJson, rootJsonVal))
-        {
-            LogManager::getSingleton().stream(LML_CRITICAL)
-                << "[task error]: SnapshotRST parse failed!";
-            break;
-        }
-        
-        CHECK_JSON_MEMBER(rootJsonVal, "taskId");
-        String szMsgId = rootJsonVal["taskId"].asString();
+        rapidjson::Document document;
+        document.Parse(szJson.c_str());
 
-        CHECK_JSON_MEMBER(rootJsonVal, "version");
-        m_szVersion = rootJsonVal["version"].asString();
+        CHECK_RAPIDJSON_VALIDITY(document.IsObject());
 
-        CHECK_JSON_MEMBER(rootJsonVal, "code");
-        String szCode = rootJsonVal["code"].asString();
+        CHECK_RAPIDJSON_MEMBER(document, "taskId");
+        CHECK_RAPIDJSON_VALIDITY(document["taskId"].IsString());
+        String szMsgId = document["taskId"].GetString();
+
+        CHECK_RAPIDJSON_MEMBER(document, "version");
+        CHECK_RAPIDJSON_VALIDITY(document["version"].IsString());
+        m_szVersion = document["version"].GetString();
+
+        CHECK_RAPIDJSON_MEMBER(document, "code");
+        CHECK_RAPIDJSON_VALIDITY(document["code"].IsString());
+        String szCode = document["code"].GetString();
         m_nCode = StringUtil::parseInt(szCode);
-        
+
         if (m_nCode == 0)
         {
-            CHECK_JSON_MEMBER(rootJsonVal, "data");
-            Json::Value dataJsonVal = rootJsonVal["data"];
+            CHECK_RAPIDJSON_MEMBER(document, "data");
+            CHECK_RAPIDJSON_VALIDITY(document["data"].IsObject());
+            const rapidjson::Value& dataJsonVal = document["data"];
 
-            Json::Value::Members dataJsonMembers(dataJsonVal.getMemberNames());
-            for (Json::Value::Members::iterator it = dataJsonMembers.begin(); it != dataJsonMembers.end(); ++it)
+            for (rapidjson::Value::ConstMemberIterator it = dataJsonVal.MemberBegin();
+            it != dataJsonVal.MemberEnd(); it++)
             {
-                const String &key = *it;
+                String key = it->name.GetString();
+
+                rapidjson::Document memberDoc;
+                memberDoc.Parse(it->value.GetString());
+
+                CHECK_RAPIDJSON_VALIDITY(memberDoc.IsObject());
+
                 GameMovableSnapshot* pPlayerSnapshot = dynamic_cast<GameMovableSnapshot*>(
                     MovableSnapshotManager::getSingleton().reuseObject(GET_OBJECT_TYPE(GameMovableSnapshot)));
-                
-                Json::Reader reader;
-                Json::Value memberJsonVal;
-                if (!reader.parse(dataJsonVal[key].asString(), memberJsonVal))
-                {
-                    LogManager::getSingleton().stream(LML_CRITICAL)
-                        << "[task error]: SnapshotRST parse member failed!";
-                    break;
-                }
 
-                if (_deserializeHero(memberJsonVal, pPlayerSnapshot))
+                if (_deserializeHero(memberDoc, pPlayerSnapshot))
                 {
                     m_FrameSnapshot[pPlayerSnapshot->szGameObjGuid] = pPlayerSnapshot;
                 }
@@ -166,62 +177,72 @@ void SnapshotRST::deserialize()
                 << szJson;
         }
 
-//         u2uint64 ulTestEnd = timer.getMilliseconds();
-//         LogManager::getSingleton().stream(LML_CRITICAL)
-//             << "[test time]: time = "
-//             << (ulTestEnd - ulTestStart);
-        
         m_bDeserializeSucceed = true;
     } while (0);
 
     m_bDeserializeSucceed = false;
 }
 //-----------------------------------------------------------------------
-bool SnapshotRST::_deserializeHero(Json::Value& jsonValue, GameMovableSnapshot* gameMovableSnapshot)
+bool SnapshotRST::_deserializeHero(rapidjson::Value& jsonValue, GameMovableSnapshot* gameMovableSnapshot)
 {
     do
     {
-        CHECK_JSON_MEMBER(jsonValue, "userId");
-        u2uint64 ulPlayerId = jsonValue["userId"].asUInt64();
+        CHECK_RAPIDJSON_MEMBER(jsonValue, "userId");
+        CHECK_RAPIDJSON_VALIDITY(jsonValue["userId"].IsUint64());
+        u2uint64 ulPlayerId = jsonValue["userId"].GetUint64();
         gameMovableSnapshot->szPlayerId = StringUtil::toString(ulPlayerId);
 
-        CHECK_JSON_MEMBER(jsonValue, "heroId");
-        u2uint32 ulGameObjId = jsonValue["heroId"].asUInt();
+        CHECK_RAPIDJSON_MEMBER(jsonValue, "heroId");
+        CHECK_RAPIDJSON_VALIDITY(jsonValue["heroId"].IsUint());
+        u2uint32 ulGameObjId = jsonValue["heroId"].GetUint();
         gameMovableSnapshot->szGameObjGuid = StringUtil::toString(ulGameObjId);
 
-        CHECK_JSON_MEMBER(jsonValue, "type");
-        gameMovableSnapshot->szGameObjType = jsonValue["type"].asString();
+        CHECK_RAPIDJSON_MEMBER(jsonValue, "type");
+        CHECK_RAPIDJSON_VALIDITY(jsonValue["type"].IsUint());
+        u2uint32 uGameObjType = jsonValue["type"].GetUint();
+        gameMovableSnapshot->szGameObjType = StringUtil::toString(uGameObjType);
 
-        CHECK_JSON_MEMBER(jsonValue, "nickName");
-        gameMovableSnapshot->szPlayerName = jsonValue["nickName"].asString();
+        CHECK_RAPIDJSON_MEMBER(jsonValue, "nickName");
+        CHECK_RAPIDJSON_VALIDITY(jsonValue["nickName"].IsString());
+        gameMovableSnapshot->szPlayerName = jsonValue["nickName"].GetString();
 
-        CHECK_JSON_MEMBER(jsonValue, "hp");
-        gameMovableSnapshot->uCurHp = jsonValue["hp"].asUInt();
+        CHECK_RAPIDJSON_MEMBER(jsonValue, "hp");
+        CHECK_RAPIDJSON_VALIDITY(jsonValue["hp"].IsUint());
+        gameMovableSnapshot->uCurHp = jsonValue["hp"].GetUint();
 
-        CHECK_JSON_MEMBER(jsonValue, "speed");
-        gameMovableSnapshot->uCurSpeed = jsonValue["speed"].asUInt();
+        CHECK_RAPIDJSON_MEMBER(jsonValue, "speed");
+        CHECK_RAPIDJSON_VALIDITY(jsonValue["speed"].IsNumber());
+        gameMovableSnapshot->rCurSpeed = jsonValue["speed"].GetDouble();
 
-        CHECK_JSON_MEMBER(jsonValue, "effDistance");
-        gameMovableSnapshot->uAtkDistance = jsonValue["effDistance"].asUInt();
+        CHECK_RAPIDJSON_MEMBER(jsonValue, "effDistance");
+        CHECK_RAPIDJSON_VALIDITY(jsonValue["effDistance"].IsNumber());
+        gameMovableSnapshot->rAtkDistance = jsonValue["effDistance"].GetDouble();
 
-        CHECK_JSON_MEMBER(jsonValue, "alive");
-        gameMovableSnapshot->bAlive = jsonValue["alive"].asBool();
+        CHECK_RAPIDJSON_MEMBER(jsonValue, "alive");
+        CHECK_RAPIDJSON_VALIDITY(jsonValue["alive"].IsBool());
+        gameMovableSnapshot->bAlive = jsonValue["alive"].GetBool();
 
-        CHECK_JSON_MEMBER(jsonValue, "point");
-        Json::Value pointJsonVal = jsonValue["point"];
+        CHECK_RAPIDJSON_MEMBER(jsonValue, "point");
+        CHECK_RAPIDJSON_VALIDITY(jsonValue["point"].IsObject());
+        const rapidjson::Value& pointJsonVal = jsonValue["point"];
 
-        CHECK_JSON_MEMBER(pointJsonVal, "timestamp");
-        gameMovableSnapshot->ulTimestamp = pointJsonVal["timestamp"].asUInt64();
+        CHECK_RAPIDJSON_MEMBER(pointJsonVal, "timestamp");
+        CHECK_RAPIDJSON_VALIDITY(pointJsonVal["timestamp"].IsUint64());
+        gameMovableSnapshot->ulTimestamp = pointJsonVal["timestamp"].GetUint64();
 
-        CHECK_JSON_MEMBER(pointJsonVal, "x");
-        CHECK_JSON_MEMBER(pointJsonVal, "y");
-        gameMovableSnapshot->v2Position.x = pointJsonVal["x"].asFloat();
-        gameMovableSnapshot->v2Position.y = pointJsonVal["y"].asFloat();
+        CHECK_RAPIDJSON_MEMBER(pointJsonVal, "x");
+        CHECK_RAPIDJSON_MEMBER(pointJsonVal, "y");
+        CHECK_RAPIDJSON_VALIDITY(pointJsonVal["x"].IsNumber());
+        CHECK_RAPIDJSON_VALIDITY(pointJsonVal["y"].IsNumber());
+        gameMovableSnapshot->v2Position.x = pointJsonVal["x"].GetDouble();
+        gameMovableSnapshot->v2Position.y = pointJsonVal["y"].GetDouble();
 
-        CHECK_JSON_MEMBER(pointJsonVal, "vx");
-        CHECK_JSON_MEMBER(pointJsonVal, "vy");
-        gameMovableSnapshot->v2Velocity.x = pointJsonVal["vx"].asFloat();
-        gameMovableSnapshot->v2Velocity.y = pointJsonVal["vy"].asFloat();
+        CHECK_RAPIDJSON_MEMBER(pointJsonVal, "vx");
+        CHECK_RAPIDJSON_MEMBER(pointJsonVal, "vy");
+        CHECK_RAPIDJSON_VALIDITY(pointJsonVal["vx"].IsNumber());
+        CHECK_RAPIDJSON_VALIDITY(pointJsonVal["vy"].IsNumber());
+        gameMovableSnapshot->v2Velocity.x = pointJsonVal["vx"].GetDouble();
+        gameMovableSnapshot->v2Velocity.y = pointJsonVal["vy"].GetDouble();
 
         return true;
     } while (0);
