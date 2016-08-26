@@ -185,10 +185,10 @@ Scene::retrieveAllMoveableSnapshotsByGameObjGuid(const String& guid)
 //-----------------------------------------------------------------------
 void Scene::pushbackControlSnapshot(ControlSnapshot* control)
 {
-    ControlSnapshotMap::iterator it = m_ControlSnapshotMap.find(control->ulTimestampOnRequest);
+    ControlSnapshotMap::iterator it = m_ControlSnapshotMap.find(control->ulTimestamp);
     if (it == m_ControlSnapshotMap.end())
     {
-        m_ControlSnapshotMap[control->ulTimestampOnRequest] = control;
+        m_ControlSnapshotMap[control->ulTimestamp] = control;
     }
     else
     {

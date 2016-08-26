@@ -156,6 +156,9 @@ private:
 
 bool AppDelegate::applicationDidFinishLaunching()
 {
+    #if COCOS2D_DEBUG
+
+#endif    
 	cocos2d::log("Hello world! CCLog! = %d", std::this_thread::get_id());
 	CCLOG("Hello world! CCLOG");
 

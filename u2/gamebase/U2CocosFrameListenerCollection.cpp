@@ -31,7 +31,7 @@ void CocosFrameListenerCollection::registerFrameListener()
     {
         m_pScheduler = cocos2d::Director::getInstance()->getScheduler();
         m_pScheduler->schedule(schedule_selector(CocosFrameListenerCollection::_onCocosUpdate)
-            , this, 1.0f / 60, CC_REPEAT_FOREVER, 0.0f, false);
+            , this, 0, CC_REPEAT_FOREVER, 0.0f, false);
     }
 }
 //-----------------------------------------------------------------------

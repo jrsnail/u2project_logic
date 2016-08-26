@@ -113,6 +113,24 @@ public:
 
     virtual void destoryObject(Task* obj);
 
+    void destoryObjectByName(const String& name);
+
+    Task* retrieveObjectByName(const String& name);
+
+    Task* retrieveObjectByGuid(const String& guid);
+
+    bool hasObjectByName(const String& name);
+
+    void addObject(Task* obj);
+
+    void removeObject(Task* obj);
+
+protected:
+    ObjectMapIterator retrieveAllObjects()
+    {
+        return SimpleObjectManager<Task>::retrieveAllObjects();
+    }
+
 public:
     /** Override standard Singleton retrieval.
     @remarks
@@ -147,6 +165,9 @@ public:
     preventing link errors.
     */
     static TaskManager* getSingletonPtr(void);
+
+protected:
+    U2_AUTO_MUTEX;
 };
 
 

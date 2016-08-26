@@ -109,9 +109,12 @@ void RegisterHRsp::deserialize()
         CHECK_RAPIDJSON_VALIDITY(document["message"].IsString());
         m_szMsg = document["message"].GetString();
 
-        CHECK_RAPIDJSON_MEMBER(document, "data");
-        CHECK_RAPIDJSON_VALIDITY(document["data"].IsUint64());
-        m_ulSelfPlayerGuid = document["data"].IsUint64();
+        if (m_nCode == 0)
+        {
+            CHECK_RAPIDJSON_MEMBER(document, "data");
+            CHECK_RAPIDJSON_VALIDITY(document["data"].IsUint64());
+            m_ulSelfPlayerGuid = document["data"].IsUint64();
+        }
 
         m_bDeserializeSucceed = true;
     } while (0);

@@ -57,11 +57,20 @@ void RegisterHReq::serialize()
     rapidjson::Document document;
     document.SetObject();
 
+//     document.AddMember("hardid"
+//         , rapidjson::Value(String("test_abc" + String(__TIME__)).c_str(), document.GetAllocator()).Move()
+//         , document.GetAllocator());
+//     document.AddMember("nickName"
+//         , rapidjson::Value(String("test_nickname" + String(__TIME__)).c_str(), document.GetAllocator()).Move()
+//         , document.GetAllocator());
+
+    String szHardId = "test_abc" + StringUtil::toString(u2::Root::getSingleton().getTimer()->getMicroseconds());
+    String szNickname = "test_nickname" + StringUtil::toString(u2::Root::getSingleton().getTimer()->getMicroseconds());
     document.AddMember("hardid"
-        , rapidjson::Value(String("test_abc" + String(__TIME__)).c_str(), document.GetAllocator()).Move()
+        , rapidjson::Value(szHardId.c_str(), document.GetAllocator()).Move()
         , document.GetAllocator());
     document.AddMember("nickName"
-        , rapidjson::Value(String("test_nickname" + String(__TIME__)).c_str(), document.GetAllocator()).Move()
+        , rapidjson::Value(szNickname.c_str(), document.GetAllocator()).Move()
         , document.GetAllocator());
     document.AddMember("icon", 1, document.GetAllocator());
     rapidjson::StringBuffer buffer;

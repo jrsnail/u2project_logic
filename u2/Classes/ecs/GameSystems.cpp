@@ -577,7 +577,7 @@ void PredictSelfSystem::_execute(GameObject* gameObj, u2real dt)
     bSuc = DATAPOOL(ON_DataPool_Memory)->loadMemoryUint64Data(ON_LocaleTime_EnterRoom, ulLocalTimeEnterRoom);
     u2uint64 ulTripLantency = 0;
     bSuc = DATAPOOL(ON_DataPool_Memory)->loadMemoryUint64Data(ON_TripLatency, ulTripLantency);
-    pSnapshot->ulTimestampOnRequest
+    pSnapshot->ulTimestamp
         = (Root::getSingleton().getTimer()->getMilliseconds() - ulLocalTimeEnterRoom)
         + ulServerTimeElapseEnterRoom;
 

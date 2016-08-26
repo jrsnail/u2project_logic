@@ -67,6 +67,8 @@ TaskManager::~TaskManager()
 //-----------------------------------------------------------------------
 Task* TaskManager::createObject(const String& type, const String& name, const String& guid)
 {
+    U2_LOCK_AUTO_MUTEX;
+
     Task* pObj = SimpleObjectManager<Task>::createObject(type, name, guid);
     if (pObj != nullptr)
     {
@@ -88,7 +90,45 @@ PostTaskAndReplyRelay* TaskManager::createObject(
 //-----------------------------------------------------------------------
 void TaskManager::destoryObject(Task* obj)
 {
+    U2_LOCK_AUTO_MUTEX;
+
     assert(obj != nullptr);
     assert(obj == SimpleObjectManager<Task>::retrieveObjectByGuid(obj->getGuid()));
     SimpleObjectManager<Task>::destoryObject(obj);
+}
+//-----------------------------------------------------------------------
+void TaskManager::destoryObjectByName(const String& name)
+{
+    U2_LOCK_AUTO_MUTEX;
+    SimpleObjectManager<Task>::destoryObjectByName(name);
+}
+//-----------------------------------------------------------------------
+Task* TaskManager::retrieveObjectByName(const String& name)
+{
+    U2_LOCK_AUTO_MUTEX;
+    return SimpleObjectManager<Task>::retrieveObjectByName(name);
+}
+//-----------------------------------------------------------------------
+Task* TaskManager::retrieveObjectByGuid(const String& guid)
+{
+    U2_LOCK_AUTO_MUTEX;
+    return SimpleObjectManager<Task>::retrieveObjectByGuid(guid);
+}
+//-----------------------------------------------------------------------
+bool TaskManager::hasObjectByName(const String& name)
+{
+    U2_LOCK_AUTO_MUTEX;
+    return SimpleObjectManager<Task>::hasObjectByName(name);
+}
+//-----------------------------------------------------------------------
+void TaskManager::addObject(Task* obj)
+{
+    U2_LOCK_AUTO_MUTEX;
+    return SimpleObjectManager<Task>::addObject(obj);
+}
+//-----------------------------------------------------------------------
+void TaskManager::removeObject(Task* obj)
+{
+    U2_LOCK_AUTO_MUTEX;
+    SimpleObjectManager<Task>::removeObject(obj);
 }

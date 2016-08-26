@@ -20,7 +20,6 @@ class MovableSnapshot : public ReusableObject
 public:
     MovableSnapshot(const String& type, const String& name = BLANK, const String& guid = BLANK)
         : ReusableObject(type, name, guid)
-        , ulTimestampOnRequest(0)
         , ulTimestamp(0)
         , bAlive(true)
         , v2Velocity(cocos2d::Vec2::ZERO)
@@ -34,7 +33,6 @@ public:
     {
         szGameObjGuid = ths.szGameObjGuid;
         szGameObjType = ths.szGameObjType;
-        ulTimestampOnRequest = ths.ulTimestampOnRequest;
         ulTimestamp = ths.ulTimestamp;
         bAlive = ths.bAlive;
         v2Velocity = ths.v2Velocity;
@@ -47,7 +45,6 @@ public:
     {
         szGameObjGuid = ths.szGameObjGuid;
         szGameObjType = ths.szGameObjType;
-        ulTimestampOnRequest = ths.ulTimestampOnRequest;
         ulTimestamp = ths.ulTimestamp;
         bAlive = ths.bAlive;
         v2Velocity = ths.v2Velocity;
@@ -62,7 +59,6 @@ public:
 
         szGameObjGuid = BLANK;
         szGameObjType = BLANK;
-        ulTimestampOnRequest = 0L;
         ulTimestamp = 0L;
         bAlive = true;
         v2Velocity = cocos2d::Vec2::ZERO;
@@ -75,7 +71,6 @@ public:
 
         szGameObjGuid = BLANK;
         szGameObjType = BLANK;
-        ulTimestampOnRequest = 0L;
         ulTimestamp = 0L;
         bAlive = true;
         v2Velocity = cocos2d::Vec2::ZERO;
@@ -85,7 +80,6 @@ public:
 
     u2::String      szGameObjGuid;
     u2::String      szGameObjType;
-    u2uint64        ulTimestampOnRequest;
     u2uint64        ulTimestamp;
     bool            bAlive;
     cocos2d::Vec2   v2Velocity;
@@ -145,7 +139,7 @@ class ControlSnapshot : public ReusableObject
 public:
     ControlSnapshot(const String& type, const String& name = BLANK, const String& guid = BLANK)
         : ReusableObject(type, name, guid)
-        , ulTimestampOnRequest(0)
+        , ulTimestamp(0)
         , v2Velocity(cocos2d::Vec2::ZERO)
     {
 
@@ -156,7 +150,7 @@ public:
         szPlayerGuid = ths.szPlayerGuid;
         szGameObjGuid = ths.szGameObjGuid;
         szGameObjType = ths.szGameObjType;
-        ulTimestampOnRequest = ths.ulTimestampOnRequest;
+        ulTimestamp = ths.ulTimestamp;
         v2Velocity = ths.v2Velocity;
         return *this;
     }
@@ -166,7 +160,7 @@ public:
         szPlayerGuid = ths.szPlayerGuid;
         szGameObjGuid = ths.szGameObjGuid;
         szGameObjType = ths.szGameObjType;
-        ulTimestampOnRequest = ths.ulTimestampOnRequest;
+        ulTimestamp = ths.ulTimestamp;
         v2Velocity = ths.v2Velocity;
         return *this;
     }
@@ -178,7 +172,7 @@ public:
         szPlayerGuid = BLANK;
         szGameObjGuid = BLANK;
         szGameObjType = BLANK;
-        ulTimestampOnRequest = 0L;
+        ulTimestamp = 0L;
         v2Velocity = cocos2d::Vec2::ZERO;
     };
 
@@ -189,7 +183,7 @@ public:
         szPlayerGuid = BLANK;
         szGameObjGuid = BLANK;
         szGameObjType = BLANK;
-        ulTimestampOnRequest = 0L;
+        ulTimestamp = 0L;
         v2Velocity = cocos2d::Vec2::ZERO;
     };
 
@@ -197,7 +191,7 @@ public:
     u2::String      szPlayerGuid;
     u2::String      szGameObjGuid;
     u2::String      szGameObjType;
-    u2uint64        ulTimestampOnRequest;
+    u2uint64        ulTimestamp;
     cocos2d::Vec2   v2Velocity;
 };
 
