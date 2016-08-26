@@ -84,6 +84,7 @@ void RegisterHRsp::deserialize()
     do
     {
         std::string szJson(m_Data.begin(), m_Data.end());
+        LogManager::getSingleton().stream(LML_TRIVIAL) << "RegisterHRsp: " << szJson;
 
         rapidjson::Document document;
         document.Parse(szJson.c_str());
@@ -113,7 +114,11 @@ void RegisterHRsp::deserialize()
         {
             CHECK_RAPIDJSON_MEMBER(document, "data");
             CHECK_RAPIDJSON_VALIDITY(document["data"].IsUint64());
-            m_ulSelfPlayerGuid = document["data"].IsUint64();
+            m_ulSelfPlayerGuid = document["data"].GetUint64();
+        }
+        else
+        {
+            assert(0);
         }
 
         m_bDeserializeSucceed = true;

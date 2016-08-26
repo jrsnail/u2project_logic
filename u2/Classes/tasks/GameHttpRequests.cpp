@@ -57,26 +57,27 @@ void RegisterHReq::serialize()
     rapidjson::Document document;
     document.SetObject();
 
-//     document.AddMember("hardid"
-//         , rapidjson::Value(String("test_abc" + String(__TIME__)).c_str(), document.GetAllocator()).Move()
-//         , document.GetAllocator());
-//     document.AddMember("nickName"
-//         , rapidjson::Value(String("test_nickname" + String(__TIME__)).c_str(), document.GetAllocator()).Move()
-//         , document.GetAllocator());
-
-    String szHardId = "test_abc" + StringUtil::toString(u2::Root::getSingleton().getTimer()->getMicroseconds());
-    String szNickname = "test_nickname" + StringUtil::toString(u2::Root::getSingleton().getTimer()->getMicroseconds());
     document.AddMember("hardid"
-        , rapidjson::Value(szHardId.c_str(), document.GetAllocator()).Move()
+        , rapidjson::Value("test_abcAAA", document.GetAllocator()).Move()
         , document.GetAllocator());
     document.AddMember("nickName"
-        , rapidjson::Value(szNickname.c_str(), document.GetAllocator()).Move()
+        , rapidjson::Value("test_nicknameAAA", document.GetAllocator()).Move()
         , document.GetAllocator());
+
+//     String szHardId = "test_abc" + StringUtil::toString(u2::Root::getSingleton().getTimer()->getMicroseconds());
+//     String szNickname = "test_nickname" +StringUtil::toString(u2::Root::getSingleton().getTimer()->getMicroseconds());
+//     document.AddMember("hardid"
+//         , rapidjson::Value(szHardId.c_str(), document.GetAllocator()).Move()
+//         , document.GetAllocator());
+//     document.AddMember("nickName"
+//         , rapidjson::Value(szNickname.c_str(), document.GetAllocator()).Move()
+//         , document.GetAllocator());
     document.AddMember("icon", 1, document.GetAllocator());
     rapidjson::StringBuffer buffer;
     rapidjson::Writer< rapidjson::StringBuffer > writer(buffer);
     document.Accept(writer);
     String szContentJsonStr = buffer.GetString();
+    LogManager::getSingleton().stream(LML_TRIVIAL) << "RegisterHReq: " << szContentJsonStr;
 
     GameUrlMaker urlMaker;
     urlMaker.setPath("plane/operation");
@@ -118,6 +119,7 @@ void PlayHReq::serialize()
     rapidjson::Writer< rapidjson::StringBuffer > writer(buffer);
     document.Accept(writer);
     String szContentJsonStr = buffer.GetString();
+    LogManager::getSingleton().stream(LML_TRIVIAL) << "PlayHReq: " << szContentJsonStr;
 
 
     GameUrlMaker urlMaker;
