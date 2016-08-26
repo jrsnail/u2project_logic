@@ -23,7 +23,9 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../Classes \
                     $(LOCAL_PATH)/../../../engine/include/core/threading \
                     $(LOCAL_PATH)/../../../engine/include/mvc \
 					$(LOCAL_PATH)/../../../engine/include/lua \
-					$(LOCAL_PATH)/../../../engine/include/json \
+					$(LOCAL_PATH)/../../../engine/include/rapidjson \
+					$(LOCAL_PATH)/../../../engine/include/rapidjson/internal \
+					$(LOCAL_PATH)/../../../engine/include/rapidjson/error \
 					$(LOCAL_PATH)/../../../engine/include/xml \
                     $(LOCAL_PATH)/../../../gamebase \
 					$(LOCAL_PATH)/../../../luabridge
@@ -52,7 +54,6 @@ ALLFILES += $(wildcard $(LOCAL_PATH)/../../../engine/src/core/threading/*)
 ALLFILES += $(wildcard $(LOCAL_PATH)/../../../engine/src/core/Android/*)
 ALLFILES += $(wildcard $(LOCAL_PATH)/../../../engine/src/mvc/*)
 ALLFILES += $(wildcard $(LOCAL_PATH)/../../../engine/src/lua/*)
-ALLFILES += $(wildcard $(LOCAL_PATH)/../../../engine/src/json/*)
 ALLFILES += $(wildcard $(LOCAL_PATH)/../../../engine/src/xml/*)
 ALLFILES += $(call walk, $(LOCAL_PATH)/../../../gamebase)
 ALLFILES += $(call walk, $(LOCAL_PATH)/../../../luabridge)

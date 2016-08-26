@@ -4,6 +4,7 @@
 #include "U2FileSystemArchive.h"
 #include "U2ZipArchive.h"
 #if U2_PLATFORM == U2_PLATFORM_ANDROID
+#	include "platform/android/CCFileUtils-android.h"
 #	include <android/asset_manager.h>
 #	include <android/asset_manager_jni.h>
 #	include "U2ApkFileSystemArchive.h"
@@ -104,7 +105,7 @@ void Root::_initialize()
     }
 #if U2_PLATFORM == U2_PLATFORM_ANDROID
     //AAssetManager* pAssetMgr = AAssetManager_fromJava(env, assetManager);
-    AAssetManager* pAssetMgr = FileUtilsAndroid::getAssetManager();
+    AAssetManager* pAssetMgr = cocos2d::FileUtilsAndroid::getAssetManager();
     if (pAssetMgr)
     {
         if (!FactoryManager::getSingleton().hasObjectFactory("ApkFileSystem"))

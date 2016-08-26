@@ -221,12 +221,12 @@ ControlSnapshot* Scene::retrieveControlSnapshotOnTimestamp(u2uint64 timestamp)
 void Scene::eraseControlSnapshotBeforeTimestamp(u2uint64 timestamp)
 {
     for (ControlSnapshotMap::iterator it = m_ControlSnapshotMap.begin();
-    it != m_ControlSnapshotMap.end(); it++)
+    it != m_ControlSnapshotMap.end(); )
     {
         if (it->first < timestamp)
         {
             U2_DELETE it->second;
-            m_ControlSnapshotMap.erase(it);
+            m_ControlSnapshotMap.erase(it++);
         }
         else
         {

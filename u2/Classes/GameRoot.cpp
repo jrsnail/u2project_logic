@@ -16,6 +16,11 @@
 #include "application/AppFacade.h"
 #include "battle/BattleCommands.h"
 #include "battle/JoystickViewComponent.h"
+#if U2_PLATFORM == U2_PLATFORM_ANDROID
+#	include "CCFileUtils-android.h"
+#	include <android/asset_manager.h>
+#	include <android/asset_manager_jni.h>
+#endif
 
 
     
@@ -151,7 +156,7 @@ void GameRoot::_initialize()
     }
 #if U2_PLATFORM == U2_PLATFORM_ANDROID
     //AAssetManager* pAssetMgr = AAssetManager_fromJava(env, assetManager);
-    AAssetManager* pAssetMgr = FileUtilsAndroid::getAssetManager();
+    AAssetManager* pAssetMgr = cocos2d::FileUtilsAndroid::getAssetManager();
     if (pAssetMgr)
     {
         if (!FactoryManager::getSingleton().hasObjectFactory("ApkFileSystem"))

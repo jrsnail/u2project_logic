@@ -600,7 +600,7 @@ void PredictSelfSystem::_execute(GameObject* gameObj, u2real dt)
         else
         {
             ControlSnapshot* pControlSnapshot 
-                = Scene::getSingleton().retrieveControlSnapshotOnTimestamp(pMovableSnapshot->ulTimestampOnRequest);
+                = Scene::getSingleton().retrieveControlSnapshotOnTimestamp(pMovableSnapshot->ulTimestamp);
             if (pControlSnapshot == nullptr)
             {
                 assert(0);
@@ -608,7 +608,7 @@ void PredictSelfSystem::_execute(GameObject* gameObj, u2real dt)
             else
             {
                 v2ServerPos = pMovableSnapshot->v2Position;
-                Scene::getSingleton().eraseControlSnapshotBeforeTimestamp(pMovableSnapshot->ulTimestampOnRequest);
+                Scene::getSingleton().eraseControlSnapshotBeforeTimestamp(pMovableSnapshot->ulTimestamp);
                 bDo = true;
             }
         }
