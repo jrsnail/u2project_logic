@@ -542,12 +542,6 @@ void WsTaskLoop::_onSend(struct libwebsocket_context *ctx, struct libwebsocket *
                 int nBytesWrite = libwebsocket_write(wsi, &buf[LWS_SEND_BUFFER_PRE_PADDING], n
                     , (libwebsocket_write_protocol)nWriteProtocol);
 
-                LogManager::getSingleton().stream(LML_TRIVIAL)
-                    << "WebSocketClient send task: "
-                    << pSendTask->getType()
-                    << ", "
-                    << pSendTask->getName();
-
                 U2_FREE(buf, MEMCATEGORY_GENERAL);
 
                 // Buffer overrun?

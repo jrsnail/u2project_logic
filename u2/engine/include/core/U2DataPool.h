@@ -83,6 +83,26 @@ protected:
     typedef map<String, vector<u2char>::type>::type  MemoryMap;
     MemoryMap           m_MemoryMap;
 
+    U2_MUTEX(m_Uint64MemoryMapMutex);
+    typedef map<String, u2uint64>::type         Uint64MemoryMap;
+    Uint64MemoryMap     m_Uint64MemoryMap;
+
+    U2_MUTEX(m_FloatMemoryMapMutex);
+    typedef map<String, float>::type            FloatMemoryMap;
+    FloatMemoryMap      m_FloatMemoryMap;
+
+    U2_MUTEX(m_Vec2MemoryMapMutex);
+    typedef map<String, cocos2d::Vec2>::type    Vec2MemoryMap;
+    Vec2MemoryMap       m_Vec2MemoryMap;
+
+    U2_MUTEX(m_BoolMemoryMapMutex);
+    typedef map<String, bool>::type             BoolMemoryMap;
+    BoolMemoryMap       m_BoolMemoryMap;
+
+    U2_MUTEX(m_StringMemoryMapMutex);
+    typedef map<String, String>::type           StringMemoryMap;
+    StringMemoryMap     m_StringMemoryMap;
+
 
     U2_MUTEX(m_TaskQueueMapMutex);
     typedef list<Task*>::type       TaskQueue;

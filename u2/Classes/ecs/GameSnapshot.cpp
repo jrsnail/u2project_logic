@@ -59,9 +59,6 @@ void GameScene::end()
 //-----------------------------------------------------------------------
 void GameScene::_onUpdate(float dt)
 {
-    LogManager::getSingleton().stream(LML_TRIVIAL) 
-        << "GameScene::_onUpdate : " 
-        << u2::Root::getSingleton().getTimer()->getMilliseconds();
     _updateGameObjWithSnapshot();
 
     // send synchronize task every frame

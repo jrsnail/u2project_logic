@@ -57,21 +57,21 @@ void RegisterHReq::serialize()
     rapidjson::Document document;
     document.SetObject();
 
-    document.AddMember("hardid"
-        , rapidjson::Value("test_abcAAA", document.GetAllocator()).Move()
-        , document.GetAllocator());
-    document.AddMember("nickName"
-        , rapidjson::Value("test_nicknameAAA", document.GetAllocator()).Move()
-        , document.GetAllocator());
-
-//     String szHardId = "test_abc" + StringUtil::toString(u2::Root::getSingleton().getTimer()->getMicroseconds());
-//     String szNickname = "test_nickname" +StringUtil::toString(u2::Root::getSingleton().getTimer()->getMicroseconds());
 //     document.AddMember("hardid"
-//         , rapidjson::Value(szHardId.c_str(), document.GetAllocator()).Move()
+//         , rapidjson::Value("test_abcCCC", document.GetAllocator()).Move()
 //         , document.GetAllocator());
 //     document.AddMember("nickName"
-//         , rapidjson::Value(szNickname.c_str(), document.GetAllocator()).Move()
+//         , rapidjson::Value("test_nicknameCCC", document.GetAllocator()).Move()
 //         , document.GetAllocator());
+
+    String szHardId = "test_abc" + StringUtil::toString(u2::Root::getSingleton().getTimer()->getMicroseconds());
+    String szNickname = "test_nickname" +StringUtil::toString(u2::Root::getSingleton().getTimer()->getMicroseconds());
+    document.AddMember("hardid"
+        , rapidjson::Value(szHardId.c_str(), document.GetAllocator()).Move()
+        , document.GetAllocator());
+    document.AddMember("nickName"
+        , rapidjson::Value(szNickname.c_str(), document.GetAllocator()).Move()
+        , document.GetAllocator());
     document.AddMember("icon", 1, document.GetAllocator());
     rapidjson::StringBuffer buffer;
     rapidjson::Writer< rapidjson::StringBuffer > writer(buffer);

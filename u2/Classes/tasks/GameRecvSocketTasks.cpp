@@ -116,9 +116,11 @@ void SnapshotRST::deserialize()
 {
     do 
     {
+        
         std::string szJson(m_Data.begin(), m_Data.end());
         LogManager::getSingleton().stream(LML_TRIVIAL) << "SnapshotRST: " << szJson;
 
+        u2uint64 ulStart = Root::getSingleton().getTimer()->getMilliseconds();
         rapidjson::Document document;
         document.Parse(szJson.c_str());
 
@@ -139,6 +141,7 @@ void SnapshotRST::deserialize()
 
         if (m_nCode == 0)
         {
+            u2uint64 ulStart1 = Root::getSingleton().getTimer()->getMicroseconds();
             CHECK_RAPIDJSON_MEMBER(document, "data");
             CHECK_RAPIDJSON_VALIDITY(document["data"].IsObject());
             const rapidjson::Value& dataJsonVal = document["data"];
@@ -166,6 +169,8 @@ void SnapshotRST::deserialize()
                     m_bDeserializeSucceed = false;
                 }
             }
+            u2uint64 ulDelta1 = Root::getSingleton().getTimer()->getMicroseconds() - ulStart1;
+            LogManager::getSingleton().stream(LML_TRIVIAL) << "SnapshotRST::deserialize 1: " << ulDelta1;
         }
         else
         {
@@ -176,6 +181,8 @@ void SnapshotRST::deserialize()
                 << ", json = "
                 << szJson;
         }
+        u2uint64 ulDelta = Root::getSingleton().getTimer()->getMilliseconds() - ulStart;
+        LogManager::getSingleton().stream(LML_TRIVIAL) << "SnapshotRST::deserialize : " << ulDelta;
 
         m_bDeserializeSucceed = true;
     } while (0);
@@ -244,12 +251,6 @@ bool SnapshotRST::_deserializeHero(rapidjson::Value& jsonValue, GameMovableSnaps
         gameMovableSnapshot->v2Velocity.x = pointJsonVal["vx"].GetDouble();
         gameMovableSnapshot->v2Velocity.y = pointJsonVal["vy"].GetDouble();
 
-        if (gameMovableSnapshot->szGameObjGuid == "4" 
-            && gameMovableSnapshot->ulTimestamp == 33147827)
-        {
-            int a = 0;
-        }
-
         return true;
     } while (0);
 
@@ -261,7 +262,10 @@ void SnapshotRST::run()
     deserialize();
     if (m_nCode == 0)
     {
+        u2uint64 ulStart = Root::getSingleton().getTimer()->getMilliseconds();
         Scene::getSingleton().addFrameSnapshot(&m_FrameSnapshot);
+        u2uint64 ulDelta = Root::getSingleton().getTimer()->getMilliseconds() - ulStart;
+        LogManager::getSingleton().stream(LML_TRIVIAL) << "SnapshotRST::addFrameSnapshot : " << ulDelta;
     }
     else
     {

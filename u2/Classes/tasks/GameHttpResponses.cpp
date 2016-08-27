@@ -196,53 +196,55 @@ void PlayHRsp::deserialize()
         CHECK_RAPIDJSON_VALIDITY(document["message"].IsString());
         m_szMsg = document["message"].GetString();
 
-        CHECK_RAPIDJSON_MEMBER(document, "data");
-        CHECK_RAPIDJSON_VALIDITY(document["data"].IsObject());
-        const rapidjson::Value& dataJsonVal = document["data"];
-
-        CHECK_RAPIDJSON_MEMBER(dataJsonVal, "enterRoomTime");
-        CHECK_RAPIDJSON_VALIDITY(dataJsonVal["enterRoomTime"].IsUint64());
-        m_ulEnterRoomTimestamp = dataJsonVal["enterRoomTime"].GetUint64();
-
-        CHECK_RAPIDJSON_MEMBER(dataJsonVal, "heros");
-        CHECK_RAPIDJSON_VALIDITY(dataJsonVal["heros"].IsArray());
-        const rapidjson::Value& herosJsonVal = dataJsonVal["heros"];
-
-        for (rapidjson::SizeType i = 0; i < herosJsonVal.Size(); i++)
+        if (m_nCode == 0)
         {
-            GameMovableSnapshot* pPlayerSnapshot = dynamic_cast<GameMovableSnapshot*>(
-                MovableSnapshotManager::getSingleton().reuseObject(GET_OBJECT_TYPE(GameMovableSnapshot)));
-            if (_deserializeHero(herosJsonVal[i], pPlayerSnapshot))
+            CHECK_RAPIDJSON_MEMBER(document, "data");
+            CHECK_RAPIDJSON_VALIDITY(document["data"].IsObject());
+            const rapidjson::Value& dataJsonVal = document["data"];
+
+            CHECK_RAPIDJSON_MEMBER(dataJsonVal, "enterRoomTime");
+            CHECK_RAPIDJSON_VALIDITY(dataJsonVal["enterRoomTime"].IsUint64());
+            m_ulEnterRoomTimestamp = dataJsonVal["enterRoomTime"].GetUint64();
+
+            CHECK_RAPIDJSON_MEMBER(dataJsonVal, "heros");
+            CHECK_RAPIDJSON_VALIDITY(dataJsonVal["heros"].IsArray());
+            const rapidjson::Value& herosJsonVal = dataJsonVal["heros"];
+
+            for (rapidjson::SizeType i = 0; i < herosJsonVal.Size(); i++)
             {
-                m_FrameSnapshot[pPlayerSnapshot->szGameObjGuid] = pPlayerSnapshot;
+                GameMovableSnapshot* pPlayerSnapshot = dynamic_cast<GameMovableSnapshot*>(
+                    MovableSnapshotManager::getSingleton().reuseObject(GET_OBJECT_TYPE(GameMovableSnapshot)));
+                if (_deserializeHero(herosJsonVal[i], pPlayerSnapshot))
+                {
+                    m_FrameSnapshot[pPlayerSnapshot->szGameObjGuid] = pPlayerSnapshot;
+                }
+                else
+                {
+                    MovableSnapshotManager::getSingleton().recycleObject(pPlayerSnapshot);
+                    m_bDeserializeSucceed = false;
+                }
             }
-            else
-            {
-                MovableSnapshotManager::getSingleton().recycleObject(pPlayerSnapshot);
-                m_bDeserializeSucceed = false;
-            }
+
+            CHECK_RAPIDJSON_MEMBER(dataJsonVal, "room");
+            CHECK_RAPIDJSON_VALIDITY(dataJsonVal["room"].IsObject());
+            const rapidjson::Value& roomJsonVal = dataJsonVal["room"];
+
+            CHECK_RAPIDJSON_MEMBER(roomJsonVal, "roomId");
+            CHECK_RAPIDJSON_VALIDITY(roomJsonVal["roomId"].IsUint());
+            m_szRoomGuid = StringUtil::toString(roomJsonVal["roomId"].GetUint());
+
+            CHECK_RAPIDJSON_MEMBER(roomJsonVal, "state");
+            CHECK_RAPIDJSON_VALIDITY(roomJsonVal["state"].IsInt());
+            m_nRoomState = roomJsonVal["state"].GetInt();
+
+            CHECK_RAPIDJSON_MEMBER(roomJsonVal, "createTime");
+            CHECK_RAPIDJSON_VALIDITY(roomJsonVal["createTime"].IsUint64());
+            m_ulCreateRoomTimestamp = roomJsonVal["createTime"].GetUint64();
+
+            CHECK_RAPIDJSON_MEMBER(roomJsonVal, "beginTime");
+            CHECK_RAPIDJSON_VALIDITY(roomJsonVal["beginTime"].IsUint64());
+            m_ulStartRoomTimestamp = roomJsonVal["beginTime"].GetUint64();
         }
-
-        CHECK_RAPIDJSON_MEMBER(dataJsonVal, "room");
-        CHECK_RAPIDJSON_VALIDITY(dataJsonVal["room"].IsObject());
-        const rapidjson::Value& roomJsonVal = dataJsonVal["room"];
-
-        CHECK_RAPIDJSON_MEMBER(roomJsonVal, "roomId");
-        CHECK_RAPIDJSON_VALIDITY(roomJsonVal["roomId"].IsUint());
-        m_szRoomGuid = StringUtil::toString(roomJsonVal["roomId"].GetUint());
-
-        CHECK_RAPIDJSON_MEMBER(roomJsonVal, "state");
-        CHECK_RAPIDJSON_VALIDITY(roomJsonVal["state"].IsInt());
-        m_nRoomState = roomJsonVal["state"].GetInt();
-
-        CHECK_RAPIDJSON_MEMBER(roomJsonVal, "createTime");
-        CHECK_RAPIDJSON_VALIDITY(roomJsonVal["createTime"].IsUint64());
-        m_ulCreateRoomTimestamp = roomJsonVal["createTime"].GetUint64();
-
-        CHECK_RAPIDJSON_MEMBER(roomJsonVal, "beginTime");
-        CHECK_RAPIDJSON_VALIDITY(roomJsonVal["beginTime"].IsUint64());
-        m_ulStartRoomTimestamp = roomJsonVal["beginTime"].GetUint64();
-
 
         m_bDeserializeSucceed = true;
     } while (0);

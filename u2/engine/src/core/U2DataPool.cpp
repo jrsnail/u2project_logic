@@ -176,168 +176,101 @@ void DataPool::removeData(const String& key)
 //-----------------------------------------------------------------------
 bool DataPool::saveMemoryFloatData(const String& key, float value)
 {
-    U2_LOCK_MUTEX(m_MemoryMapMutex);
-    vector<u2char>::type& vec = m_MemoryMap[key];
-
-    // clear old data first
-    vec.clear();
-
-    OutStreamQueue<DataFilterOutStream> out;
-    out.push<VariableMemOutStream>("aaa", &vec);
-    out.push<DataFilterOutStream>("bbb");
-    out->writeFloat(value);
-    out->close();
+    U2_LOCK_MUTEX(m_FloatMemoryMapMutex);
+    m_FloatMemoryMap[key] = value;
     return true;
 }
 //-----------------------------------------------------------------------
 bool DataPool::saveMemoryStringData(const String& key, const String& value)
 {
-    U2_LOCK_MUTEX(m_MemoryMapMutex);
-    vector<u2char>::type& vec = m_MemoryMap[key];
-
-    // clear old data first
-    vec.clear();
-
-    OutStreamQueue<DataFilterOutStream> out;
-    out.push<VariableMemOutStream>("aaa", &vec);
-    out.push<DataFilterOutStream>("bbb");
-    out->writeUTFString(value);
-    out->close();
+    U2_LOCK_MUTEX(m_StringMemoryMapMutex);
+    m_StringMemoryMap[key] = value;
     return true;
 }
 //-----------------------------------------------------------------------
 bool DataPool::saveMemoryBoolData(const String& key, bool value)
 {
-    U2_LOCK_MUTEX(m_MemoryMapMutex);
-    vector<u2char>::type& vec = m_MemoryMap[key];
-
-    // clear old data first
-    vec.clear();
-
-    OutStreamQueue<DataFilterOutStream> out;
-    out.push<VariableMemOutStream>("aaa", &vec);
-    out.push<DataFilterOutStream>("bbb");
-    out->writeBool(value);
-    out->close();
+    U2_LOCK_MUTEX(m_BoolMemoryMapMutex);
+    m_BoolMemoryMap[key] = value;
     return true;
 }
 //-----------------------------------------------------------------------
 bool DataPool::saveMemoryUint64Data(const String& key, u2uint64 value)
 {
-    U2_LOCK_MUTEX(m_MemoryMapMutex);
-    vector<u2char>::type& vec = m_MemoryMap[key];
-
-    // clear old data first
-    vec.clear();
-
-    OutStreamQueue<DataFilterOutStream> out;
-    out.push<VariableMemOutStream>("aaa", &vec);
-    out.push<DataFilterOutStream>("bbb");
-    out->writeUint64(value);
-    out->close();
+    U2_LOCK_MUTEX(m_Uint64MemoryMapMutex);
+    m_Uint64MemoryMap[key] = value;
     return true;
 }
 //-----------------------------------------------------------------------
 bool DataPool::saveMemoryVec2Data(const String& key, const cocos2d::Vec2& value)
 {
-    U2_LOCK_MUTEX(m_MemoryMapMutex);
-    vector<u2char>::type& vec = m_MemoryMap[key];
-
-    // clear old data first
-    vec.clear();
-
-    OutStreamQueue<DataFilterOutStream> out;
-    out.push<VariableMemOutStream>("aaa", &vec);
-    out.push<DataFilterOutStream>("bbb");
-    out->writeFloat(value.x);
-    out->writeFloat(value.y);
-    out->close();
+    U2_LOCK_MUTEX(m_Vec2MemoryMapMutex);
+    m_Vec2MemoryMap[key] = value;
     return true;
 }
 //-----------------------------------------------------------------------
 bool DataPool::loadMemoryFloatData(const String& key, float& value)
 {
-    U2_LOCK_MUTEX(m_MemoryMapMutex);
-    MemoryMap::iterator it = m_MemoryMap.find(key);
-    if (it == m_MemoryMap.end())
+    U2_LOCK_MUTEX(m_FloatMemoryMapMutex);
+    FloatMemoryMap::iterator it = m_FloatMemoryMap.find(key);
+    if (it == m_FloatMemoryMap.end())
     {
         return false;
     }
-    vector<u2char>::type& vec = m_MemoryMap[key];
 
-    InStreamQueue<DataFilterInStream> in;
-    in.push<VariableMemInStream>("aaa", &vec);
-    in.push<DataFilterInStream>("bbb");
-    value = in->readFloat();
+    value = m_FloatMemoryMap[key];
     return true;
 }
 //-----------------------------------------------------------------------
 bool DataPool::loadMemoryStringData(const String& key, String& value)
 {
-    U2_LOCK_MUTEX(m_MemoryMapMutex);
-    MemoryMap::iterator it = m_MemoryMap.find(key);
-    if (it == m_MemoryMap.end())
+    U2_LOCK_MUTEX(m_StringMemoryMapMutex);
+    StringMemoryMap::iterator it = m_StringMemoryMap.find(key);
+    if (it == m_StringMemoryMap.end())
     {
         return false;
     }
-    vector<u2char>::type& vec = m_MemoryMap[key];
 
-    InStreamQueue<DataFilterInStream> in;
-    in.push<VariableMemInStream>("aaa", &vec);
-    in.push<DataFilterInStream>("bbb");
-    value = in->readUTFString();
+    value = m_StringMemoryMap[key];
     return true;
 }
 //-----------------------------------------------------------------------
 bool DataPool::loadMemoryBoolData(const String& key, bool& value)
 {
-    U2_LOCK_MUTEX(m_MemoryMapMutex);
-    MemoryMap::iterator it = m_MemoryMap.find(key);
-    if (it == m_MemoryMap.end())
+    U2_LOCK_MUTEX(m_BoolMemoryMapMutex);
+    BoolMemoryMap::iterator it = m_BoolMemoryMap.find(key);
+    if (it == m_BoolMemoryMap.end())
     {
         return false;
     }
-    vector<u2char>::type& vec = m_MemoryMap[key];
 
-    InStreamQueue<DataFilterInStream> in;
-    in.push<VariableMemInStream>("aaa", &vec);
-    in.push<DataFilterInStream>("bbb");
-    value = in->readBool();
+    value = m_BoolMemoryMap[key];
     return true;
 }
 //-----------------------------------------------------------------------
 bool DataPool::loadMemoryUint64Data(const String& key, u2uint64& value)
 {
-    U2_LOCK_MUTEX(m_MemoryMapMutex);
-    MemoryMap::iterator it = m_MemoryMap.find(key);
-    if (it == m_MemoryMap.end())
+    U2_LOCK_MUTEX(m_Uint64MemoryMapMutex);
+    Uint64MemoryMap::iterator it = m_Uint64MemoryMap.find(key);
+    if (it == m_Uint64MemoryMap.end())
     {
         return false;
     }
-    vector<u2char>::type& vec = m_MemoryMap[key];
 
-    InStreamQueue<DataFilterInStream> in;
-    in.push<VariableMemInStream>("aaa", &vec);
-    in.push<DataFilterInStream>("bbb");
-    value = in->readUint64();
+    value = m_Uint64MemoryMap[key];
     return true;
 }
 //-----------------------------------------------------------------------
 bool DataPool::loadMemoryVec2Data(const String& key, cocos2d::Vec2& value)
 {
-    U2_LOCK_MUTEX(m_MemoryMapMutex);
-    MemoryMap::iterator it = m_MemoryMap.find(key);
-    if (it == m_MemoryMap.end())
+    U2_LOCK_MUTEX(m_Vec2MemoryMapMutex);
+    Vec2MemoryMap::iterator it = m_Vec2MemoryMap.find(key);
+    if (it == m_Vec2MemoryMap.end())
     {
         return false;
     }
-    vector<u2char>::type& vec = m_MemoryMap[key];
 
-    InStreamQueue<DataFilterInStream> in;
-    in.push<VariableMemInStream>("aaa", &vec);
-    in.push<DataFilterInStream>("bbb");
-    value.x = in->readFloat();
-    value.y = in->readFloat();
+    value = m_Vec2MemoryMap[key];
     return true;
 }
 //-----------------------------------------------------------------------

@@ -89,18 +89,16 @@ void LogicTaskLoop::_onUpdate(float dt)
         }
         else
         {
-            LogManager::getSingleton().stream(LML_TRIVIAL)
-                << "LogicClient run task: "
-                << pTask->getType()
-                << ", "
-                << pTask->getName();
             _runTask(pTask);
         }
         m_WorkingQueue.pop_front();
     }
 
     // execute systems
+    u2uint64 ulStart = Root::getSingleton().getTimer()->getMilliseconds();
     SystemManager::getSingleton().execute(dt);
+    u2uint64 ulDelta = Root::getSingleton().getTimer()->getMilliseconds() - ulStart;
+    LogManager::getSingleton().stream(LML_TRIVIAL) << "SystemManager : " << ulDelta;
 }
 //---------------------------------------------------------------------
 void LogicTaskLoop::_addToIncomingQueue(Task* task)

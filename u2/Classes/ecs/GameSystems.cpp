@@ -496,6 +496,7 @@ void PredictSelfSystem::_exit()
 //-----------------------------------------------------------------------
 void PredictSelfSystem::_execute(GameObject* gameObj, u2real dt)
 {
+    
     PredictSelfComponent* pPredictSelfComp = dynamic_cast<PredictSelfComponent*>(
         gameObj->retrieveComponentByType("component_predict_self"));
     if (pPredictSelfComp == nullptr)
@@ -503,7 +504,6 @@ void PredictSelfSystem::_execute(GameObject* gameObj, u2real dt)
         assert(0);
         return;
     }
-
 
     cocos2d::Vec2 v2Dir = cocos2d::Vec2::ZERO;
     bool bSuc = DATAPOOL(ON_DataPool_Memory)->loadMemoryVec2Data("joystick_dir", v2Dir);
@@ -565,10 +565,12 @@ void PredictSelfSystem::_execute(GameObject* gameObj, u2real dt)
 
     pVelocityComp->v2Velocity = pSpeedDirComp->v2Dir * pSpeedComp->fSpeed;
 
-
+    u2uint64 ulStart = Root::getSingleton().getTimer()->getMilliseconds();
     // save control snapshot
     GameControlSnapshot* pSnapshot = dynamic_cast<GameControlSnapshot*>(
         ControlSnapshotManager::getSingleton().reuseObject(GET_OBJECT_TYPE(GameControlSnapshot)));
+    u2uint64 ulDelta = Root::getSingleton().getTimer()->getMilliseconds() - ulStart;
+    LogManager::getSingleton().stream(LML_TRIVIAL) << "PredictSelfSystem::_execute 1: " << ulDelta;
     
     // timestamp
     u2uint64 ulServerTimeElapseEnterRoom = 0;

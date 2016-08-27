@@ -104,17 +104,22 @@ void Scene::addFrameSnapshot(FrameSnapshot* frame)
         }
         else
         {
+            u2uint64 ulStart4 = Root::getSingleton().getTimer()->getMicroseconds();
             //assert(0);
             MovableSnapshotManager::getSingleton().recycleObject(pMovableSnapshot);
+            u2uint64 ulDelta4 = Root::getSingleton().getTimer()->getMicroseconds() - ulStart4;
+            LogManager::getSingleton().stream(LML_TRIVIAL) << "Scene::addFrameSnapshot 4: " << ulDelta4;
             continue;
         }
         
         if (movableSnapshots.size() > 2)
         {
-            
+            u2uint64 ulStart5 = Root::getSingleton().getTimer()->getMicroseconds();
             MoveableSnapshotMap::iterator it2 = movableSnapshots.begin();
             MovableSnapshotManager::getSingleton().recycleObject(it2->second);
             movableSnapshots.erase(it2);
+            u2uint64 ulDelta5 = Root::getSingleton().getTimer()->getMicroseconds() - ulStart5;
+            LogManager::getSingleton().stream(LML_TRIVIAL) << "Scene::addFrameSnapshot 5: " << ulDelta5;
         }
     }
 }
