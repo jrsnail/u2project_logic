@@ -117,7 +117,7 @@ void SnapshotRST::deserialize()
     do 
     {
         std::string szJson(m_Data.begin(), m_Data.end());
-        //LogManager::getSingleton().stream(LML_TRIVIAL) << "SnapshotRST: " << szJson;
+        LogManager::getSingleton().stream(LML_TRIVIAL) << "SnapshotRST: " << szJson;
 
         rapidjson::Document document;
         document.Parse(szJson.c_str());
@@ -243,6 +243,12 @@ bool SnapshotRST::_deserializeHero(rapidjson::Value& jsonValue, GameMovableSnaps
         CHECK_RAPIDJSON_VALIDITY(pointJsonVal["vy"].IsNumber());
         gameMovableSnapshot->v2Velocity.x = pointJsonVal["vx"].GetDouble();
         gameMovableSnapshot->v2Velocity.y = pointJsonVal["vy"].GetDouble();
+
+        if (gameMovableSnapshot->szGameObjGuid == "4" 
+            && gameMovableSnapshot->ulTimestamp == 33147827)
+        {
+            int a = 0;
+        }
 
         return true;
     } while (0);

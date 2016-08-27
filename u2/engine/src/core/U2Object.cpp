@@ -21,7 +21,8 @@ Object::Object(const String& type, const String& name, const String& guid)
     : m_szType(type)
     , m_szName(name)
     , m_szGuid(guid)
-    , m_bDeserializeSucceed(true)
+    , m_bDeserializeSucceed(false)
+    , m_bSerializeSucceed(false)
 {
     if (m_szGuid == BLANK)
     {

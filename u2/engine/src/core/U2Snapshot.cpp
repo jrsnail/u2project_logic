@@ -92,6 +92,14 @@ void Scene::addFrameSnapshot(FrameSnapshot* frame)
         MoveableSnapshotMap::iterator itMovable = movableSnapshots.find(pMovableSnapshot->ulTimestamp);
         if (itMovable == movableSnapshots.end())
         {
+            if (movableSnapshots.size() > 0)
+            {
+                if (pMovableSnapshot->ulTimestamp < movableSnapshots.rbegin()->second->ulTimestamp)
+                {
+                    assert(0);
+                }
+            }
+            
             movableSnapshots.insert(std::make_pair(pMovableSnapshot->ulTimestamp, pMovableSnapshot));
         }
         else

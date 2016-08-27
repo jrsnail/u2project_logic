@@ -61,6 +61,11 @@ inline void MoveSST::setAttackedGameObjGuid(const String& id)
 //-----------------------------------------------------------------------
 void MoveSST::serialize()
 {
+    if (m_bSerializeSucceed)
+    {
+        return;
+    }
+
     // room id
     String szSelfRoomId;
     bool bSuc = DATAPOOL(ON_DataPool_Memory)->loadMemoryStringData("SelfRoomId", szSelfRoomId);
@@ -137,4 +142,6 @@ void MoveSST::serialize()
     LogManager::getSingleton().stream(LML_TRIVIAL) << "MoveSST: " << szJsonStr;
 
     setData(vector<u2char>::type(szJsonStr.begin(), szJsonStr.end()));
+
+    m_bSerializeSucceed = true;
 }

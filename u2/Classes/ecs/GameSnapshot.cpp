@@ -59,6 +59,9 @@ void GameScene::end()
 //-----------------------------------------------------------------------
 void GameScene::_onUpdate(float dt)
 {
+    LogManager::getSingleton().stream(LML_TRIVIAL) 
+        << "GameScene::_onUpdate : " 
+        << u2::Root::getSingleton().getTimer()->getMilliseconds();
     _updateGameObjWithSnapshot();
 
     // send synchronize task every frame
@@ -70,6 +73,7 @@ void GameScene::_onUpdate(float dt)
     else
     {
         Task* pTask = TaskManager::getSingleton().createObject(GET_OBJECT_TYPE(MoveSST));
+        pTask->serialize();
         pWsTaskLoop->postTask(pTask);
     }
 }

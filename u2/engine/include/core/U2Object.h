@@ -33,6 +33,7 @@ public:
     virtual void serialize() {};
     virtual void deserialize() {};
     bool isDeserializeSucceed() { return m_bDeserializeSucceed; };
+    bool isSerializeSucceed() { return m_bSerializeSucceed; };
     void setData(const vector<u2char>::type& data) { m_Data = data; }
     const vector<u2char>::type& getData() const { return m_Data; };
     vector<u2char>::type& getData() { return m_Data; };
@@ -44,6 +45,7 @@ protected:
     String                  m_szGuid;       //< 唯一标识对象，每个对象递增
     vector<u2char>::type    m_Data;
     bool                    m_bDeserializeSucceed;
+    bool                    m_bSerializeSucceed;
 };
 
 
