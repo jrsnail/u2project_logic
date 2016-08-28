@@ -162,7 +162,7 @@ void WsTaskLoop::_runInternal()
             libwebsocket_service(m_pWsContext, 0);
         }
 
-        // Sleep 10 ms
+        // Sleep 1 ms
         U2_THREAD_SLEEP(1);
     }
 }

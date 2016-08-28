@@ -14,7 +14,7 @@ class TypedObjectManager
 {
 protected:
     // <type, T*>
-    typedef std::multimap<String, T*>                TypedObjectMap;
+    typedef std::multimap<String, T*>     TypedObjectMap;
     typedef std::pair<typename TypedObjectMap::iterator, typename TypedObjectMap::iterator>   Pair;
     
 public:

@@ -1,0 +1,29 @@
+syntax = "proto3";
+option optimize_for = LITE_RUNTIME;
+
+
+message SnapshotRsp
+{
+	string taskId = 1;
+	string version = 2;
+	int32 code = 3;
+	
+	message MovableSnapshot
+	{
+		fixed64 userId = 1;
+		fixed32 heroId = 2;
+		fixed32 type = 3;
+		bytes nickname = 4;
+		fixed32 hp = 5;
+		float speed = 6;
+		float effDistance = 7;
+		bool alive = 8;
+		float x = 9;
+		float y = 10;
+		float vx = 11;
+		float vy = 12;
+		fixed64 timestamp = 13;
+	}
+	
+	repeated MovableSnapshot snapshots = 4;
+}

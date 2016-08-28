@@ -5,6 +5,7 @@
 #include <rapidjson/writer.h>
 #include "ecs/GameComponents.h"
 #include "application/AppPrerequisites.h"
+#include "pb/SnapshotReq.pb.h"
 
 
 
@@ -117,6 +118,7 @@ void MoveSST::serialize()
         + ulServerTimeElapseEnterRoom;
 
 
+    /*
     // create json data
     rapidjson::Document document;
     document.SetObject();
@@ -142,6 +144,27 @@ void MoveSST::serialize()
     LogManager::getSingleton().stream(LML_TRIVIAL) << "MoveSST: " << szJsonStr;
 
     setData(vector<u2char>::type(szJsonStr.begin(), szJsonStr.end()));
+
+    m_bSerializeSucceed = true;
+    */
+    
+
+    SnapshotReq snapshotReq;
+    snapshotReq.set_roomid(StringUtil::parseUnsignedInt(szSelfRoomId));
+    snapshotReq.set_heroid(StringUtil::parseUnsignedInt(szSelfGameObjGuid));
+    snapshotReq.set_attheroid(0);
+    snapshotReq.set_accspeed(0.0f);
+    snapshotReq.set_x(m_v2Position.x);
+    snapshotReq.set_y(m_v2Position.y);
+    snapshotReq.set_vx(m_v2Velocity.x);
+    snapshotReq.set_vy(m_v2Velocity.y);
+    snapshotReq.set_timestamp(m_ulTimestamp);
+    snapshotReq.set_taskid("plane");
+    snapshotReq.set_version("1.0.0");
+    String szProtoBufStr = snapshotReq.SerializeAsString();
+    LogManager::getSingleton().stream(LML_TRIVIAL) << "MoveSST: " << szProtoBufStr;
+
+    setData(vector<u2char>::type(szProtoBufStr.begin(), szProtoBufStr.end()));
 
     m_bSerializeSucceed = true;
 }

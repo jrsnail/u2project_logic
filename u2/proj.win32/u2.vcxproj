@@ -72,7 +72,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(EngineRoot)cocos\audio\include;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;..\..\Dependenices\include;..\engine;..\engine\include;..\engine\include\core;..\engine\include\core\streams;..\engine\include\core\threading;..\engine\include\core\threading\threadpool;..\engine\include\core\sserver;..\engine\include\mvc;..\engine\include\lua;..\engine\include\xml;..\gamebase;..\Classes;..\luabridge;..;$(EngineRoot)external;%(AdditionalIncludeDirectories);$(_COCOS_HEADER_WIN32_BEGIN);$(_COCOS_HEADER_WIN32_END)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot)cocos\audio\include;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;..\..\Dependenices\include\protobuf;..\..\Dependenices\include;..\engine;..\engine\include;..\engine\include\core;..\engine\include\core\streams;..\engine\include\core\threading;..\engine\include\core\threading\threadpool;..\engine\include\core\sserver;..\engine\include\mvc;..\engine\include\lua;..\engine\include\xml;..\gamebase;..\Classes;..\luabridge;..;$(EngineRoot)external;%(AdditionalIncludeDirectories);$(_COCOS_HEADER_WIN32_BEGIN);$(_COCOS_HEADER_WIN32_END)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_CHIPMUNK_INTEGRATION=1;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;U2_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -85,9 +85,9 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>%(AdditionalDependencies);$(_COCOS_LIB_WIN32_BEGIN);$(_COCOS_LIB_WIN32_END);zlib.lib;zziplib.lib;libcurl_imp.lib;websockets.lib</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies);$(_COCOS_LIB_WIN32_BEGIN);$(_COCOS_LIB_WIN32_END);zlib.lib;zziplib.lib;libcurl_imp.lib;websockets.lib;libprotobuf-lited.lib</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
-      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories);$(_COCOS_LIB_PATH_WIN32_BEGIN);$(_COCOS_LIB_PATH_WIN32_END);..\..\Dependenices\libs\zlib\Win\$(PlatformShortName);..\..\Dependenices\libs\zzip\Win\$(PlatformShortName);..\..\Dependenices\libs\curl\Win\$(PlatformShortName);..\..\Dependenices\libs\websocket\Win\$(PlatformShortName)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories);$(_COCOS_LIB_PATH_WIN32_BEGIN);$(_COCOS_LIB_PATH_WIN32_END);..\..\Dependenices\libs\zlib\Win\$(PlatformShortName);..\..\Dependenices\libs\zzip\Win\$(PlatformShortName);..\..\Dependenices\libs\curl\Win\$(PlatformShortName);..\..\Dependenices\libs\websocket\Win\$(PlatformShortName);..\..\Dependenices\libs\protobuf\Win\$(PlatformShortName)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
@@ -165,6 +165,8 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\tasks\GameSendSocketTasks.cpp" />
     <ClCompile Include="..\Classes\tasks\GameUrlMaker.cpp" />
     <ClCompile Include="..\Classes\tasks\GameWsClientImpl.cpp" />
+    <ClCompile Include="..\Classes\tasks\pb\SnapshotReq.pb.cc" />
+    <ClCompile Include="..\Classes\tasks\pb\SnapshotRsp.pb.cc" />
     <ClCompile Include="..\engine\src\core\streams\U2CodeCvt.cpp" />
     <ClCompile Include="..\engine\src\core\streams\U2DataFilterStream.cpp" />
     <ClCompile Include="..\engine\src\core\streams\U2FileHandleStream.cpp" />
@@ -323,6 +325,8 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\tasks\GameSendSocketTasks.h" />
     <ClInclude Include="..\Classes\tasks\GameUrlMaker.h" />
     <ClInclude Include="..\Classes\tasks\GameWsClientImpl.h" />
+    <ClInclude Include="..\Classes\tasks\pb\SnapshotReq.pb.h" />
+    <ClInclude Include="..\Classes\tasks\pb\SnapshotRsp.pb.h" />
     <ClInclude Include="..\engine\include\core\streams\U2CodeCvt.h" />
     <ClInclude Include="..\engine\include\core\streams\U2DataFilterStream.h" />
     <ClInclude Include="..\engine\include\core\streams\U2FileHandleStream.h" />

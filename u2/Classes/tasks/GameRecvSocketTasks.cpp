@@ -4,6 +4,7 @@
 #include "ecs/GameComponents.h"
 #include "ecs/GameSnapshot.h"
 #include "GameSendSocketTasks.h"
+#include "pb/SnapshotRsp.pb.h"
 
 
 U2EG_NAMESPACE_USING
@@ -111,6 +112,7 @@ SnapshotRST::SnapshotRST(const String& type, const String& name, const u2::Strin
 SnapshotRST::~SnapshotRST()
 {
 }
+/*
 //-----------------------------------------------------------------------
 void SnapshotRST::deserialize()
 {
@@ -181,6 +183,68 @@ void SnapshotRST::deserialize()
                 << ", json = "
                 << szJson;
         }
+        u2uint64 ulDelta = Root::getSingleton().getTimer()->getMilliseconds() - ulStart;
+        LogManager::getSingleton().stream(LML_TRIVIAL) << "SnapshotRST::deserialize : " << ulDelta;
+
+        m_bDeserializeSucceed = true;
+    } while (0);
+
+    m_bDeserializeSucceed = false;
+}
+*/
+
+void SnapshotRST::deserialize()
+{
+    do
+    {
+        std::string szProtoBuf(m_Data.begin(), m_Data.end());
+        LogManager::getSingleton().stream(LML_TRIVIAL) << "SnapshotRST: " << szProtoBuf;
+
+        u2uint64 ulStart = Root::getSingleton().getTimer()->getMilliseconds();
+
+        SnapshotRsp snapshotRsp;
+        if (snapshotRsp.ParseFromString(szProtoBuf))
+        {
+            String szTaskId = snapshotRsp.taskid();
+            m_szVersion = snapshotRsp.version();
+            m_nCode = snapshotRsp.code();
+
+            if (m_nCode == 0)
+            {
+                for (int i = 0; i < snapshotRsp.snapshots_size(); i++)
+                {
+                    GameMovableSnapshot* pPlayerSnapshot = dynamic_cast<GameMovableSnapshot*>(
+                        MovableSnapshotManager::getSingleton().reuseObject(GET_OBJECT_TYPE(GameMovableSnapshot)));
+
+                    const ::SnapshotRsp_MovableSnapshot& snapshot = snapshotRsp.snapshots(i);
+                    pPlayerSnapshot->szPlayerId = StringUtil::toString(snapshot.userid());
+                    pPlayerSnapshot->szGameObjGuid = StringUtil::toString(snapshot.heroid());
+                    pPlayerSnapshot->szGameObjType = StringUtil::toString(snapshot.type());
+                    pPlayerSnapshot->szPlayerName = snapshot.nickname();
+                    pPlayerSnapshot->uCurHp = snapshot.hp();
+                    pPlayerSnapshot->rCurSpeed = snapshot.speed();
+                    pPlayerSnapshot->rAtkDistance = snapshot.effdistance();
+                    pPlayerSnapshot->bAlive = snapshot.alive();
+                    pPlayerSnapshot->ulTimestamp = snapshot.timestamp();
+                    pPlayerSnapshot->v2Position.x = snapshot.x();
+                    pPlayerSnapshot->v2Position.y = snapshot.y();
+                    pPlayerSnapshot->v2Velocity.x = snapshot.vx();
+                    pPlayerSnapshot->v2Velocity.y = snapshot.vy();
+
+                    m_FrameSnapshot[pPlayerSnapshot->szGameObjGuid] = pPlayerSnapshot;
+                }
+            }
+        }
+        else
+        {
+            assert(0);
+            LogManager::getSingleton().stream(LML_CRITICAL)
+                << "[task error]: code = "
+                << m_nCode
+                << ", protobuf = "
+                << szProtoBuf;
+        }
+
         u2uint64 ulDelta = Root::getSingleton().getTimer()->getMilliseconds() - ulStart;
         LogManager::getSingleton().stream(LML_TRIVIAL) << "SnapshotRST::deserialize : " << ulDelta;
 

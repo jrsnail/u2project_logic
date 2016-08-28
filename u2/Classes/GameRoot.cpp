@@ -21,6 +21,7 @@
 #	include <android/asset_manager.h>
 #	include <android/asset_manager_jni.h>
 #endif
+#include <google/protobuf/stubs/common.h>
 
 
     
@@ -128,7 +129,7 @@ void GameRoot::_initialize()
         m_pLogManager = U2_NEW u2::LogManager();
         m_pLogManager->createLog("u2.log", true, true);
 #if U2_DEBUG_MODE == 1
-        m_pLogManager->setLogDetail(LoggingLevel::LL_BOREME);
+//        m_pLogManager->setLogDetail(LoggingLevel::LL_BOREME);
 #endif
     }
 
@@ -281,12 +282,23 @@ void GameRoot::enter()
         pHttpTaskLoop->postTask(pRegisterReq);
     }
 
+    {
+        //------------------------------- protobuf ----------------------------------------
+        // Verify that the version of the library that we linked against is
+        // compatible with the version of the headers we compiled against.
+        GOOGLE_PROTOBUF_VERIFY_VERSION;
+    }
+    
+
     SystemManager::getSingleton().enter();
 }
 //-----------------------------------------------------------------------
 void GameRoot::exit()
 {
     SystemManager::getSingleton().exit();
+
+    // Optional:  Delete all global objects allocated by libprotobuf.
+    google::protobuf::ShutdownProtobufLibrary();
 }
 //-----------------------------------------------------------------------
 void GameRoot::pause()

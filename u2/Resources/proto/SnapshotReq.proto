@@ -1,0 +1,18 @@
+syntax = "proto3";
+option optimize_for = LITE_RUNTIME;
+
+
+message SnapshotReq
+{
+	fixed32 roomId = 1;
+	fixed32 heroId = 2;
+	fixed32 attHeroId = 3;
+	float accSpeed = 4;
+	float x = 5;
+	float y = 6;
+	float vx = 7;
+	float vy = 8;
+	string version = 9;
+	string taskId = 10;
+	fixed64 timestamp = 11;
+}
