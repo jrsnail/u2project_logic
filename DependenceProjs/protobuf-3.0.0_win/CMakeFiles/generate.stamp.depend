@@ -1,0 +1,41 @@
+# CMake generation dependency list for this directory.
+D:/Share/protobuf-3.0.0/cmake/CMakeLists.txt
+D:/Share/protobuf-3.0.0_win/CMakeFiles/3.4.1/CMakeSystem.cmake
+D:/Program Files (x86)/CMake/share/cmake-3.4/Modules/CMakeSystemSpecificInitialize.cmake
+D:/Share/protobuf-3.0.0_win/CMakeFiles/3.4.1/CMakeCCompiler.cmake
+D:/Share/protobuf-3.0.0_win/CMakeFiles/3.4.1/CMakeCXXCompiler.cmake
+D:/Program Files (x86)/CMake/share/cmake-3.4/Modules/CMakeSystemSpecificInformation.cmake
+D:/Program Files (x86)/CMake/share/cmake-3.4/Modules/CMakeGenericSystem.cmake
+D:/Program Files (x86)/CMake/share/cmake-3.4/Modules/Platform/Windows.cmake
+D:/Program Files (x86)/CMake/share/cmake-3.4/Modules/Platform/WindowsPaths.cmake
+D:/Program Files (x86)/CMake/share/cmake-3.4/Modules/CMakeCInformation.cmake
+D:/Program Files (x86)/CMake/share/cmake-3.4/Modules/Platform/Windows-MSVC-C.cmake
+D:/Program Files (x86)/CMake/share/cmake-3.4/Modules/Platform/Windows-MSVC.cmake
+D:/Share/protobuf-3.0.0_win/CMakeFiles/3.4.1/CMakeRCCompiler.cmake
+D:/Program Files (x86)/CMake/share/cmake-3.4/Modules/CMakeRCInformation.cmake
+D:/Program Files (x86)/CMake/share/cmake-3.4/Modules/CMakeCommonLanguageInclude.cmake
+D:/Program Files (x86)/CMake/share/cmake-3.4/Modules/CMakeCXXInformation.cmake
+D:/Program Files (x86)/CMake/share/cmake-3.4/Modules/Compiler/MSVC-CXX.cmake
+D:/Program Files (x86)/CMake/share/cmake-3.4/Modules/Platform/Windows-MSVC-CXX.cmake
+D:/Program Files (x86)/CMake/share/cmake-3.4/Modules/Platform/Windows-MSVC.cmake
+D:/Program Files (x86)/CMake/share/cmake-3.4/Modules/CMakeCommonLanguageInclude.cmake
+D:/Program Files (x86)/CMake/share/cmake-3.4/Modules/CMakeDependentOption.cmake
+D:/Share/protobuf-3.0.0/cmake/protobuf-options.cmake
+D:/Program Files (x86)/CMake/share/cmake-3.4/Modules/FindThreads.cmake
+D:/Program Files (x86)/CMake/share/cmake-3.4/Modules/CheckLibraryExists.cmake
+D:/Program Files (x86)/CMake/share/cmake-3.4/Modules/CheckSymbolExists.cmake
+D:/Program Files (x86)/CMake/share/cmake-3.4/Modules/CheckIncludeFile.cmake
+D:/Program Files (x86)/CMake/share/cmake-3.4/Modules/FindPackageHandleStandardArgs.cmake
+D:/Program Files (x86)/CMake/share/cmake-3.4/Modules/FindPackageMessage.cmake
+D:/Program Files (x86)/CMake/share/cmake-3.4/Modules/CMakeParseArguments.cmake
+D:/Share/protobuf-3.0.0/cmake/extract_includes.bat.in
+D:/Share/protobuf-3.0.0/cmake/libprotobuf-lite.cmake
+D:/Share/protobuf-3.0.0/cmake/libprotobuf.cmake
+D:/Share/protobuf-3.0.0/cmake/libprotoc.cmake
+D:/Share/protobuf-3.0.0/cmake/protoc.cmake
+D:/Share/protobuf-3.0.0/cmake/install.cmake
+D:/Program Files (x86)/CMake/share/cmake-3.4/Modules/GNUInstallDirs.cmake
+D:/Share/protobuf-3.0.0/cmake/protobuf-config.cmake.in
+D:/Share/protobuf-3.0.0/cmake/protobuf-config-version.cmake.in
+D:/Share/protobuf-3.0.0/cmake/protobuf-module.cmake.in
+D:/Share/protobuf-3.0.0/cmake/protobuf-options.cmake

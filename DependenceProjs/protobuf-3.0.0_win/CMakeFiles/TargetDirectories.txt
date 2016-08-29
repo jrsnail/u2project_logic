@@ -1,0 +1,6 @@
+D:/Share/protobuf-3.0.0_win/CMakeFiles/libprotoc.dir
+D:/Share/protobuf-3.0.0_win/CMakeFiles/ALL_BUILD.dir
+D:/Share/protobuf-3.0.0_win/CMakeFiles/libprotobuf.dir
+D:/Share/protobuf-3.0.0_win/CMakeFiles/libprotobuf-lite.dir
+D:/Share/protobuf-3.0.0_win/CMakeFiles/ZERO_CHECK.dir
+D:/Share/protobuf-3.0.0_win/CMakeFiles/protoc.dir
