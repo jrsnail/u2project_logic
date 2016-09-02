@@ -3,8 +3,6 @@
 #include <websocket/libwebsockets.h>
 #include "U2LogManager.h"
 #include "U2Exception.h"
-#include "U2DataPool.h"
-#include "U2PredefinedPrerequisites.h"
 #include "U2Scheduler.h"
 
 
@@ -69,11 +67,17 @@ void WsTaskLoop::run()
     m_bKeepRunning = true;
 
     m_thread = std::move(std::thread(std::bind(&WsTaskLoop::_runInternal, this)));
-    m_thread.detach();
+    //m_thread.detach();
 }
 //-----------------------------------------------------------------------
 void WsTaskLoop::quit()
 {
+    // Waiting for the subThread safety exit
+    if (m_thread.joinable())
+    {
+        m_thread.join();
+    }
+
     U2_LOCK_MUTEX(m_KeepRunningMutex);
     m_bKeepRunning = false;
 

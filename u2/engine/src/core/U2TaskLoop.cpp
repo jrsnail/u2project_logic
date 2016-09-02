@@ -4,8 +4,6 @@
 #include "U2Exception.h"
 #include "U2Task.h"
 #include "U2Scheduler.h"
-#include "U2LogicClient.h"
-#include "U2WebSocketClientImpl.h"
 
 
 U2EG_NAMESPACE_USING
@@ -181,6 +179,15 @@ TaskLoopManager::TaskLoopManager()
 //-----------------------------------------------------------------------
 TaskLoopManager::~TaskLoopManager()
 {
+    ObjectMapIterator it = SimpleObjectManager<TaskLoop>::retrieveAllObjects();
+    while (it.hasMoreElements())
+    {
+        TaskLoop* pTaskLoop = it.getNext();
+        if (pTaskLoop != nullptr)
+        {
+            pTaskLoop->quit();
+        }
+    }
 }
 //-----------------------------------------------------------------------
 TaskLoop* TaskLoopManager::createObject(const String& type, const String& name, const String& guid)

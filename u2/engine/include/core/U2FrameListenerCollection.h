@@ -1,15 +1,12 @@
-﻿//
-//  CRemoteMsgManager.h
-//  myGame
-//
-//  Created by jiang on 13-7-23.
-//
-//
-#ifndef __U2FrameListenerCollection__
+﻿#ifndef __U2FrameListenerCollection__
 #define __U2FrameListenerCollection__
 
 
-#include "U2Core.h"
+#include "U2Prerequisites.h"
+#include "U2STLRedefined.h"
+#include "U2Singleton.h"
+#include "U2IteratorWrapper.h"
+#include "U2HeaderPrefix.h"
 
 
 U2EG_NAMESPACE_BEGIN
@@ -80,5 +77,8 @@ protected:
 
 
 U2EG_NAMESPACE_END
+
+
+#include "U2HeaderSuffix.h"
 
 #endif /* defined(__U2FrameListenerCollection__) */

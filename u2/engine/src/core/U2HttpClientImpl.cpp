@@ -36,7 +36,7 @@ void ActiveHttpTaskLoop::_runInternal()
             U2_LOCK_MUTEX(m_PausingMutex);
             if (m_bPausing)
             {
-                U2_THREAD_SLEEP(1000);
+                U2_THREAD_SLEEP(1);
                 continue;
             }
         }
@@ -50,7 +50,7 @@ void ActiveHttpTaskLoop::_runInternal()
             }
             if (bEmpty)
             {
-                U2_THREAD_SLEEP(1000);
+                U2_THREAD_SLEEP(1);
             }
             else
             {
@@ -75,7 +75,7 @@ void ActiveHttpTaskLoop::_runInternal()
                 U2_LOCK_MUTEX(m_PausingMutex);
                 if (m_bPausing)
                 {
-                    U2_THREAD_SLEEP(1000);
+                    U2_THREAD_SLEEP(1);
                     continue;
                 }
             }

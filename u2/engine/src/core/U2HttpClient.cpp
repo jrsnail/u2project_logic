@@ -4,9 +4,6 @@
 #include "U2LogManager.h"
 #include "U2Exception.h"
 #include "U2FrameListenerCollection.h"
-#include "U2StreamQueue.h"
-#include "U2DataFilterStream.h"
-#include "U2StringStream.h"
 #include "cocos2d.h"
 
 

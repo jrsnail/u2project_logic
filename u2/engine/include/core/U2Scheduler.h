@@ -195,10 +195,10 @@ public:
 };
 
 
+U2EG_NAMESPACE_END
+
 
 #include "U2HeaderSuffix.h"
-
-U2EG_NAMESPACE_END
 
 
 #endif // __U2Scheduler_H__
