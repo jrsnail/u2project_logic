@@ -413,21 +413,27 @@ void HttpDownloadTaskLoop::postTaskAndReply(Task* task, Task* reply)
 //-----------------------------------------------------------------------
 void HttpDownloadTaskLoop::run()
 {
-    U2_LOCK_MUTEX(m_KeepRunningMutex);
+    U2_LOCK_MUTEX_NAMED(m_KeepRunningMutex, runningLck);
     m_bKeepRunning = true;
+
+    U2_LOCK_MUTEX_NAMED(m_PausingMutex, pausingLck);
+    m_bPausing = false;
 
     for (size_t i = 0; i < m_uTotalThreadCount; i++)
     {
         std::thread t = std::move(std::thread(std::bind(&HttpDownloadTaskLoop::_runInternal, this)));
         m_ThreadMap[t.get_id()] = std::move(t);
-        m_ThreadMap[t.get_id()].detach();
+        //m_ThreadMap[t.get_id()].detach();
     }
 }
 //-----------------------------------------------------------------------
 void HttpDownloadTaskLoop::quit()
 {
-    U2_LOCK_MUTEX(m_KeepRunningMutex);
+    U2_LOCK_MUTEX_NAMED(m_KeepRunningMutex, runningLck);
     m_bKeepRunning = false;
+
+    U2_LOCK_MUTEX_NAMED(m_PausingMutex, pausingLck);
+    m_bPausing = true;
 }
 //-----------------------------------------------------------------------
 void HttpDownloadTaskLoop::pause()
@@ -442,6 +448,31 @@ void HttpDownloadTaskLoop::resume()
 {
     U2_LOCK_MUTEX(m_PausingMutex);
     m_bPausing = false;
+}
+//-----------------------------------------------------------------------
+void HttpDownloadTaskLoop::join()
+{
+    for (ThreadMap::iterator it = m_ThreadMap.begin(); 
+    it != m_ThreadMap.end(); it++)
+    {
+        std::thread& t = it->second;
+        if (t.joinable())
+        {
+            t.join();
+        }
+    }
+}
+//-----------------------------------------------------------------------
+bool HttpDownloadTaskLoop::isRunning()
+{
+    U2_LOCK_MUTEX(m_KeepRunningMutex);
+    return m_bKeepRunning;
+}
+//-----------------------------------------------------------------------
+bool HttpDownloadTaskLoop::isPausing()
+{
+    U2_LOCK_MUTEX(m_PausingMutex);
+    return m_bPausing;
 }
 //-----------------------------------------------------------------------
 String HttpDownloadTaskLoop::getThreadId()
@@ -579,6 +610,8 @@ void HttpDownloadTaskLoop::_runInternal()
             }
         }
     }
+
+    _postRunCurrentTaskLoop();
 }
 //-----------------------------------------------------------------------
 Chunk* HttpDownloadTaskLoop::_getNextWaitingChunk()

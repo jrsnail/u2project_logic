@@ -279,7 +279,11 @@ void TaskLoopManager::resumeAll()
         TaskLoop* pTaskLoop = it.getNext();
         if (pTaskLoop != nullptr)
         {
-            if (pTaskLoop->isRunning() && pTaskLoop->isPausing())
+            if (!pTaskLoop->isRunning())
+            {
+                pTaskLoop->run();
+            }
+            else if (pTaskLoop->isPausing())
             {
                 pTaskLoop->resume();
             }

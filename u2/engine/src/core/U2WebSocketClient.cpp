@@ -35,6 +35,7 @@ public:
 WsTaskLoop::WsTaskLoop(const String& type, const String& name, const String& guid)
     : TaskLoop(type, name, guid)
     , m_bKeepRunning(true)
+    , m_bPausing(false)
     , m_eState(State::CONNECTING)
     , m_aWsProtocols(nullptr)
     , m_pWsContext(nullptr)
@@ -60,17 +61,22 @@ void WsTaskLoop::postTaskAndReply(Task* task, Task* reply)
 //-----------------------------------------------------------------------
 void WsTaskLoop::run()
 {
-    U2_LOCK_MUTEX(m_KeepRunningMutex);
+    U2_LOCK_MUTEX_NAMED(m_KeepRunningMutex, runningLck);
     m_bKeepRunning = true;
+    
+    U2_LOCK_MUTEX_NAMED(m_PausingMutex, pausingLck);
+    m_bPausing = false;
 
     m_thread = std::move(std::thread(std::bind(&WsTaskLoop::_runInternal, this)));
-    //m_thread.detach();
 }
 //-----------------------------------------------------------------------
 void WsTaskLoop::quit()
 {
-    U2_LOCK_MUTEX(m_KeepRunningMutex);
+    U2_LOCK_MUTEX_NAMED(m_KeepRunningMutex, runningLck);
     m_bKeepRunning = false;
+
+    U2_LOCK_MUTEX_NAMED(m_PausingMutex, pausingLck);
+    m_bPausing = true;
 }
 //-----------------------------------------------------------------------
 void WsTaskLoop::join()
@@ -100,7 +106,8 @@ bool WsTaskLoop::isRunning()
 //-----------------------------------------------------------------------
 bool WsTaskLoop::isPausing()
 {
-    return !isRunning();
+    U2_LOCK_MUTEX(m_PausingMutex);
+    return m_bPausing;
 }
 //-----------------------------------------------------------------------
 String WsTaskLoop::getThreadId()

@@ -182,6 +182,12 @@ public:
 
     virtual void resume() override;
 
+    virtual void join() override;
+
+    virtual bool isRunning() override;
+
+    virtual bool isPausing() override;
+
     virtual String getThreadId() override;
 
     /**
@@ -267,7 +273,6 @@ protected:
     void _saveAllRequests();
 
 protected:
-    std::thread     m_thread;
     /** when detach, thread.get_id() will return back 0,
         so we should record it here.
     */

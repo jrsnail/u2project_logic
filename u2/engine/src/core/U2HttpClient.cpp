@@ -323,6 +323,7 @@ static int processDeleteTask(HttpTaskLoop* client, HttpRequest* request, write_c
 HttpTaskLoop::HttpTaskLoop(const String& type, const String& name, const u2::String& guid)
     : TaskLoop(type, name, guid)
     , m_bKeepRunning(true)
+    , m_bPausing(false)
     , m_uTimeoutForConnect(30)
     , m_uTimeoutForRead(60)
 {
@@ -345,11 +346,13 @@ void HttpTaskLoop::postTaskAndReply(Task* task, Task* reply)
 //-----------------------------------------------------------------------
 void HttpTaskLoop::run()
 {
-    U2_LOCK_MUTEX(m_KeepRunningMutex);
+    U2_LOCK_MUTEX_NAMED(m_KeepRunningMutex, runningLck);
     m_bKeepRunning = true;
 
+    U2_LOCK_MUTEX_NAMED(m_PausingMutex, pausingLck);
+    m_bPausing = false;
+
     m_thread = std::move(std::thread(std::bind(&HttpTaskLoop::_runInternal, this)));
-    //m_thread.detach();
 }
 //-----------------------------------------------------------------------
 void HttpTaskLoop::join()
@@ -362,12 +365,16 @@ void HttpTaskLoop::join()
 //-----------------------------------------------------------------------
 void HttpTaskLoop::quit()
 {
-    U2_LOCK_MUTEX(m_KeepRunningMutex);
+    U2_LOCK_MUTEX_NAMED(m_KeepRunningMutex, runningLck);
     m_bKeepRunning = false;
+
+    U2_LOCK_MUTEX_NAMED(m_PausingMutex, pausingLck);
+    m_bPausing = true;
 }
 //-----------------------------------------------------------------------
 void HttpTaskLoop::pause()
 {
+    // in this case, we just quit directly, we do not keep link on pause state
     quit();
     join();
 }
@@ -385,7 +392,8 @@ bool HttpTaskLoop::isRunning()
 //-----------------------------------------------------------------------
 bool HttpTaskLoop::isPausing()
 {
-    return !isRunning();
+    U2_LOCK_MUTEX(m_PausingMutex);
+    return m_bPausing;
 }
 //-----------------------------------------------------------------------
 String HttpTaskLoop::getThreadId()
