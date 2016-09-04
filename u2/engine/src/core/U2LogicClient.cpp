@@ -3,6 +3,9 @@
 #include "U2LogManager.h"
 #include "U2Exception.h"
 #include "U2FrameListenerCollection.h"
+#include "U2Root.h"
+#include "U2System.h"
+#include "U2Timer.h"
 
 
 U2EG_NAMESPACE_USING
@@ -31,8 +34,6 @@ void LogicTaskLoop::postTaskAndReply(Task* task, Task* reply)
 //-----------------------------------------------------------------------
 void LogicTaskLoop::run()
 {
-    TaskLoop::run();
-    
     FrameListenerCollection::getSingleton().addFrameListener(this
         , std::bind(&LogicTaskLoop::_onUpdate, this, std::placeholders::_1));
     
@@ -41,17 +42,14 @@ void LogicTaskLoop::run()
 //-----------------------------------------------------------------------
 void LogicTaskLoop::quit()
 {
-    TaskLoop::quit();
 }
 //-----------------------------------------------------------------------
 void LogicTaskLoop::pause()
 {
-    TaskLoop::pause();
 }
 //-----------------------------------------------------------------------
 void LogicTaskLoop::resume()
 {
-    TaskLoop::resume();
 }
 //-----------------------------------------------------------------------
 String LogicTaskLoop::getThreadId()

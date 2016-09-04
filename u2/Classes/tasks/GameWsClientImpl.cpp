@@ -6,10 +6,11 @@
 
 
 
+
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
 GameWsTaskLoop::GameWsTaskLoop(const u2::String& type, const u2::String& name, const u2::String& guid)
-    : JsonWsTaskLoop(type, name, guid)
+    : WsTaskLoop(type, name, guid)
 {
     CREATE_FACTORY(GameWsCloseRST);
     CREATE_FACTORY(GameWsErrorRST);
@@ -53,6 +54,7 @@ inline const u2::String& GameWsTaskLoop::_getRecvTaskLoop()
 //-----------------------------------------------------------------------
 RecvSocketTask* GameWsTaskLoop::_splitRecvTask(vector<u2char>::type& buffer, bool binary)
 {
+    
     std::string szJson(buffer.begin(), buffer.end());
 
     rapidjson::Document document;
@@ -83,4 +85,17 @@ RecvSocketTask* GameWsTaskLoop::_splitRecvTask(vector<u2char>::type& buffer, boo
         << "Damaged recv task: "
         << szJson;
     return nullptr;
+    
+    /*
+    InStreamQueue<DataFilterInStream> in;
+    in.push<VariableMemInStream>("aaa", &buffer);
+    in.push<DataFilterInStream>("bbb");
+    String szType = StringUtil::toString(in->readInt32());
+
+    RecvSocketTask* pTask = dynamic_cast<RecvSocketTask*>(
+        TaskManager::getSingleton().createObject(szType));
+    pTask->setBinary(binary);
+    pTask->setData(buffer);
+    return pTask;
+    */
 }

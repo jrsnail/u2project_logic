@@ -31,6 +31,7 @@ void GameScene::connect()
             );
         //m_pWsTaskLoop->setUrl("ws://echo.websocket.org");
         m_pWsTaskLoop->setUrl("ws://10.60.81.51:9008");
+        //m_pWsTaskLoop->setUrl("ws://10.60.118.59:8080/websocket");
         m_pWsTaskLoop->run();
     }
 }

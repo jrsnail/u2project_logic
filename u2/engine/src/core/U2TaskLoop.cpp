@@ -27,13 +27,7 @@ TaskLoop::~TaskLoop()
         m_pScheduler = nullptr;
     }
 
-    // copy, avaid to interrupt iterator
-    TaskLoopListenerList v = m_TaskLoopListeners;
-    for (TaskLoopListenerList::iterator it = v.begin(); it != v.end(); it++)
-    {
-        (*it)->preDestroyCurrentTaskLoop(this);
-    }
-    m_TaskLoopListeners.clear();
+    _preDestroyCurrentTaskLoop();
 
     m_TaskListeners.clear();
 }
@@ -77,41 +71,6 @@ void TaskLoop::removeTaskListener(TaskListener* listener)
     if (it != m_TaskListeners.end())
     {
         m_TaskListeners.erase(it);
-    }
-}
-//-----------------------------------------------------------------------
-void TaskLoop::run()
-{
-    
-}
-//-----------------------------------------------------------------------
-void TaskLoop::quit()
-{
-    // copy, avaid to interrupt iterator
-    TaskLoopListenerList v = m_TaskLoopListeners;
-    for (TaskLoopListenerList::iterator it = v.begin(); it != v.end(); it++)
-    {
-        (*it)->preQuitCurrentTaskLoop(this);
-    }
-}
-//---------------------------------------------------------------------
-void TaskLoop::pause()
-{
-    // copy, avaid to interrupt iterator
-    TaskLoopListenerList v = m_TaskLoopListeners;
-    for (TaskLoopListenerList::iterator it = v.begin(); it != v.end(); it++)
-    {
-        (*it)->prePauseCurrentTaskLoop(this);
-    }
-}
-//---------------------------------------------------------------------
-void TaskLoop::resume()
-{
-    // copy, avaid to interrupt iterator
-    TaskLoopListenerList v = m_TaskLoopListeners;
-    for (TaskLoopListenerList::iterator it = v.begin(); it != v.end(); it++)
-    {
-        (*it)->postResumeCurrentTaskLoop(this);
     }
 }
 //---------------------------------------------------------------------
@@ -159,6 +118,47 @@ void TaskLoop::_postRunCurrentTaskLoop()
     }
 }
 //-----------------------------------------------------------------------
+void TaskLoop::_postQuitCurrentTaskLoop()
+{
+    // copy, avaid to interrupt iterator
+    TaskLoopListenerList v = m_TaskLoopListeners;
+    for (TaskLoopListenerList::iterator it = v.begin(); it != v.end(); it++)
+    {
+        (*it)->postQuitCurrentTaskLoop(this);
+    }
+}
+//-----------------------------------------------------------------------
+void TaskLoop::_prePauseCurrentTaskLoop()
+{
+    // copy, avaid to interrupt iterator
+    TaskLoopListenerList v = m_TaskLoopListeners;
+    for (TaskLoopListenerList::iterator it = v.begin(); it != v.end(); it++)
+    {
+        (*it)->prePauseCurrentTaskLoop(this);
+    }
+}
+//-----------------------------------------------------------------------
+void TaskLoop::_postResumeCurrentTaskLoop()
+{
+    // copy, avaid to interrupt iterator
+    TaskLoopListenerList v = m_TaskLoopListeners;
+    for (TaskLoopListenerList::iterator it = v.begin(); it != v.end(); it++)
+    {
+        (*it)->postResumeCurrentTaskLoop(this);
+    }
+}
+//-----------------------------------------------------------------------
+void TaskLoop::_preDestroyCurrentTaskLoop()
+{
+    // copy, avaid to interrupt iterator
+    TaskLoopListenerList v = m_TaskLoopListeners;
+    for (TaskLoopListenerList::iterator it = v.begin(); it != v.end(); it++)
+    {
+        (*it)->preDestroyCurrentTaskLoop(this);
+    }
+    m_TaskLoopListeners.clear();
+}
+//-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
 map<String, TaskLoop* >::type TaskLoopManager::ms_TaskLoops;
 //-----------------------------------------------------------------------
@@ -179,15 +179,7 @@ TaskLoopManager::TaskLoopManager()
 //-----------------------------------------------------------------------
 TaskLoopManager::~TaskLoopManager()
 {
-    ObjectMapIterator it = SimpleObjectManager<TaskLoop>::retrieveAllObjects();
-    while (it.hasMoreElements())
-    {
-        TaskLoop* pTaskLoop = it.getNext();
-        if (pTaskLoop != nullptr)
-        {
-            pTaskLoop->quit();
-        }
-    }
+    quitAll();
 }
 //-----------------------------------------------------------------------
 TaskLoop* TaskLoopManager::createObject(const String& type, const String& name, const String& guid)
@@ -229,6 +221,21 @@ TaskLoop* TaskLoopManager::current()
     return it->second;
 }
 //---------------------------------------------------------------------
+void TaskLoopManager::quitAll()
+{
+    ObjectMapIterator it = TaskLoopManager::getSingleton().retrieveAllObjects();
+    while (it.hasMoreElements())
+    {
+        TaskLoop* pTaskLoop = it.getNext();
+        if (pTaskLoop != nullptr)
+        {
+            pTaskLoop->quit();
+            pTaskLoop->join();
+        }
+    }
+    ms_TaskLoops.clear();
+}
+//---------------------------------------------------------------------
 void TaskLoopManager::postRunCurrentTaskLoop(TaskLoop* loop)
 {
     String szId = loop->getThreadId();
@@ -243,7 +250,7 @@ void TaskLoopManager::postRunCurrentTaskLoop(TaskLoop* loop)
     }
 }
 //---------------------------------------------------------------------
-void TaskLoopManager::preQuitCurrentTaskLoop(TaskLoop* loop)
+void TaskLoopManager::postQuitCurrentTaskLoop(TaskLoop* loop)
 {
     String szId = loop->getThreadId();
     TaskLoopMap::iterator it = ms_TaskLoops.find(szId);

@@ -41,11 +41,8 @@ public:
     void setBinary(bool b);
     bool isBinary() const;
 
-    void setData(const vector<u2char>::type& data);
-
 protected:
     bool m_bIsBinary;
-    vector<u2char>::type m_Data;
 };
 
 

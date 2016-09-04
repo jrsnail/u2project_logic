@@ -31,7 +31,7 @@ public:
     {
     public:
         virtual void postRunCurrentTaskLoop(TaskLoop* loop) = 0;
-        virtual void preQuitCurrentTaskLoop(TaskLoop* loop) = 0;
+        virtual void postQuitCurrentTaskLoop(TaskLoop* loop) = 0;
         virtual void prePauseCurrentTaskLoop(TaskLoop* loop) = 0;
         virtual void postResumeCurrentTaskLoop(TaskLoop* loop) = 0;
         virtual void preDestroyCurrentTaskLoop(TaskLoop* loop) = 0;
@@ -138,7 +138,7 @@ public:
     virtual void postTaskAndReply(Task* task, Task* reply) = 0;
 
     // Run the message loop.
-    virtual void run();
+    virtual void run() = 0;
 
     // Signals the Run method to return after it is done processing all pending
     // messages.  This method may only be called on the same thread that called
@@ -148,11 +148,11 @@ public:
     // that doing so is fairly dangerous if the target thread makes nested calls
     // to MessageLoop::Run.  The problem being that you won't know which nested
     // run loop you are quitting, so be careful!
-    virtual void quit();
+    virtual void quit() = 0;
 
-    virtual void pause();
+    virtual void pause() = 0;
 
-    virtual void resume();
+    virtual void resume() = 0;
 
     virtual String getThreadId() = 0;
 
@@ -160,11 +160,17 @@ public:
         , const String& taskType, const String& taskName
         , u2uint64 period, bool repeat = false, bool catchUp = true);
 
+    virtual void join() {};
+
 protected:
     // Runs the specified Task.
     void _runTask(Task* task);
     
     void _postRunCurrentTaskLoop();
+    void _postQuitCurrentTaskLoop();
+    void _prePauseCurrentTaskLoop();
+    void _postResumeCurrentTaskLoop();
+    void _preDestroyCurrentTaskLoop();
 
 
 protected:
@@ -195,9 +201,10 @@ public:
 
     // Returns the TaskLoop object for the current thread, or null if none.
     static TaskLoop* current();
+    static void quitAll();
 
     virtual void postRunCurrentTaskLoop(TaskLoop* loop) override;
-    virtual void preQuitCurrentTaskLoop(TaskLoop* loop) override;
+    virtual void postQuitCurrentTaskLoop(TaskLoop* loop) override;
     virtual void prePauseCurrentTaskLoop(TaskLoop* loop) override;
     virtual void postResumeCurrentTaskLoop(TaskLoop* loop) override;
     virtual void preDestroyCurrentTaskLoop(TaskLoop* loop) override;

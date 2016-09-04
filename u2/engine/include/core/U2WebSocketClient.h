@@ -53,6 +53,8 @@ public:
 
     virtual String getThreadId() override;
 
+    virtual void join() override;
+
     void setUrl(const String& url);
     const String& getUrl() const;
 
@@ -106,9 +108,6 @@ protected:
     // This flag is set to false when Run should return.
     U2_MUTEX(m_KeepRunningMutex);
     bool m_bKeepRunning;
-
-    U2_MUTEX(m_PausingMutex);
-    bool m_bPausing;
 
     // Protect access to m_IncomingQueue.
     U2_MUTEX(m_mtxIncomingQueue);

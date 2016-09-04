@@ -1,6 +1,6 @@
 ﻿#include "U2HttpClientImpl.h"
 
-#include "U2PredefinedPrerequisites.h"
+//#include "U2PredefinedPrerequisites.h"
 
 
 
@@ -29,15 +29,8 @@ void ActiveHttpTaskLoop::_runInternal()
         {
             U2_LOCK_MUTEX(m_KeepRunningMutex);
             if (!m_bKeepRunning)
-                break;
-        }
-
-        {
-            U2_LOCK_MUTEX(m_PausingMutex);
-            if (m_bPausing)
             {
-                U2_THREAD_SLEEP(1);
-                continue;
+                break;
             }
         }
 
@@ -71,15 +64,6 @@ void ActiveHttpTaskLoop::_runInternal()
                     break;
             }
 
-            {
-                U2_LOCK_MUTEX(m_PausingMutex);
-                if (m_bPausing)
-                {
-                    U2_THREAD_SLEEP(1);
-                    continue;
-                }
-            }
-
             Task* pTask = m_WorkingQueue.front();
             if (pTask == nullptr)
             {
@@ -92,6 +76,8 @@ void ActiveHttpTaskLoop::_runInternal()
             m_WorkingQueue.pop_front();
         }
     }
+
+    _postQuitCurrentTaskLoop();
 }
 //---------------------------------------------------------------------
 void ActiveHttpTaskLoop::_addToIncomingQueue(Task* task)
@@ -102,6 +88,6 @@ void ActiveHttpTaskLoop::_addToIncomingQueue(Task* task)
 //---------------------------------------------------------------------
 inline const String& ActiveHttpTaskLoop::_getRecvTaskLoop()
 {
-    static u2::String szTaskLoop = ON_Logic_TaskLoop;
+    static u2::String szTaskLoop = "ON_Logic_TaskLoop";
     return szTaskLoop;
 }

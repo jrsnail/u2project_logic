@@ -413,8 +413,6 @@ void HttpDownloadTaskLoop::postTaskAndReply(Task* task, Task* reply)
 //-----------------------------------------------------------------------
 void HttpDownloadTaskLoop::run()
 {
-    TaskLoop::run();
-    
     U2_LOCK_MUTEX(m_KeepRunningMutex);
     m_bKeepRunning = true;
 
@@ -430,8 +428,6 @@ void HttpDownloadTaskLoop::quit()
 {
     U2_LOCK_MUTEX(m_KeepRunningMutex);
     m_bKeepRunning = false;
-
-    TaskLoop::quit();
 }
 //-----------------------------------------------------------------------
 void HttpDownloadTaskLoop::pause()
@@ -440,14 +436,12 @@ void HttpDownloadTaskLoop::pause()
 
     U2_LOCK_MUTEX(m_PausingMutex);
     m_bPausing = true;
-    TaskLoop::pause();
 }
 //-----------------------------------------------------------------------
 void HttpDownloadTaskLoop::resume()
 {
     U2_LOCK_MUTEX(m_PausingMutex);
     m_bPausing = false;
-    TaskLoop::resume();
 }
 //-----------------------------------------------------------------------
 String HttpDownloadTaskLoop::getThreadId()

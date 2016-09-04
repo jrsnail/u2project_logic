@@ -35,7 +35,6 @@ public:
 WsTaskLoop::WsTaskLoop(const String& type, const String& name, const String& guid)
     : TaskLoop(type, name, guid)
     , m_bKeepRunning(true)
-    , m_bPausing(false)
     , m_eState(State::CONNECTING)
     , m_aWsProtocols(nullptr)
     , m_pWsContext(nullptr)
@@ -61,8 +60,6 @@ void WsTaskLoop::postTaskAndReply(Task* task, Task* reply)
 //-----------------------------------------------------------------------
 void WsTaskLoop::run()
 {
-    TaskLoop::run();
-    
     U2_LOCK_MUTEX(m_KeepRunningMutex);
     m_bKeepRunning = true;
 
@@ -72,30 +69,27 @@ void WsTaskLoop::run()
 //-----------------------------------------------------------------------
 void WsTaskLoop::quit()
 {
-    // Waiting for the subThread safety exit
+    U2_LOCK_MUTEX(m_KeepRunningMutex);
+    m_bKeepRunning = false;
+}
+//-----------------------------------------------------------------------
+void WsTaskLoop::join()
+{
     if (m_thread.joinable())
     {
         m_thread.join();
     }
-
-    U2_LOCK_MUTEX(m_KeepRunningMutex);
-    m_bKeepRunning = false;
-
-    TaskLoop::quit();
 }
 //-----------------------------------------------------------------------
 void WsTaskLoop::pause()
 {
-    U2_LOCK_MUTEX(m_PausingMutex);
-    m_bPausing = true;
-    TaskLoop::pause();
+    quit();
+    join();
 }
 //-----------------------------------------------------------------------
 void WsTaskLoop::resume()
 {
-    U2_LOCK_MUTEX(m_PausingMutex);
-    m_bPausing = false;
-    TaskLoop::resume();
+    run();
 }
 //-----------------------------------------------------------------------
 String WsTaskLoop::getThreadId()
@@ -125,17 +119,6 @@ void WsTaskLoop::_runInternal()
                 }
             }
         }
-
-        /* how to ?
-        {
-            U2_LOCK_MUTEX(m_PausingMutex);
-            if (m_bPausing)
-            {
-                U2_THREAD_SLEEP(1000);
-                continue;
-            }
-        }
-        */
 
         if (m_eState == State::CLOSED || m_eState == State::CLOSING)
         {
@@ -169,6 +152,8 @@ void WsTaskLoop::_runInternal()
         // Sleep 1 ms
         U2_THREAD_SLEEP(1);
     }
+
+    _postQuitCurrentTaskLoop();
 }
 //---------------------------------------------------------------------
 void WsTaskLoop::_addToIncomingQueue(Task* task)
@@ -483,17 +468,6 @@ void WsTaskLoop::_onSend(struct libwebsocket_context *ctx, struct libwebsocket *
                 break;
             }
         }
-
-        /* how to ?
-        {
-            U2_LOCK_MUTEX(m_PausingMutex);
-            if (m_bPausing)
-            {
-                U2_THREAD_SLEEP(1000);
-                continue;
-            }
-        }
-        */
 
         Task* pTask = m_WorkingQueue.front();
         if (pTask == nullptr)

@@ -67,6 +67,8 @@ void MoveSST::serialize()
         return;
     }
 
+    setBinary(true);
+
     // room id
     String szSelfRoomId;
     bool bSuc = DATAPOOL(ON_DataPool_Memory)->loadMemoryStringData("SelfRoomId", szSelfRoomId);
@@ -118,7 +120,7 @@ void MoveSST::serialize()
         + ulServerTimeElapseEnterRoom;
 
 
-    /*
+    
     // create json data
     rapidjson::Document document;
     document.SetObject();
@@ -146,9 +148,9 @@ void MoveSST::serialize()
     setData(vector<u2char>::type(szJsonStr.begin(), szJsonStr.end()));
 
     m_bSerializeSucceed = true;
-    */
     
-
+    
+    /*
     SnapshotReq snapshotReq;
     snapshotReq.set_roomid(StringUtil::parseUnsignedInt(szSelfRoomId));
     snapshotReq.set_heroid(StringUtil::parseUnsignedInt(szSelfGameObjGuid));
@@ -164,7 +166,15 @@ void MoveSST::serialize()
     String szProtoBufStr = snapshotReq.SerializeAsString();
     LogManager::getSingleton().stream(LML_TRIVIAL) << "MoveSST: " << szProtoBufStr;
 
+    vector<u2char>::type v;
+    OutStreamQueue<DataFilterOutStream> out;
+    out.push<VariableMemOutStream>("aaa", &v);
+    out.push<DataFilterOutStream>("bbb");
+    out->writeInt32(1);     // taskId
+    out->close();
+
     setData(vector<u2char>::type(szProtoBufStr.begin(), szProtoBufStr.end()));
 
     m_bSerializeSucceed = true;
+    */
 }

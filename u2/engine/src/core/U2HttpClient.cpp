@@ -4,7 +4,9 @@
 #include "U2LogManager.h"
 #include "U2Exception.h"
 #include "U2FrameListenerCollection.h"
-#include "cocos2d.h"
+// #include "U2StreamQueue.h"
+// #include "U2DataFilterStream.h"
+// #include "U2StringStream.h"
 
 
 U2EG_NAMESPACE_USING
@@ -321,7 +323,6 @@ static int processDeleteTask(HttpTaskLoop* client, HttpRequest* request, write_c
 HttpTaskLoop::HttpTaskLoop(const String& type, const String& name, const u2::String& guid)
     : TaskLoop(type, name, guid)
     , m_bKeepRunning(true)
-    , m_bPausing(false)
     , m_uTimeoutForConnect(30)
     , m_uTimeoutForRead(60)
 {
@@ -344,35 +345,36 @@ void HttpTaskLoop::postTaskAndReply(Task* task, Task* reply)
 //-----------------------------------------------------------------------
 void HttpTaskLoop::run()
 {
-    TaskLoop::run();
-    
     U2_LOCK_MUTEX(m_KeepRunningMutex);
     m_bKeepRunning = true;
 
     m_thread = std::move(std::thread(std::bind(&HttpTaskLoop::_runInternal, this)));
-    m_thread.detach();
+    //m_thread.detach();
+}
+//-----------------------------------------------------------------------
+void HttpTaskLoop::join()
+{
+    if (m_thread.joinable())
+    {
+        m_thread.join();
+    }
 }
 //-----------------------------------------------------------------------
 void HttpTaskLoop::quit()
 {
     U2_LOCK_MUTEX(m_KeepRunningMutex);
     m_bKeepRunning = false;
-
-    TaskLoop::quit();
 }
 //-----------------------------------------------------------------------
 void HttpTaskLoop::pause()
 {
-    U2_LOCK_MUTEX(m_PausingMutex);
-    m_bPausing = true;
-    TaskLoop::pause();
+    quit();
+    join();
 }
 //-----------------------------------------------------------------------
 void HttpTaskLoop::resume()
 {
-    U2_LOCK_MUTEX(m_PausingMutex);
-    m_bPausing = false;
-    TaskLoop::resume();
+    run();
 }
 //-----------------------------------------------------------------------
 String HttpTaskLoop::getThreadId()
@@ -523,7 +525,7 @@ void HttpTaskLoop::enableCookies(const String& cookieFile)
     }
     else
     {
-        m_szCookieFilename = (cocos2d::FileUtils::getInstance()->getWritablePath() + "cookieFile.txt");
+        //m_szCookieFilename = (cocos2d::FileUtils::getInstance()->getWritablePath() + "cookieFile.txt");
     }
 }
 //-----------------------------------------------------------------------

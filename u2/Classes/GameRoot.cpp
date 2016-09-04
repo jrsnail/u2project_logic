@@ -129,7 +129,7 @@ void GameRoot::_initialize()
         m_pLogManager = U2_NEW u2::LogManager();
         m_pLogManager->createLog("u2.log", true, true);
 #if U2_DEBUG_MODE == 1
-//        m_pLogManager->setLogDetail(LoggingLevel::LL_BOREME);
+        m_pLogManager->setLogDetail(LoggingLevel::LL_BOREME);
 #endif
     }
 

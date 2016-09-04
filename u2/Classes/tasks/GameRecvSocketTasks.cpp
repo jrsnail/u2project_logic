@@ -112,7 +112,6 @@ SnapshotRST::SnapshotRST(const String& type, const String& name, const u2::Strin
 SnapshotRST::~SnapshotRST()
 {
 }
-/*
 //-----------------------------------------------------------------------
 void SnapshotRST::deserialize()
 {
@@ -191,13 +190,19 @@ void SnapshotRST::deserialize()
 
     m_bDeserializeSucceed = false;
 }
-*/
 
+/*
 void SnapshotRST::deserialize()
 {
     do
     {
-        std::string szProtoBuf(m_Data.begin(), m_Data.end());
+        // the first 4 bytes means task id
+        if (m_Data.size() <= 4)
+        {
+            assert(0);
+        }
+
+        String szProtoBuf(m_Data.begin() + 4, m_Data.end());
         LogManager::getSingleton().stream(LML_TRIVIAL) << "SnapshotRST: " << szProtoBuf;
 
         u2uint64 ulStart = Root::getSingleton().getTimer()->getMilliseconds();
@@ -253,6 +258,7 @@ void SnapshotRST::deserialize()
 
     m_bDeserializeSucceed = false;
 }
+*/
 //-----------------------------------------------------------------------
 bool SnapshotRST::_deserializeHero(rapidjson::Value& jsonValue, GameMovableSnapshot* gameMovableSnapshot)
 {
