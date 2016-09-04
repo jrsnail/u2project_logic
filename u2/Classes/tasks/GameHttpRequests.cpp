@@ -80,7 +80,7 @@ void RegisterHReq::serialize()
     LogManager::getSingleton().stream(LML_TRIVIAL) << "RegisterHReq: " << szContentJsonStr;
 
     GameUrlMaker urlMaker;
-    urlMaker.setPath("plane/operation");
+    urlMaker.setPath("arrow/operation");
     urlMaker.addParam("content", szContentJsonStr);
     urlMaker.addParam("key", "10");
     urlMaker.addParam("protocolVer", "1");
@@ -123,7 +123,7 @@ void PlayHReq::serialize()
 
 
     GameUrlMaker urlMaker;
-    urlMaker.setPath("plane/operation");
+    urlMaker.setPath("arrow/operation");
     urlMaker.addParam("content", szContentJsonStr);
     urlMaker.addParam("key", "12");
     urlMaker.addParam("protocolVer", "1");

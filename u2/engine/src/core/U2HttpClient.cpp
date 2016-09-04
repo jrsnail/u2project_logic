@@ -377,6 +377,17 @@ void HttpTaskLoop::resume()
     run();
 }
 //-----------------------------------------------------------------------
+bool HttpTaskLoop::isRunning()
+{
+    U2_LOCK_MUTEX(m_KeepRunningMutex);
+    return m_bKeepRunning;
+}
+//-----------------------------------------------------------------------
+bool HttpTaskLoop::isPausing()
+{
+    return !isRunning();
+}
+//-----------------------------------------------------------------------
 String HttpTaskLoop::getThreadId()
 {
     StringStream stream;

@@ -241,15 +241,15 @@ void Root::enter()
 //-----------------------------------------------------------------------
 void Root::exit()
 {
-    U2_DELETE m_pTaskLoopManager;
+    TaskLoopManager::getSingleton().quitAll();
 }
 //-----------------------------------------------------------------------
 void Root::pause()
 {
-
+    TaskLoopManager::getSingleton().pauseAll();
 }
 //-----------------------------------------------------------------------
 void Root::resume()
 {
-
+    TaskLoopManager::getSingleton().resumeAll();
 }

@@ -55,6 +55,10 @@ public:
 
     virtual void join() override;
 
+    virtual bool isRunning() override;
+
+    virtual bool isPausing() override;
+
     void setUrl(const String& url);
     const String& getUrl() const;
 

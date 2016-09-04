@@ -162,6 +162,10 @@ public:
 
     virtual void join() {};
 
+    virtual bool isRunning() = 0;
+
+    virtual bool isPausing() = 0;
+
 protected:
     // Runs the specified Task.
     void _runTask(Task* task);
@@ -201,7 +205,11 @@ public:
 
     // Returns the TaskLoop object for the current thread, or null if none.
     static TaskLoop* current();
-    static void quitAll();
+
+    void quitAll();
+    void runAll();
+    void pauseAll();
+    void resumeAll();
 
     virtual void postRunCurrentTaskLoop(TaskLoop* loop) override;
     virtual void postQuitCurrentTaskLoop(TaskLoop* loop) override;

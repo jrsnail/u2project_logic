@@ -92,6 +92,17 @@ void WsTaskLoop::resume()
     run();
 }
 //-----------------------------------------------------------------------
+bool WsTaskLoop::isRunning()
+{
+    U2_LOCK_MUTEX(m_KeepRunningMutex);
+    return m_bKeepRunning;
+}
+//-----------------------------------------------------------------------
+bool WsTaskLoop::isPausing()
+{
+    return !isRunning();
+}
+//-----------------------------------------------------------------------
 String WsTaskLoop::getThreadId()
 {
     StringStream stream;
@@ -123,6 +134,8 @@ void WsTaskLoop::_runInternal()
         if (m_eState == State::CLOSED || m_eState == State::CLOSING)
         {
             libwebsocket_context_destroy(m_pWsContext);
+            m_pWsContext = nullptr;
+            m_pWebSocket = nullptr;
 
             size_t protocolCount = 0;
             if (m_Protocols.size() > 0)

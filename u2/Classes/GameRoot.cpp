@@ -299,14 +299,18 @@ void GameRoot::exit()
 
     // Optional:  Delete all global objects allocated by libprotobuf.
     google::protobuf::ShutdownProtobufLibrary();
+
+    Root::exit();
 }
 //-----------------------------------------------------------------------
 void GameRoot::pause()
 {
     SystemManager::getSingleton().pause();
+    Root::pause();
 }
 //-----------------------------------------------------------------------
 void GameRoot::resume()
 {
     SystemManager::getSingleton().resume();
+    Root::resume();
 }

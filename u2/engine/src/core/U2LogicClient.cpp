@@ -15,6 +15,7 @@ U2EG_NAMESPACE_USING
 //-----------------------------------------------------------------------
 LogicTaskLoop::LogicTaskLoop(const String& type, const String& name, const String& guid)
     : TaskLoop(type, name, guid)
+    , m_bKeepRunning(true)
 {
 }
 //-----------------------------------------------------------------------
@@ -34,6 +35,9 @@ void LogicTaskLoop::postTaskAndReply(Task* task, Task* reply)
 //-----------------------------------------------------------------------
 void LogicTaskLoop::run()
 {
+    U2_LOCK_MUTEX(m_KeepRunningMutex);
+    m_bKeepRunning = true;
+
     FrameListenerCollection::getSingleton().addFrameListener(this
         , std::bind(&LogicTaskLoop::_onUpdate, this, std::placeholders::_1));
     
@@ -42,14 +46,32 @@ void LogicTaskLoop::run()
 //-----------------------------------------------------------------------
 void LogicTaskLoop::quit()
 {
+    U2_LOCK_MUTEX(m_KeepRunningMutex);
+    m_bKeepRunning = false;
+
+    FrameListenerCollection::getSingleton().removeFrameListener(this);
 }
 //-----------------------------------------------------------------------
 void LogicTaskLoop::pause()
 {
+    quit();
+    join();
 }
 //-----------------------------------------------------------------------
 void LogicTaskLoop::resume()
 {
+    run();
+}
+//-----------------------------------------------------------------------
+bool LogicTaskLoop::isRunning()
+{
+    U2_LOCK_MUTEX(m_KeepRunningMutex);
+    return m_bKeepRunning;
+}
+//-----------------------------------------------------------------------
+bool LogicTaskLoop::isPausing()
+{
+    return !isRunning();
 }
 //-----------------------------------------------------------------------
 String LogicTaskLoop::getThreadId()

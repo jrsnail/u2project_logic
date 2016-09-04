@@ -229,11 +229,62 @@ void TaskLoopManager::quitAll()
         TaskLoop* pTaskLoop = it.getNext();
         if (pTaskLoop != nullptr)
         {
-            pTaskLoop->quit();
-            pTaskLoop->join();
+            if (pTaskLoop->isRunning())
+            {
+                pTaskLoop->quit();
+                pTaskLoop->join();
+            }
         }
     }
     ms_TaskLoops.clear();
+}
+//---------------------------------------------------------------------
+void TaskLoopManager::runAll()
+{
+    ObjectMapIterator it = TaskLoopManager::getSingleton().retrieveAllObjects();
+    while (it.hasMoreElements())
+    {
+        TaskLoop* pTaskLoop = it.getNext();
+        if (pTaskLoop != nullptr)
+        {
+            if (!pTaskLoop->isRunning())
+            {
+                pTaskLoop->run();
+            }
+        }
+    }
+}
+//---------------------------------------------------------------------
+void TaskLoopManager::pauseAll()
+{
+    ObjectMapIterator it = TaskLoopManager::getSingleton().retrieveAllObjects();
+    while (it.hasMoreElements())
+    {
+        TaskLoop* pTaskLoop = it.getNext();
+        if (pTaskLoop != nullptr)
+        {
+            if (pTaskLoop->isRunning() && !pTaskLoop->isPausing())
+            {
+                pTaskLoop->pause();
+            }
+        }
+    }
+}
+//---------------------------------------------------------------------
+void TaskLoopManager::resumeAll()
+{
+    ObjectMapIterator it = TaskLoopManager::getSingleton().retrieveAllObjects();
+    while (it.hasMoreElements())
+    {
+        TaskLoop* pTaskLoop = it.getNext();
+        if (pTaskLoop != nullptr)
+        {
+            if (pTaskLoop->isRunning() && pTaskLoop->isPausing())
+            {
+                pTaskLoop->resume();
+            }
+        }
+    }
 }
 //---------------------------------------------------------------------
 void TaskLoopManager::postRunCurrentTaskLoop(TaskLoop* loop)
