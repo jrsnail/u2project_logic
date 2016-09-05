@@ -301,22 +301,14 @@ void TaskLoopManager::postRunCurrentTaskLoop(TaskLoop* loop)
     }
     else
     {
-        assert(0);
+        // The thread id had existed when resume from pause state
+        //assert(0);
     }
 }
 //---------------------------------------------------------------------
 void TaskLoopManager::postQuitCurrentTaskLoop(TaskLoop* loop)
 {
-    String szId = loop->getThreadId();
-    TaskLoopMap::iterator it = ms_TaskLoops.find(szId);
-    if (it == ms_TaskLoops.end())
-    {
-        assert(0);
-    }
-    else
-    {
-        ms_TaskLoops.erase(it);
-    }
+    
 }
 //---------------------------------------------------------------------
 void TaskLoopManager::prePauseCurrentTaskLoop(TaskLoop* loop)
@@ -331,5 +323,16 @@ void TaskLoopManager::postResumeCurrentTaskLoop(TaskLoop* loop)
 //---------------------------------------------------------------------
 void TaskLoopManager::preDestroyCurrentTaskLoop(TaskLoop* loop)
 {
-
+    /*
+    String szId = loop->getThreadId();
+    TaskLoopMap::iterator it = ms_TaskLoops.find(szId);
+    if (it == ms_TaskLoops.end())
+    {
+        assert(0);
+    }
+    else
+    {
+        ms_TaskLoops.erase(it);
+    }
+     */
 }
