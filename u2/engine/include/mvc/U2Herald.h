@@ -14,7 +14,7 @@ class Script;
 class Observer;
 
 
-class Herald : public Object
+class Herald : public Object, public GeneralAllocatedObject
 {
 protected:
     typedef std::map<String, Script*>              ScriptMap;

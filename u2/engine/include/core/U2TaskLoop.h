@@ -16,7 +16,7 @@ class Task;
 class Scheduler;
 
 
-class TaskLoop : public Object
+class TaskLoop : public Object, public GeneralAllocatedObject
 {
 public:
     // A DestructionObserver is notified when the current MessageLoop is being

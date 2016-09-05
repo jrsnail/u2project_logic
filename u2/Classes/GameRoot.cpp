@@ -120,9 +120,6 @@ GameRoot::~GameRoot()
 //-----------------------------------------------------------------------
 void GameRoot::_initialize()
 {
-    initGameFactories();
-    initFactroy();
-
     // Create log manager and default log file if there is no log manager yet
     if (u2::LogManager::getSingletonPtr() == nullptr)
     {
@@ -137,6 +134,15 @@ void GameRoot::_initialize()
     AndroidLogListener* mAndroidLogger = U2_NEW AndroidLogListener();
     m_pLogManager->getDefaultLog()->addListener(mAndroidLogger);
 #endif
+
+    // factory
+    if (u2::FactoryManager::getSingletonPtr() == nullptr)
+    {
+        m_pFactoryManager = U2_NEW FactoryManager;
+    }
+
+    initGameFactories();
+    initFactroy();
 
     // archive
     m_pArchiveManager = U2_NEW ArchiveManager;
@@ -224,6 +230,10 @@ void GameRoot::_initialize()
     }
 
     // task manager
+    if (TaskManager::getSingletonPtr() == nullptr)
+    {
+        m_pTaskManager = U2_NEW TaskManager;
+    }
     if (TaskLoopManager::getSingletonPtr() == nullptr)
     {
         m_pTaskLoopManager = U2_NEW TaskLoopManager;
@@ -233,6 +243,7 @@ void GameRoot::_initialize()
     _loadResources();
 
 
+    
 
 
     // Logic task loop

@@ -96,7 +96,7 @@ protected:
 };
 
 
-class _U2Export Chunk : public Object
+class _U2Export Chunk : public Object, public GeneralAllocatedObject
 {
 public:
     enum eDownloadState

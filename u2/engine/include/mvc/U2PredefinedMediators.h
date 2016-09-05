@@ -17,7 +17,7 @@
 U2EG_NAMESPACE_USING
 
 
-class TransMediator : public u2::Object, public ViewComponent::Listener
+class TransMediator : public u2::Object, public ViewComponent::Listener, public GeneralAllocatedObject
 {
 public:
     TransMediator(const String& type, const String& name = BLANK, const String& guid = BLANK);

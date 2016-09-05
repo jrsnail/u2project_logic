@@ -60,6 +60,7 @@ protected:
 /** This is a single thread scheduler, do not use it in multi thread at any time.
 */
 class Scheduler : public SimpleObjectManager<SchedulerTask>, public Object
+    , public GeneralAllocatedObject
 {
 public:
     /**

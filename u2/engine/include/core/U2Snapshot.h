@@ -15,7 +15,7 @@ U2EG_NAMESPACE_BEGIN
 class GameObject;
 
 
-class MovableSnapshot : public ReusableObject
+class MovableSnapshot : public ReusableObject, public GeneralAllocatedObject
 {
 public:
     MovableSnapshot(const String& type, const String& name = BLANK, const String& guid = BLANK)
@@ -134,7 +134,7 @@ protected:
 };
 
 
-class ControlSnapshot : public ReusableObject
+class ControlSnapshot : public ReusableObject, public GeneralAllocatedObject
 {
 public:
     ControlSnapshot(const String& type, const String& name = BLANK, const String& guid = BLANK)

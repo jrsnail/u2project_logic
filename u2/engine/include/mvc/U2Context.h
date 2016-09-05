@@ -15,7 +15,7 @@
 U2EG_NAMESPACE_BEGIN
 
 
-class Context : public u2::Object
+class Context : public u2::Object, public GeneralAllocatedObject
 {
 protected:
     typedef std::map<String, Context*>      ContextMap;

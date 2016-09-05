@@ -269,9 +269,9 @@ bool SnapshotRST::_deserializeHero(rapidjson::Value& jsonValue, GameMovableSnaps
         u2uint64 ulPlayerId = jsonValue["userId"].GetUint64();
         gameMovableSnapshot->szPlayerId = StringUtil::toString(ulPlayerId);
 
-        CHECK_RAPIDJSON_MEMBER(jsonValue, "heroId");
-        CHECK_RAPIDJSON_VALIDITY(jsonValue["heroId"].IsUint());
-        u2uint32 ulGameObjId = jsonValue["heroId"].GetUint();
+        CHECK_RAPIDJSON_MEMBER(jsonValue, "entityId");
+        CHECK_RAPIDJSON_VALIDITY(jsonValue["entityId"].IsUint());
+        u2uint32 ulGameObjId = jsonValue["entityId"].GetUint();
         gameMovableSnapshot->szGameObjGuid = StringUtil::toString(ulGameObjId);
 
         CHECK_RAPIDJSON_MEMBER(jsonValue, "type");

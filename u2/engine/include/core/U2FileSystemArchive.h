@@ -104,7 +104,6 @@ protected:
 
 
 class FileSystemArchiveFactory : public TemplateObjectFactory < FileSystemArchive >
-    , public GeneralAllocatedObject
 {
 public:
 	virtual const String& getType() const override;

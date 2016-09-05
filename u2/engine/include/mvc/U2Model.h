@@ -17,7 +17,7 @@ U2EG_NAMESPACE_BEGIN
 class Proxy;
 
 
-class Model : public Object
+class Model : public Object, public GeneralAllocatedObject
 {
 public:
     typedef std::list<String>                       ProxyNames;

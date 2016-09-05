@@ -10,7 +10,7 @@
 U2EG_NAMESPACE_BEGIN
 
 
-class Command : public Object, public Notifier
+class Command : public Object, public Notifier, public GeneralAllocatedObject
 {
 public:
     Command(const String& type, const String& name = BLANK, const String& guid = BLANK);

@@ -16,7 +16,7 @@ U2EG_NAMESPACE_BEGIN
 class Task;
 
 
-class DataPool : public Object
+class DataPool : public Object, public GeneralAllocatedObject
 {
 public:
     DataPool(const String& type, const String& name = BLANK, const String& guid = BLANK);
