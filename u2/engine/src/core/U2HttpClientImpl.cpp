@@ -74,6 +74,7 @@ void ActiveHttpTaskLoop::_runInternal()
                 processTask(dynamic_cast<HttpRequest*>(pTask), m_ResponseMessage);
             }
             m_WorkingQueue.pop_front();
+            TaskManager::getSingleton().destoryObject(pTask);
         }
     }
 
