@@ -324,6 +324,7 @@ HttpTaskLoop::HttpTaskLoop(const String& type, const String& name, const u2::Str
     : TaskLoop(type, name, guid)
     , m_bKeepRunning(true)
     , m_bPausing(false)
+    , m_bDestroying(false)
     , m_uTimeoutForConnect(30)
     , m_uTimeoutForRead(60)
 {
@@ -332,6 +333,11 @@ HttpTaskLoop::HttpTaskLoop(const String& type, const String& name, const u2::Str
 //-----------------------------------------------------------------------
 HttpTaskLoop::~HttpTaskLoop()
 {
+    U2_LOCK_MUTEX_NAMED(m_DestroyingMutex, destroyingLck);
+    m_bDestroying = true;
+
+    quit();
+    join();
 }
 //-----------------------------------------------------------------------
 void HttpTaskLoop::postTask(Task* task)

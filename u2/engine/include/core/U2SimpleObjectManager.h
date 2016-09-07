@@ -68,6 +68,12 @@ SimpleObjectManager<T>::SimpleObjectManager()
 template <class T>
 SimpleObjectManager<T>::~SimpleObjectManager()
 {
+    for (typename NamedObjectMap::iterator it = m_NamedMap.begin(); it != m_NamedMap.end(); it++)
+    {
+        ObjectCollection::getSingletonPtr()->destoryObject(it->second);
+        it->second = nullptr;
+    }
+    m_NamedMap.clear();
 }
 //-----------------------------------------------------------------------
 template <class T>

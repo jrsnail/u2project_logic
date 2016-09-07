@@ -116,6 +116,9 @@ protected:
     U2_MUTEX(m_PausingMutex);
     bool m_bPausing;
 
+    U2_MUTEX(m_DestroyingMutex);
+    bool m_bDestroying;
+
     // Protect access to m_IncomingQueue.
     U2_MUTEX(m_mtxIncomingQueue);
     // A null terminated list which creates an incoming_queue of tasks that are

@@ -34,7 +34,6 @@ public:
         virtual void postQuitCurrentTaskLoop(TaskLoop* loop) = 0;
         virtual void prePauseCurrentTaskLoop(TaskLoop* loop) = 0;
         virtual void postResumeCurrentTaskLoop(TaskLoop* loop) = 0;
-        virtual void postDestroyCurrentTaskLoop(TaskLoop* loop) = 0;
 
     protected:
         virtual ~TaskLoopListener() {};
@@ -174,7 +173,6 @@ protected:
     void _postQuitCurrentTaskLoop();
     void _prePauseCurrentTaskLoop();
     void _postResumeCurrentTaskLoop();
-    void _postDestroyCurrentTaskLoop();
 
 
 protected:
@@ -215,7 +213,6 @@ public:
     virtual void postQuitCurrentTaskLoop(TaskLoop* loop) override;
     virtual void prePauseCurrentTaskLoop(TaskLoop* loop) override;
     virtual void postResumeCurrentTaskLoop(TaskLoop* loop) override;
-    virtual void postDestroyCurrentTaskLoop(TaskLoop* loop) override;
 
 public:
     /** Override standard Singleton retrieval.

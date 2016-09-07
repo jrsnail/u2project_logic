@@ -78,6 +78,12 @@ void ActiveHttpTaskLoop::_runInternal()
         }
     }
 
+    U2_LOCK_MUTEX_NAMED(m_DestroyingMutex, destroyingLck);
+    if (m_bDestroying)
+    {
+        return;
+    }
+
     _postQuitCurrentTaskLoop();
 }
 //---------------------------------------------------------------------

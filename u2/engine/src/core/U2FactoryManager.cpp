@@ -33,10 +33,16 @@ FactoryManager::~FactoryManager()
 {
 	do 
 	{
+        ObjectFactory* pObjectFactory = nullptr;
 		ObjectFactoryMap::iterator fit = mObjectFactories.begin();
 		if (fit != mObjectFactories.end())
 		{
+            pObjectFactory = fit->second;
 			mObjectFactories.erase(fit);
+            if (pObjectFactory != nullptr)
+            {
+                U2_DELETE pObjectFactory;
+            }
 		}
         else
         {
@@ -57,13 +63,16 @@ bool FactoryManager::hasObjectFactory(const String& type) const
 	return mObjectFactories.find(type) != mObjectFactories.end();
 }
 //-----------------------------------------------------------------------
-void FactoryManager::destroyObjectFactory(const String& type)
+ObjectFactory* FactoryManager::removeObjectFactory(const String& type)
 {
+    ObjectFactory* pObjectFactory = nullptr;
 	ObjectFactoryMap::iterator it = mObjectFactories.find(type);
 	if (it != mObjectFactories.end())
 	{
+        pObjectFactory = it->second;
 		mObjectFactories.erase(it);
 	}
+    return pObjectFactory;
 }
 //-----------------------------------------------------------------------
 Object* FactoryManager::createObject(const String& type, const String& name, const String& guid)

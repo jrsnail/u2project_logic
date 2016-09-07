@@ -390,6 +390,7 @@ HttpDownloadTaskLoop::HttpDownloadTaskLoop(const String& type, const String& nam
     : TaskLoop(type, name, guid)
     , m_bKeepRunning(true)
     , m_bPausing(false)
+    , m_bDestroying(false)
     , m_uTimeoutForConnect(30)
     , m_uTimeoutForRead(60)
     , m_uTotalThreadCount(1)
@@ -399,6 +400,8 @@ HttpDownloadTaskLoop::HttpDownloadTaskLoop(const String& type, const String& nam
 //-----------------------------------------------------------------------
 HttpDownloadTaskLoop::~HttpDownloadTaskLoop()
 {
+    U2_LOCK_MUTEX_NAMED(m_DestroyingMutex, destroyingLck);
+    m_bDestroying = true;
 }
 //-----------------------------------------------------------------------
 void HttpDownloadTaskLoop::postTask(Task* task)
@@ -611,7 +614,7 @@ void HttpDownloadTaskLoop::_runInternal()
         }
     }
 
-    _postRunCurrentTaskLoop();
+    _postQuitCurrentTaskLoop();
 }
 //-----------------------------------------------------------------------
 Chunk* HttpDownloadTaskLoop::_getNextWaitingChunk()

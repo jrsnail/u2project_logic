@@ -17,11 +17,17 @@ LogicTaskLoop::LogicTaskLoop(const String& type, const String& name, const Strin
     : TaskLoop(type, name, guid)
     , m_bKeepRunning(true)
     , m_bPausing(false)
+    , m_bDestroying(false)
 {
 }
 //-----------------------------------------------------------------------
 LogicTaskLoop::~LogicTaskLoop()
 {
+    U2_LOCK_MUTEX_NAMED(m_DestroyingMutex, destroyingLck);
+    m_bDestroying = true;
+
+    quit();
+    join();
 }
 //-----------------------------------------------------------------------
 void LogicTaskLoop::postTask(Task* task)
@@ -57,6 +63,12 @@ void LogicTaskLoop::quit()
     m_bPausing = true;
 
     FrameListenerCollection::getSingleton().removeFrameListener(this);
+
+    U2_LOCK_MUTEX_NAMED(m_DestroyingMutex, destroyingLck);
+    if (m_bDestroying)
+    {
+        return;
+    }
 
     _postQuitCurrentTaskLoop();
 }

@@ -285,6 +285,9 @@ protected:
     U2_MUTEX(m_PausingMutex);
     bool m_bPausing;
 
+    U2_MUTEX(m_DestroyingMutex);
+    bool m_bDestroying;
+
     U2_MUTEX(m_TimeoutForConnectMutex);
     size_t m_uTimeoutForConnect;
 

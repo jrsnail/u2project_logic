@@ -25,7 +25,7 @@ public:
 
 	bool hasObjectFactory(const String& type) const;
 
-	void destroyObjectFactory(const String& type);
+    ObjectFactory* removeObjectFactory(const String& type);
 
 	Object* createObject(const String& type, const String& name, const String& guid);
 
@@ -92,7 +92,13 @@ protected:
 	}
 
 #define DESTROY_FACTORY_WITH_TYPE(TypeStr)                                              \
-	u2::FactoryManager::getSingleton().destroyObjectFactory(TypeStr);
+    {                                                                                   \
+        ObjectFactory* pObjectFactory = u2::FactoryManager::getSingleton().removeObjectFactory(TypeStr);    \
+        if (pObjectFactory != nullptr)                                                  \
+        {                                                                               \
+            U2_DELETE pObjectFactory;                                                   \
+        }                                                                               \
+    }
 
 
 U2EG_NAMESPACE_END

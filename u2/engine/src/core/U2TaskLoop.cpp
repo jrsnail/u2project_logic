@@ -27,8 +27,6 @@ TaskLoop::~TaskLoop()
         m_pScheduler = nullptr;
     }
 
-    _postDestroyCurrentTaskLoop();
-
     m_TaskListeners.clear();
 }
 //---------------------------------------------------------------------
@@ -146,17 +144,6 @@ void TaskLoop::_postResumeCurrentTaskLoop()
     {
         (*it)->postResumeCurrentTaskLoop(this);
     }
-}
-//-----------------------------------------------------------------------
-void TaskLoop::_postDestroyCurrentTaskLoop()
-{
-    // copy, avaid to interrupt iterator
-    TaskLoopListenerList v = m_TaskLoopListeners;
-    for (TaskLoopListenerList::iterator it = v.begin(); it != v.end(); it++)
-    {
-        (*it)->postDestroyCurrentTaskLoop(this);
-    }
-    m_TaskLoopListeners.clear();
 }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
@@ -329,19 +316,4 @@ void TaskLoopManager::prePauseCurrentTaskLoop(TaskLoop* loop)
 void TaskLoopManager::postResumeCurrentTaskLoop(TaskLoop* loop)
 {
 
-}
-//---------------------------------------------------------------------
-void TaskLoopManager::postDestroyCurrentTaskLoop(TaskLoop* loop)
-{
-    U2_LOCK_MUTEX(m_TaskLoopMapMtx);
-    String szId = loop->getThreadId();
-    TaskLoopMap::iterator it = ms_TaskLoops.find(szId);
-    if (it == ms_TaskLoops.end())
-    {
-        assert(0);
-    }
-    else
-    {
-        ms_TaskLoops.erase(it);
-    }
 }

@@ -36,6 +36,7 @@ WsTaskLoop::WsTaskLoop(const String& type, const String& name, const String& gui
     : TaskLoop(type, name, guid)
     , m_bKeepRunning(true)
     , m_bPausing(false)
+    , m_bDestroying(false)
     , m_eState(State::CONNECTING)
     , m_aWsProtocols(nullptr)
     , m_pWsContext(nullptr)
@@ -47,6 +48,11 @@ WsTaskLoop::WsTaskLoop(const String& type, const String& name, const String& gui
 //-----------------------------------------------------------------------
 WsTaskLoop::~WsTaskLoop()
 {
+    U2_LOCK_MUTEX_NAMED(m_DestroyingMutex, destroyingLck);
+    m_bDestroying = true;
+
+    quit();
+    join();
 }
 //-----------------------------------------------------------------------
 void WsTaskLoop::postTask(Task* task)
@@ -171,6 +177,12 @@ void WsTaskLoop::_runInternal()
 
         // Sleep 1 ms
         U2_THREAD_SLEEP(1);
+    }
+
+    U2_LOCK_MUTEX_NAMED(m_DestroyingMutex, destroyingLck);
+    if (m_bDestroying)
+    {
+        return;
     }
 
     _postQuitCurrentTaskLoop();
