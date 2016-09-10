@@ -314,11 +314,11 @@ public:
 	static bool isNumber(const String& val);
 
 	//-----------------------------------------------------------------------
-	static String getDefaultStringLocale(void) { return m_sDefaultStringLocale; }
+    static String getDefaultStringLocale(void);
 	//-----------------------------------------------------------------------
-	static void setUseLocale(bool useLocale) { m_sUseLocale = useLocale; }
+    static void setUseLocale(bool useLocale);
 	//-----------------------------------------------------------------------
-	static bool isUseLocale() { return m_sUseLocale; }
+    static bool isUseLocale();
 
 protected:
 	static String		m_sDefaultStringLocale;

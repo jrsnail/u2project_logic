@@ -783,3 +783,18 @@ bool StringUtil::isNumber(const String& val)
 	str >> tst;
 	return !str.fail() && str.eof();
 }
+//-----------------------------------------------------------------------
+inline String StringUtil::getDefaultStringLocale(void)
+{
+    return m_sDefaultStringLocale;
+}
+//-----------------------------------------------------------------------
+inline void StringUtil::setUseLocale(bool useLocale)
+{
+    m_sUseLocale = useLocale;
+}
+//-----------------------------------------------------------------------
+inline bool StringUtil::isUseLocale()
+{
+    return m_sUseLocale;
+}
