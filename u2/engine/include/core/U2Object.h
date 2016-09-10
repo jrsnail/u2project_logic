@@ -20,24 +20,24 @@ U2EG_NAMESPACE_BEGIN
 #define GET_OBJECT_TYPE(T)          typeid(T).name()
 
 
-class Object
+class _U2Export Object
 {
 public:
     Object(const String& type, const String& name = BLANK, const String& guid = BLANK);
     virtual ~Object();
 
-    const String& getType() const { return m_szType; };
-    const String& getName() const { return m_szName; };
-    const String& getGuid() const { return m_szGuid; };
+    const String& getType() const;
+    const String& getName() const;
+    const String& getGuid() const;
 
-    virtual void serialize() {};
-    virtual void deserialize() {};
-    bool isDeserializeSucceed() { return m_bDeserializeSucceed; };
-    bool isSerializeSucceed() { return m_bSerializeSucceed; };
-    void setData(const vector<u2char>::type& data) { m_Data = data; }
-    const vector<u2char>::type& getData() const { return m_Data; };
-    vector<u2char>::type& getData() { return m_Data; };
-    size_t getDataSize() { return m_Data.size(); }
+    virtual void serialize();
+    virtual void deserialize();
+    bool isDeserializeSucceed();
+    bool isSerializeSucceed();
+    void setData(const vector<u2char>::type& data);
+    const vector<u2char>::type& getData() const;
+    vector<u2char>::type& getData();
+    size_t getDataSize();
 
 protected:
     String                  m_szType;       //< 子类类型
@@ -49,7 +49,7 @@ protected:
 };
 
 
-class ObjectFactory : public FactoryObj< Object >, public GeneralAllocatedObject
+class _U2Export ObjectFactory : public FactoryObj< Object >, public GeneralAllocatedObject
 {
 public:
     virtual ~ObjectFactory() {}
@@ -64,7 +64,7 @@ public:
 
 
 template <class T>
-class TemplateObjectFactory : public ObjectFactory
+class _U2Export TemplateObjectFactory : public ObjectFactory
 {
 public:
     TemplateObjectFactory(const String& type = BLANK);
@@ -120,7 +120,7 @@ Object* TemplateObjectFactory<T>::createInstance(const String& name, const Strin
 }
 
 
-class ReusableObject : public Object
+class _U2Export ReusableObject : public Object
 {
 public:
     ReusableObject(const String& type, const String& name = BLANK, const String& guid = BLANK);

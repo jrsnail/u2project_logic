@@ -34,37 +34,31 @@ public:
         , m_nRetry(3)
         , m_eType(Type::HTTP_POST)
 	{}
-	virtual ~HttpRequest() {};
+	virtual ~HttpRequest();
 
 // 	virtual void preRecycleByPool() override;
 // 	virtual void postReuseFromPool() override;
 
 	virtual bool canConcate(const HttpRequest* request);
 
-	void setUrl(const String& url) { m_szUrl = url; };
-	const String& getUrl() const { return m_szUrl; };
+    void setUrl(const String& url);
+	const String& getUrl() const;
 
-	void setHttpType(const HttpRequest::Type& type) { m_eType = type; };
-	const HttpRequest::Type getHttpType() const { return m_eType; };
+	void setHttpType(const HttpRequest::Type& type);
+	const HttpRequest::Type getHttpType() const;
 
-    void setRetry(size_t retry) { m_nRetry = retry; };
-    size_t getRetry() const { return m_nRetry; };
+    void setRetry(size_t retry);
+    size_t getRetry() const;
 
 	/** Set custom-defined headers.
 	@param pHeaders the string vector of custom-defined headers.
 	*/
-	void setHttpHeaders(const vector<String>::type& headers)
-	{
-		m_Headers = headers;
-	}
+    void setHttpHeaders(const vector<String>::type& headers);
 
 	/** Get custom headers.
 	@return std::vector<std::string> the string vector of custom-defined headers.
 	*/
-	const vector<String>::type& getHttpHeaders() const
-	{
-		return m_Headers;
-	}
+    const vector<String>::type& getHttpHeaders() const;
 
     virtual void run() override;
 
@@ -90,57 +84,38 @@ public:
     /** Set response headers.
     @param pHeaders the string vector of response headers.
     */
-    inline void setHttpHeader(const vector<u2char>::type& data)
-    {
-        m_Headers = data;
-    }
+    void setHttpHeader(const vector<u2char>::type& data);
 
     /** Get response headers.
     @return std::vector<std::string> the string vector of response headers.
     */
-    inline vector<u2char>::type* getHttpHeader()
-    {
-        return &m_Headers;
-    }
+    vector<u2char>::type* getHttpHeader();
 
     /** Set the http response code.
     @param value the http response code that represent whether the request is successful or not.
     */
-    inline void setResultCode(long value)
-    {
-        m_lResultCode = value;
-    }
+    void setResultCode(long value);
 
     /** Get the http response code to judge whether response is successful or not.
     I know that you want to see the _responseCode is 200.
     If _responseCode is not 200, you should check the meaning for _responseCode by the net.
     @return long the value of _responseCode
     */
-    inline u2int64 getResultCode()
-    {
-        return m_lResultCode;
-    }
+    u2int64 getResultCode();
 
     /** Set the error buffer which will tell you more the reason why http request failed.
     @param value a string pointer that point to the reason.
     */
-    inline void setErrorBuffer(const char* value)
-    {
-        m_szErrorBuffer.clear();
-        m_szErrorBuffer.assign(value);
-    }
+    void setErrorBuffer(const char* value);
 
     /** Get the error buffer which will tell you more about the reason why http request failed.
     @return const char* the pointer that point to _errorBuffer.
     */
-    inline const String& getErrorBuffer()
-    {
-        return m_szErrorBuffer;
-    }
+    const String& getErrorBuffer();
 
-    inline void setSucceed(bool succeed) { m_bSucceed = succeed; };
+    void setSucceed(bool succeed);
 
-    inline bool isSucceed() const { return m_bSucceed; };
+    bool isSucceed() const;
 
     virtual void run() override;
 

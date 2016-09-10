@@ -48,6 +48,59 @@ Object::~Object()
 {
 }
 //-----------------------------------------------------------------------
+inline const String& Object::getType() const
+{
+    return m_szType;
+}
+//-----------------------------------------------------------------------
+inline const String& Object::getName() const
+{
+    return m_szName;
+}
+//-----------------------------------------------------------------------
+inline const String& Object::getGuid() const
+{
+    return m_szGuid;
+}
+//-----------------------------------------------------------------------
+void Object::serialize()
+{
+}
+//-----------------------------------------------------------------------
+void Object::deserialize()
+{
+}
+//-----------------------------------------------------------------------
+inline bool Object::isDeserializeSucceed()
+{
+    return m_bDeserializeSucceed;
+}
+//-----------------------------------------------------------------------
+inline bool Object::isSerializeSucceed()
+{
+    return m_bSerializeSucceed;
+}
+//-----------------------------------------------------------------------
+inline void Object::setData(const vector<u2char>::type& data)
+{
+    m_Data = data;
+}
+//-----------------------------------------------------------------------
+inline const vector<u2char>::type& Object::getData() const
+{
+    return m_Data;
+}
+//-----------------------------------------------------------------------
+inline vector<u2char>::type& Object::getData()
+{
+    return m_Data;
+}
+//-----------------------------------------------------------------------
+inline size_t Object::getDataSize()
+{
+    return m_Data.size();
+}
+//-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
 ReusableObject::ReusableObject(const String& type, const String& name, const String& guid)
     : Object(type, name, guid)

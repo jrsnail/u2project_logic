@@ -32,6 +32,50 @@ U2EG_NAMESPACE_USING
 // 	m_Headers.clear();
 // }
 //-----------------------------------------------------------------------
+HttpRequest::~HttpRequest()
+{
+}
+//-----------------------------------------------------------------------
+inline void HttpRequest::setUrl(const String& url)
+{
+    m_szUrl = url;
+}
+//-----------------------------------------------------------------------
+inline const String& HttpRequest::getUrl() const
+{
+    return m_szUrl;
+}
+//-----------------------------------------------------------------------
+inline void HttpRequest::setHttpType(const HttpRequest::Type& type)
+{
+    m_eType = type;
+}
+//-----------------------------------------------------------------------
+inline const HttpRequest::Type HttpRequest::getHttpType() const
+{
+    return m_eType;
+}
+//-----------------------------------------------------------------------
+inline void HttpRequest::setRetry(size_t retry)
+{
+    m_nRetry = retry;
+}
+//-----------------------------------------------------------------------
+inline size_t HttpRequest::getRetry() const
+{
+    return m_nRetry;
+}
+//-----------------------------------------------------------------------
+inline void HttpRequest::setHttpHeaders(const vector<String>::type& headers)
+{
+    m_Headers = headers;
+}
+//-----------------------------------------------------------------------
+inline const vector<String>::type& HttpRequest::getHttpHeaders() const
+{
+    return m_Headers;
+}
+//-----------------------------------------------------------------------
 bool HttpRequest::canConcate(const HttpRequest* request)
 {
 	do 
@@ -102,6 +146,47 @@ HttpResponse::~HttpResponse()
 //     m_lResultCode = 0L;
 //     m_szErrorBuffer = BLANK;
 // }
+//-----------------------------------------------------------------------
+inline void HttpResponse::setHttpHeader(const vector<u2char>::type& data)
+{
+    m_Headers = data;
+}
+//-----------------------------------------------------------------------
+inline vector<u2char>::type* HttpResponse::getHttpHeader()
+{
+    return &m_Headers;
+}
+//-----------------------------------------------------------------------
+inline void HttpResponse::setResultCode(long value)
+{
+    m_lResultCode = value;
+}
+//-----------------------------------------------------------------------
+inline u2int64 HttpResponse::getResultCode()
+{
+    return m_lResultCode;
+}
+//-----------------------------------------------------------------------
+inline void HttpResponse::setErrorBuffer(const char* value)
+{
+    m_szErrorBuffer.clear();
+    m_szErrorBuffer.assign(value);
+}
+//-----------------------------------------------------------------------
+inline const String& HttpResponse::getErrorBuffer()
+{
+    return m_szErrorBuffer;
+}
+//-----------------------------------------------------------------------
+inline void HttpResponse::setSucceed(bool succeed)
+{
+    m_bSucceed = succeed;
+}
+//-----------------------------------------------------------------------
+inline bool HttpResponse::isSucceed() const
+{
+    return m_bSucceed;
+}
 //-----------------------------------------------------------------------
 void HttpResponse::run()
 {
