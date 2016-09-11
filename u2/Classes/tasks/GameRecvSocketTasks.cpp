@@ -147,8 +147,12 @@ void SnapshotRST::deserialize()
             CHECK_RAPIDJSON_VALIDITY(document["data"].IsObject());
             const rapidjson::Value& dataJsonVal = document["data"];
 
-            for (rapidjson::Value::ConstMemberIterator it = dataJsonVal.MemberBegin();
-            it != dataJsonVal.MemberEnd(); it++)
+            CHECK_RAPIDJSON_MEMBER(dataJsonVal, "heros");
+            CHECK_RAPIDJSON_VALIDITY(dataJsonVal["heros"].IsObject());
+            const rapidjson::Value& herosJsonVal = dataJsonVal["heros"];
+
+            for (rapidjson::Value::ConstMemberIterator it = herosJsonVal.MemberBegin();
+            it != herosJsonVal.MemberEnd(); it++)
             {
                 String key = it->name.GetString();
 

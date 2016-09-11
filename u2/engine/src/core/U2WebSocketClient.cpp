@@ -12,19 +12,48 @@ U2EG_NAMESPACE_USING
 
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
+static void printWebSocketLog(int level, const char *line)
+{
+    static const char * const log_level_names[] = {
+        "ERR",
+        "WARN",
+        "NOTICE",
+        "INFO",
+        "DEBUG",
+        "PARSER",
+        "HEADER",
+        "EXTENSION",
+        "CLIENT",
+        "LATENCY",
+    };
+
+    char buf[30] = { 0 };
+    int n;
+    for (n = 0; n < LLL_COUNT; n++)
+    {
+        if (level != (1 << n))
+            continue;
+        break;
+    }
+
+    LogManager::getSingleton().stream(LML_NORMAL) << "[websocket]" << buf << line;
+}
+//-----------------------------------------------------------------------
+//-----------------------------------------------------------------------
 // Wrapper for converting websocket callback from static function to member function of WebSocket class.
 class WebSocketCallbackWrapper
 {
 public:
 
-    static int onSocketCallback(struct libwebsocket_context *ctx, struct libwebsocket *wsi,
-    enum libwebsocket_callback_reasons reason, void *user, void *in, size_t len)
+    static int onSocketCallback(struct lws *wsi,
+    enum lws_callback_reasons reason, void *user, void *in, size_t len)
     {
         // Gets the user data from context. We know that it's a 'WebSocket' instance.
-        WsTaskLoop* pWsTaskLoop = (WsTaskLoop*)libwebsocket_context_user(ctx);
+        lws_context* context = lws_get_context(wsi);
+        WsTaskLoop* pWsTaskLoop = (WsTaskLoop*)lws_context_user(context);
         if (pWsTaskLoop)
         {
-            return pWsTaskLoop->onSocketCallback(ctx, wsi, reason, user, in, len);
+            return pWsTaskLoop->onSocketCallback(wsi, reason, user, in, len);
         }
         return 0;
     }
@@ -146,7 +175,7 @@ void WsTaskLoop::_runInternal()
 
         if (m_eState == State::CLOSED || m_eState == State::CLOSING)
         {
-            libwebsocket_context_destroy(m_pWsContext);
+            lws_context_destroy(m_pWsContext);
             m_pWsContext = nullptr;
             m_pWebSocket = nullptr;
 
@@ -163,7 +192,7 @@ void WsTaskLoop::_runInternal()
             {
                 U2_FREE((m_aWsProtocols + i)->name, MEMCATEGORY_GENERAL);
             }
-            U2_DELETE_ARRAY_T(m_aWsProtocols, libwebsocket_protocols, protocolCount + 1, MEMCATEGORY_GENERAL);
+            U2_DELETE_ARRAY_T(m_aWsProtocols, lws_protocols, protocolCount + 1, MEMCATEGORY_GENERAL);
             m_aWsProtocols = nullptr;
 
             // exit the loop.
@@ -172,7 +201,7 @@ void WsTaskLoop::_runInternal()
 
         if (m_pWsContext && m_eState != State::CLOSED && m_eState != State::CLOSING)
         {
-            libwebsocket_service(m_pWsContext, 0);
+            lws_service(m_pWsContext, 0);
         }
 
         // Sleep 1 ms
@@ -283,8 +312,8 @@ void WsTaskLoop::_connect()
         protocolCount = 1;
     }
 
-    m_aWsProtocols = static_cast<libwebsocket_protocols*>(
-        U2_NEW_ARRAY_T(libwebsocket_protocols, protocolCount + 1, MEMCATEGORY_GENERAL)
+    m_aWsProtocols = static_cast<lws_protocols*>(
+        U2_NEW_ARRAY_T(lws_protocols, protocolCount + 1, MEMCATEGORY_GENERAL)
         );
 
     if (m_Protocols.size() > 0)
@@ -311,9 +340,27 @@ void WsTaskLoop::_connect()
     }
 
 
+
+    static const struct lws_extension exts[] = {
+        {
+            "permessage-deflate",
+            lws_extension_callback_pm_deflate,
+        // client_no_context_takeover extension is not supported in the current version, it will cause connection fail
+        // It may be a bug of lib websocket build
+        //            "permessage-deflate; client_no_context_takeover; client_max_window_bits"
+        "permessage-deflate; client_max_window_bits"
+        },
+        {
+            "deflate-frame",
+            lws_extension_callback_pm_deflate,
+        "deflate_frame"
+        },
+        { nullptr, nullptr, nullptr /* terminator */ }
+    };
+
     // create context
     struct lws_context_creation_info info;
-    memset(&info, 0, sizeof(info));
+    memset(&info, 0, sizeof info);
 
     /*
     * create the websocket context.  This tracks open connections and
@@ -325,14 +372,19 @@ void WsTaskLoop::_connect()
 
     info.port = CONTEXT_PORT_NO_LISTEN;
     info.protocols = m_aWsProtocols;
-#ifndef LWS_NO_EXTENSIONS
-    info.extensions = libwebsocket_get_internal_extensions();
-#endif
+// #ifndef LWS_NO_EXTENSIONS
+//     info.extensions = lws_get_internal_extensions();
+// #endif
+    info.extensions = exts;
     info.gid = -1;
     info.uid = -1;
+    info.options = 0;
     info.user = (void*)this;
 
-    m_pWsContext = libwebsocket_create_context(&info);
+    int log_level = LLL_ERR | LLL_WARN | LLL_NOTICE/* | LLL_INFO | LLL_DEBUG | LLL_PARSER*/ | LLL_HEADER | LLL_EXT | LLL_CLIENT | LLL_LATENCY;
+    lws_set_log_level(log_level, printWebSocketLog);
+
+    m_pWsContext = lws_create_context(&info);
 
 
     // connect
@@ -348,7 +400,7 @@ void WsTaskLoop::_connect()
                 szName += ", ";
             }
         }
-        m_pWebSocket = libwebsocket_client_connect(m_pWsContext, szHost.c_str(), nPort, bUseSSL ? 1 : 0,
+        m_pWebSocket = lws_client_connect(m_pWsContext, szHost.c_str(), nPort, bUseSSL ? 1 : 0,
             path.c_str(), szHost.c_str(), szHost.c_str(),
             szName.c_str(), -1);
         if (nullptr == m_pWebSocket)
@@ -361,41 +413,17 @@ void WsTaskLoop::_connect()
     }
 }
 //---------------------------------------------------------------------
-int WsTaskLoop::onSocketCallback(struct libwebsocket_context *ctx,
-    struct libwebsocket *wsi, int reason,
+int WsTaskLoop::onSocketCallback(struct lws *wsi, int reason,
     void *user, void *in, size_t len)
 {
-    assert(m_pWsContext == nullptr || ctx == m_pWsContext);
-    assert(m_pWebSocket == nullptr || wsi == nullptr || wsi == m_pWebSocket);
-
     switch (reason)
     {
-        case LWS_CALLBACK_DEL_POLL_FD:
-        case LWS_CALLBACK_PROTOCOL_DESTROY:
         case LWS_CALLBACK_CLIENT_CONNECTION_ERROR:
         {
-            Task* pTask = nullptr;
-            if (reason == LWS_CALLBACK_CLIENT_CONNECTION_ERROR
-                || (reason == LWS_CALLBACK_PROTOCOL_DESTROY && m_eState == State::CONNECTING)
-                || (reason == LWS_CALLBACK_DEL_POLL_FD && m_eState == State::CONNECTING)
-                || (reason == LWS_CALLBACK_DEL_POLL_FD && m_eState == State::OPEN)
-                )
-            {
-                pTask = TaskManager::getSingleton().createObject(_getWsErrorRecvTask());
-                m_eState = State::CLOSING;
-            }
-            else if (reason == LWS_CALLBACK_PROTOCOL_DESTROY && m_eState == State::CLOSING)
-            {
-                pTask = TaskManager::getSingleton().createObject(_getWsCloseRecvTask());
-            }
+            m_eState = State::CLOSING;
 
-            if (pTask == nullptr)
-            {
-            }
-            else
-            {
-                _dispatchRecvTask(pTask);
-            }
+            Task* pTask = TaskManager::getSingleton().createObject(_getWsErrorRecvTask());
+            _dispatchRecvTask(pTask);
             break;
         }
         case LWS_CALLBACK_CLIENT_ESTABLISHED:
@@ -406,19 +434,20 @@ int WsTaskLoop::onSocketCallback(struct libwebsocket_context *ctx,
 
             // start the ball rolling,
             // LWS_CALLBACK_CLIENT_WRITEABLE will come next service
-            libwebsocket_callback_on_writable(ctx, wsi);
+            lws_callback_on_writable(wsi);
             break;
         }
         case LWS_CALLBACK_CLIENT_RECEIVE:
         {
-            _onRecv(ctx, wsi, reason, user, in, len);
+            _onRecv(wsi, reason, user, in, len);
             break;
         }
         case LWS_CALLBACK_CLIENT_WRITEABLE:
         {
-            _onSend(ctx, wsi, reason, user, in, len);
+            _onSend(wsi, reason, user, in, len);
             break;
         }
+        case LWS_CALLBACK_PROTOCOL_DESTROY:
         case LWS_CALLBACK_CLOSED:
         {
             m_bKeepRunning = false;
@@ -438,30 +467,32 @@ int WsTaskLoop::onSocketCallback(struct libwebsocket_context *ctx,
     return 0;
 }
 //---------------------------------------------------------------------
-void WsTaskLoop::_onRecv(struct libwebsocket_context *ctx, struct libwebsocket *wsi,
+void WsTaskLoop::_onRecv(struct lws *wsi,
     int reason, void *user, void *in, size_t len)
 {
     if (in && len > 0)
     {
         m_RecvBuffer.insert(m_RecvBuffer.end(), (char*)in, (char*)in + len);
-        size_t uPendingFrameDataLen = libwebsockets_remaining_packet_payload(wsi);
+    }
+    else
+    {
 
-        if (uPendingFrameDataLen > 0)
-        {
-        }
+    }
 
-        // If no more data pending, send it to the client thread
-        if (uPendingFrameDataLen == 0)
-        {
-            RecvSocketTask* pTask = _splitRecvTask(m_RecvBuffer, lws_frame_is_binary(wsi));
-            m_RecvBuffer.clear();
+    size_t uRemainingSize = lws_remaining_packet_payload(wsi);
+    int isFinalFragment = lws_is_final_fragment(wsi);
 
-            _dispatchRecvTask(pTask);
-        }
+    // If no more data pending, send it to the client thread
+    if (uRemainingSize == 0 && isFinalFragment)
+    {
+        RecvSocketTask* pTask = _splitRecvTask(m_RecvBuffer, lws_frame_is_binary(wsi));
+        m_RecvBuffer.clear();
+
+        _dispatchRecvTask(pTask);
     }
 }
 //---------------------------------------------------------------------
-void WsTaskLoop::_onSend(struct libwebsocket_context *ctx, struct libwebsocket *wsi,
+void WsTaskLoop::_onSend(struct lws *wsi,
     int reason, void *user, void *in, size_t len)
 {
     if (m_WorkingQueue.empty())
@@ -484,7 +515,7 @@ void WsTaskLoop::_onSend(struct libwebsocket_context *ctx, struct libwebsocket *
             //U2_THREAD_SLEEP(1000);
 
             // get notified as soon as we can write again
-            libwebsocket_callback_on_writable(ctx, wsi);
+            lws_callback_on_writable(wsi);
             return;
         }
     }
@@ -549,14 +580,23 @@ void WsTaskLoop::_onSend(struct libwebsocket_context *ctx, struct libwebsocket *
                     }
                 }
 
-                int nBytesWrite = libwebsocket_write(wsi, &buf[LWS_SEND_BUFFER_PRE_PADDING], n
-                    , (libwebsocket_write_protocol)nWriteProtocol);
+                int nBytesWrite = lws_write(wsi, &buf[LWS_SEND_BUFFER_PRE_PADDING], n
+                    , (lws_write_protocol)nWriteProtocol);
 
                 U2_FREE(buf, MEMCATEGORY_GENERAL);
 
                 // Buffer overrun?
                 if (nBytesWrite < 0)
                 {
+                    LogManager::getSingleton().stream(LML_CRITICAL)
+                        << "ERROR: msg("
+                        << pSendTask->getName()
+                        << "), lws_write return "
+                        << nBytesWrite
+                        << ", but it should be "
+                        << n
+                        << ", drop this message.\n";
+                    quit();
                     break;
                 }
                 // Do we have another fragments to send?
@@ -577,7 +617,7 @@ void WsTaskLoop::_onSend(struct libwebsocket_context *ctx, struct libwebsocket *
     }
 
     // get notified as soon as we can write again
-    libwebsocket_callback_on_writable(ctx, wsi);
+    lws_callback_on_writable(wsi);
 }
 //---------------------------------------------------------------------
 void WsTaskLoop::_dispatchRecvTask(Task* task)

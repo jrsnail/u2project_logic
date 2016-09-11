@@ -127,10 +127,10 @@ void MoveSST::serialize()
     document.AddMember("roomId"
         , rapidjson::Value(szSelfRoomId.c_str(), document.GetAllocator()).Move()
         , document.GetAllocator());
-    document.AddMember("heroId"
+    document.AddMember("entityId"
         , rapidjson::Value(szSelfGameObjGuid.c_str(), document.GetAllocator()).Move()
         , document.GetAllocator());
-    document.AddMember("attHeroId", 0, document.GetAllocator());
+    document.AddMember("attEntityId", 0, document.GetAllocator());
     document.AddMember("accSpeed", 0, document.GetAllocator());
     document.AddMember("x", m_v2Position.x, document.GetAllocator());
     document.AddMember("y", m_v2Position.y, document.GetAllocator());
@@ -139,6 +139,16 @@ void MoveSST::serialize()
     document.AddMember("timestamp", m_ulTimestamp, document.GetAllocator());
     document.AddMember("taskId", "plane", document.GetAllocator());
     document.AddMember("version", "1.0.0", document.GetAllocator());
+    document.AddMember("skillId", 0, document.GetAllocator());
+    document.AddMember("skillUsed", 0, document.GetAllocator());
+    document.AddMember("skillMoveX", 0, document.GetAllocator());
+    document.AddMember("skillMoveY", 0, document.GetAllocator());
+    document.AddMember("skillTime", 0, document.GetAllocator());
+    document.AddMember("skillErp", 0, document.GetAllocator());
+    document.AddMember("skillRefHp", 0, document.GetAllocator());
+    document.AddMember("eatObjId", 0, document.GetAllocator());
+    document.AddMember("eatObjType", 0, document.GetAllocator());
+    document.AddMember("hpMax", 0, document.GetAllocator());
     rapidjson::StringBuffer buffer;
     rapidjson::Writer< rapidjson::StringBuffer > writer(buffer);
     document.Accept(writer);

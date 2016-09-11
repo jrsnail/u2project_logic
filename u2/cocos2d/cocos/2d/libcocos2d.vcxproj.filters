@@ -67,9 +67,6 @@
     <Filter Include="extension">
       <UniqueIdentifier>{976bf662-699e-482e-b5db-a20d4abab137}</UniqueIdentifier>
     </Filter>
-    <Filter Include="extension\AssetsManager">
-      <UniqueIdentifier>{ad47c713-2196-4c8f-9205-2a2a7ecc0b80}</UniqueIdentifier>
-    </Filter>
     <Filter Include="extension\GUI">
       <UniqueIdentifier>{b27aba95-51a2-413c-8570-0aff9adf2b6b}</UniqueIdentifier>
     </Filter>
@@ -84,15 +81,6 @@
     </Filter>
     <Filter Include="cocosdenshion\Source Files">
       <UniqueIdentifier>{f42ec238-cddc-475a-b343-6d0984cb9681}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="network">
-      <UniqueIdentifier>{31338a7d-ebe1-4867-9c17-d3645122a864}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="network\Header Files">
-      <UniqueIdentifier>{5a094fe5-f941-4dd4-a892-28d721162ea7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="network\Source Files">
-      <UniqueIdentifier>{9702eb68-42c9-405a-bc89-a1bd85a40ec7}</UniqueIdentifier>
     </Filter>
     <Filter Include="ui\BaseClasses">
       <UniqueIdentifier>{ad654e6b-96ee-4693-9789-dc4aa1c52e70}</UniqueIdentifier>
@@ -826,9 +814,6 @@
     <ClCompile Include="..\3d\CCMotionStreak3D.cpp">
       <Filter>3d</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\extensions\assets-manager\AssetsManager.cpp">
-      <Filter>extension\AssetsManager</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\extensions\GUI\CCScrollView\CCScrollView.cpp">
       <Filter>extension\GUI\CCScrollView</Filter>
     </ClCompile>
@@ -849,15 +834,6 @@
     </ClCompile>
     <ClCompile Include="..\audio\win32\SimpleAudioEngine.cpp">
       <Filter>cocosdenshion\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\network\HttpClient.cpp">
-      <Filter>network\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\network\SocketIO.cpp">
-      <Filter>network\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\network\WebSocket.cpp">
-      <Filter>network\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\ui\UIScale9Sprite.cpp">
       <Filter>ui\BaseClasses</Filter>
@@ -1239,18 +1215,6 @@
     </ClCompile>
     <ClCompile Include="..\ui\UIEditBox\UIEditBoxImpl-win32.cpp">
       <Filter>ui\UIWidgets\EditBox</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\extensions\assets-manager\AssetsManagerEx.cpp">
-      <Filter>extension\AssetsManager</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\extensions\assets-manager\CCEventAssetsManagerEx.cpp">
-      <Filter>extension\AssetsManager</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\extensions\assets-manager\CCEventListenerAssetsManagerEx.cpp">
-      <Filter>extension\AssetsManager</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\extensions\assets-manager\Manifest.cpp">
-      <Filter>extension\AssetsManager</Filter>
     </ClCompile>
     <ClCompile Include="..\ui\UIWebView.cpp">
       <Filter>ui\UIWidgets</Filter>
@@ -1922,17 +1886,11 @@
     <ClCompile Include="..\editor-support\cocostudio\CCComExtensionData.cpp">
       <Filter>cocostudio\components</Filter>
     </ClCompile>
-    <ClCompile Include="..\network\CCDownloader.cpp">
-      <Filter>network\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CCCameraBackgroundBrush.cpp">
       <Filter>2d</Filter>
     </ClCompile>
     <ClCompile Include="..\renderer\CCTextureCube.cpp">
       <Filter>renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\network\CCDownloader-curl.cpp">
-      <Filter>network</Filter>
     </ClCompile>
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\Light3DReader\Light3DReader.cpp" />
   </ItemGroup>
@@ -2553,9 +2511,6 @@
     <ClInclude Include="..\3d\cocos3d.h">
       <Filter>3d</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\extensions\assets-manager\AssetsManager.h">
-      <Filter>extension\AssetsManager</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\extensions\GUI\CCScrollView\CCScrollView.h">
       <Filter>extension\GUI\CCScrollView</Filter>
     </ClInclude>
@@ -2588,21 +2543,6 @@
     </ClInclude>
     <ClInclude Include="..\audio\include\SimpleAudioEngine.h">
       <Filter>cocosdenshion\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\network\HttpClient.h">
-      <Filter>network\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\network\HttpRequest.h">
-      <Filter>network\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\network\HttpResponse.h">
-      <Filter>network\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\network\SocketIO.h">
-      <Filter>network\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\network\WebSocket.h">
-      <Filter>network\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\ui\UIScale9Sprite.h">
       <Filter>ui\BaseClasses</Filter>
@@ -3044,18 +2984,6 @@
     </ClInclude>
     <ClInclude Include="..\ui\UIEditBox\UIEditBoxImpl-win32.h">
       <Filter>ui\UIWidgets\EditBox</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\extensions\assets-manager\AssetsManagerEx.h">
-      <Filter>extension\AssetsManager</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\extensions\assets-manager\CCEventAssetsManagerEx.h">
-      <Filter>extension\AssetsManager</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\extensions\assets-manager\CCEventListenerAssetsManagerEx.h">
-      <Filter>extension\AssetsManager</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\extensions\assets-manager\Manifest.h">
-      <Filter>extension\AssetsManager</Filter>
     </ClInclude>
     <ClInclude Include="..\ui\UIWebView-inl.h">
       <Filter>ui\UIWidgets</Filter>
@@ -3757,23 +3685,11 @@
     <ClInclude Include="..\editor-support\cocostudio\CCComExtensionData.h">
       <Filter>cocostudio\components</Filter>
     </ClInclude>
-    <ClInclude Include="..\network\CCDownloader.h">
-      <Filter>network\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\network\CCDownloaderImpl.h">
-      <Filter>network\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\network\CCIDownloaderImpl.h">
-      <Filter>network\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CCCameraBackgroundBrush.h">
       <Filter>2d</Filter>
     </ClInclude>
     <ClInclude Include="..\renderer\CCTextureCube.h">
       <Filter>renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\network\CCDownloader-curl.h">
-      <Filter>network\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\Light3DReader\Light3DReader.h" />
   </ItemGroup>

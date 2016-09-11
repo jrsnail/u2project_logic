@@ -11,9 +11,9 @@
 #include "U2HeaderPrefix.h"
 
 
-struct libwebsocket_protocols;
-struct libwebsocket_context;
-struct libwebsocket;
+struct lws_protocols;
+struct lws_context;
+struct lws;
 
 
 U2EG_NAMESPACE_BEGIN
@@ -69,7 +69,7 @@ public:
 
     State getState();
 
-    int onSocketCallback(struct libwebsocket_context *ctx, struct libwebsocket *wsi,
+    int onSocketCallback(struct lws *wsi,
         int reason, void *user, void *in, size_t len);
 
     void startHeartBeat();
@@ -85,10 +85,10 @@ protected:
 
     void _connect();
 
-    void _onRecv(struct libwebsocket_context *ctx, struct libwebsocket *wsi,
+    void _onRecv(struct lws *wsi,
         int reason, void *user, void *in, size_t len);
 
-    void _onSend(struct libwebsocket_context *ctx, struct libwebsocket *wsi,
+    void _onSend(struct lws *wsi,
         int reason, void *user, void *in, size_t len);
 
     virtual RecvSocketTask* _splitRecvTask(vector<u2char>::type& buffer, bool binary) = 0;
@@ -133,9 +133,9 @@ protected:
     State                   m_eState;
     vector<u2char>::type	m_RecvBuffer;
 
-    struct ::libwebsocket_protocols* m_aWsProtocols;
-    struct ::libwebsocket_context* m_pWsContext;
-    struct ::libwebsocket*         m_pWebSocket;
+    struct ::lws_protocols* m_aWsProtocols;
+    struct ::lws_context*   m_pWsContext;
+    struct ::lws*           m_pWebSocket;
 
     u2uint64                m_ulHeartBeatPeriod;
 };
