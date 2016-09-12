@@ -96,13 +96,28 @@ void WsTaskLoop::postTaskAndReply(Task* task, Task* reply)
 //-----------------------------------------------------------------------
 void WsTaskLoop::run()
 {
+    // As when websocket connection closed, logic layer
+    // received a close task at which time the websocket 
+    // thread still running, if at this time logic layer 
+    // call run() method again, may case thread safe 
+    // problem, so here we should make sure last thread
+    // loop quit and join normally.
+    if (m_eState == State::CLOSED)
+    {
+        quit();
+        join();
+    }
+
     U2_LOCK_MUTEX_NAMED(m_KeepRunningMutex, runningLck);
     m_bKeepRunning = true;
     
     U2_LOCK_MUTEX_NAMED(m_PausingMutex, pausingLck);
     m_bPausing = false;
 
-    m_thread = std::move(std::thread(std::bind(&WsTaskLoop::_runInternal, this)));
+    if (!m_thread.joinable())
+    {
+        m_thread = std::move(std::thread(std::bind(&WsTaskLoop::_runInternal, this)));
+    }
 }
 //-----------------------------------------------------------------------
 void WsTaskLoop::quit()
@@ -450,8 +465,6 @@ int WsTaskLoop::onSocketCallback(struct lws *wsi, int reason,
         case LWS_CALLBACK_PROTOCOL_DESTROY:
         case LWS_CALLBACK_CLOSED:
         {
-            m_bKeepRunning = false;
-
             if (m_eState != State::CLOSED)
             {
                 m_eState = State::CLOSED;
