@@ -342,6 +342,7 @@ void WsTaskLoop::_connect()
             strcpy(name, (*it).c_str());
             m_aWsProtocols[i].name = name;
             m_aWsProtocols[i].callback = WebSocketCallbackWrapper::onSocketCallback;
+            m_aWsProtocols[i].rx_buffer_size = 256 * 1024;
         }
     }
     else
@@ -352,6 +353,7 @@ void WsTaskLoop::_connect()
         strcpy(name, "default-protocol");
         m_aWsProtocols[0].name = name;
         m_aWsProtocols[0].callback = WebSocketCallbackWrapper::onSocketCallback;
+        m_aWsProtocols[0].rx_buffer_size = 256 * 1024;
     }
 
 
@@ -443,13 +445,13 @@ int WsTaskLoop::onSocketCallback(struct lws *wsi, int reason,
         }
         case LWS_CALLBACK_CLIENT_ESTABLISHED:
         {
-            m_eState = State::OPEN;
-            Task* pTask = TaskManager::getSingleton().createObject(_getWsOpenRecvTask());
-            _dispatchRecvTask(pTask);
-
             // start the ball rolling,
             // LWS_CALLBACK_CLIENT_WRITEABLE will come next service
             lws_callback_on_writable(wsi);
+
+            m_eState = State::OPEN;
+            Task* pTask = TaskManager::getSingleton().createObject(_getWsOpenRecvTask());
+            _dispatchRecvTask(pTask);
             break;
         }
         case LWS_CALLBACK_CLIENT_RECEIVE:
